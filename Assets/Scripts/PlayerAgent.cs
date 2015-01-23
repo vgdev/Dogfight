@@ -8,9 +8,7 @@ public abstract class PlayerAgent
 	public Avatar playerAvatar;
 	public PlayerFieldController field;
 
-	public PlayerAgent()
-	{
-	}
+	public abstract void Initialize();
 
 	public abstract void Update(float dt);
 }

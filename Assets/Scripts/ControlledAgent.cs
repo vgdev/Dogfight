@@ -9,15 +9,15 @@ public class ControlledAgent : PlayerAgent
 	private string focusButton;
 	private string chargeButton;
 
-	public void Initialize()
+	public override void Initialize()
 	{
 		string strPlay = "Player ";
 		int playerNumber = field.playerNumber;
 		horizontalMoveAxis = "Horizontal Movement " + strPlay + playerNumber;
-		verticalMoveAxis = "Vertical Movment " + strPlay + playerNumber;
+		verticalMoveAxis = "Vertical Movement " + strPlay + playerNumber;
 		focusButton = "Focus " + strPlay + playerNumber;
 		fireButton = "Fire " + strPlay + playerNumber;
-		chargeButton = "charge " + strPlay + playerNumber;
+		chargeButton = "Charge " + strPlay + playerNumber;
 	}
 
 	public override void Update (float dt)
@@ -25,6 +25,8 @@ public class ControlledAgent : PlayerAgent
 		Vector2 movementVector = Vector2.zero;
 		movementVector.x = Mathf.Sign (Input.GetAxis (horizontalMoveAxis));
 		movementVector.y = Mathf.Sign (Input.GetAxis (verticalMoveAxis));
+		Debug.Log (horizontalMoveAxis + " : " + Input.GetAxis (horizontalMoveAxis));
+		Debug.Log ("movement vector: " + movementVector.ToString ());
 		bool focus = Input.GetAxis (focusButton)  != 0f;
 		bool fire = Input.GetAxis (fireButton) != 0f;
 		bool charge = Input.GetAxis (chargeButton) != 0f;

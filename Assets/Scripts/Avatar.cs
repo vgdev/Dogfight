@@ -50,7 +50,7 @@ public class Avatar : BaseLib.CachedObject
 		get { return -(int)Mathf.Sign (forbiddenMovement.y); }
 	}
 
-	public virtual void Move(float verticalDirection, float horizontalDirection, bool focus, float dt = 1.0f)
+	public virtual void Move(float horizontalDirection, float verticalDirection, bool focus, float dt = 1.0f)
 	{
 		float movementSpeed = (focus) ? focusMovementSpeed : normalMovementSpeed;
 		Vector2 dir = new Vector2 (Mathf.Sign (horizontalDirection), Mathf.Sign(verticalDirection));
