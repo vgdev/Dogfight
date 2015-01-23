@@ -33,5 +33,6 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		playerController = new T();
 		playerController.field = this;
 		playerController.playerAvatar = avatar.GetComponent<Avatar>();
+		playerController.Initialize ();
 	}
 }
