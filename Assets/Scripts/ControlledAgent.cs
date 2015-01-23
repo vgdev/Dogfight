@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using BaseLib;
 using System.Collections;
 
 public class ControlledAgent : PlayerAgent 
@@ -23,10 +24,10 @@ public class ControlledAgent : PlayerAgent
 	public override void Update (float dt)
 	{
 		Vector2 movementVector = Vector2.zero;
-		movementVector.x = Mathf.Sign (Input.GetAxis (horizontalMoveAxis));
-		movementVector.y = Mathf.Sign (Input.GetAxis (verticalMoveAxis));
-		Debug.Log (horizontalMoveAxis + " : " + Input.GetAxis (horizontalMoveAxis));
-		Debug.Log ("movement vector: " + movementVector.ToString ());
+		movementVector.x = Util.Sign(Input.GetAxis (horizontalMoveAxis));
+		movementVector.y = Util.Sign(Input.GetAxis (verticalMoveAxis));
+		//Debug.Log (horizontalMoveAxis + " : " + Input.GetAxis (horizontalMoveAxis));
+		//Debug.Log ("movement vector: " + movementVector.ToString ());
 		bool focus = Input.GetAxis (focusButton)  != 0f;
 		bool fire = Input.GetAxis (fireButton) != 0f;
 		bool charge = Input.GetAxis (chargeButton) != 0f;

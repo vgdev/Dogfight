@@ -10,12 +10,6 @@ public class PlayerMovementLimit : MonoBehaviour
 	[SerializeField]
 	private Vector2 lockedMovementVector;
 
-	private ScreenBoundary boundary;
-	void Start()
-	{
-		boundary = GetComponent<ScreenBoundary> ();
-	}
-
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if(other.gameObject.tag == tagCheck)

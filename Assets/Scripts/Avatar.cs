@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using BaseLib;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider2D))]
-public class Avatar : BaseLib.CachedObject
+public class Avatar : CachedObject
 {
 	[SerializeField]
 	private float normalMovementSpeed = 5f;
@@ -43,31 +44,31 @@ public class Avatar : BaseLib.CachedObject
 	private Vector2 forbiddenMovement = Vector3.zero;
 	public int CanMoveHorizontal
 	{
-		get { return -(int)Mathf.Sign (forbiddenMovement.x); }
+		get { return -(int)Util.Sign(forbiddenMovement.x); }
 	}
 	public int CanMoveVertical
 	{
-		get { return -(int)Mathf.Sign (forbiddenMovement.y); }
+		get { return -(int)Util.Sign(forbiddenMovement.y); }
 	}
 
 	public virtual void Move(float horizontalDirection, float verticalDirection, bool focus, float dt = 1.0f)
 	{
 		float movementSpeed = (focus) ? focusMovementSpeed : normalMovementSpeed;
-		Vector2 dir = new Vector2 (Mathf.Sign (horizontalDirection), Mathf.Sign(verticalDirection));
+		Vector2 dir = new Vector2 (Util.Sign(horizontalDirection), Util.Sign(verticalDirection));
 		Vector3 movementVector = movementSpeed * Vector3.one;
-		movementVector.x *= (dir.x == Mathf.Sign (forbiddenMovement.x)) ? 0f : dir.x;
-		movementVector.y *= (dir.y == Mathf.Sign (forbiddenMovement.y)) ? 0f : dir.y;
+		movementVector.x *= (dir.x == Util.Sign(forbiddenMovement.x)) ? 0f : dir.x;
+		movementVector.y *= (dir.y == Util.Sign(forbiddenMovement.y)) ? 0f : dir.y;
 		movementVector.z = 0f;
 		Transform.position += movementVector * dt;
 	}
 
 	public void AllowMovement(Vector2 direction)
 	{
-		if(Mathf.Sign (direction.x) == Mathf.Sign (forbiddenMovement.x))
+		if(Util.Sign(direction.x) == Util.Sign(forbiddenMovement.x))
 		{
 			forbiddenMovement.x = 0;
 		}
-		if(Mathf.Sign (direction.y) == Mathf.Sign (forbiddenMovement.y))
+		if(Util.Sign(direction.y) == Util.Sign(forbiddenMovement.y))
 		{
 			forbiddenMovement.y = 0;
 		}

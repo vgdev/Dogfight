@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Util : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+namespace BaseLib
+{
+	public static class Util
+	{
+		public static float Sign(float e)
+		{
+			return (e == 0f) ? 0f : Mathf.Sign (e);
+		}
 	}
 }
