@@ -11,7 +11,7 @@ public class TestSpawnPlayer : TestScript
 		GameController controller = GetComponent<GameController> ();
 		for(int i = 0; i < characters.Length; i++)
 		{
-			controller.players[i].field.SpawnPlayer(characters[i]);
+			controller.players[i].field.SpawnPlayer<ControlledAgent>(characters[i]);
 		}
 	}
 }

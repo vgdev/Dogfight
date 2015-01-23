@@ -18,7 +18,10 @@ public class PlayerFieldController : BaseLib.CachedObject {
 
 	void FixedUpdate () 
 	{
-		playerController.Update(Time.fixedDeltaTime);
+		if(playerController != null)
+		{
+			playerController.Update(Time.fixedDeltaTime);
+		}
 	}
 
 	public void SpawnPlayer<T>(GameObject character) where T : PlayerAgent, new()
