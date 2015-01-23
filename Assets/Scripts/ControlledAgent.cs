@@ -9,7 +9,7 @@ public class ControlledAgent : PlayerAgent
 	private string focusButton;
 	private string chargeButton;
 
-	public ControlledAgent()
+	public void Initialize()
 	{
 		string strPlay = "Player ";
 		int playerNumber = field.playerNumber;
