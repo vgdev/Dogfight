@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class Deactivate : BulletController
+public class Deactivate : ProjectileController
 {
 	public override bool IsFinite 
 	{
@@ -15,7 +15,7 @@ public class Deactivate : BulletController
 	{
 	}
 
-	public override void UpdateBullet(Bullet bullet, float dt)
+	public override void UpdateBullet(Projectile bullet, float dt)
 	{
 		bullet.Deactivate ();
 	}

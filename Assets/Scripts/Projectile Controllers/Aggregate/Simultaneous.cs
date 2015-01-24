@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using BaseLib;
 using System.Collections;
 
-public class Simultaneous : BulletController 
+public class Simultaneous : ProjectileController 
 {
 	private bool is_finite;
 	public override bool IsFinite
@@ -10,9 +10,9 @@ public class Simultaneous : BulletController
 		get { return is_finite; }
 	}
 
-	private BulletController[] controllerSet;
+	private ProjectileController[] controllerSet;
 
-	public Simultaneous(BulletController[] controllers, bool waitForAll)
+	public Simultaneous(ProjectileController[] controllers, bool waitForAll)
 	{
 		controllerSet = controllers;
 		int finite_count = 0;
@@ -26,7 +26,7 @@ public class Simultaneous : BulletController
 		is_finite = (!waitForAll && finite_count >= 1) || (waitForAll && finite_count >= controllerSet.Length);
 	}
 
-	public override void UpdateBullet (Bullet bullet, float dt)
+	public override void UpdateBullet (Projectile bullet, float dt)
 	{
 		for(int i = 0; i < controllerSet.Length; i++)
 		{
@@ -34,7 +34,7 @@ public class Simultaneous : BulletController
 		}
 	}
 
-	public override void OnControllerAdd (Bullet bullet)
+	public override void OnControllerAdd (Projectile bullet)
 	{
 		base.OnControllerAdd (bullet);
 		for(int i = 0; i < controllerSet.Length; i++)

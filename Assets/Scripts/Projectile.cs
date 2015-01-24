@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using BaseLib;
 using System.Collections.Generic;
 using System.Collections;
 
-public class Bullet : CachedObject
+public class Projectile : CachedObject
 {
-	private BulletController controller;
+	private ProjectileController controller;
 	private Dictionary<string, object> properties;
 
 	public override void Awake()
@@ -43,7 +43,7 @@ public class Bullet : CachedObject
 		return (properties.ContainsKey(key)) && (properties[key] is T);
 	}
 
-	public BulletController Controller
+	public ProjectileController Controller
 	{
 		get { return controller; }
 		set 

@@ -2,7 +2,7 @@ using System;
 using BaseLib;
 using UnityEngine;
 
-public class Rotate : BulletController
+public class Rotate : ProjectileController
 {
 	public override bool IsFinite 
 	{
@@ -21,14 +21,14 @@ public class Rotate : BulletController
 		overrideAngularVelocity = overrideAngV;
 	}
 
-	public override void UpdateBullet(Bullet bullet, float dt)
+	public override void UpdateBullet(Projectile bullet, float dt)
 	{
 		bullet.Transform.Rotate (0f, 0f, bullet.GetProperty<float> ("angular velocity") * dt);
 	}
 
-	public override void OnControllerAdd (Bullet bullet)
+	public override void OnControllerAdd (Projectile bullet)
 	{
 		base.OnControllerAdd (bullet);
-		AddNecessaryKey (bullet, "angular velocity", initialAngularVelocity, overrideAngularVelocity);
+		AddUniversalKey (bullet, "angular velocity", initialAngularVelocity, overrideAngularVelocity);
 	}
 }

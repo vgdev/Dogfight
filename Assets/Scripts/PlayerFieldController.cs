@@ -35,4 +35,18 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		playerController.playerAvatar = avatar.GetComponent<Avatar>();
 		playerController.Initialize ();
 	}
+
+	public void SpawnProjectile(GameObject prefab, ProjectileController controller, Vector3 fieldLocation, Quaternion rotation)
+	{
+		Vector3 worldLocation = playerCamera.ViewportToWorldPoint (fieldLocation);
+		//Get projectile
+		//projectile.Transform.position = worldLocation;
+		//projectile.Transform.rotation = rotation;
+		//projectile.Activate();
+	}
+
+	public void SpawnEnemy(GameObject prefab, Vector3 fieldLocation)
+	{
+
+	}
 }
