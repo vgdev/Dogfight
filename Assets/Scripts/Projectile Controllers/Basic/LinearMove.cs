@@ -2,7 +2,7 @@ using UnityEngine;
 using BaseLib;
 using System.Collections;
 
-public class LinearMove : BulletController
+public class LinearMove : ProjectileController
 {
 	public override bool IsFinite
 	{
@@ -18,15 +18,15 @@ public class LinearMove : BulletController
 		this.overrideVelocity = overrideVelocity;
 	}
 
-	public override void UpdateBullet(Bullet bullet, float dt)
+	public override void UpdateBullet(Projectile bullet, float dt)
 	{
 		Vector3 forward = bullet.Transform.up;
 		bullet.Transform.position += initialVelocity * forward;
 	}
 
-	public override void OnControllerAdd (Bullet bullet)
+	public override void OnControllerAdd (Projectile bullet)
 	{
 		base.OnControllerAdd (bullet);
-		AddNecessaryKey (bullet, "velocity", initialVelocity, overrideVelocity);
+		AddUniversalKey (bullet, "velocity", initialVelocity, overrideVelocity);
 	}
 }
