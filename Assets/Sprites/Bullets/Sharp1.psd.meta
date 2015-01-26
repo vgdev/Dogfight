@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 4a958aa3bb763fc40840ed98d1e4374b
+guid: dd1c715a2933a8b48913456665b43235
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: needle
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
