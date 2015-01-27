@@ -3,8 +3,13 @@ using System;
 using System.Collections.Generic;
 
 namespace BaseLib {
-	public class GameObjectPool : CachedObject {
-		private Queue<PooledObject> inactive;
+	public interface IPool {
+		void Return (object obj);
+
+	}
+
+	public class GameObjectPool<T, P> : CachedObject, IPool where T : PooledObject<P> where P : MonoBehaviour{
+		private Queue<T> inactive;
 		private bool valid = true;
 		[SerializeField]
 		private int initialSpawnCount;
@@ -17,30 +22,35 @@ namespace BaseLib {
 		
 		public override void Awake() {
 			base.Awake ();
-			PooledObject[] po = basePrefab.GetComponents<PooledObject> ();
+			T[] po = basePrefab.GetComponents<T> ();
 			if(po == null || po.Length <= 0) {
 				Debug.LogError("The provided prefab must have a subclass of PooledObject attached");
 				valid = false;
 			} else {
-				inactive = new Queue<PooledObject>();
+				inactive = new Queue<T>();
 				Spawn (initialSpawnCount);
 			}
 		}
 		
-		public void Return(PooledObject po) {
+		public void Return(T po) {
 			if(valid) {
 				po.Active = false;
 				inactive.Enqueue (po);
 			}
 		}
+
+		public void Return (object obj)
+		{
+			Return ((T)obj);
+		}
 		
-		public PooledObject Get(GameObject prefab = null) {
+		public PooledObject<P> Get(P prefab = null) {
 			if(valid) {
 				if(inactive.Count <= 0)
 					Spawn (spawnCount);
-				PooledObject po = inactive.Dequeue ();
-				if(prefab != null)
-					po.MatchPrefab(prefab);
+				T po = inactive.Dequeue ();
+				if(prefab != default(P))
+					po.Prefab = prefab;
 				return po;
 			}
 			return null;
@@ -49,8 +59,9 @@ namespace BaseLib {
 		private void Spawn(int count) {
 			Transform parentTrans = container.transform;
 			for(int i = 0; i < count; i++) {
-				PooledObject newPO = ((GameObject)Instantiate(basePrefab)).GetComponent<PooledObject>();
+				T newPO = ((GameObject)Instantiate(basePrefab)).GetComponent<T>();
 				newPO.Transform.parent = parentTrans;
+				newPO.Initialize(this);
 				inactive.Enqueue(newPO);
 			}
 		}

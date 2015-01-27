@@ -12,7 +12,7 @@ public class PlayerMovementLimit : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if(other.gameObject.tag == tagCheck)
+		if(other.CompareTag(tagCheck))
 		{
 			Avatar player = other.gameObject.GetComponent<Avatar> ();
 			if(player != null)
@@ -24,7 +24,7 @@ public class PlayerMovementLimit : MonoBehaviour
 
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if(other.gameObject.tag == tagCheck)
+		if(other.CompareTag(tagCheck))
 		{
 			Avatar player = other.gameObject.GetComponent<Avatar> ();
 			if(player != null)
