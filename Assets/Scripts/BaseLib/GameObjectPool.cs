@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace BaseLib {
 	public interface IPool {
 		void Return (object obj);
-
 	}
 
 	public class GameObjectPool<T, P> : CachedObject, IPool where T : PooledObject<P> where P : MonoBehaviour{
@@ -19,6 +18,7 @@ namespace BaseLib {
 		private GameObject basePrefab;
 		[SerializeField]
 		private GameObject container;
+		private int active = 0;
 		
 		public override void Awake() {
 			base.Awake ();
@@ -36,6 +36,9 @@ namespace BaseLib {
 			if(valid) {
 				po.Active = false;
 				inactive.Enqueue (po);
+				active--;
+				Debug.Log(active);
+
 			}
 		}
 
@@ -51,6 +54,8 @@ namespace BaseLib {
 				T po = inactive.Dequeue ();
 				if(prefab != default(P))
 					po.Prefab = prefab;
+				active++;
+				Debug.Log(active);
 				return po;
 			}
 			return null;
