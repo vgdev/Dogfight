@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 
 namespace BaseLib {
-	public abstract class PooledObject : CachedObject {
-		private GameObjectPool parentPool;
+	public abstract class PooledObject<T> : CachedObject where T : MonoBehaviour {
+		private IPool parentPool;
 
-		private GameObject prefab;
-		public GameObject Prefab {
+		private T prefab;
+		public T Prefab {
 			get { 
 				return prefab; 
 			}
@@ -24,23 +24,25 @@ namespace BaseLib {
 			}
 			set {
 				if(is_active != value) {
+
 					is_active = value;
-					if(is_active) {
+					if(value)
+						Activate();
+					else{
 						Deactivate();
 						parentPool.Return(this);
 					}
-					else
-						Activate();
-					GameObject.SetActive (!is_active);
+					GameObject.SetActive (value);
 				}
 			}
 		}
 
-		public void Initialize(GameObjectPool pool) {
+		public void Initialize(IPool pool) {
+			Debug.Log ("initlaized");
 			parentPool = pool;
 		}
 
-		public abstract void MatchPrefab (GameObject gameObj);
+		public abstract void MatchPrefab (T gameObj);
 
 		protected virtual void Activate() {
 		}

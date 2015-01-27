@@ -3,10 +3,10 @@ using BaseLib;
 using System.Collections.Generic;
 using System.Collections;
 
-[RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class Projectile : PooledObject {
+public class Projectile : PooledObject<ProjectilePrefab> {
 
 	private float linearVelocity = 0f;
 	public float Velocity
@@ -40,64 +40,67 @@ public class Projectile : PooledObject {
 		}
 	}
 
-
-
 	private List<ProjectileController> controllers;
 	private Dictionary<string, object> properties;
 
-	private BoxCollider2D boxCollider;
+	[SerializeField]
 	private CircleCollider2D circleCollider;
+	[SerializeField]
+	private BoxCollider2D boxCollider;
+	[SerializeField]
 	private SpriteRenderer spriteRenderer;
 
 	public override void Awake() {
 		properties = new Dictionary<string, object> ();
 		controllers = new List<ProjectileController> ();
-		boxCollider = GetComponent<BoxCollider2D> ();
-		circleCollider = GetComponent<CircleCollider2D> ();
-		spriteRenderer = GetComponent<SpriteRenderer> ();
+		if(boxCollider == null)
+			boxCollider = GetComponent<BoxCollider2D> ();
+		if(circleCollider == null)
+			circleCollider = GetComponent<CircleCollider2D> ();
+		if(spriteRenderer == null)
+			spriteRenderer = GetComponent<SpriteRenderer> ();
 	}
 
 	void FixedUpdate() {
-		float dt = Time.fixedTime;
+		float dt = Time.fixedDeltaTime;
 
 		//Rotate
-		Transform.rotation *= Quaternion.Slerp (Transform.rotation, Transform.rotation * angularVelocity, dt);
+		Transform.rotation = Quaternion.Slerp (Transform.rotation, Transform.rotation * angularVelocity, dt);
 		//Translate
 		Transform.position += linearVelocity * Transform.up * dt;
-
 
 		for(int i = 0; i < controllers.Count; i++)
 			if(controllers[i] != null)
 				controllers[i].UpdateBullet(this, dt);
 	}
 
-	public override void MatchPrefab(GameObject prefab) {
-		BoxCollider2D boxTest = prefab.GetComponent<BoxCollider2D>();
-		CircleCollider2D circleTest = prefab.GetComponent<CircleCollider2D>();
-		SpriteRenderer spriteTest = prefab.GetComponent<SpriteRenderer>();
+	public override void MatchPrefab(ProjectilePrefab prefab) {
+		BoxCollider2D bc = prefab.BoxCollider;
+		CircleCollider2D cc = prefab.CircleCollider;
+		SpriteRenderer sr = prefab.SpriteRenderer;
 
-		Transform.localScale = prefab.transform.localScale;
-		gameObject.tag = prefab.tag;
-		gameObject.layer = prefab.layer;
+		Transform.localScale = prefab.Transform.localScale;
+		gameObject.tag = prefab.GameObject.tag;
+		gameObject.layer = prefab.GameObject.layer;
 
 		if(spriteRenderer != null) {
-			spriteRenderer.sprite = spriteTest.sprite;
-			spriteRenderer.color = spriteTest.color;
-			spriteRenderer.material = spriteTest.material;
-			spriteRenderer.sortingOrder = spriteTest.sortingOrder;
-			spriteRenderer.sortingLayerID = spriteTest.sortingLayerID;
+			spriteRenderer.sprite = sr.sprite;
+			spriteRenderer.color = sr.color;
+			//spriteRenderer.material = spriteTest.material;
+			spriteRenderer.sortingOrder = sr.sortingOrder;
+			spriteRenderer.sortingLayerID = sr.sortingLayerID;
 		}
 		else
 			Debug.LogError("The provided prefab should have a SpriteRenderer!");
 
-		if(boxCollider.enabled = boxTest != null) {
-			boxCollider.center = boxTest.center;
-			boxCollider.size = boxTest.size;
+		if(boxCollider.enabled = bc != null) {
+			boxCollider.center = bc.center;
+			boxCollider.size = bc.size;
 		}
 
-		if(circleCollider.enabled = circleTest != null) {
-			circleCollider.center = circleTest.center;
-			circleCollider.radius = circleTest.radius;
+		if(circleCollider.enabled = cc != null) {
+			circleCollider.center = cc.center;
+			circleCollider.radius = cc.radius;
 		}
 	}
 

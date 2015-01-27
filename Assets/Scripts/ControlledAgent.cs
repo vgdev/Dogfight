@@ -13,7 +13,7 @@ public class ControlledAgent : PlayerAgent
 	public override void Initialize()
 	{
 		string strPlay = "Player ";
-		int playerNumber = field.playerNumber;
+		int playerNumber = field.PlayerNumber;
 		horizontalMoveAxis = "Horizontal Movement " + strPlay + playerNumber;
 		verticalMoveAxis = "Vertical Movement " + strPlay + playerNumber;
 		focusButton = "Focus " + strPlay + playerNumber;

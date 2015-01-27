@@ -2,19 +2,87 @@
 using BaseLib;
 using System.Collections;
 
-[RequireComponent(typeof(Camera))]
 public class PlayerFieldController : BaseLib.CachedObject {
 	public Vector2 playerSpawnLocation;
-	public int playerNumber = 1;
+
+	[SerializeField]
+	private int playerNumber = 1;
+	public int PlayerNumber
+	{
+		get { 
+			return playerNumber; 
+		}
+		set { 
+			playerNumber = value; 
+		}
+	}
+
+	[SerializeField]
+	private float gamePlaneDistance;
+	[SerializeField]
+	private Camera fieldCamera;
 
 	private Rect cameraArea;
-	private Camera playerCamera;
 	private PlayerAgent playerController;
+
+	private Vector3 xDirection;
+	private Vector3 yDirection;
+	private Vector3 zDirection;
+	private Vector3 bottomLeft;
+
+	public float XSize
+	{
+		get { return xDirection.magnitude; }
+	}
+	public float YSize
+	{
+		get { return yDirection.magnitude; }
+	}
+
+	public Vector3 BottomLeft
+	{
+		get { return WorldPoint (new Vector3(0f, 0f, gamePlaneDistance)); }
+	}
+	public Vector3 BottomRight
+	{
+		get { return WorldPoint (new Vector3(1f, 0f, gamePlaneDistance)); }
+	}
+	public Vector3 TopLeft
+	{
+		get { return WorldPoint (new Vector3(0f, 1f, gamePlaneDistance)); }
+	}
+	public Vector3 TopRight
+	{
+		get { return WorldPoint (new Vector3(1f, 1f, gamePlaneDistance)); }
+	}
+	public Vector3 Center
+	{
+		get { return WorldPoint (new Vector3(0.5f, 0.5f, gamePlaneDistance)); }
+	}
+	public Vector3 Top
+	{
+		get { return WorldPoint (new Vector3 (0.5f, 1f, gamePlaneDistance)); }
+	}
+	public Vector3 Bottom
+	{
+		get { return WorldPoint (new Vector3 (0.5f, 0f, gamePlaneDistance));}
+	}
+	public Vector3 Right
+	{
+		get { return WorldPoint (new Vector3 (1f, 0.5f, gamePlaneDistance)); }
+	}
+	public Vector3 Left
+	{
+		get { return WorldPoint (new Vector3 (0f, 0.5f, gamePlaneDistance));}
+	}
+
+
 	[SerializeField]
-	private GameObjectPool bulletPool;
+	private ProjectilePool bulletPool;
 
 	void Start() {
-		playerCamera = GameObject.GetComponent<Camera> ();
+		fieldCamera.orthographic = true;
+		RecomputeWorldPoints ();
 	}
 
 	void FixedUpdate ()  {
@@ -23,23 +91,62 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		}
 	}
 
-	public void SpawnPlayer<T>(GameObject character) where T : PlayerAgent, new() {
-		Vector3 spawnPos = playerCamera.ViewportToWorldPoint (new Vector3 (playerSpawnLocation.x, playerSpawnLocation.y, 0f));
-		spawnPos.z = 0f;
+	public Vector3 WorldPoint(Vector3 fieldPoint)
+	{
+		return bottomLeft + fieldPoint.x * xDirection + fieldPoint.y * yDirection + fieldPoint.z * zDirection;
+	}
+
+	/// <summary>
+	/// Recomputes the bounding area for 
+	/// </summary>
+	public void RecomputeWorldPoints()
+	{
+		bottomLeft = fieldCamera.ViewportToWorldPoint (Vector3.zero);
+		Vector3 UL = fieldCamera.ViewportToWorldPoint (Vector3.up);
+		Vector3 BR = fieldCamera.ViewportToWorldPoint (Vector3.right);
+		xDirection = (BR - bottomLeft);
+		yDirection = (UL - bottomLeft);
+		zDirection = Vector3.Cross (xDirection, yDirection).normalized;
+	}
+
+	/// <summary>
+	/// Spawns the player with the given controller
+	/// </summary>
+	/// <param name="character">Character prefab, defines character behavior and attack patterns.</param>
+	/// <param name="controller">Controller for the player, allows for a user to manually control it or let an AI take over.</param>
+	public void SpawnPlayer(GameObject character, PlayerAgent controller) {
+		Vector3 spawnPos = WorldPoint(new Vector3 (playerSpawnLocation.x, playerSpawnLocation.y, gamePlaneDistance));
 		GameObject avatar = (GameObject)Instantiate (character, spawnPos, Quaternion.identity);
 		avatar.transform.parent = Transform;
-		playerController = new T();
+		playerController = controller;
 		playerController.field = this;
 		playerController.playerAvatar = avatar.GetComponent<Avatar>();
 		playerController.Initialize ();
 	}
-
-	public void SpawnProjectile(GameObject prefab, ProjectileController controller, Vector3 fieldLocation, Quaternion rotation) {
-		Vector3 worldLocation = playerCamera.ViewportToWorldPoint (fieldLocation);
+	
+	/// <summary>
+	/// Spawns a projectile in the field.
+	/// 
+	/// If absoluteWorldCoord is set to false, location specifies a relative position in the field. 0.0 = left/bottom, 1.0 = right/top. Values greater than 1 or less than 0 spawn
+	/// outside of of the camera view.
+	/// </summary>
+	/// <param name="prefab">Prefab for the spawned projectile, describes the visuals, size, and hitbox characteristics of the prefab.</param>
+	/// <param name="location">The location within the field to spawn the projectile.</param>
+	/// <param name="rotation">Rotation.</param>
+	/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
+	/// <param name="extraControllers">Extra ProjectileControllers to change the behavior of the projectile.</param>
+	public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, Quaternion rotation, bool absoluteWorldCoord = false, ProjectileController[] extraControllers = null) {
+		Vector3 worldLocation = Vector3.zero;
+		if(absoluteWorldCoord) {
+			worldLocation = BottomLeft + new Vector3(location.x, location.y, 0f);
+		} else {
+			worldLocation = WorldPoint(new Vector3(location.x, location.y, gamePlaneDistance));
+		}
 		Projectile projectile = (Projectile)bulletPool.Get (prefab);
 		projectile.Transform.position = worldLocation;
 		projectile.Transform.rotation = rotation;
 		projectile.Active = true;
+		return projectile;
 	}
 
 	public void SpawnEnemy(GameObject prefab, Vector3 fieldLocation) {
