@@ -132,5 +132,7 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	protected override void Deactivate() {
 		properties.Clear ();
 		controllers.Clear ();
+		linearVelocity = 0f;
+		angularVelocity = Quaternion.identity;
 	}
 }

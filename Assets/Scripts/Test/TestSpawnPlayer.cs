@@ -4,14 +4,13 @@ using System.Collections;
 [RequireComponent(typeof(GameController))]
 public class TestSpawnPlayer : TestScript 
 {
-	public GameObject[] characters;
+	public GameObject character1;
+	public GameObject character2;
 
 	void Start()
 	{
 		GameController controller = GetComponent<GameController> ();
-		for(int i = 0; i < characters.Length; i++)
-		{
-			controller.players[i].field.SpawnPlayer(characters[i], new ControlledAgent());
-		}
+		controller.player1.field.SpawnPlayer (character1, new ControlledAgent());
+		controller.player2.field.SpawnPlayer (character2, new ControlledAgent());
 	}
 }

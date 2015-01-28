@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+using UnityEngine;
 using BaseLib;
 using System.Collections;
 
 public class PlayerFieldController : BaseLib.CachedObject {
+	public enum CoordinateSystem { Screen, FieldRelative, AbsoluteWorld }
+
 	public Vector2 playerSpawnLocation;
 
-	[SerializeField]
 	private int playerNumber = 1;
-	public int PlayerNumber
-	{
+	public int PlayerNumber {
 		get { 
 			return playerNumber; 
 		}
@@ -22,8 +22,22 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	[SerializeField]
 	private Camera fieldCamera;
 
-	private Rect cameraArea;
 	private PlayerAgent playerController;
+	public PlayerAgent PlayerController {
+		get {
+			return playerController;
+		}
+		set {
+			playerController = value;
+		}
+	}
+
+	private PlayerFieldController targetField;
+	public PlayerFieldController TargetField {
+		set {
+			targetField = value;
+		}
+	}
 
 	private Vector3 xDirection;
 	private Vector3 yDirection;
@@ -39,43 +53,33 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		get { return yDirection.magnitude; }
 	}
 
-	public Vector3 BottomLeft
-	{
+	public Vector3 BottomLeft {
 		get { return WorldPoint (new Vector3(0f, 0f, gamePlaneDistance)); }
 	}
-	public Vector3 BottomRight
-	{
+	public Vector3 BottomRight {
 		get { return WorldPoint (new Vector3(1f, 0f, gamePlaneDistance)); }
 	}
-	public Vector3 TopLeft
-	{
+	public Vector3 TopLeft {
 		get { return WorldPoint (new Vector3(0f, 1f, gamePlaneDistance)); }
 	}
-	public Vector3 TopRight
-	{
+	public Vector3 TopRight {
 		get { return WorldPoint (new Vector3(1f, 1f, gamePlaneDistance)); }
 	}
-	public Vector3 Center
-	{
+	public Vector3 Center {
 		get { return WorldPoint (new Vector3(0.5f, 0.5f, gamePlaneDistance)); }
 	}
-	public Vector3 Top
-	{
+	public Vector3 Top {
 		get { return WorldPoint (new Vector3 (0.5f, 1f, gamePlaneDistance)); }
 	}
-	public Vector3 Bottom
-	{
+	public Vector3 Bottom {
 		get { return WorldPoint (new Vector3 (0.5f, 0f, gamePlaneDistance));}
 	}
-	public Vector3 Right
-	{
+	public Vector3 Right {
 		get { return WorldPoint (new Vector3 (1f, 0.5f, gamePlaneDistance)); }
 	}
-	public Vector3 Left
-	{
+	public Vector3 Left {
 		get { return WorldPoint (new Vector3 (0f, 0.5f, gamePlaneDistance));}
 	}
-
 
 	[SerializeField]
 	private ProjectilePool bulletPool;
@@ -91,16 +95,14 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		}
 	}
 
-	public Vector3 WorldPoint(Vector3 fieldPoint)
-	{
+	public Vector3 WorldPoint(Vector3 fieldPoint) {
 		return bottomLeft + fieldPoint.x * xDirection + fieldPoint.y * yDirection + fieldPoint.z * zDirection;
 	}
 
 	/// <summary>
 	/// Recomputes the bounding area for 
 	/// </summary>
-	public void RecomputeWorldPoints()
-	{
+	public void RecomputeWorldPoints() {
 		bottomLeft = fieldCamera.ViewportToWorldPoint (Vector3.zero);
 		Vector3 UL = fieldCamera.ViewportToWorldPoint (Vector3.up);
 		Vector3 BR = fieldCamera.ViewportToWorldPoint (Vector3.right);
@@ -116,12 +118,9 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	/// <param name="controller">Controller for the player, allows for a user to manually control it or let an AI take over.</param>
 	public void SpawnPlayer(GameObject character, PlayerAgent controller) {
 		Vector3 spawnPos = WorldPoint(new Vector3 (playerSpawnLocation.x, playerSpawnLocation.y, gamePlaneDistance));
-		GameObject avatar = (GameObject)Instantiate (character, spawnPos, Quaternion.identity);
-		avatar.transform.parent = Transform;
+		Avatar avatar = ((GameObject)Instantiate (character, spawnPos, Quaternion.identity)).GetComponent<Avatar>();
 		playerController = controller;
-		playerController.field = this;
-		playerController.playerAvatar = avatar.GetComponent<Avatar>();
-		playerController.Initialize ();
+		playerController.Initialize(this, avatar, targetField);
 	}
 	
 	/// <summary>
@@ -135,12 +134,18 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	/// <param name="rotation">Rotation.</param>
 	/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
 	/// <param name="extraControllers">Extra ProjectileControllers to change the behavior of the projectile.</param>
-	public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, Quaternion rotation, bool absoluteWorldCoord = false, ProjectileController[] extraControllers = null) {
+	public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, Quaternion rotation, CoordinateSystem coordSys = CoordinateSystem.Screen, ProjectileController[] extraControllers = null) {
 		Vector3 worldLocation = Vector3.zero;
-		if(absoluteWorldCoord) {
-			worldLocation = BottomLeft + new Vector3(location.x, location.y, 0f);
-		} else {
-			worldLocation = WorldPoint(new Vector3(location.x, location.y, gamePlaneDistance));
+		switch(coordSys) {
+			case CoordinateSystem.Screen:
+				worldLocation = WorldPoint(new Vector3(location.x, location.y, gamePlaneDistance));
+				break;
+			case CoordinateSystem.FieldRelative:
+				worldLocation = BottomLeft + new Vector3(location.x, location.y, 0f);
+				break;
+			case CoordinateSystem.AbsoluteWorld:
+				worldLocation = location;
+				break;
 		}
 		Projectile projectile = (Projectile)bulletPool.Get (prefab);
 		projectile.Transform.position = worldLocation;
