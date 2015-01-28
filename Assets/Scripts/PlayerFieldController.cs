@@ -99,6 +99,11 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		return bottomLeft + fieldPoint.x * xDirection + fieldPoint.y * yDirection + fieldPoint.z * zDirection;
 	}
 
+	public Vector3 FieldPoint(Vector3 worldPoint) {
+		Vector3 offset = worldPoint - bottomLeft;
+		return new Vector3 (Vector3.Project (offset, xDirection).magnitude, Vector3.Project (offset, yDirection).magnitude, Vector3.Project (offset, zDirection).magnitude);
+	}
+
 	/// <summary>
 	/// Recomputes the bounding area for 
 	/// </summary>
