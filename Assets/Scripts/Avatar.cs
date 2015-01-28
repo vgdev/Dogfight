@@ -5,11 +5,46 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Collider2D))]
 public class Avatar : CachedObject
 {
+	private PlayerFieldController fieldController;
+	public PlayerFieldController FieldController {
+		get {
+			return fieldController;
+		}
+	}
+
+	private PlayerAgent agent;
+	public PlayerAgent Agent {
+		get {
+			return agent;
+		}
+		set {
+			agent = value;
+		}
+	}
+
 	[SerializeField]
 	private float normalMovementSpeed = 5f;
 
 	[SerializeField]
 	private float focusMovementSpeed = 3f;
+
+	[SerializeField]
+	private ProjectilePrefab shotType;
+
+	[SerializeField]
+	private Vector2 shotOffset;
+
+	[SerializeField]
+	private float shotVelocity;
+
+	[SerializeField]
+	private float chargeCapacityRegen;
+
+	[SerializeField]
+	private float currentChargeCapacity;
+
+	[SerializeField]
+	private AttackPattern[] attackPatterns;
 
 	private bool charging;
 	public bool IsCharging
@@ -18,18 +53,25 @@ public class Avatar : CachedObject
 	}
 
 	private float chargeLevel = 0f;
-	public int ChargeLevel
+	public float CurrentChargeLevel
 	{
-		get { return Mathf.FloorToInt (chargeLevel); }
+		get { return chargeLevel; }
+	}
+
+	public int MaxChargeLevel
+	{
+		get { return attackPatterns.Length + 1; }
+	}
+
+	public float CurrentChargeCapacity {
+		get {
+			return currentChargeCapacity;
+		}
 	}
 
 	[HideInInspector]
 	[SerializeField]
 	private float chargeRate = 1.0f;
-
-	[HideInInspector]
-	[SerializeField]
-	private int maxChargeLevel = 3;
 
 	[SerializeField]
 	private float fireRate = 4.0f;
@@ -49,6 +91,13 @@ public class Avatar : CachedObject
 	public int CanMoveVertical
 	{
 		get { return -(int)Util.Sign(forbiddenMovement.y); }
+	}
+
+	public void Initialize(PlayerFieldController playerField, PlayerFieldController targetField) {
+		this.fieldController = playerField;
+		for(int i = 0; i < attackPatterns.Length; i++)
+			if(attackPatterns[i] != null)
+				attackPatterns[i].Initialize(targetField);
 	}
 
 	public virtual void Move(float horizontalDirection, float verticalDirection, bool focus, float dt = 1.0f)
@@ -96,14 +145,29 @@ public class Avatar : CachedObject
 		firing = false;
 	}
 
-	public virtual void Fire()
-	{
-
+	public virtual void Fire() {
+		if(FieldController != null) {
+			Vector2 offset1, offset2, location;
+			offset1 = offset2 = shotOffset;
+			offset2.x *= -1;
+			location = Util.To2D(Transform.position);
+			Projectile shot1 = FieldController.SpawnProjectile(shotType, location + offset1, Quaternion.identity, PlayerFieldController.CoordinateSystem.AbsoluteWorld);
+			Projectile shot2 = FieldController.SpawnProjectile(shotType, location + offset2, Quaternion.identity, PlayerFieldController.CoordinateSystem.AbsoluteWorld);
+			shot1.Velocity = shot2.Velocity = shotVelocity;
+		}
 	}
 
-	public virtual void SpecialAttack(int level)
-	{
-
+	public virtual void SpecialAttack(int level) {
+		int index = level - 1;
+		if (index >= 0 && index < attackPatterns.Length) {
+			if(attackPatterns[index] != null) {
+				attackPatterns[index].Fire();
+			} else {
+				Debug.Log("Null AttackPattern triggered. Make Sure all AttackPatterns are fully implemented");
+			}
+		}
+		chargeLevel -= level;
+		currentChargeCapacity -= level;
 	}
 
 	public void StartCharging()
@@ -115,7 +179,7 @@ public class Avatar : CachedObject
 	{
 		if(charging)
 		{
-			SpecialAttack(ChargeLevel);
+			SpecialAttack(Mathf.FloorToInt(CurrentChargeLevel));
 		}
 		charging = false;
 	}
@@ -123,17 +187,18 @@ public class Avatar : CachedObject
 	void FixedUpdate()
 	{
 		float dt = Time.fixedDeltaTime;
-		if(charging)
-		{
-			chargeLevel = (ChargeLevel >= maxChargeLevel) ? (float)maxChargeLevel : chargeLevel + chargeRate * dt;
+		currentChargeCapacity += chargeCapacityRegen * dt;
+		if(currentChargeCapacity > MaxChargeLevel) {
+			currentChargeCapacity = MaxChargeLevel;
 		}
-		else
-		{
-			if(firing)
-			{
+		if(charging) {
+			chargeLevel += chargeRate * dt;
+			if(chargeLevel > currentChargeCapacity)
+				chargeLevel = currentChargeCapacity;
+		} else {
+			if(firing) {
 				fireDelay -= dt;
-				if(fireDelay < 0f)
-				{
+				if(fireDelay < 0f) {
 					Fire ();
 					fireDelay = 1f / fireRate;
 				}

@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerScoreIndicator : MonoBehaviour 
 {
 	public GameController gameController;
-	public int playerNumber;
+	public bool player;
 	public GameObject baseIndicator;
 	public Vector2 additionalOffset;
 
@@ -28,7 +28,7 @@ public class PlayerScoreIndicator : MonoBehaviour
 		Vector3 basePosition = baseIndicator.transform.position;
 		for(int i = 0; i < indicators.Length; i++)
 		{
-			indicators[i].SetActive(gameController.players[playerNumber - 1].score > i);
+			indicators[i].SetActive(((player) ? gameController.player1 : gameController.player2).score > i);
 			indicators[i].transform.position = basePosition + i * new Vector3(additionalOffset.x, additionalOffset.y);
 		}
 	}

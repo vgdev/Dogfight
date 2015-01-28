@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BaseLib
 {
-	public abstract class CachedObject : MonoBehaviour
+	public class CachedObject : MonoBehaviour
 	{
 		private GameObject gameObj;
 		private Transform trans;

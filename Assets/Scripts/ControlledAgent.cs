@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using BaseLib;
 using System.Collections;
 
@@ -10,10 +10,11 @@ public class ControlledAgent : PlayerAgent
 	private string focusButton;
 	private string chargeButton;
 
-	public override void Initialize()
+	public override void Initialize (PlayerFieldController fieldController, Avatar playerAvatar, PlayerFieldController targetField)
 	{
+		base.Initialize (fieldController, playerAvatar, targetField);
 		string strPlay = "Player ";
-		int playerNumber = field.PlayerNumber;
+		int playerNumber = fieldController.PlayerNumber;
 		horizontalMoveAxis = "Horizontal Movement " + strPlay + playerNumber;
 		verticalMoveAxis = "Vertical Movement " + strPlay + playerNumber;
 		focusButton = "Focus " + strPlay + playerNumber;
@@ -32,26 +33,17 @@ public class ControlledAgent : PlayerAgent
 		bool fire = Input.GetAxis (fireButton) != 0f;
 		bool charge = Input.GetAxis (chargeButton) != 0f;
 
-		playerAvatar.Move (Input.GetAxis (horizontalMoveAxis), Input.GetAxis (verticalMoveAxis), focus, dt);
-		if(fire)
-		{
-			playerAvatar.StartFiring();
-		}
-		else
-		{
-			playerAvatar.StopFiring();
+		PlayerAvatar.Move (Input.GetAxis (horizontalMoveAxis), Input.GetAxis (verticalMoveAxis), focus, dt);
+		if(fire) {
+			PlayerAvatar.StartFiring();
+		} else {
+			PlayerAvatar.StopFiring();
 		}
 
-		if(charge)
-		{
-			playerAvatar.StartCharging();
-		}
-		else
-		{
-			if(playerAvatar.ChargeLevel != 0)
-			{
-				playerAvatar.ReleaseCharge();
-			}
+		if(charge) {
+			PlayerAvatar.StartCharging();
+		} else if(PlayerAvatar.CurrentChargeLevel != 0) {
+			PlayerAvatar.ReleaseCharge();
 		}
 	}
 }
