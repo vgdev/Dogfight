@@ -80,18 +80,33 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 
 		//Rotate
 		Transform.rotation = Quaternion.Slerp (Transform.rotation, Transform.rotation * angularVelocity, dt);
+		float movementDistance = linearVelocity * dt;
+		Vector3 movementVector = Transform.up * movementDistance;
+
+		RaycastHit2D hit = default(RaycastHit2D);
+		if (circleCollider.enabled) {
+			float radius = circleCollider.radius * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
+			hit = Physics2D.CircleCast(Transform.position, radius, movementVector, movementDistance, comboMask);
+		}
+		if (boxCollider.enabled) {
+			hit = Physics2D.BoxCast(Transform.position, 
+			                        Util.ComponentProduct2(boxCollider.size, Util.To2D(Transform.lossyScale)), 
+			                        Transform.rotation.eulerAngles.z, 
+			                        movementVector, 
+			                        movementDistance,
+			                        comboMask);
+		}
+		Debug.DrawRay (Transform.position, movementVector);
+
 		//Translate
-		Transform.position += Transform.up * linearVelocity * dt;
+		Transform.position += movementVector;
 
-		RaycastHit2D hit = Physics2D.Raycast (Transform.position, Transform.up, linearVelocity * dt, comboMask);
-		Debug.DrawRay (Transform.position, Transform.up * linearVelocity * dt);
-
-
-		if (hit != null && hit.collider != null) {
+		if (hit.collider != null) {
 			GameObject other = hit.collider.gameObject;
 			if(other.layer == playerDeathMask && CompareTag("Bullet")) {
 				Transform.position = hit.point;
 				Avatar avatar = other.GetComponentInParent<Avatar>();
+				Debug.Log(avatar);
 				if(avatar != null) {
 					Active = false;
 					avatar.Hit();

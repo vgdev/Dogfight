@@ -72,6 +72,13 @@ public class Avatar : CachedObject
 		}
 	}
 
+	private int livesRemaining;
+	public int LivesRemaining {
+		get {
+			return livesRemaining;
+		}
+	}
+
 	[HideInInspector]
 	[SerializeField]
 	private float chargeRate = 1.0f;
@@ -79,6 +86,9 @@ public class Avatar : CachedObject
 	[SerializeField]
 	private float fireRate = 4.0f;
 	private float fireDelay;
+
+	[SerializeField]
+	private float deathCancelRadius;
 
 	private bool firing = false;
 	public bool IsFiring
@@ -189,15 +199,23 @@ public class Avatar : CachedObject
 	}
 
 	public void Hit() {
+		livesRemaining--;
+		float radius = deathCancelRadius * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
+		Projectile[] toCanccel = fieldController.GetAllBullets (Transform.position, radius);
+		for(int i = 0; i < toCanccel.Length; i++) {
+			toCanccel[i].Active = false;
+		}
+	}
 
+	public void Reset(int maxLives) {
+		livesRemaining = maxLives;
 	}
 
 	public void Graze() {
 	
 	}
 
-	void FixedUpdate()
-	{
+	void FixedUpdate() {
 		float dt = Time.fixedDeltaTime;
 		currentChargeCapacity += chargeCapacityRegen * dt;
 		if(currentChargeCapacity > MaxChargeLevel) {

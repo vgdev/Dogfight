@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour
 	private bool guardianSummoned;
 
 	void Awake() {
-		//Physics2D.raycastsHitTriggers = true;
+		Physics2D.raycastsHitTriggers = true;
 		if(player1.Field != null && player2.Field != null) {
 			player1.Field.TargetField = player2.Field;
 			player2.Field.TargetField = player1.Field;
@@ -81,7 +81,7 @@ public class GameController : MonoBehaviour
 		} else if(player1.score >= winningScore) {
 			//Declare Player 2 the winner
 		} else if(reset) {
-			//Reset both Fields
+			Reset ();
 		}
 		roundTimeRemaining -= Time.fixedDeltaTime;
 		if (roundTimeRemaining < 0f && !guardianSummoned) {

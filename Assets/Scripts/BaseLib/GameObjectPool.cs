@@ -36,7 +36,7 @@ namespace BaseLib {
 			if(valid) {
 				inactive.Enqueue (po);
 				activeCount--;
-				Debug.Log(activeCount);
+				//Debug.Log(activeCount);
 			}
 		}
 
