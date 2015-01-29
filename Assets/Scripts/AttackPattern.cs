@@ -18,12 +18,12 @@ public abstract class AttackPattern : CachedObject {
 	[SerializeField]
 	private float timeout;
 
-	private bool active;
+	private bool attackActive;
 
-	protected abstract void MainLoop();
+	protected abstract void MainLoop(float dt);
 
 	protected void Deactivate() {
-		active = false;
+		attackActive = false;
 	}
 
 	public void Fire() {
@@ -31,11 +31,13 @@ public abstract class AttackPattern : CachedObject {
 	}
 
 	private IEnumerator Execute() {
-		float executionTime = 0f;
-		active = true;
-		while(executionTime < timeout && active) {
-			MainLoop();
+		float executionTime = 0f, dt;
+		attackActive = true;
+		while(executionTime < timeout && attackActive) {
+			dt = Time.fixedDeltaTime;
+			MainLoop(dt);
 			yield return new WaitForFixedUpdate();
+			executionTime += dt;
 		}
 	}
 

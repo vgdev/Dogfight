@@ -23,22 +23,24 @@ namespace BaseLib {
 				return Active; 
 			}
 			set {
-				if(is_active != value) {
-
-					is_active = value;
-					if(value)
-						Activate();
-					else{
-						Deactivate();
-						parentPool.Return(this);
-					}
-					GameObject.SetActive (value);
+				Debug.Log(value);
+				is_active = value;
+				if(value){
+					Activate();
+				} else {
+					Deactivate();
+					parentPool.Return(this);
 				}
+				GameObject.SetActive (value);
 			}
 		}
 
+		void Start() {
+			GameObject.SetActive (false);
+		}
+
 		public void Initialize(IPool pool) {
-			Debug.Log ("initlaized");
+			//Debug.Log ("initlaized");
 			parentPool = pool;
 		}
 

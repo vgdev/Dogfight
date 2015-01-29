@@ -8,6 +8,20 @@ using System.Collections;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Projectile : PooledObject<ProjectilePrefab> {
 
+	private static int playerDeathMask = 1 << 8;
+	private static int enemyDamageMask = 1 << 13;
+	private static int comboMask = playerDeathMask | enemyDamageMask;
+
+	private float damage;
+	public float Damage {
+		get {
+			return damage;
+		}
+		set {
+			damage = value;
+		}
+	}
+
 	private float linearVelocity = 0f;
 	public float Velocity
 	{
@@ -67,7 +81,29 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		//Rotate
 		Transform.rotation = Quaternion.Slerp (Transform.rotation, Transform.rotation * angularVelocity, dt);
 		//Translate
-		Transform.position += linearVelocity * Transform.up * dt;
+		Transform.position += Transform.up * linearVelocity * dt;
+
+		RaycastHit2D hit = Physics2D.Raycast (Transform.position, Transform.up, linearVelocity * dt, comboMask);
+		Debug.DrawRay (Transform.position, Transform.up * linearVelocity * dt);
+
+
+		if (hit != null && hit.collider != null) {
+			GameObject other = hit.collider.gameObject;
+			if(other.layer == playerDeathMask && CompareTag("Bullet")) {
+				Transform.position = hit.point;
+				Avatar avatar = other.GetComponentInParent<Avatar>();
+				if(avatar != null) {
+					Active = false;
+					avatar.Hit();
+				}
+			} else if(other.layer == enemyDamageMask && CompareTag("Player Shot")) {
+				Transform.position = hit.point;
+				Enemy enemy = other.GetComponent<Enemy>();
+				if(enemy != null) {
+					enemy.Hit (this);
+				}
+			}
+		}
 
 		for(int i = 0; i < controllers.Count; i++)
 			if(controllers[i] != null)
@@ -133,6 +169,7 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		properties.Clear ();
 		controllers.Clear ();
 		linearVelocity = 0f;
+		damage = 0f;
 		angularVelocity = Quaternion.identity;
 	}
 }

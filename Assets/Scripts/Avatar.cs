@@ -38,6 +38,9 @@ public class Avatar : CachedObject
 	private float shotVelocity;
 
 	[SerializeField]
+	private float shotDamage;
+
+	[SerializeField]
 	private float chargeCapacityRegen;
 
 	[SerializeField]
@@ -154,6 +157,7 @@ public class Avatar : CachedObject
 			Projectile shot1 = FieldController.SpawnProjectile(shotType, location + offset1, Quaternion.identity, PlayerFieldController.CoordinateSystem.AbsoluteWorld);
 			Projectile shot2 = FieldController.SpawnProjectile(shotType, location + offset2, Quaternion.identity, PlayerFieldController.CoordinateSystem.AbsoluteWorld);
 			shot1.Velocity = shot2.Velocity = shotVelocity;
+			shot1.Damage = shot2.Damage = shotDamage;
 		}
 	}
 
@@ -182,6 +186,14 @@ public class Avatar : CachedObject
 			SpecialAttack(Mathf.FloorToInt(CurrentChargeLevel));
 		}
 		charging = false;
+	}
+
+	public void Hit() {
+
+	}
+
+	public void Graze() {
+	
 	}
 
 	void FixedUpdate()
