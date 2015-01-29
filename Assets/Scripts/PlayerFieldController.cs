@@ -1,6 +1,7 @@
 using UnityEngine;
 using BaseLib;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerFieldController : BaseLib.CachedObject {
 	public enum CoordinateSystem { Screen, FieldRelative, AbsoluteWorld }
@@ -21,6 +22,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	private float gamePlaneDistance;
 	[SerializeField]
 	private Camera fieldCamera;
+
 	private Transform cameraTransform;
 	public Transform CameraTransform {
 		get {
@@ -48,12 +50,19 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		}
 	}
 
-	private int livesRemaining;
 	public int LivesRemaining {
 		get {
-			return livesRemaining;
+			if(playerController.PlayerAvatar != null) {
+				return playerController.PlayerAvatar.LivesRemaining;
+			} else { 
+				Debug.Log("Player Field without Player");
+				return int.MinValue;
+			}
 		}
 	}
+
+	[SerializeField]
+	private float deathCancelRaidus;
 
 	private Vector3 xDirection;
 	private Vector3 yDirection;
@@ -100,7 +109,6 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	void Start() {
 		fieldCamera.orthographic = true;
 		cameraTransform = fieldCamera.transform;
-		livesRemaining = 5;
 		RecomputeWorldPoints ();
 	}
 
@@ -143,6 +151,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	public void SpawnPlayer(GameObject character, PlayerAgent controller) {
 		Vector3 spawnPos = WorldPoint(Util.To3D(playerSpawnLocation, gamePlaneDistance));
 		Avatar avatar = ((GameObject)Instantiate (character, spawnPos, Quaternion.identity)).GetComponent<Avatar>();
+		avatar.Reset (5);
 		playerController = controller;
 		playerController.Initialize(this, avatar, targetField);
 	}
@@ -182,5 +191,17 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		FieldMovementPattern enemy = ((GameObject)Instantiate (prefab)).GetComponent<FieldMovementPattern> ();
 		enemy.Transform.position = WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance));
 		enemy.field = this;
+	}
+
+	public Projectile[] GetAllBullets(Vector3 position, float radius, int layerMask = 1 << 14) {
+		Collider2D[] hits = Physics2D.OverlapCircleAll (position, radius, layerMask);
+		List<Projectile> projectiles = new List<Projectile> ();
+		for (int i = 0; i < hits.Length; i++) {
+			Projectile proj = hits[i].GetComponent<Projectile>();
+			if(proj != null) {
+				projectiles.Add(proj);
+			}
+		}
+		return projectiles.ToArray ();
 	}
 }

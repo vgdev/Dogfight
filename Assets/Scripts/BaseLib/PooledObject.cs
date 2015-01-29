@@ -23,7 +23,7 @@ namespace BaseLib {
 				return Active; 
 			}
 			set {
-				Debug.Log(value);
+				//Debug.Log(value);
 				is_active = value;
 				if(value){
 					Activate();

@@ -29,6 +29,28 @@ namespace BaseLib
 			return new Vector3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
 		}
 
+		public static float MaxComponent2(Vector2 v) {
+			return (v.x > v.y) ? v.x : v.y;
+		}
+
+		public static float MaxComponent3(Vector3 v) {
+			if(v.x > v.y)
+				return (v.z > v.y) ? v.z : v.y;
+			else
+				return (v.z > v.x) ? v.z : v.x;
+		}
+		
+		public static float MinComponent2(Vector2 v) {
+			return (v.x < v.y) ? v.x : v.y;
+		}
+		
+		public static float MinComponent3(Vector3 v) {
+			if(v.x < v.y)
+				return (v.z < v.y) ? v.z : v.y;
+			else
+				return (v.z < v.x) ? v.z : v.x;
+		}
+
 		public static Vector3 BerzierCurveVectorLerp(Vector3 start, Vector3 end, Vector3 c1, Vector3 c2, float t) {
 			float u, uu, uuu, tt, ttt;
 			Vector3 p, p0 = start, p1 = c1, p2 = c2, p3 = end;
