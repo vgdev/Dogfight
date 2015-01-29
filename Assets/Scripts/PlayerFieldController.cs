@@ -21,6 +21,15 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	private float gamePlaneDistance;
 	[SerializeField]
 	private Camera fieldCamera;
+	private Transform cameraTransform;
+	public Transform CameraTransform {
+		get {
+			return cameraTransform;
+		}
+		set {
+			cameraTransform = value;
+		}
+	}
 
 	private PlayerAgent playerController;
 	public PlayerAgent PlayerController {
@@ -39,20 +48,24 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		}
 	}
 
+	private int livesRemaining;
+	public int LivesRemaining {
+		get {
+			return livesRemaining;
+		}
+	}
+
 	private Vector3 xDirection;
 	private Vector3 yDirection;
 	private Vector3 zDirection;
 	private Vector3 bottomLeft;
 
-	public float XSize
-	{
+	public float XSize {
 		get { return xDirection.magnitude; }
 	}
-	public float YSize
-	{
+	public float YSize {
 		get { return yDirection.magnitude; }
 	}
-
 	public Vector3 BottomLeft {
 		get { return WorldPoint (new Vector3(0f, 0f, gamePlaneDistance)); }
 	}
@@ -86,6 +99,8 @@ public class PlayerFieldController : BaseLib.CachedObject {
 
 	void Start() {
 		fieldCamera.orthographic = true;
+		cameraTransform = fieldCamera.transform;
+		livesRemaining = 5;
 		RecomputeWorldPoints ();
 	}
 
@@ -96,12 +111,16 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	}
 
 	public Vector3 WorldPoint(Vector3 fieldPoint) {
-		return bottomLeft + fieldPoint.x * xDirection + fieldPoint.y * yDirection + fieldPoint.z * zDirection;
+		return bottomLeft + Relative2Absolute (fieldPoint);
 	}
 
 	public Vector3 FieldPoint(Vector3 worldPoint) {
 		Vector3 offset = worldPoint - bottomLeft;
 		return new Vector3 (Vector3.Project (offset, xDirection).magnitude, Vector3.Project (offset, yDirection).magnitude, Vector3.Project (offset, zDirection).magnitude);
+	}
+
+	public Vector3 Relative2Absolute(Vector3 relativeVector) {
+		return relativeVector.x * xDirection + relativeVector.y * yDirection + relativeVector.z * zDirection;
 	}
 
 	/// <summary>
@@ -122,7 +141,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	/// <param name="character">Character prefab, defines character behavior and attack patterns.</param>
 	/// <param name="controller">Controller for the player, allows for a user to manually control it or let an AI take over.</param>
 	public void SpawnPlayer(GameObject character, PlayerAgent controller) {
-		Vector3 spawnPos = WorldPoint(new Vector3 (playerSpawnLocation.x, playerSpawnLocation.y, gamePlaneDistance));
+		Vector3 spawnPos = WorldPoint(Util.To3D(playerSpawnLocation, gamePlaneDistance));
 		Avatar avatar = ((GameObject)Instantiate (character, spawnPos, Quaternion.identity)).GetComponent<Avatar>();
 		playerController = controller;
 		playerController.Initialize(this, avatar, targetField);
@@ -159,7 +178,9 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		return projectile;
 	}
 
-	public void SpawnEnemy(GameObject prefab, Vector3 fieldLocation) {
-
+	public void SpawnEnemy(GameObject prefab, Vector2 fieldLocation) {
+		FieldMovementPattern enemy = ((GameObject)Instantiate (prefab)).GetComponent<FieldMovementPattern> ();
+		enemy.Transform.position = WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance));
+		enemy.field = this;
 	}
 }

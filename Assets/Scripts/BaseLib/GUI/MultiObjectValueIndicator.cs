@@ -1,18 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerScoreIndicator : MonoBehaviour 
-{
-	public GameController gameController;
-	public bool player;
-	public GameObject baseIndicator;
-	public Vector2 additionalOffset;
+public abstract class MultiObjectValueIndicator : MonoBehaviour  {
+	[SerializeField]
+	protected GameController gameController;
+	[SerializeField]
+	protected bool player;
+	[SerializeField]
+	protected GameObject baseIndicator;
+	[SerializeField]
+	protected Vector2 additionalOffset;
 
-	private GameObject[] indicators;
+	protected GameObject[] indicators;
+
+	protected abstract int GetMaxValue();
+
+	protected abstract int GetValue ();
 
 	void Start()
 	{
-		indicators = new GameObject[gameController.winningScore];
+		indicators = new GameObject[GetMaxValue()];
 		indicators [0] = baseIndicator;
 		Vector3 basePosition = baseIndicator.transform.position;
 		for(int i = 1; i < indicators.Length; i++)
@@ -28,7 +35,7 @@ public class PlayerScoreIndicator : MonoBehaviour
 		Vector3 basePosition = baseIndicator.transform.position;
 		for(int i = 0; i < indicators.Length; i++)
 		{
-			indicators[i].SetActive(((player) ? gameController.player1 : gameController.player2).score > i);
+			indicators[i].SetActive(GetValue() > i);
 			indicators[i].transform.position = basePosition + i * new Vector3(additionalOffset.x, additionalOffset.y);
 		}
 	}

@@ -18,7 +18,7 @@ namespace BaseLib {
 		private GameObject basePrefab;
 		[SerializeField]
 		private GameObject container;
-		private int active = 0;
+		private int activeCount = 0;
 		
 		public override void Awake() {
 			base.Awake ();
@@ -34,11 +34,9 @@ namespace BaseLib {
 		
 		public void Return(T po) {
 			if(valid) {
-				po.Active = false;
 				inactive.Enqueue (po);
-				active--;
-				Debug.Log(active);
-
+				activeCount--;
+				Debug.Log(activeCount);
 			}
 		}
 
@@ -54,8 +52,8 @@ namespace BaseLib {
 				T po = inactive.Dequeue ();
 				if(prefab != default(P))
 					po.Prefab = prefab;
-				active++;
-				Debug.Log(active);
+				activeCount++;
+				//Debug.Log(active);
 				return po;
 			}
 			return null;

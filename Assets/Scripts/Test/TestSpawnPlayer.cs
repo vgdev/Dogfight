@@ -10,7 +10,7 @@ public class TestSpawnPlayer : TestScript
 	void Start()
 	{
 		GameController controller = GetComponent<GameController> ();
-		controller.player1.field.SpawnPlayer (character1, new ControlledAgent());
-		controller.player2.field.SpawnPlayer (character2, new ControlledAgent());
+		controller.player1.Field.SpawnPlayer (character1, new ControlledAgent());
+		controller.player2.Field.SpawnPlayer (character2, new ControlledAgent());
 	}
 }
