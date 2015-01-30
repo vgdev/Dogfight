@@ -3,8 +3,8 @@ using BaseLib;
 using System.Collections.Generic;
 using System.Collections;
 
-[RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(CircleCollider2D))]
+//[RequireComponent(typeof(BoxCollider2D))]
+//[RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class Projectile : PooledObject<ProjectilePrefab> {
 
@@ -66,20 +66,28 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	private List<ProjectileController> controllers;
 	private Dictionary<string, object> properties;
 
-	[SerializeField]
-	private CircleCollider2D circleCollider;
-	[SerializeField]
-	private BoxCollider2D boxCollider;
+//	[SerializeField]
+//	private CircleCollider2D circleCollider;
+//	[SerializeField]
+//	private BoxCollider2D boxCollider;
+
+	private bool circleCheck = false;
+	private bool boxCheck = false;
+	private Vector2 circleCenter = Vector2.zero; 
+	private float circleRaidus = 1f;
+	private Vector2 boxCenter = Vector2.zero;
+	private Vector2 boxSize = Vector2.one;
+
 	[SerializeField]
 	private SpriteRenderer spriteRenderer;
 
 	public override void Awake() {
 		properties = new Dictionary<string, object> ();
 		controllers = new List<ProjectileController> ();
-		if(boxCollider == null)
-			boxCollider = GetComponent<BoxCollider2D> ();
-		if(circleCollider == null)
-			circleCollider = GetComponent<CircleCollider2D> ();
+		//if(boxCollider == null)
+		//	boxCollider = GetComponent<BoxCollider2D> ();
+		//if(circleCollider == null)
+		//	circleCollider = GetComponent<CircleCollider2D> ();
 		if(spriteRenderer == null)
 			spriteRenderer = GetComponent<SpriteRenderer> ();
 	}
@@ -93,13 +101,14 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		Vector3 movementVector = Transform.up * movementDistance;
 
 		RaycastHit2D hit = default(RaycastHit2D);
-		if (circleCollider.enabled) {
-			float radius = circleCollider.radius * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
+		if (circleCheck) {//circleCollider.enabled) {
+			float radius = circleRaidus * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
 			hit = Physics2D.CircleCast(Transform.position, radius, movementVector, movementDistance, comboMask);
 		}
-		if (boxCollider.enabled) {
+		if (boxCheck) {//boxCollider.enabled) {
+			Vector2 offset = Util.ComponentProduct2(Transform.lossyScale, boxCenter);
 			hit = Physics2D.BoxCast(Transform.position, 
-			                        Util.ComponentProduct2(boxCollider.size, Util.To2D(Transform.lossyScale)), 
+			                        Util.ComponentProduct2(boxSize, Util.To2D(Transform.lossyScale)), 
 			                        Transform.rotation.eulerAngles.z, 
 			                        movementVector, 
 			                        movementDistance,
@@ -153,14 +162,18 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		else
 			Debug.LogError("The provided prefab should have a SpriteRenderer!");
 
-		if(boxCollider.enabled = bc != null) {
-			boxCollider.center = bc.center;
-			boxCollider.size = bc.size;
+		if(boxCheck = (bc != null)) {//boxCollider.enabled = bc != null) {
+//			boxCollider.center = bc.center;
+//			boxCollider.size = bc.size;
+			boxCenter = bc.center;
+			boxSize = bc.size;
 		}
 
-		if(circleCollider.enabled = cc != null) {
-			circleCollider.center = cc.center;
-			circleCollider.radius = cc.radius;
+		if(circleCheck = (cc != null)) {//circleCollider.enabled = cc != null) {
+//			circleCollider.center = cc.center;
+//			circleCollider.radius = cc.radius;
+			circleCenter = cc.center;
+			circleRaidus = cc.radius;
 		}
 	}
 
