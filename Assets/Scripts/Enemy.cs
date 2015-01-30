@@ -5,7 +5,6 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(FieldMovementPattern))]
-[RequireComponent(typeof(AttackPattern))]
 public class Enemy : CachedObject {
 
 	[SerializeField]
@@ -21,10 +20,12 @@ public class Enemy : CachedObject {
 	void Start() {
 		health = maxHealth;
 		EnemyManager.RegisterEnemy (this);
-		attacks = GetComponent<AttackPattern> ();
 		fmp = GetComponent<FieldMovementPattern> ();
-		attacks.Initialize (fmp.field);
-		attacks.Fire ();
+		attacks = GetComponent<AttackPattern> ();
+		if (attacks != null) {
+			attacks.Initialize (fmp.field);
+			attacks.Fire ();
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {

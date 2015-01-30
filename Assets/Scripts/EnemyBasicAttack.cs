@@ -7,6 +7,7 @@ public class EnemyBasicAttack : AttackPattern {
 	public float velocity;
 	public float angV;
 	private float currentDelay;
+	[SerializeField]
 	private float generalRange;
 
 	public ProjectilePrefab basicPrefab;
