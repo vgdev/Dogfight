@@ -33,7 +33,7 @@ public abstract class AttackPattern : CachedObject {
 	private IEnumerator Execute() {
 		float executionTime = 0f, dt;
 		attackActive = true;
-		while(executionTime < timeout && attackActive) {
+		while((executionTime < timeout || timeout < 0) && attackActive) {
 			dt = Time.fixedDeltaTime;
 			MainLoop(dt);
 			yield return new WaitForFixedUpdate();

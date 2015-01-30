@@ -54,6 +54,15 @@ public class FieldMovementPattern : CachedObject {
 	public AtomicMovement[] movements;
 
 	void Start() {
+		PlayerFieldController[] controllers = FindObjectsOfType<PlayerFieldController> ();
+		float minDist = float.MaxValue;
+		for (int i = 0; i < controllers.Length; i++) {
+			float dist = (controllers[i].transform.position - transform.position).magnitude;
+			if(dist < minDist) {
+				field = controllers[i];
+				minDist = dist;
+			}
+		}
 		StartCoroutine (Move ());
 	}
 

@@ -15,7 +15,7 @@ public class ProjectileBoundary : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		Debug.Log ("Entered");
+		//Debug.Log ("Entered");
 		if(other.CompareTag(tagFilter))
 		{
 			Projectile proj = other.GetComponent<Projectile>();
