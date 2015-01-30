@@ -17,8 +17,7 @@ public class TestPlayerAttackPattern : AttackPattern {
 
 			for(int i = 0; i < number; i++)
 			{
-				Quaternion rot = Quaternion.Euler(0f, 0f, 360f / (float) number * (float)i);
-				Projectile bullet = TargetField.SpawnProjectile(prefab, spawnLocation, rot);
+				Projectile bullet = TargetField.SpawnProjectile(prefab, spawnLocation, 360f / (float) number * (float)i);
 				bullet.Velocity = velocity;
 				bullet.AngularVelocity = angV;
 			}

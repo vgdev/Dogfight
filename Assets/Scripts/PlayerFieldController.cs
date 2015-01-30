@@ -52,13 +52,28 @@ public class PlayerFieldController : BaseLib.CachedObject {
 
 	public int LivesRemaining {
 		get {
-			if(playerController.PlayerAvatar != null) {
+			if(playerController != null && playerController.PlayerAvatar != null) {
 				return playerController.PlayerAvatar.LivesRemaining;
-			} else { 
+			} else {
 				Debug.Log("Player Field without Player");
 				return int.MinValue;
 			}
 		}
+	}
+
+	public Vector3 PlayerPosition {
+		get {
+			if(playerController != null && playerController.PlayerAvatar != null) {
+				return playerController.PlayerAvatar.Transform.position;
+			} else {
+				Debug.Log("Player Field without Player");
+				return Vector3.zero;
+			}
+		}
+	}
+
+	public float AngleTowardPlayer(Vector3 startLocation) {
+		return Projectile.AngleBetween2D (startLocation, PlayerPosition);
 	}
 
 	[SerializeField]
@@ -167,7 +182,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	/// <param name="rotation">Rotation.</param>
 	/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
 	/// <param name="extraControllers">Extra ProjectileControllers to change the behavior of the projectile.</param>
-	public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, Quaternion rotation, CoordinateSystem coordSys = CoordinateSystem.Screen, ProjectileController[] extraControllers = null) {
+	public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.Screen, ProjectileController[] extraControllers = null) {
 		Vector3 worldLocation = Vector3.zero;
 		switch(coordSys) {
 			case CoordinateSystem.Screen:
@@ -182,7 +197,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		}
 		Projectile projectile = (Projectile)bulletPool.Get (prefab);
 		projectile.Transform.position = worldLocation;
-		projectile.Transform.rotation = rotation;
+		projectile.Transform.rotation = Quaternion.Euler(0f, 0f, rotation);
 		projectile.Active = true;
 		return projectile;
 	}
@@ -190,7 +205,6 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	public void SpawnEnemy(GameObject prefab, Vector2 fieldLocation) {
 		FieldMovementPattern enemy = ((GameObject)Instantiate (prefab)).GetComponent<FieldMovementPattern> ();
 		enemy.Transform.position = WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance));
-		enemy.field = this;
 	}
 
 	public Projectile[] GetAllBullets(Vector3 position, float radius, int layerMask = 1 << 14) {

@@ -19,8 +19,7 @@ public class TestFieldFire : TestScript {
 		{
 			for(int i = 0; i < number; i++)
 			{
-				Quaternion rot = Quaternion.Euler(0f, 0f, 360f / (float) number * (float)i);
-				Projectile bullet = field.SpawnProjectile(prefab, spawnLocation, rot);
+				Projectile bullet = field.SpawnProjectile(prefab, spawnLocation, 360f / (float) number * (float)i);
 				bullet.Velocity = velocity;
 				bullet.AngularVelocity = angV;
 			}

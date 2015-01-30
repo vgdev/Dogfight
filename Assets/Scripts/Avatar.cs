@@ -164,8 +164,8 @@ public class Avatar : CachedObject
 			offset1 = offset2 = shotOffset;
 			offset2.x *= -1;
 			location = Util.To2D(Transform.position);
-			Projectile shot1 = FieldController.SpawnProjectile(shotType, location + offset1, Quaternion.identity, PlayerFieldController.CoordinateSystem.AbsoluteWorld);
-			Projectile shot2 = FieldController.SpawnProjectile(shotType, location + offset2, Quaternion.identity, PlayerFieldController.CoordinateSystem.AbsoluteWorld);
+			Projectile shot1 = FieldController.SpawnProjectile(shotType, location + offset1, 0f, PlayerFieldController.CoordinateSystem.AbsoluteWorld);
+			Projectile shot2 = FieldController.SpawnProjectile(shotType, location + offset2, 0f, PlayerFieldController.CoordinateSystem.AbsoluteWorld);
 			shot1.Velocity = shot2.Velocity = shotVelocity;
 			shot1.Damage = shot2.Damage = shotDamage;
 		}

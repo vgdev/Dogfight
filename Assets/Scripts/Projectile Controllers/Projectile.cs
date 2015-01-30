@@ -12,6 +12,15 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	private static int enemyDamageMask = 1 << 13;
 	private static int comboMask = playerDeathMask | enemyDamageMask;
 
+	public static float AngleBetween2D(Vector2 v1, Vector2 v2) {
+		Vector2 diff = v2 - v1;
+		return Mathf.Atan2 (diff.y, diff.x) * 180f / Mathf.PI - 90f; 
+	}
+
+	public static Quaternion RotationBetween2D(Vector2 v1, Vector2 v2) {
+		return Quaternion.Euler (0f, 0f, AngleBetween2D (v1, v2));
+	}
+
 	private float damage;
 	public float Damage {
 		get {
