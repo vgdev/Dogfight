@@ -46,6 +46,8 @@ public class Enemy : CachedObject {
 	}
 
 	private void Die() {
+		float radius = Util.MaxComponent3 (Transform.lossyScale) * deathReflectRadius;
+		//TODO: FINISH
 		EnemyManager.UnregisterEnemy (this);
 		Destroy (GameObject);
 	}
