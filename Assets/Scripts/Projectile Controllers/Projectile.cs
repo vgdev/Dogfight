@@ -143,6 +143,11 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 				controllers[i].UpdateBullet(this, dt);
 	}
 
+	public void Transfer(PlayerFieldController currentController, PlayerFieldController targetField) {
+		Vector2 relativePos = currentController.FieldPoint (Transform.position);
+		Transform.position = targetField.WorldPoint (relativePos);
+	}
+
 	public override void MatchPrefab(ProjectilePrefab prefab) {
 		BoxCollider2D bc = prefab.BoxCollider;
 		CircleCollider2D cc = prefab.CircleCollider;
