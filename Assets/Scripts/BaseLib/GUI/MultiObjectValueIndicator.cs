@@ -1,22 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Multi object value indicator.
+/// </summary>
 public abstract class MultiObjectValueIndicator : MonoBehaviour  {
+
+	/// <summary>
+	/// The game controller.
+	/// </summary>
 	[SerializeField]
 	protected GameController gameController;
+
+	/// <summary>
+	/// The player.
+	/// </summary>
 	[SerializeField]
 	protected bool player;
+
+	/// <summary>
+	/// The base indicator.
+	/// </summary>
 	[SerializeField]
 	protected GameObject baseIndicator;
+
+	/// <summary>
+	/// The additional offset.
+	/// </summary>
 	[SerializeField]
 	protected Vector2 additionalOffset;
 
+	/// <summary>
+	/// The indicators.
+	/// </summary>
 	protected GameObject[] indicators;
 
+	/// <summary>
+	/// Gets the max value.
+	/// </summary>
+	/// <returns>The max value.</returns>
 	protected abstract int GetMaxValue();
 
+	/// <summary>
+	/// Gets the value.
+	/// </summary>
+	/// <returns>The value.</returns>
 	protected abstract int GetValue ();
 
+	/// <summary>
+	/// Start this instance.
+	/// </summary>
 	void Start()
 	{
 		indicators = new GameObject[GetMaxValue()];
@@ -30,6 +63,9 @@ public abstract class MultiObjectValueIndicator : MonoBehaviour  {
 		}
 	}
 
+	/// <summary>
+	/// Update this instance.
+	/// </summary>
 	void Update()
 	{		
 		Vector3 basePosition = baseIndicator.transform.position;

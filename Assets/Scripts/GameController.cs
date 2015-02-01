@@ -2,26 +2,49 @@
 using System;
 using System.Collections;
 
-public class GameController : MonoBehaviour 
-{
+/// <summary>
+/// Game controller.
+/// </summary>
+public class GameController : MonoBehaviour  {
+	
+	//TODO: Document Comment
 	[Serializable]
 	public class PlayerData {
+
 		[SerializeField]
 		private PlayerFieldController field;
+		/// <summary>
+		/// Gets the field.
+		/// </summary>
+		/// <value>The field.</value>
 		public PlayerFieldController Field {
 			get {
 				return field;
 			}
 		}
 
+		/// <summary>
+		/// The score.
+		/// </summary>
 		public int score;
 	}
 
+	/// <summary>
+	/// The player1.
+	/// </summary>
 	public PlayerData player1;
+
+	/// <summary>
+	/// The player2.
+	/// </summary>
 	public PlayerData player2;
 
 	[SerializeField]
 	public int winningScore;
+	/// <summary>
+	/// Gets the winning score.
+	/// </summary>
+	/// <value>The winning score.</value>
 	public int WinningScore {
 		get {
 			return winningScore;
@@ -30,27 +53,44 @@ public class GameController : MonoBehaviour
 
 	[SerializeField]
 	private int maximumLives;
+	/// <summary>
+	/// Gets the maximum lives.
+	/// </summary>
+	/// <value>The maximum lives.</value>
 	public int MaximumLives {
 		get {
 			return maximumLives;
 		}
 	}
 
-
+	/// <summary>
+	/// The round time.
+	/// </summary>
 	[SerializeField]
 	private float roundTime;
+
 	private float roundTimeRemaining;
+	/// <summary>
+	/// Gets the remaining round time.
+	/// </summary>
+	/// <value>The remaining round time.</value>
 	public float RemainingRoundTime {
 		get {
 			return roundTimeRemaining;
 		}
 	}
 
+	/// <summary>
+	/// The guardian.
+	/// </summary>
 	[SerializeField]
 	public GameObject guardian;
 
 	private bool guardianSummoned;
 
+	/// <summary>
+	/// Awake this instance.
+	/// </summary>
 	void Awake() {
 		Physics2D.raycastsHitTriggers = true;
 		if(player1.Field != null && player2.Field != null) {
@@ -62,14 +102,17 @@ public class GameController : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Fixeds the update.
+	/// </summary>
 	void FixedUpdate() {
 		bool reset = false;
 		if (player1.Field.LivesRemaining <= 0) {
-			player1.score++;
+			player2.score++;
 			reset = true;
 		}
 		if (player2.Field.LivesRemaining <= 0) {
-			player2.score++;
+			player1.score++;
 			reset = true;
 		}
 		if(player1.score >= winningScore && player2.score >= winningScore) {
@@ -90,15 +133,27 @@ public class GameController : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Starts the round.
+	/// </summary>
 	public void StartRound() {
 		roundTimeRemaining = roundTime;
 		guardianSummoned = false;
 	}
 
+	/// <summary>
+	/// Reset this instance.
+	/// </summary>
 	public void Reset() {
-
+		player1.Field.Reset ();
+		player2.Field.Reset ();
 	}
 
+	/// <summary>
+	/// Spawns the enemy.
+	/// </summary>
+	/// <param name="prefab">Prefab.</param>
+	/// <param name="relativeLocations">Relative locations.</param>
 	public void SpawnEnemy(GameObject prefab, Vector2 relativeLocations) {
 		if(player1.Field != null && player2.Field != null) {
 			player1.Field.SpawnEnemy(prefab, relativeLocations);

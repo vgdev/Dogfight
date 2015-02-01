@@ -1,22 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// FPS counter.
+/// </summary>
 [RequireComponent(typeof(GUIText))]
 public class FPSCounter : MonoBehaviour {
+
+	/// <summary>
+	/// The update interval.
+	/// </summary>
 	private float updateInterval = 0.5f;
-	
+
+	/// <summary>
+	/// The accum.
+	/// </summary>
 	private float accum = 0.0f; // FPS accumulated over the interval
+
+	/// <summary>
+	/// The frames.
+	/// </summary>
 	private float frames = 0f; // Frames drawn over the interval
+
+	/// <summary>
+	/// The timeleft.
+	/// </summary>
 	private float timeleft; // Left time for current interval
 
+	/// <summary>
+	/// The display.
+	/// </summary>
 	private GUIText display;
 
-	// Use this for initialization
+	/// <summary>
+	/// Start this instance.
+	/// </summary>
 	void Start () {
 		display = guiText;
 	}
-	
-	// Update is called once per frame
+
+	/// <summary>
+	/// Update this instance.
+	/// </summary>
 	void Update () {
 		float dt = Time.deltaTime;
 		timeleft -= dt ;

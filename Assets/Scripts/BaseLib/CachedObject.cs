@@ -1,39 +1,44 @@
 using System;
 using UnityEngine;
 
-namespace BaseLib
-{
-	public class CachedObject : MonoBehaviour
-	{
+namespace BaseLib {
+	/// <summary>
+	/// Cached object.
+	/// </summary>
+	public class CachedObject : MonoBehaviour {
 		private GameObject gameObj;
 		private Transform trans;
-		
-		public Transform Transform
-		{
-			get
-			{
-				if(trans == null)
-				{
+
+		/// <summary>
+		/// Gets the transform.
+		/// </summary>
+		/// <value>The transform.</value>
+		public Transform Transform {
+			get {
+				if(trans == null) {
 					trans = transform;
 				}
 				return trans;
 			}
 		}
-		
-		public GameObject GameObject
-		{
-			get
-			{
-				if(gameObj == null)
-				{
+
+		/// <summary>
+		/// Gets the game object.
+		/// </summary>
+		/// <value>The game object.</value>
+		public GameObject GameObject {
+			get {
+				if(gameObj == null) {
 					gameObj = gameObject;
 				}
 				return gameObj;
 			}
 		}
-		
-		public virtual void Awake()
-		{
+
+		/// <summary>
+		/// Awake this instance.
+		/// </summary>
+		public virtual void Awake() {
 			trans = transform;
 			gameObj = gameObject;
 		}
