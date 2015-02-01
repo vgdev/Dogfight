@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Test spawn player.
+/// </summary>
 [RequireComponent(typeof(GameController))]
 public class TestSpawnPlayer : TestScript 
 {

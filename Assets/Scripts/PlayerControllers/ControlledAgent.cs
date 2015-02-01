@@ -2,6 +2,9 @@ using UnityEngine;
 using BaseLib;
 using System.Collections;
 
+/// <summary>
+/// Controlled agent.
+/// </summary>
 public class ControlledAgent : PlayerAgent  {
 	private string horizontalMoveAxis;
 	private string verticalMoveAxis;
@@ -9,6 +12,12 @@ public class ControlledAgent : PlayerAgent  {
 	private string focusButton;
 	private string chargeButton;
 
+	/// <summary>
+	/// Initialize the specified fieldController, playerAvatar and targetField.
+	/// </summary>
+	/// <param name="fieldController">Field controller.</param>
+	/// <param name="playerAvatar">Player avatar.</param>
+	/// <param name="targetField">Target field.</param>
 	public override void Initialize (PlayerFieldController fieldController, Avatar playerAvatar, PlayerFieldController targetField) {
 		base.Initialize (fieldController, playerAvatar, targetField);
 		string strPlay = "Player ";
@@ -20,6 +29,10 @@ public class ControlledAgent : PlayerAgent  {
 		chargeButton = "Charge " + strPlay + playerNumber;
 	}
 
+	/// <summary>
+	/// Update the specified dt.
+	/// </summary>
+	/// <param name="dt">Dt.</param>
 	public override void Update (float dt) {
 		Vector2 movementVector = Vector2.zero;
 		movementVector.x = Util.Sign(Input.GetAxis (horizontalMoveAxis));

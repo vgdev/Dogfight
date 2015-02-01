@@ -1,15 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Round timer.
+/// </summary>
 [RequireComponent(typeof(GUIText))]
 public class RoundTimer : MonoBehaviour {
 
+	/// <summary>
+	/// The game controller.
+	/// </summary>
 	[SerializeField]
 	private GameController gameController;
+
+	/// <summary>
+	/// The color of the flash.
+	/// </summary>
 	[SerializeField]
 	private Color flashColor;
+
+	/// <summary>
+	/// The flash interval.
+	/// </summary>
 	[SerializeField]
 	private float flashInterval;
+
+	/// <summary>
+	/// The flash threshold.
+	/// </summary>
 	[SerializeField]
 	private float flashThreshold;
 
@@ -18,6 +36,9 @@ public class RoundTimer : MonoBehaviour {
 	private float flashDelay;
 	private GUIText label;
 
+	/// <summary>
+	/// Start this instance.
+	/// </summary>
 	void Start() {
 		label = guiText;
 		normalColor = label.color;
@@ -25,6 +46,9 @@ public class RoundTimer : MonoBehaviour {
 		flashDelay = 0f;
 	}
 
+	/// <summary>
+	/// Update this instance.
+	/// </summary>
 	void Update() {
 		int timeSec = Mathf.FloorToInt (gameController.RemainingRoundTime);
 		int seconds = timeSec % 60;

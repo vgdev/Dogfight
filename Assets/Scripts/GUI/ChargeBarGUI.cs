@@ -1,20 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Charge bar GU.
+/// </summary>
 public class ChargeBarGUI : MonoBehaviour {
+
+	/// <summary>
+	/// The field controller.
+	/// </summary>
 	[SerializeField]
 	private PlayerFieldController fieldController;
 	private Avatar player;
 
+	/// <summary>
+	/// The charge capacity.
+	/// </summary>
 	[SerializeField]
 	private Transform chargeCapacity;
 
+	/// <summary>
+	/// The charge level.
+	/// </summary>
 	[SerializeField]
 	private Transform chargeLevel;
 
+	/// <summary>
+	/// The indicator.
+	/// </summary>
 	[SerializeField]
 	private GameObject indicator;
 
+	/// <summary>
+	/// Start this instance.
+	/// </summary>
 	void Start() {
 		player = fieldController.PlayerController.PlayerAvatar;
 		int maxIndicatorLevel = player.MaxChargeLevel - 1;
@@ -30,6 +49,9 @@ public class ChargeBarGUI : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Update this instance.
+	/// </summary>
 	void Update() {
 		Vector3 capacityScale = chargeCapacity.localScale;
 		Vector3 levelScale = chargeCapacity.localScale;
