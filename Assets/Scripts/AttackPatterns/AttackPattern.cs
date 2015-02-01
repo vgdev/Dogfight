@@ -24,6 +24,16 @@ public abstract class AttackPattern : CachedObject {
 	}
 
 	/// <summary>
+	/// Gets the angle to player.
+	/// </summary>
+	/// <value>The angle to player.</value>
+	protected float AngleToPlayer {
+		get {
+			return targetField.AngleTowardPlayer(Transform.position);
+		}
+	}
+
+	/// <summary>
 	/// The timeout.
 	/// </summary>
 	[SerializeField]
