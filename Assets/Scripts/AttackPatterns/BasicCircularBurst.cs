@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using BaseLib;
 
 /// <summary>
 /// Basic circular burst.
@@ -9,27 +10,56 @@ public class BasicCircularBurst : AttackPattern {
 	/// <summary>
 	/// The prefab.
 	/// </summary>
-	public ProjectilePrefab prefab;
+	[SerializeField]
+	private ProjectilePrefab prefab;
 
 	/// <summary>
 	/// The spawn location.
 	/// </summary>
-	public Vector2 spawnLocation;
+	[SerializeField]
+	private Vector2 spawnLocation;
 
 	/// <summary>
 	/// The bullet count.
 	/// </summary>
-	public int bulletCount;
+	[SerializeField]
+	private int bulletCount;
 
 	/// <summary>
 	/// The velocity.
 	/// </summary>
-	public float velocity;
+	[SerializeField]
+	private float velocity;
 
 	/// <summary>
 	/// The ang v.
 	/// </summary>
-	public float angV;
+	[SerializeField]
+	private float angV;
+
+	/// <summary>
+	/// The burst count.
+	/// </summary>
+	[SerializeField]
+	private int burstCount;
+
+	/// <summary>
+	/// The burst fire delay.
+	/// </summary>
+	[SerializeField]
+	private CountdownDelay burstDelay;
+
+	/// <summary>
+	/// The burst initial rotation.
+	/// </summary>
+	[SerializeField]
+	private float burstInitialRotation;
+
+	/// <summary>
+	/// The burst rotation delta.
+	/// </summary>
+	[SerializeField]
+	private float burstRotationDelta;
 
 	/// <summary>
 	/// Mains the loop.
@@ -39,6 +69,5 @@ public class BasicCircularBurst : AttackPattern {
 		for(int i = 0; i < bulletCount; i++) {
 			FireCurvedBullet(prefab, spawnLocation, 360f / (float) bulletCount * (float)i, velocity, angV);
 		}
-		Terminate ();
 	}
 }

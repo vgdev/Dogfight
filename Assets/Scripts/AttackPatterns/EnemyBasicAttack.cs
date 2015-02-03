@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using BaseLib;
 
 /// <summary>
 /// Enemy basic attack.
@@ -9,7 +10,7 @@ public class EnemyBasicAttack : AttackPattern {
 	/// <summary>
 	/// The fire delay.
 	/// </summary>
-	public float fireDelay;
+	public CountdownDelay fireDelay;
 
 	/// <summary>
 	/// The velocity.
@@ -38,20 +39,11 @@ public class EnemyBasicAttack : AttackPattern {
 	public ProjectilePrefab basicPrefab;
 
 	/// <summary>
-	/// Start this instance.
-	/// </summary>
-	void Start() {
-		currentDelay = fireDelay;
-	}
-
-	/// <summary>
 	/// Mains the loop.
 	/// </summary>
 	/// <param name="dt">Dt.</param>
 	protected override void MainLoop (float dt) {
-		currentDelay -= dt;
-		if (currentDelay <= 0f) {
-			currentDelay = fireDelay;
+		if (fireDelay.Tick(dt)) {
 			float angle = TargetField.AngleTowardPlayer(transform.position) + Random.Range(-generalRange, generalRange);
 			Projectile proj = TargetField.SpawnProjectile(basicPrefab, Transform.position,
 			                            angle, 
