@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using BaseLib;
 
 /// <summary>
 /// Round timer.
@@ -23,7 +24,7 @@ public class RoundTimer : MonoBehaviour {
 	/// The flash interval.
 	/// </summary>
 	[SerializeField]
-	private float flashInterval;
+	private CountdownDelay flashInterval;
 
 	/// <summary>
 	/// The flash threshold.
@@ -33,7 +34,6 @@ public class RoundTimer : MonoBehaviour {
 
 	private Color normalColor;
 	private bool flashState;
-	private float flashDelay;
 	private GUIText label;
 
 	/// <summary>
@@ -43,7 +43,6 @@ public class RoundTimer : MonoBehaviour {
 		label = guiText;
 		normalColor = label.color;
 		flashState = false;
-		flashDelay = 0f;
 	}
 
 	/// <summary>
@@ -55,16 +54,14 @@ public class RoundTimer : MonoBehaviour {
 		int minutes = timeSec / 60;
 		label.text = minutes.ToString ("D2") + ":" + seconds.ToString ("D2");;
 		if (timeSec < flashThreshold) {
-			flashDelay -= Time.deltaTime;
-			if(flashDelay <= 0) {
+			if(flashInterval.Tick(Time.deltaTime)) {
 				label.color = (flashState) ? flashColor : normalColor;
 				flashState = !flashState;
-				flashDelay = flashInterval;
 			}
 		} else {
 			label.color = normalColor;
 			flashState = false;
-			flashDelay = 0f;
+			flashInterval.ForceReady();
 		}
 	}
 }
