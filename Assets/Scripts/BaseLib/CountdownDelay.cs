@@ -91,9 +91,25 @@ namespace BaseLib {
 
 		[SerializeField]
 		private int maxCount;
+		public int MaxCount {
+			get {
+				return maxCount;
+			}
+			set {
+				maxCount = value;
+			}
+		}
 
 		[SerializeField]
 		private int count;
+		public int Count {
+			get {
+				return count;
+			}
+			set {
+				count = value;
+			}
+		}
 
 		public Counter(int maxCount) {
 			this.maxCount = maxCount;
@@ -105,8 +121,11 @@ namespace BaseLib {
 			bool ready = count < 0;
 			if(ready && reset)
 				count = maxCount;
+			return ready;
 		}
 
-
+		public void Reset() {
+			count = maxCount;
+		}
 	}
 }
