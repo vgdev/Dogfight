@@ -35,13 +35,14 @@ public class BasicCircularBurst : AttackPattern {
 	/// The ang v.
 	/// </summary>
 	[SerializeField]
+	[Range(-360f, 360f)]
 	private float angV;
 
 	/// <summary>
 	/// The burst count.
 	/// </summary>
 	[SerializeField]
-	private int burstCount;
+	private Counter burstCount;
 
 	/// <summary>
 	/// The burst fire delay.
@@ -53,21 +54,32 @@ public class BasicCircularBurst : AttackPattern {
 	/// The burst initial rotation.
 	/// </summary>
 	[SerializeField]
+	[Rotation2D]
 	private float burstInitialRotation;
 
 	/// <summary>
 	/// The burst rotation delta.
 	/// </summary>
 	[SerializeField]
+	[Range(-360f, 360f)]
 	private float burstRotationDelta;
+
+	protected override void OnExecutionStart () {
+		burstCount.Reset ();
+	}
 
 	/// <summary>
 	/// Mains the loop.
 	/// </summary>
 	/// <param name="dt">Dt.</param>
 	protected override void MainLoop (float dt) {
-		for(int i = 0; i < bulletCount; i++) {
-			FireCurvedBullet(prefab, spawnLocation, 360f / (float) bulletCount * (float)i, velocity, angV);
+		if (burstCount.Count > 0) {
+			if(burstDelay.Tick(dt)) {
+				for(int i = 0; i < bulletCount; i++) {
+					FireCurvedBullet(prefab, spawnLocation, 360f / (float) bulletCount * (float)i, velocity, angV);
+				}
+				burstCount.Tick();
+			}
 		}
 	}
 }
