@@ -6,7 +6,7 @@ using System.Collections;
 /// <summary>
 /// Attack pattern.
 /// </summary>
-public abstract class AttackPattern : CachedObject {
+public abstract class AbstractAttackPattern : CachedObject {
 
 	private PlayerFieldController targetField;
 
@@ -23,6 +23,8 @@ public abstract class AttackPattern : CachedObject {
 		}
 	}
 
+	protected abstract bool IsFinished { get; }
+
 	/// <summary>
 	/// Gets the angle to player.
 	/// </summary>
@@ -32,12 +34,6 @@ public abstract class AttackPattern : CachedObject {
 			return targetField.AngleTowardPlayer(Transform.position);
 		}
 	}
-
-	/// <summary>
-	/// The timeout.
-	/// </summary>
-	[SerializeField]
-	private float timeout;
 
 	/// <summary>
 	/// The attack active.
@@ -115,13 +111,12 @@ public abstract class AttackPattern : CachedObject {
 	/// Execute this instance.
 	/// </summary>
 	private IEnumerator Execute() {
-		float executionTime = 0f, dt;
 		attackActive = true;
-		while((executionTime < timeout || timeout < 0) && attackActive) {
-			dt = Time.fixedDeltaTime;
-			executionTime += dt;
-			MainLoop(dt);
+		OnExecutionStart ();
+		while(!IsFinished && attackActive) {
+			MainLoop(Time.fixedDeltaTime);
 			yield return new WaitForFixedUpdate();
 		}
+		OnExecutionFinish ();
 	}
 }

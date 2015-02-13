@@ -79,7 +79,7 @@ public class Avatar : CachedObject {
 	/// The attack patterns.
 	/// </summary>
 	[SerializeField]
-	private AttackPattern[] attackPatterns;
+	private AbstractAttackPattern[] attackPatterns;
 
 	private bool charging;
 	/// <summary>
@@ -303,7 +303,7 @@ public class Avatar : CachedObject {
 		float radius = deathCancelRadius * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
 		Projectile[] toCanccel = fieldController.GetAllBullets (Transform.position, radius);
 		for(int i = 0; i < toCanccel.Length; i++) {
-			toCanccel[i].Active = false;
+			toCanccel[i].Deactivate();
 		}
 	}
 

@@ -30,7 +30,7 @@ public class ProjectileBoundary : MonoBehaviour {
 		if(other.CompareTag(tagFilter)) {
 			Projectile proj = other.GetComponent<Projectile>();
 			if(proj != null) {
-				proj.Active = false;
+				proj.Deactivate();
 			}
 		}
 	}

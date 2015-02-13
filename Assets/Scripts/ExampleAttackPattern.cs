@@ -1,10 +1,21 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
 /// An example attack pattern for those trying to make new bullet patterns for new characters or enemies.
 /// </summary>
-public class ExampleAttackPattern : AttackPattern {
+public class ExampleAttackPattern : AbstractAttackPattern {
+
+	/// <summary>
+	/// Gets a value indicating whether the current attack pattern execution is finished.
+	/// </summary>
+	/// <value><c>true</c> if this instance is finished; otherwise, <c>false</c>.</value>
+	protected override bool IsFinished {
+		get {
+			return false;
+		}
+	}
+
 	
 	[SerializeField] // This forces Unity to serialize fireDelay (or any field that's private), it's good programming practice not to use public variables
 	private float fireDelay; // Total Time between shots

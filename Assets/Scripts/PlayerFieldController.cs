@@ -298,6 +298,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		Vector3 spawnPos = WorldPoint(Util.To3D(playerSpawnLocation, gamePlaneDistance));
 		Avatar avatar = ((GameObject)Instantiate (character, spawnPos, Quaternion.identity)).GetComponent<Avatar>();
 		avatar.Reset (5);
+		avatar.Transform.parent = Transform;
 		playerController = controller;
 		playerController.Initialize(this, avatar, targetField);
 	}
@@ -329,7 +330,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		Projectile projectile = (Projectile)bulletPool.Get (prefab);
 		projectile.Transform.position = worldLocation;
 		projectile.Transform.rotation = Quaternion.Euler(0f, 0f, rotation);
-		projectile.Active = true;
+		projectile.Activate ();
 		return projectile;
 	}
 

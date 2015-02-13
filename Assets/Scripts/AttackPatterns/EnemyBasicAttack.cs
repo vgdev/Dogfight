@@ -5,7 +5,7 @@ using BaseLib;
 /// <summary>
 /// Enemy basic attack.
 /// </summary>
-public class EnemyBasicAttack : AttackPattern {
+public class EnemyBasicAttack : AbstractAttackPattern {
 
 	/// <summary>
 	/// The fire delay.
@@ -37,6 +37,12 @@ public class EnemyBasicAttack : AttackPattern {
 	/// The basic prefab.
 	/// </summary>
 	public ProjectilePrefab basicPrefab;
+
+	protected override bool IsFinished {
+		get {
+			return false;
+		}
+	}
 
 	/// <summary>
 	/// Mains the loop.

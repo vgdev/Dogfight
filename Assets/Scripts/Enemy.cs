@@ -23,7 +23,7 @@ public class Enemy : CachedObject {
 	private int maxHealth;
 	private int health;
 
-	private AttackPattern attacks;
+	private AbstractAttackPattern attacks;
 	private FieldMovementPattern fmp;
 
 	/// <summary>
@@ -33,7 +33,7 @@ public class Enemy : CachedObject {
 		health = maxHealth;
 		EnemyManager.RegisterEnemy (this);
 		fmp = GetComponent<FieldMovementPattern> ();
-		attacks = GetComponent<AttackPattern> ();
+		attacks = GetComponent<AbstractAttackPattern> ();
 		if (attacks != null) {
 			attacks.TargetField = fmp.field;
 			attacks.Fire ();
@@ -59,7 +59,7 @@ public class Enemy : CachedObject {
 	/// <param name="proj">Proj.</param>
 	public void Hit(Projectile proj) {
 		health -= proj.Damage;
-		proj.Active = false;
+		proj.Deactivate ();
 		if(health <= 0) {
 			Die();
 		}
