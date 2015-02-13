@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 
@@ -9,7 +9,7 @@ using System.Collections;
 public abstract class PlayerAgent {
 
 	private Avatar playerAvatar;
-	private PlayerFieldController fieldController;
+	private AbstractDanmakuField fieldController;
 
 	/// <summary>
 	/// Gets the player avatar.
@@ -25,7 +25,7 @@ public abstract class PlayerAgent {
 	/// Gets the field controller.
 	/// </summary>
 	/// <value>The field controller.</value>
-	public PlayerFieldController FieldController {
+	public AbstractDanmakuField FieldController {
 		get {
 			return fieldController;
 		}
@@ -37,10 +37,10 @@ public abstract class PlayerAgent {
 	/// <param name="fieldController">Field controller.</param>
 	/// <param name="playerAvatar">Player avatar.</param>
 	/// <param name="targetField">Target field.</param>
-	public virtual void Initialize(PlayerFieldController fieldController, Avatar playerAvatar, PlayerFieldController targetField) {
+	public virtual void Initialize(AbstractDanmakuField fieldController, Avatar playerAvatar) {
 		this.fieldController = fieldController;
 		this.playerAvatar = playerAvatar;
-		playerAvatar.Initialize (fieldController, targetField);
+		playerAvatar.Initialize (this);
 	}
 
 	/// <summary>

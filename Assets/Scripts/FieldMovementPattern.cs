@@ -17,7 +17,7 @@ public class FieldMovementPattern : CachedObject {
 	/// <summary>
 	/// The field.
 	/// </summary>
-	public PlayerFieldController field;
+	public PhantasmagoriaField field;
 
 	/// <summary>
 	/// The test start point.
@@ -79,7 +79,7 @@ public class FieldMovementPattern : CachedObject {
 		/// <returns>The location.</returns>
 		/// <param name="field">Field.</param>
 		/// <param name="startLocation">Start location.</param>
-		public Vector3 NextLocation(PlayerFieldController field, Vector3 startLocation) {
+		public Vector3 NextLocation(PhantasmagoriaField field, Vector3 startLocation) {
 			return Interpret (targetLocation, field, startLocation);
 		}
 
@@ -89,7 +89,7 @@ public class FieldMovementPattern : CachedObject {
 		/// <returns>The control point1.</returns>
 		/// <param name="field">Field.</param>
 		/// <param name="startLocation">Start location.</param>
-		public Vector3 NextControlPoint1(PlayerFieldController field, Vector3 startLocation) {
+		public Vector3 NextControlPoint1(PhantasmagoriaField field, Vector3 startLocation) {
 			return Interpret (curveControlPoint1, field, startLocation);
 		}
 
@@ -99,7 +99,7 @@ public class FieldMovementPattern : CachedObject {
 		/// <returns>The control point2.</returns>
 		/// <param name="field">Field.</param>
 		/// <param name="startLocation">Start location.</param>
-		public Vector3 NextControlPoint2(PlayerFieldController field, Vector3 startLocation) {
+		public Vector3 NextControlPoint2(PhantasmagoriaField field, Vector3 startLocation) {
 			return Interpret (curveControlPoint2, field, startLocation);
 		}
 
@@ -109,7 +109,7 @@ public class FieldMovementPattern : CachedObject {
 		/// <param name="loc">Location.</param>
 		/// <param name="field">Field.</param>
 		/// <param name="startLocation">Start location.</param>
-		private Vector3 Interpret(Vector2 loc, PlayerFieldController field, Vector3 startLocation) {	
+		private Vector3 Interpret(Vector2 loc, PhantasmagoriaField field, Vector3 startLocation) {	
 			Vector3 nextLocation = Util.To3D(loc);
 			switch(locationType) {
 				case FieldMovementPattern.LocationType.Relative:
@@ -135,7 +135,7 @@ public class FieldMovementPattern : CachedObject {
 	/// Start this instance.
 	/// </summary>
 	void Start() {
-		PlayerFieldController[] controllers = FindObjectsOfType<PlayerFieldController> ();
+		PhantasmagoriaField[] controllers = FindObjectsOfType<PhantasmagoriaField> ();
 		float minDist = float.MaxValue;
 		for (int i = 0; i < controllers.Length; i++) {
 			float dist = (controllers[i].transform.position - transform.position).magnitude;

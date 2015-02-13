@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -10,7 +10,7 @@ public abstract class MultiObjectValueIndicator : MonoBehaviour  {
 	/// The game controller.
 	/// </summary>
 	[SerializeField]
-	protected GameController gameController;
+	protected PhantasmagoriaGameController gameController;
 
 	/// <summary>
 	/// The player.

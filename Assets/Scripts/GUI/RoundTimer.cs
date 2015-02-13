@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using BaseLib;
 
@@ -12,7 +12,7 @@ public class RoundTimer : MonoBehaviour {
 	/// The game controller.
 	/// </summary>
 	[SerializeField]
-	private GameController gameController;
+	private PhantasmagoriaGameController gameController;
 
 	/// <summary>
 	/// The color of the flash.

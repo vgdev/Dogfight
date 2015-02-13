@@ -53,7 +53,7 @@ public class EnemyBasicAttack : AbstractAttackPattern {
 			float angle = TargetField.AngleTowardPlayer(transform.position) + Random.Range(-generalRange, generalRange);
 			Projectile proj = TargetField.SpawnProjectile(basicPrefab, Transform.position,
 			                            angle, 
-			                            PlayerFieldController.CoordinateSystem.AbsoluteWorld);
+			                            FieldCoordinateSystem.AbsoluteWorld);
 			proj.Velocity = velocity;
 			proj.AngularVelocity = angV;
 		}
