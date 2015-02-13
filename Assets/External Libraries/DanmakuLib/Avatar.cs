@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using BaseLib;
 using System.Collections.Generic;
 
@@ -7,17 +7,6 @@ using System.Collections.Generic;
 /// </summary>
 [RequireComponent(typeof(Collider2D))]
 public class Avatar : CachedObject {
-
-	private PlayerFieldController fieldController;
-	/// <summary>
-	/// Gets the field controller.
-	/// </summary>
-	/// <value>The field controller.</value>
-	public PlayerFieldController FieldController {
-		get {
-			return fieldController;
-		}
-	}
 
 	private PlayerAgent agent;
 	/// <summary>
@@ -30,6 +19,16 @@ public class Avatar : CachedObject {
 		}
 		set {
 			agent = value;
+		}
+	}
+
+	/// <summary>
+	/// Gets the field controller.
+	/// </summary>
+	/// <value>The field controller.</value>
+	public AbstractDanmakuField FieldController {
+		get {
+			return agent.FieldController;
 		}
 	}
 
@@ -182,11 +181,11 @@ public class Avatar : CachedObject {
 	/// </summary>
 	/// <param name="playerField">Player field.</param>
 	/// <param name="targetField">Target field.</param>
-	public void Initialize(PlayerFieldController playerField, PlayerFieldController targetField) {
-		this.fieldController = playerField;
+	public void Initialize(PlayerAgent agent) {
+		this.agent = agent;
 		for(int i = 0; i < attackPatterns.Length; i++)
 			if(attackPatterns[i] != null)
-				attackPatterns[i].TargetField = targetField;
+				attackPatterns[i].TargetField = FieldController.TargetField;
 	}
 
 	/// <summary>
@@ -255,8 +254,8 @@ public class Avatar : CachedObject {
 			offset1 = offset2 = shotOffset;
 			offset2.x *= -1;
 			location = Util.To2D(Transform.position);
-			Projectile shot1 = FieldController.SpawnProjectile(shotType, location + offset1, 0f, PlayerFieldController.CoordinateSystem.AbsoluteWorld);
-			Projectile shot2 = FieldController.SpawnProjectile(shotType, location + offset2, 0f, PlayerFieldController.CoordinateSystem.AbsoluteWorld);
+			Projectile shot1 = FieldController.SpawnProjectile(shotType, location + offset1, 0f, FieldCoordinateSystem.AbsoluteWorld);
+			Projectile shot2 = FieldController.SpawnProjectile(shotType, location + offset2, 0f, FieldCoordinateSystem.AbsoluteWorld);
 			shot1.Velocity = shot2.Velocity = shotVelocity;
 		}
 	}
@@ -301,7 +300,7 @@ public class Avatar : CachedObject {
 	public void Hit() {
 		livesRemaining--;
 		float radius = deathCancelRadius * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
-		Projectile[] toCanccel = fieldController.GetAllBullets (Transform.position, radius);
+		Projectile[] toCanccel = FieldController.GetAllBullets (Transform.position, radius);
 		for(int i = 0; i < toCanccel.Length; i++) {
 			toCanccel[i].Deactivate();
 		}

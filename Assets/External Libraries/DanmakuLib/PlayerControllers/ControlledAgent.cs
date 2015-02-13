@@ -18,10 +18,10 @@ public class ControlledAgent : PlayerAgent  {
 	/// <param name="fieldController">Field controller.</param>
 	/// <param name="playerAvatar">Player avatar.</param>
 	/// <param name="targetField">Target field.</param>
-	public override void Initialize (PlayerFieldController fieldController, Avatar playerAvatar, PlayerFieldController targetField) {
-		base.Initialize (fieldController, playerAvatar, targetField);
+	public override void Initialize (AbstractDanmakuField fieldController, Avatar playerAvatar) {
+		base.Initialize (fieldController, playerAvatar);
 		string strPlay = "Player ";
-		int playerNumber = fieldController.PlayerNumber;
+		int playerNumber = ((PhantasmagoriaField)fieldController).PlayerNumber;
 		horizontalMoveAxis = "Horizontal Movement " + strPlay + playerNumber;
 		verticalMoveAxis = "Vertical Movement " + strPlay + playerNumber;
 		focusButton = "Focus " + strPlay + playerNumber;

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -10,7 +10,7 @@ public class ChargeBarGUI : MonoBehaviour {
 	/// The field controller.
 	/// </summary>
 	[SerializeField]
-	private PlayerFieldController fieldController;
+	private PhantasmagoriaField fieldController;
 	private Avatar player;
 
 	/// <summary>

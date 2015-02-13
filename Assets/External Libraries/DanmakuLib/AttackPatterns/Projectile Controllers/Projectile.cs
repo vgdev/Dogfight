@@ -143,6 +143,14 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	[SerializeField]
 	private SpriteRenderer spriteRenderer;
 
+	private float fireTimer;
+
+	public float BulletTime {
+		get {
+			return fireTimer;
+		}
+	}
+
 	/// <summary>
 	/// Awake this instance.
 	/// </summary>
@@ -158,7 +166,7 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	/// </summary>
 	void FixedUpdate() {
 		float dt = Time.fixedDeltaTime;
-
+		fireTimer += dt;
 		//Rotate
 		Transform.rotation = Quaternion.Slerp (Transform.rotation, Transform.rotation * angularVelocity, dt);
 		float movementDistance = linearVelocity * dt;
@@ -217,7 +225,7 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	/// </summary>
 	/// <param name="currentController">Current controller.</param>
 	/// <param name="targetField">Target field.</param>
-	public void Transfer(PlayerFieldController currentController, PlayerFieldController targetField) {
+	public void Transfer(PhantasmagoriaField currentController, PhantasmagoriaField targetField) {
 		Vector2 relativePos = currentController.FieldPoint (Transform.position);
 		Transform.position = targetField.WorldPoint (relativePos);
 	}
@@ -313,12 +321,12 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	/// <summary>
 	/// Deactivate this instance.
 	/// </summary>
-	public override void Deactivate() 
-	{
+	public override void Deactivate()  {
 		base.Deactivate ();
 		properties.Clear ();
 		controllers.Clear ();
 		linearVelocity = 0f;
+		fireTimer = 0f;
 		damage = 0;
 		angularVelocity = Quaternion.identity;
 	}

@@ -1,57 +1,34 @@
-using UnityEngine;
-using BaseLib;
+﻿using UnityEngine;
 using System.Collections;
+using BaseLib;
 using System.Collections.Generic;
 
-/// <summary>
-/// Player field controller.
-/// </summary>
-public class PlayerFieldController : BaseLib.CachedObject {
-	
-	public enum CoordinateSystem { Screen, FieldRelative, AbsoluteWorld }
+public enum FieldCoordinateSystem { Screen, FieldRelative, AbsoluteWorld }
 
+public abstract class AbstractDanmakuField : CachedObject {
+	
 	/// <summary>
 	/// The player spawn location.
 	/// </summary>
-	public Vector2 playerSpawnLocation;
+	[SerializeField]
+	private Vector2 playerSpawnLocation = new Vector2(0.5f, 0.25f);
 
-	private int playerNumber = 1;
-	/// <summary>
-	/// Gets or sets the player number.
-	/// </summary>
-	/// <value>The player number.</value>
-	public int PlayerNumber {
-		get { 
-			return playerNumber; 
-		}
-		set { 
-			playerNumber = value; 
+	public abstract AbstractDanmakuField TargetField { get; }
+
+	private AbstractDanmakuGameController gameController;
+
+	public AbstractDanmakuGameController GameController {
+		get {
+			if(gameController == null) {
+				gameController = FindObjectOfType<AbstractDanmakuGameController>();
+			}
+			return gameController;
 		}
 	}
 
-	/// <summary>
-	/// The game plane distance.
-	/// </summary>
-	[SerializeField]
-	private float gamePlaneDistance;
-
-	/// <summary>
-	/// The field camera.
-	/// </summary>
-	[SerializeField]
-	private Camera fieldCamera;
-
-	private Transform cameraTransform;
-	/// <summary>
-	/// Gets or sets the camera transform.
-	/// </summary>
-	/// <value>The camera transform.</value>
-	public Transform CameraTransform {
+	public ProjectilePool BulletPool {
 		get {
-			return cameraTransform;
-		}
-		set {
-			cameraTransform = value;
+			return GameController.BulletPool;
 		}
 	}
 
@@ -69,15 +46,162 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		}
 	}
 
-	private PlayerFieldController targetField;
+	
 	/// <summary>
-	/// Sets the target field.
+	/// The field camera.
 	/// </summary>
-	/// <value>The target field.</value>
-	public PlayerFieldController TargetField {
-		set {
-			targetField = value;
+	[SerializeField]
+	private Camera fieldCamera;
+	
+	private Transform cameraTransform;
+	/// <summary>
+	/// Gets or sets the camera transform.
+	/// </summary>
+	/// <value>The camera transform.</value>
+	public Transform CameraTransform {
+		get {
+			return cameraTransform;
 		}
+		set {
+			cameraTransform = value;
+		}
+	}
+
+	/// <summary>
+	/// Recomputes the bounding area for 
+	/// </summary>
+	public void RecomputeWorldPoints() {
+		bottomLeft = fieldCamera.ViewportToWorldPoint (Vector3.zero);
+		Vector3 UL = fieldCamera.ViewportToWorldPoint (Vector3.up);
+		Vector3 BR = fieldCamera.ViewportToWorldPoint (Vector3.right);
+		xDirection = (BR - bottomLeft);
+		yDirection = (UL - bottomLeft);
+		zDirection = Vector3.Cross (xDirection, yDirection).normalized;
+	}
+
+	private Vector3 xDirection;
+	private Vector3 yDirection;
+	private Vector3 zDirection;
+	private Vector3 bottomLeft;
+	/// <summary>
+	/// The game plane distance.
+	/// </summary>
+	[SerializeField]
+	private float gamePlaneDistance = 10;
+	/// <summary>
+	/// Gets the size of the X.
+	/// </summary>
+	/// <value>The size of the X.</value>
+	public float XSize {
+		get { return xDirection.magnitude; }
+	}
+	
+	/// <summary>
+	/// Gets the size of the Y.
+	/// </summary>
+	/// <value>The size of the Y.</value>
+	public float YSize {
+		get { return yDirection.magnitude; }
+	}
+	
+	/// <summary>
+	/// Gets the bottom left.
+	/// </summary>
+	/// <value>The bottom left.</value>
+	public Vector3 BottomLeft {
+		get { return WorldPoint (new Vector3(0f, 0f, gamePlaneDistance)); }
+	}
+	
+	/// <summary>
+	/// Gets the bottom right.
+	/// </summary>
+	/// <value>The bottom right.</value>
+	public Vector3 BottomRight {
+		get { return WorldPoint (new Vector3(1f, 0f, gamePlaneDistance)); }
+	}
+	
+	/// <summary>
+	/// Gets the top left.
+	/// </summary>
+	/// <value>The top left.</value>
+	public Vector3 TopLeft {
+		get { return WorldPoint (new Vector3(0f, 1f, gamePlaneDistance)); }
+	}
+	
+	/// <summary>
+	/// Gets the top right.
+	/// </summary>
+	/// <value>The top right.</value>
+	public Vector3 TopRight {
+		get { return WorldPoint (new Vector3(1f, 1f, gamePlaneDistance)); }
+	}
+	
+	/// <summary>
+	/// Gets the center.
+	/// </summary>
+	/// <value>The center.</value>
+	public Vector3 Center {
+		get { return WorldPoint (new Vector3(0.5f, 0.5f, gamePlaneDistance)); }
+	}
+	
+	/// <summary>
+	/// Gets the top.
+	/// </summary>
+	/// <value>The top.</value>
+	public Vector3 Top {
+		get { return WorldPoint (new Vector3 (0.5f, 1f, gamePlaneDistance)); }
+	}
+	
+	/// <summary>
+	/// Gets the bottom.
+	/// </summary>
+	/// <value>The bottom.</value>
+	public Vector3 Bottom {
+		get { return WorldPoint (new Vector3 (0.5f, 0f, gamePlaneDistance));}
+	}
+	
+	/// <summary>
+	/// Gets the right.
+	/// </summary>
+	/// <value>The right.</value>
+	public Vector3 Right {
+		get { return WorldPoint (new Vector3 (1f, 0.5f, gamePlaneDistance)); }
+	}
+	
+	/// <summary>
+	/// Gets the left.
+	/// </summary>
+	/// <value>The left.</value>
+	public Vector3 Left {
+		get { return WorldPoint (new Vector3 (0f, 0.5f, gamePlaneDistance));}
+	}
+
+	/// <summary>
+	/// Worlds the point.
+	/// </summary>
+	/// <returns>The point.</returns>
+	/// <param name="fieldPoint">Field point.</param>
+	public Vector3 WorldPoint(Vector3 fieldPoint) {
+		return bottomLeft + Relative2Absolute (fieldPoint);
+	}
+	
+	/// <summary>
+	/// Fields the point.
+	/// </summary>
+	/// <returns>The point.</returns>
+	/// <param name="worldPoint">World point.</param>
+	public Vector3 FieldPoint(Vector3 worldPoint) {
+		Vector3 offset = worldPoint - bottomLeft;
+		return new Vector3 (Vector3.Project (offset, xDirection).magnitude, Vector3.Project (offset, yDirection).magnitude, Vector3.Project (offset, zDirection).magnitude);
+	}
+	
+	/// <summary>
+	/// Relative2s the absolute.
+	/// </summary>
+	/// <returns>The absolute.</returns>
+	/// <param name="relativeVector">Relative vector.</param>
+	public Vector3 Relative2Absolute(Vector3 relativeVector) {
+		return relativeVector.x * xDirection + relativeVector.y * yDirection + relativeVector.z * zDirection;
 	}
 
 	/// <summary>
@@ -94,7 +218,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 			}
 		}
 	}
-
+	
 	/// <summary>
 	/// Gets the player position.
 	/// </summary>
@@ -109,7 +233,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 			}
 		}
 	}
-
+	
 	/// <summary>
 	/// Angles the toward player.
 	/// </summary>
@@ -118,112 +242,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	public float AngleTowardPlayer(Vector3 startLocation) {
 		return Projectile.AngleBetween2D (startLocation, PlayerPosition);
 	}
-
-	/// <summary>
-	/// The death cancel raidus.
-	/// </summary>
-	[SerializeField]
-	private float deathCancelRaidus;
-
-	private Vector3 xDirection;
-	private Vector3 yDirection;
-	private Vector3 zDirection;
-	private Vector3 bottomLeft;
-
-	/// <summary>
-	/// Gets the size of the X.
-	/// </summary>
-	/// <value>The size of the X.</value>
-	public float XSize {
-		get { return xDirection.magnitude; }
-	}
-
-	/// <summary>
-	/// Gets the size of the Y.
-	/// </summary>
-	/// <value>The size of the Y.</value>
-	public float YSize {
-		get { return yDirection.magnitude; }
-	}
-
-	/// <summary>
-	/// Gets the bottom left.
-	/// </summary>
-	/// <value>The bottom left.</value>
-	public Vector3 BottomLeft {
-		get { return WorldPoint (new Vector3(0f, 0f, gamePlaneDistance)); }
-	}
-
-	/// <summary>
-	/// Gets the bottom right.
-	/// </summary>
-	/// <value>The bottom right.</value>
-	public Vector3 BottomRight {
-		get { return WorldPoint (new Vector3(1f, 0f, gamePlaneDistance)); }
-	}
-
-	/// <summary>
-	/// Gets the top left.
-	/// </summary>
-	/// <value>The top left.</value>
-	public Vector3 TopLeft {
-		get { return WorldPoint (new Vector3(0f, 1f, gamePlaneDistance)); }
-	}
-
-	/// <summary>
-	/// Gets the top right.
-	/// </summary>
-	/// <value>The top right.</value>
-	public Vector3 TopRight {
-		get { return WorldPoint (new Vector3(1f, 1f, gamePlaneDistance)); }
-	}
-
-	/// <summary>
-	/// Gets the center.
-	/// </summary>
-	/// <value>The center.</value>
-	public Vector3 Center {
-		get { return WorldPoint (new Vector3(0.5f, 0.5f, gamePlaneDistance)); }
-	}
-
-	/// <summary>
-	/// Gets the top.
-	/// </summary>
-	/// <value>The top.</value>
-	public Vector3 Top {
-		get { return WorldPoint (new Vector3 (0.5f, 1f, gamePlaneDistance)); }
-	}
-
-	/// <summary>
-	/// Gets the bottom.
-	/// </summary>
-	/// <value>The bottom.</value>
-	public Vector3 Bottom {
-		get { return WorldPoint (new Vector3 (0.5f, 0f, gamePlaneDistance));}
-	}
-
-	/// <summary>
-	/// Gets the right.
-	/// </summary>
-	/// <value>The right.</value>
-	public Vector3 Right {
-		get { return WorldPoint (new Vector3 (1f, 0.5f, gamePlaneDistance)); }
-	}
-
-	/// <summary>
-	/// Gets the left.
-	/// </summary>
-	/// <value>The left.</value>
-	public Vector3 Left {
-		get { return WorldPoint (new Vector3 (0f, 0.5f, gamePlaneDistance));}
-	}
-
-	/// <summary>
-	/// The bullet pool.
-	/// </summary>
-	[SerializeField]
-	private ProjectilePool bulletPool;
-
+	
 	/// <summary>
 	/// Start this instance.
 	/// </summary>
@@ -232,7 +251,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		cameraTransform = fieldCamera.transform;
 		RecomputeWorldPoints ();
 	}
-
+	
 	/// <summary>
 	/// Fixeds the update.
 	/// </summary>
@@ -240,53 +259,6 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		if(playerController != null) {
 			playerController.Update(Time.fixedDeltaTime);
 		}
-	}
-
-	/// <summary>
-	/// Worlds the point.
-	/// </summary>
-	/// <returns>The point.</returns>
-	/// <param name="fieldPoint">Field point.</param>
-	public Vector3 WorldPoint(Vector3 fieldPoint) {
-		return bottomLeft + Relative2Absolute (fieldPoint);
-	}
-
-	/// <summary>
-	/// Fields the point.
-	/// </summary>
-	/// <returns>The point.</returns>
-	/// <param name="worldPoint">World point.</param>
-	public Vector3 FieldPoint(Vector3 worldPoint) {
-		Vector3 offset = worldPoint - bottomLeft;
-		return new Vector3 (Vector3.Project (offset, xDirection).magnitude, Vector3.Project (offset, yDirection).magnitude, Vector3.Project (offset, zDirection).magnitude);
-	}
-
-	/// <summary>
-	/// Relative2s the absolute.
-	/// </summary>
-	/// <returns>The absolute.</returns>
-	/// <param name="relativeVector">Relative vector.</param>
-	public Vector3 Relative2Absolute(Vector3 relativeVector) {
-		return relativeVector.x * xDirection + relativeVector.y * yDirection + relativeVector.z * zDirection;
-	}
-
-	/// <summary>
-	/// Reset this instance.
-	/// </summary>
-	public void Reset() {
-		playerController.PlayerAvatar.Reset (5);
-	}
-
-	/// <summary>
-	/// Recomputes the bounding area for 
-	/// </summary>
-	public void RecomputeWorldPoints() {
-		bottomLeft = fieldCamera.ViewportToWorldPoint (Vector3.zero);
-		Vector3 UL = fieldCamera.ViewportToWorldPoint (Vector3.up);
-		Vector3 BR = fieldCamera.ViewportToWorldPoint (Vector3.right);
-		xDirection = (BR - bottomLeft);
-		yDirection = (UL - bottomLeft);
-		zDirection = Vector3.Cross (xDirection, yDirection).normalized;
 	}
 
 	/// <summary>
@@ -300,7 +272,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		avatar.Reset (5);
 		avatar.Transform.parent = Transform;
 		playerController = controller;
-		playerController.Initialize(this, avatar, targetField);
+		playerController.Initialize(this, avatar);
 	}
 	
 	/// <summary>
@@ -314,26 +286,26 @@ public class PlayerFieldController : BaseLib.CachedObject {
 	/// <param name="rotation">Rotation.</param>
 	/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
 	/// <param name="extraControllers">Extra ProjectileControllers to change the behavior of the projectile.</param>
-	public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.Screen, ProjectileController[] extraControllers = null) {
+	public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, float rotation, FieldCoordinateSystem coordSys = FieldCoordinateSystem.Screen, ProjectileController[] extraControllers = null) {
 		Vector3 worldLocation = Vector3.zero;
 		switch(coordSys) {
-			case CoordinateSystem.Screen:
+			case FieldCoordinateSystem.Screen:
 				worldLocation = WorldPoint(new Vector3(location.x, location.y, gamePlaneDistance));
 				break;
-			case CoordinateSystem.FieldRelative:
+			case FieldCoordinateSystem.FieldRelative:
 				worldLocation = BottomLeft + new Vector3(location.x, location.y, 0f);
 				break;
-			case CoordinateSystem.AbsoluteWorld:
+			case FieldCoordinateSystem.AbsoluteWorld:
 				worldLocation = location;
 				break;
 		}
-		Projectile projectile = (Projectile)bulletPool.Get (prefab);
+		Projectile projectile = (Projectile)BulletPool.Get (prefab);
 		projectile.Transform.position = worldLocation;
 		projectile.Transform.rotation = Quaternion.Euler(0f, 0f, rotation);
 		projectile.Activate ();
 		return projectile;
 	}
-
+	
 	/// <summary>
 	/// Spawns the enemy.
 	/// </summary>
@@ -344,6 +316,7 @@ public class PlayerFieldController : BaseLib.CachedObject {
 		enemy.Transform.position = WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance));
 	}
 
+	
 	/// <summary>
 	/// Gets all bullets.
 	/// </summary>

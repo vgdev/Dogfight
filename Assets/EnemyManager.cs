@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using BaseLib;
 
-[RequireComponent(typeof(GameController))]
+[RequireComponent(typeof(PhantasmagoriaGameController))]
 public class EnemyManager : StaticGameObject<EnemyManager> {
 
 	private List<Enemy> registeredEnemies;
@@ -16,7 +16,7 @@ public class EnemyManager : StaticGameObject<EnemyManager> {
 		Instance.registeredEnemies.Remove (enemy);
 	}
 
-	private GameController controller;
+	private PhantasmagoriaGameController controller;
 
 	[SerializeField]
 	private float roundStartSafeZone;
@@ -47,7 +47,7 @@ public class EnemyManager : StaticGameObject<EnemyManager> {
 	}
 
 	void Start() {
-		controller = GetComponent<GameController> ();
+		controller = GetComponent<PhantasmagoriaGameController> ();
 		chainSpawnCountdown = roundStartSafeZone;
 		weightSum = 0f;
 		for (int i = 0; i < chains.Length; i++) {

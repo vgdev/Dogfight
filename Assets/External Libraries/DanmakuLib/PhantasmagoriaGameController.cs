@@ -5,19 +5,19 @@ using System.Collections;
 /// <summary>
 /// Game controller.
 /// </summary>
-public class GameController : MonoBehaviour  {
+public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 	
 	//TODO: Document Comment
 	[Serializable]
 	public class PlayerData {
 
 		[SerializeField]
-		private PlayerFieldController field;
+		private PhantasmagoriaField field;
 		/// <summary>
 		/// Gets the field.
 		/// </summary>
 		/// <value>The field.</value>
-		public PlayerFieldController Field {
+		public PhantasmagoriaField Field {
 			get {
 				return field;
 			}
@@ -94,8 +94,8 @@ public class GameController : MonoBehaviour  {
 	void Awake() {
 		Physics2D.raycastsHitTriggers = true;
 		if(player1.Field != null && player2.Field != null) {
-			player1.Field.TargetField = player2.Field;
-			player2.Field.TargetField = player1.Field;
+			player1.Field.SetTargetField(player2.Field);
+			player2.Field.SetTargetField(player1.Field);
 			player1.Field.PlayerNumber = 1;
 			player2.Field.PlayerNumber = 2;
 			StartRound();

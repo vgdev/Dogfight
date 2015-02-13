@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using BaseLib;
 using System;
 using System.Collections;
@@ -8,13 +8,13 @@ using System.Collections;
 /// </summary>
 public abstract class AbstractAttackPattern : CachedObject {
 
-	private PlayerFieldController targetField;
+	private AbstractDanmakuField targetField;
 
 	/// <summary>
 	/// Gets or sets the target field.
 	/// </summary>
 	/// <value>The target field.</value>
-	public PlayerFieldController TargetField {
+	public AbstractDanmakuField TargetField {
 		get {
 			return targetField;
 		}
@@ -113,9 +113,10 @@ public abstract class AbstractAttackPattern : CachedObject {
 	private IEnumerator Execute() {
 		attackActive = true;
 		OnExecutionStart ();
+		WaitForFixedUpdate wffu = new WaitForFixedUpdate ();
 		while(!IsFinished && attackActive) {
 			MainLoop(Time.fixedDeltaTime);
-			yield return new WaitForFixedUpdate();
+			yield return wffu;
 		}
 		OnExecutionFinish ();
 	}

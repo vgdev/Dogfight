@@ -74,6 +74,7 @@ namespace BaseLib {
 		public virtual void Deactivate() {
 			is_active = false;
 			GameObject.SetActive (false);
+			parentPool.Return (this);
 		}
 	}
 }

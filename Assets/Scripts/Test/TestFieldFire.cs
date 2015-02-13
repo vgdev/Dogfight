@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class TestFieldFire : TestScript {
-	public PlayerFieldController field;
+	public PhantasmagoriaField field;
 	public ProjectilePrefab prefab;
 	public Vector2 spawnLocation;
 	public int number;

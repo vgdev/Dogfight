@@ -21,7 +21,7 @@ public class MovementEditor : Editor {
 		curveTex.SetPixel (0, 0, Color.white);
 		FieldMovementPattern fmp = (FieldMovementPattern)target;
 		FieldMovementPattern.AtomicMovement[] movements = fmp.movements;
-		PlayerFieldController testField = fmp.field;
+		PhantasmagoriaField testField = fmp.field;
 		if(testField != null) {
 			testField.RecomputeWorldPoints();
 			Vector3 currentLocation = testField.WorldPoint(Util.To3D(fmp.testStartPoint));

@@ -4,10 +4,11 @@ using BaseLib;
 
 public abstract class AbstractTimedAttackPattern : AbstractAttackPattern {
 
+	[SerializeField]
 	private CountdownDelay timeout;
 
 	protected override void MainLoop (float dt) {
-		timeout.Tick (dt);
+		timeout.Tick (dt, false);
 	}
 
 	protected override void OnExecutionStart () {
