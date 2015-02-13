@@ -195,7 +195,7 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 				Avatar avatar = other.GetComponentInParent<Avatar>();
 				Debug.Log(avatar);
 				if(avatar != null) {
-					Active = false;
+					Deactivate();
 					avatar.Hit();
 				}
 			} else if(other.layer == enemyDamageMask && CompareTag("Player Shot")) {
@@ -313,7 +313,9 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	/// <summary>
 	/// Deactivate this instance.
 	/// </summary>
-	protected override void Deactivate() {
+	public override void Deactivate() 
+	{
+		base.Deactivate ();
 		properties.Clear ();
 		controllers.Clear ();
 		linearVelocity = 0f;

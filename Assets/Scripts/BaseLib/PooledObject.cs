@@ -36,17 +36,6 @@ namespace BaseLib {
 			get { 
 				return is_active; 
 			}
-			set {
-				//Debug.Log(value);
-				is_active = value;
-				if(value){
-					Activate();
-				} else {
-					Deactivate();
-					parentPool.Return(this);
-				}
-				GameObject.SetActive (value);
-			}
 		}
 
 		/// <summary>
@@ -74,13 +63,17 @@ namespace BaseLib {
 		/// <summary>
 		/// Activate this instance.
 		/// </summary>
-		protected virtual void Activate() {
+		public virtual void Activate() {
+			is_active = true;
+			GameObject.SetActive (true);
 		}
 
 		/// <summary>
 		/// Deactivate this instance.
 		/// </summary>
-		protected virtual void Deactivate() {
+		public virtual void Deactivate() {
+			is_active = false;
+			GameObject.SetActive (false);
 		}
 	}
 }

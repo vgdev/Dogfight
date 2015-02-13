@@ -5,7 +5,7 @@ using BaseLib;
 /// <summary>
 /// Basic circular burst.
 /// </summary>
-public class BasicCircularBurst : AttackPattern {
+public class BasicCircularBurst : AbstractAttackPattern {
 
 	/// <summary>
 	/// The prefab.
@@ -18,6 +18,9 @@ public class BasicCircularBurst : AttackPattern {
 	/// </summary>
 	[SerializeField]
 	private Vector2 spawnLocation;
+
+	[SerializeField]
+	private Vector2 spawnArea;
 
 	/// <summary>
 	/// The bullet count.
@@ -54,7 +57,7 @@ public class BasicCircularBurst : AttackPattern {
 	/// The burst initial rotation.
 	/// </summary>
 	[SerializeField]
-	[Rotation2D]
+	[Range(-180f, 180f)]
 	private float burstInitialRotation;
 
 	/// <summary>
@@ -64,8 +67,17 @@ public class BasicCircularBurst : AttackPattern {
 	[Range(-360f, 360f)]
 	private float burstRotationDelta;
 
+	private Vector2 currentBurstSource;
+
+	protected override bool IsFinished {
+		get {
+			return burstCount.Ready();
+		}
+	}
+
 	protected override void OnExecutionStart () {
 		burstCount.Reset ();
+		currentBurstSource = spawnLocation - 0.5f * spawnArea + Util.RandomVect2 (spawnArea);
 	}
 
 	/// <summary>
@@ -75,8 +87,9 @@ public class BasicCircularBurst : AttackPattern {
 	protected override void MainLoop (float dt) {
 		if (burstCount.Count > 0) {
 			if(burstDelay.Tick(dt)) {
+				float offset = (burstCount.MaxCount - burstCount.Count) * burstRotationDelta;
 				for(int i = 0; i < bulletCount; i++) {
-					FireCurvedBullet(prefab, spawnLocation, 360f / (float) bulletCount * (float)i, velocity, angV);
+					FireCurvedBullet(prefab, currentBurstSource, offset + 360f / (float) bulletCount * (float)i, velocity, angV);
 				}
 				burstCount.Tick();
 			}

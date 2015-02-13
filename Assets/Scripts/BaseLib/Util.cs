@@ -44,6 +44,15 @@ namespace BaseLib
 		public static Vector3 To3D(Vector2 v, float z = 0f) {
 			return new Vector3 (v.x, v.y, z);
 		}
+		
+		public static Vector2 RandomVect2(Vector2 v) {
+			return new Vector2 (Random.value * v.x, Random.value * v.y);
+		}
+
+		
+		public static Vector3 RandomVect3(Vector3 v) {
+			return new Vector3 (Random.value * v.x, Random.value * v.y, Random.value * v.z);
+		}
 
 		/// <summary>
 		/// Components the product2.

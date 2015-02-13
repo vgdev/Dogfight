@@ -116,6 +116,10 @@ namespace BaseLib {
 			count = maxCount;
 		}
 
+		public bool Ready() {
+			return count <= 0;
+		}
+
 		public bool Tick(bool reset = true) {
 			count--;
 			bool ready = count < 0;
