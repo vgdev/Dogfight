@@ -1,5 +1,5 @@
 using UnityEngine;
-using BaseLib;
+using UnityUtilLib;
 using System.Collections;
 
 /// <summary>
@@ -7,13 +7,13 @@ using System.Collections;
 /// </summary>
 public class PlayerDeathHitbox : CachedObject {
 
-	private Avatar player;
+	private AbstractPlayableCharacter player;
 
 	/// <summary>
 	/// Start this instance.
 	/// </summary>
 	void Start() {
-		player = GetComponentInParent<Avatar> ();
+		player = GetComponentInParent<AbstractPlayableCharacter> ();
 		if (player == null) {
 			Debug.LogError("PlayerDeathHitbox should be on a child object of a GameObject with an Avatar sublcass script");
 		}
@@ -26,21 +26,21 @@ public class PlayerDeathHitbox : CachedObject {
 	void OnTriggerEnter2D(Collider2D other) {
 		//Debug.Log ("Hit");
 		if (player != null) {
-			player.Hit();
 			Projectile proj = other.GetComponent<Projectile>();
 			if(proj != null) {
+				player.Hit(proj);
 				proj.Deactivate();
 			}
 		}
 	}
 
-	/// <summary>
-	/// Raises the bullet collision event.
-	/// </summary>
-	/// <param name="other">Other.</param>
-	void OnBulletCollision(ProjectileData other) {
-		if (player != null) {
-			player.Hit ();
-		}
-	}
+//	/// <summary>
+//	/// Raises the bullet collision event.
+//	/// </summary>
+//	/// <param name="other">Other.</param>
+//	void OnBulletCollision(ProjectileData other) {
+//		if (player != null) {
+//			player.Hit ();
+//		}
+//	}
 }
