@@ -25,7 +25,7 @@ public class PlayerMovementLimit : MonoBehaviour {
 	/// <param name="other">Other.</param>
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.CompareTag(tagCheck)) {
-			Avatar player = other.gameObject.GetComponent<Avatar> ();
+			AbstractPlayableCharacter player = other.gameObject.GetComponent<AbstractPlayableCharacter> ();
 			if(player != null) {
 				player.ForbidMovement(lockedMovementVector);
 			}
@@ -36,13 +36,10 @@ public class PlayerMovementLimit : MonoBehaviour {
 	/// Raises the trigger exit2 d event.
 	/// </summary>
 	/// <param name="other">Other.</param>
-	void OnTriggerExit2D(Collider2D other)
-	{
-		if(other.CompareTag(tagCheck))
-		{
-			Avatar player = other.gameObject.GetComponent<Avatar> ();
-			if(player != null)
-			{
+	void OnTriggerExit2D(Collider2D other) {
+		if(other.CompareTag(tagCheck)) {
+			AbstractPlayableCharacter player = other.gameObject.GetComponent<AbstractPlayableCharacter> ();
+			if(player != null) {
 				player.AllowMovement(lockedMovementVector);
 			}
 		}
