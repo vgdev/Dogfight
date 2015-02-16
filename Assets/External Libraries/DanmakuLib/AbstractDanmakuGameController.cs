@@ -26,5 +26,5 @@ public abstract class AbstractDanmakuGameController : MonoBehaviour {
 		}
 	}
 
-	public abstract void SpawnEnemy (GameObject prefab, Vector2 relativeLocations);
+	public abstract void SpawnEnemy (AbstractEnemy prefab, Vector2 relativeLocations);
 }

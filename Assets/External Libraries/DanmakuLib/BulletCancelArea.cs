@@ -9,33 +9,17 @@ using UnityUtilLib;
 [RequireComponent(typeof(Collider2D))]
 public class BulletCancelArea : CachedObject {
 
-	//TODO: Finish this class
-
-	/// <summary>
-	/// The max scale.
-	/// </summary>
-	[SerializeField]
-	private float maxScale = 8f;
-	public float MaxScale {
-		get {
-			return maxScale;
-		}
-		set {
-			maxScale = value;
-		}
-	}
-
-	/// <summary>
-	/// Start this instance.
-	/// </summary>
-	void Start() {
-		StartCoroutine (Execute ());
-	}
-
 	/// <summary>
 	/// Execute this instance.
 	/// </summary>
-	private IEnumerator Execute() {
-		throw new System.NotImplementedException();
+	public IEnumerator Execute(float duration, float maxScale) {
+		Vector3 maxScaleV = Vector3.one * maxScale;
+		Vector3 startScale = Transform.localScale;
+		float t = 0;
+		while (t < 1f) {
+			Transform.localScale = Vector3.Lerp(startScale, maxScaleV, t);
+			yield return new WaitForFixedUpdate();
+			t += Time.fixedDeltaTime / duration;
+		}
 	}
 }

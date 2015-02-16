@@ -163,5 +163,9 @@ namespace UnityUtilLib
 			}
 			return returnValue;
 		}
+
+		public static T InstantiatePrefab<T>(T component) where T : Component {
+			return ((GameObject)GameObject.Instantiate (component.gameObject)).GetComponent<T> ();
+		}
 	}
 }

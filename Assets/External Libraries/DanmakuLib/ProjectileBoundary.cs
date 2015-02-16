@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Projectile boundary.
@@ -13,12 +14,15 @@ public class ProjectileBoundary : MonoBehaviour {
 	[SerializeField]
 	private string tagFilter;
 
+	private List<string> validTags;
+
 	/// <summary>
 	/// Awake this instance.
 	/// </summary>
 	void Awake() {
 		if(tagFilter == null)
 			tagFilter = "";
+		validTags = new List<string>(tagFilter.Split ('|'));
 	}
 
 	/// <summary>
@@ -27,11 +31,15 @@ public class ProjectileBoundary : MonoBehaviour {
 	/// <param name="other">Other.</param>
 	void OnTriggerEnter2D(Collider2D other) {
 		//Debug.Log ("Entered");
-		if(other.CompareTag(tagFilter)) {
+		if(validTags.Contains(other.tag)) {
 			Projectile proj = other.GetComponent<Projectile>();
 			if(proj != null) {
-				proj.Deactivate();
+				ProcessProjectile(proj);
 			}
 		}
+	}
+
+	protected virtual void ProcessProjectile(Projectile proj) {
+		proj.Deactivate();
 	}
 }
