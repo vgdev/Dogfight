@@ -292,8 +292,8 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// </summary>
 	/// <param name="prefab">Prefab.</param>
 	/// <param name="fieldLocation">Field location.</param>
-	public void SpawnEnemy(GameObject prefab, Vector2 fieldLocation) {
-		FieldMovementPattern enemy = ((GameObject)Instantiate (prefab)).GetComponent<FieldMovementPattern> ();
+	public void SpawnEnemy(AbstractEnemy prefab, Vector2 fieldLocation) {
+		AbstractEnemy enemy = Util.InstantiatePrefab<AbstractEnemy> (prefab);
 		enemy.Transform.position = WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance));
 	}
 	

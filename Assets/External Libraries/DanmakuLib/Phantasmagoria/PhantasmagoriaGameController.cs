@@ -72,7 +72,10 @@ public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 	/// The guardian.
 	/// </summary>
 	[SerializeField]
-	public GameObject guardian;
+	private BasicEnemy guardian;
+
+	[SerializeField]
+	private Vector2 guardianSpawnLocation = new Vector2 (0.5f, 1.1f);
 
 	private bool guardianSummoned;
 
@@ -116,7 +119,7 @@ public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 		}
 		roundTimeRemaining -= Time.fixedDeltaTime;
 		if (roundTimeRemaining < 0f && !guardianSummoned) {
-			SpawnEnemy(guardian, new Vector2(0.5f, 1.1f));
+			SpawnEnemy(guardian, guardianSpawnLocation);
 			guardianSummoned = true;
 		}
 	}
@@ -142,7 +145,7 @@ public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 	/// </summary>
 	/// <param name="prefab">Prefab.</param>
 	/// <param name="relativeLocations">Relative locations.</param>
-	public override void SpawnEnemy(GameObject prefab, Vector2 relativeLocations) {
+	public override void SpawnEnemy(AbstractEnemy prefab, Vector2 relativeLocations) {
 		if(player1.Field != null && player2.Field != null) {
 			player1.Field.SpawnEnemy(prefab, relativeLocations);
 			player2.Field.SpawnEnemy(prefab, relativeLocations);

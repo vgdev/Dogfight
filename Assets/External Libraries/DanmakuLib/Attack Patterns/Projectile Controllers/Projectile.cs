@@ -108,16 +108,6 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	private Dictionary<string, object> properties;
 
 	/// <summary>
-	/// The circle check.
-	/// </summary>
-	private bool circleCheck = false;
-
-	/// <summary>
-	/// The box check.
-	/// </summary>
-	private bool boxCheck = false;
-
-	/// <summary>
 	/// The circle center.
 	/// </summary>
 	private Vector2 circleCenter = Vector2.zero; 
@@ -126,16 +116,6 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	/// The circle raidus.
 	/// </summary>
 	private float circleRaidus = 1f;
-
-	/// <summary>
-	/// The box center.
-	/// </summary>
-	private Vector2 boxCenter = Vector2.zero;
-
-	/// <summary>
-	/// The size of the box.
-	/// </summary>
-	private Vector2 boxSize = Vector2.one;
 
 	/// <summary>
 	/// The sprite renderer.
@@ -173,24 +153,13 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		Vector3 movementVector = Transform.up * movementDistance;
 
 		RaycastHit2D hit = default(RaycastHit2D);
-		if (circleCheck) {//circleCollider.enabled) {
-			Vector2 offset = Util.ComponentProduct2(Transform.lossyScale, circleCenter);
-			float radius = circleRaidus * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
-			hit = Physics2D.CircleCast(Transform.position + Util.To3D(offset), 
-			                           radius, 
-			                           movementVector, 
-			                           movementDistance, 
-			                           comboMask);
-		}
-		if (boxCheck) {//boxCollider.enabled) {
-			Vector2 offset = Util.ComponentProduct2(Transform.lossyScale, boxCenter);
-			hit = Physics2D.BoxCast(Transform.position + Util.To3D(offset), 
-			                        Util.ComponentProduct2(boxSize, Util.To2D(Transform.lossyScale)), 
-			                        Transform.rotation.eulerAngles.z, 
-			                        movementVector, 
-			                        movementDistance,
-			                        comboMask);
-		}
+		Vector2 offset = Util.ComponentProduct2(Transform.lossyScale, circleCenter);
+		float radius = circleRaidus * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
+		hit = Physics2D.CircleCast(Transform.position + Util.To3D(offset), 
+		                           radius, 
+		                           movementVector, 
+		                           movementDistance, 
+		                           comboMask);
 		Debug.DrawRay (Transform.position, movementVector);
 
 		//Translate
@@ -236,7 +205,6 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	/// </summary>
 	/// <param name="prefab">Prefab.</param>
 	public override void MatchPrefab(ProjectilePrefab prefab) {
-		BoxCollider2D bc = prefab.BoxCollider;
 		CircleCollider2D cc = prefab.CircleCollider;
 		SpriteRenderer sr = prefab.SpriteRenderer;
 
@@ -254,19 +222,14 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		else
 			Debug.LogError("The provided prefab should have a SpriteRenderer!");
 
-		if(boxCheck = (bc != null)) {//boxCollider.enabled = bc != null) {
-//			boxCollider.center = bc.center;
-//			boxCollider.size = bc.size;
-			boxCenter = bc.center;
-			boxSize = bc.size;
-		}
-
-		if(circleCheck = (cc != null)) {//circleCollider.enabled = cc != null) {
+		if(cc != null) {//circleCollider.enabled = cc != null) {
 //			circleCollider.center = cc.center;
 //			circleCollider.radius = cc.radius;
 			circleCenter = cc.center;
 			circleRaidus = cc.radius;
 		}
+		else
+			Debug.LogError("The provided prefab should a CircleCollider2D!");
 	}
 
 	/// <summary>

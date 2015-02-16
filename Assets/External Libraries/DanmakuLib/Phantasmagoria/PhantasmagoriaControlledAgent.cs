@@ -26,7 +26,6 @@ public class PhantasmagoriaControlledAgent : AbstractPlayerAgent  {
 	/// </summary>
 	/// <param name="dt">Dt.</param>
 	public override void Update (float dt) {
-		Debug.Log ("Hello");
 		PhantasmagoriaPlayableCharacter player = (PhantasmagoriaPlayableCharacter)Player;
 		Vector2 movementVector = Vector2.zero;
 		movementVector.x = Util.Sign(Input.GetAxis (horizontalMoveAxis));

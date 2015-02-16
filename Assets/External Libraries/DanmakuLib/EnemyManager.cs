@@ -23,7 +23,7 @@ public class EnemyManager : StaticGameObject<EnemyManager> {
 
 	[System.Serializable]
 	public class EnemySpawnData {
-		public GameObject EnemyPrefab;
+		public AbstractEnemy EnemyPrefab;
 		public Rect spawnArea;
 		public float timeUntilNext;
 	}
