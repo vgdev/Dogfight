@@ -12,6 +12,7 @@ namespace UnityUtilLib {
 
 		void Start() {
 			rend = renderer;
+			rend.material.mainTexture.wrapMode = TextureWrapMode.Repeat;
 		}
 
 		// Update is called once per frame

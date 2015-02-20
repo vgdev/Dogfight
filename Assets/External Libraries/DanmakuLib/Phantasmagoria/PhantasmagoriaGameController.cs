@@ -76,8 +76,16 @@ public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 
 	[SerializeField]
 	private Vector2 guardianSpawnLocation = new Vector2 (0.5f, 1.1f);
-
 	private bool guardianSummoned;
+
+	[SerializeField]
+	private float closureDuration;
+
+	[SerializeField]
+	private Transform closureTop;
+
+	[SerializeField]
+	private Transform closureBottom;
 
 	/// <summary>
 	/// Awake this instance.
@@ -115,7 +123,7 @@ public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 		} else if(player1.score >= winningScore) {
 			//Declare Player 2 the winner
 		} else if(reset) {
-			RoundReset ();
+			StartCoroutine(RoundReset ());
 		}
 		roundTimeRemaining -= Time.fixedDeltaTime;
 		if (roundTimeRemaining < 0f && !guardianSummoned) {
@@ -139,9 +147,49 @@ public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 	/// <summary>
 	/// Reset this instance.
 	/// </summary>
-	public void RoundReset() {
+	public IEnumerator RoundReset() {
+		float oldTimeScale = Time.timeScale;
+		float duration = closureDuration / 2f;
+		Vector3 scale = closureTop.localScale;
+		Vector3 oldScale = scale;
+		Time.timeScale = 0;
+		float t = 0;
+		scale.y = t;
+		while (t <= 1f) {
+			scale.y = t;
+			closureTop.localScale = scale;
+			closureBottom.localScale = scale;
+			yield return new WaitForEndOfFrame ();
+			t += Time.unscaledDeltaTime / duration;
+		}
+		scale.y = 1f;
+		closureTop.localScale = scale;
+		closureBottom.localScale = scale;
 		player1.Field.RoundReset ();
 		player2.Field.RoundReset ();
+		Projectile[] allProjectiles = FindObjectsOfType<Projectile> ();
+		for(int i = 0; i < allProjectiles.Length; i++) {
+			allProjectiles[i].DeactivateImmediate();
+		}
+		AbstractEnemy[] allEnemies = FindObjectsOfType<AbstractEnemy> ();
+		for(int i = 0; i < allEnemies.Length; i++) {
+			Destroy (allEnemies[i].GameObject);
+		}
+		BulletCancelArea[] bcas = FindObjectsOfType<BulletCancelArea> ();
+		for(int i = 0; i < bcas.Length; i++) {
+			Destroy (bcas[i].GameObject);
+		}
+		while (t > 0f) {
+			Debug.Log(t);
+			scale.y = t;
+			closureTop.localScale = scale;
+			closureBottom.localScale = scale;
+			yield return new WaitForEndOfFrame ();
+			t -= Time.unscaledDeltaTime / duration;
+		}
+		closureTop.localScale = oldScale;
+		closureBottom.localScale = oldScale;
+		Time.timeScale = oldTimeScale;
 	}
 
 	/// <summary>

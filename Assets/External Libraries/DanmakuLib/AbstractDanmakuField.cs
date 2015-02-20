@@ -249,7 +249,7 @@ public abstract class AbstractDanmakuField : CachedObject {
 		Vector3 spawnPos = WorldPoint(Util.To3D(playerSpawnLocation, gamePlaneDistance));
 		player =  (AbstractPlayableCharacter) Instantiate(playerCharacter, spawnPos, Quaternion.identity);
 		if(player != null) {
-			player.Reset (5);
+			player.Reset (1);
 			player.Transform.parent = Transform;
 			player.Field = this;
 		}
@@ -293,7 +293,6 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// <param name="prefab">Prefab.</param>
 	/// <param name="fieldLocation">Field location.</param>
 	public void SpawnEnemy(AbstractEnemy prefab, Vector2 fieldLocation) {
-		Debug.Log(WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance)));
 		Instantiate(prefab, WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance)), Quaternion.identity);
 	}
 	

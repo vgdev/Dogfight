@@ -148,7 +148,6 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		for (int i = 0; i < hits.Length; i++) {
 			RaycastHit2D hit = hits[i];
 			if (hit.collider != null) {
-				Debug.Log(hit.collider.gameObject.layer);
 				hit.collider.SendMessage("OnProjectileCollision", this, SendMessageOptions.DontRequireReceiver);
 			}
 			if(to_deactivate){
@@ -162,13 +161,7 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 				controllers[i].UpdateBullet(this, dt);
 
 		if (to_deactivate) {
-			base.Deactivate();
-			properties.Clear ();
-			controllers.Clear ();
-			linearVelocity = 0f;
-			fireTimer = 0f;
-			damage = 0;
-			angularVelocity = Quaternion.identity;
+			DeactivateImmediate();
 		}
 	}
 
@@ -274,5 +267,15 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	/// </summary>
 	public override void Deactivate()  {
 		to_deactivate = true;
+	}
+
+	public void DeactivateImmediate() {
+		base.Deactivate();
+		properties.Clear ();
+		controllers.Clear ();
+		linearVelocity = 0f;
+		fireTimer = 0f;
+		damage = 0;
+		angularVelocity = Quaternion.identity;
 	}
 }

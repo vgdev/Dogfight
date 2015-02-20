@@ -3,9 +3,9 @@ using System.Collections;
 
 namespace UnityUtilLib.GUI {
 	public class RemoveMouse : MonoBehaviour  {
-		void Update () {
+		void Awake () {
 			#if UNITY_EDITOR
-			DestroyImmediate(this);
+			Destroy (this);
 			#else
 			Screen.lockCursor = true;
 			#endif
