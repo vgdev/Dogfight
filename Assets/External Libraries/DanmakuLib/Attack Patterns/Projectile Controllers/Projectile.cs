@@ -8,41 +8,20 @@ using System.Collections;
 /// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
 public class Projectile : PooledObject<ProjectilePrefab> {
-	/// <summary>
-	/// The player death mask.
-	/// </summary>
-	private static int playerDeathMask = 1 << 8;
 
-	/// <summary>
-	/// The enemy damage mask.
-	/// </summary>
-	private static int enemyDamageMask = 1 << 13;
+	private static int[] collisionMask;
 
-	/// <summary>
-	/// The combo mask.
-	/// </summary>
-	private static int comboMask = playerDeathMask | enemyDamageMask;
-
-	/// <summary>
-	/// Angles the between 2d.
-	/// </summary>
-	/// <returns>The between2 d.</returns>
-	/// <param name="v1">V1.</param>
-	/// <param name="v2">V2.</param>
-	public static float AngleBetween2D(Vector2 v1, Vector2 v2) {
-		Vector2 diff = v2 - v1;
-		return Mathf.Atan2 (diff.y, diff.x) * 180f / Mathf.PI - 90f; 
+	public static void RecomputeProjectileCollisions() {
+		collisionMask = new int[32];
+		for(int i = 0; i < 32; i++) {
+			collisionMask[i] = 0;
+			for (int j = 0; j < 32; j++) {
+				collisionMask[i] |= (Physics2D.GetIgnoreLayerCollision(i, j)) ? 0 : (1 << j);
+			}
+		}
 	}
 
-	/// <summary>
-	/// Rotations the between2 d.
-	/// </summary>
-	/// <returns>The between2 d.</returns>
-	/// <param name="v1">V1.</param>
-	/// <param name="v2">V2.</param>
-	public static Quaternion RotationBetween2D(Vector2 v1, Vector2 v2) {
-		return Quaternion.Euler (0f, 0f, AngleBetween2D (v1, v2));
-	}
+	private bool to_deactivate;
 
 	/// <summary>
 	/// The damage.
@@ -139,6 +118,8 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		controllers = new List<ProjectileController> ();
 		if(spriteRenderer == null)
 			spriteRenderer = GetComponent<SpriteRenderer> ();
+		if(collisionMask == null)
+			RecomputeProjectileCollisions();
 	}
 
 	/// <summary>
@@ -152,42 +133,43 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		float movementDistance = linearVelocity * dt;
 		Vector3 movementVector = Transform.up * movementDistance;
 
-		RaycastHit2D hit = default(RaycastHit2D);
 		Vector2 offset = Util.ComponentProduct2(Transform.lossyScale, circleCenter);
 		float radius = circleRaidus * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
-		hit = Physics2D.CircleCast(Transform.position + Util.To3D(offset), 
+		RaycastHit2D[] hits = Physics2D.CircleCastAll(Transform.position + Util.To3D(offset), 
 		                           radius, 
 		                           movementVector, 
-		                           movementDistance, 
-		                           comboMask);
+		                           movementDistance,
+		                           collisionMask[GameObject.layer]);
 		Debug.DrawRay (Transform.position, movementVector);
 
 		//Translate
 		Transform.position += movementVector;
 
-		if (hit.collider != null) {
-			GameObject other = hit.collider.gameObject;
-			if(other.layer == playerDeathMask && CompareTag("Bullet")) {
+		for (int i = 0; i < hits.Length; i++) {
+			RaycastHit2D hit = hits[i];
+			if (hit.collider != null) {
+				Debug.Log(hit.collider.gameObject.layer);
+				hit.collider.SendMessage("OnProjectileCollision", this, SendMessageOptions.DontRequireReceiver);
+			}
+			if(to_deactivate){
 				Transform.position = hit.point;
-				AbstractPlayableCharacter avatar = other.GetComponentInParent<AbstractPlayableCharacter>();
-				Debug.Log(avatar);
-				if(avatar != null) {
-					Deactivate();
-					avatar.Hit(this);
-				}
-			} else if(other.layer == enemyDamageMask && CompareTag("Player Shot")) {
-				Transform.position = hit.point;
-				AbstractEnemy enemy = other.GetComponent<AbstractEnemy>();
-				if(enemy != null) {
-					enemy.Hit (damage);
-					Deactivate();
-				}
+				break;
 			}
 		}
 
 		for(int i = 0; i < controllers.Count; i++)
 			if(controllers[i] != null)
 				controllers[i].UpdateBullet(this, dt);
+
+		if (to_deactivate) {
+			base.Deactivate();
+			properties.Clear ();
+			controllers.Clear ();
+			linearVelocity = 0f;
+			fireTimer = 0f;
+			damage = 0;
+			angularVelocity = Quaternion.identity;
+		}
 	}
 
 	/// <summary>
@@ -282,16 +264,15 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 			controller.OnControllerRemove(this);
 	}
 
+	public override void Activate () {
+		base.Activate ();
+		to_deactivate = false;
+	}
+
 	/// <summary>
 	/// Deactivate this instance.
 	/// </summary>
 	public override void Deactivate()  {
-		base.Deactivate ();
-		properties.Clear ();
-		controllers.Clear ();
-		linearVelocity = 0f;
-		fireTimer = 0f;
-		damage = 0;
-		angularVelocity = Quaternion.identity;
+		to_deactivate = true;
 	}
 }

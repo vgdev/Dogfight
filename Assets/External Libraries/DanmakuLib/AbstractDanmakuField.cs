@@ -230,7 +230,7 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// <returns>The toward player.</returns>
 	/// <param name="startLocation">Start location.</param>
 	public float AngleTowardPlayer(Vector3 startLocation) {
-		return Projectile.AngleBetween2D (startLocation, PlayerPosition);
+		return Util.AngleBetween2D (startLocation, PlayerPosition);
 	}
 
 	public override void Awake () {
@@ -247,7 +247,7 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// <param name="controller">Controller for the player, allows for a user to manually control it or let an AI take over.</param>
 	public AbstractPlayableCharacter SpawnPlayer(AbstractPlayableCharacter playerCharacter) {
 		Vector3 spawnPos = WorldPoint(Util.To3D(playerSpawnLocation, gamePlaneDistance));
-		player = ((GameObject)Instantiate (playerCharacter.GameObject, spawnPos, Quaternion.identity)).GetComponent<AbstractPlayableCharacter>();
+		player =  (AbstractPlayableCharacter) Instantiate(playerCharacter, spawnPos, Quaternion.identity);
 		if(player != null) {
 			player.Reset (5);
 			player.Transform.parent = Transform;
@@ -293,8 +293,8 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// <param name="prefab">Prefab.</param>
 	/// <param name="fieldLocation">Field location.</param>
 	public void SpawnEnemy(AbstractEnemy prefab, Vector2 fieldLocation) {
-		AbstractEnemy enemy = Util.InstantiatePrefab<AbstractEnemy> (prefab);
-		enemy.Transform.position = WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance));
+		Debug.Log(WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance)));
+		Instantiate(prefab, WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance)), Quaternion.identity);
 	}
 	
 	/// <summary>

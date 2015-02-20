@@ -32,7 +32,7 @@ namespace UnityUtilLib {
 		/// Gets or sets a value indicating whether this <see cref="UnityUtilLib.PooledObject`1"/> is active.
 		/// </summary>
 		/// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
-		public bool Active {
+		public bool IsActive {
 			get { 
 				return is_active; 
 			}

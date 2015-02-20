@@ -29,7 +29,6 @@ public class ProjectileTransferBoundary : ProjectileBoundary {
 		if (field != null && targetField != null) {
 			Vector2 relativePos = field.FieldPoint(proj.Transform.position);
 			proj.Transform.position = targetField.WorldPoint(relativePos);
-
 		}
 	}
 }

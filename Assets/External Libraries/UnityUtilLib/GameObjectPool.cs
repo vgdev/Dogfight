@@ -34,7 +34,7 @@ namespace UnityUtilLib {
 		/// The base prefab.
 		/// </summary>
 		[SerializeField]
-		private GameObject basePrefab;
+		private T basePrefab;
 
 		/// <summary>
 		/// The container.
@@ -107,7 +107,7 @@ namespace UnityUtilLib {
 		private void Spawn(int count) {
 			Transform parentTrans = container.transform;
 			for(int i = 0; i < count; i++) {
-				T newPO = ((GameObject)Instantiate(basePrefab)).GetComponent<T>();
+				T newPO = (T)Instantiate(basePrefab);
 				newPO.Transform.parent = parentTrans;
 				newPO.Initialize(this);
 				inactive.Enqueue(newPO);

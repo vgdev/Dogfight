@@ -101,19 +101,56 @@ public class PhantasmagoriaPlayableCharacter : AbstractAgentCharacter {
 		}
 	}
 
+	[SerializeField]
+	private BulletCancelArea cancelPrefab;
+
+	[SerializeField]
+	private float deathCancelDuration;
+
 	/// <summary>
 	/// The death cancel radius.
 	/// </summary>
 	[SerializeField]
 	private float deathCancelRadius;
 
+	[SerializeField]
+	private CountdownDelay deathInvincibiiltyPeriod;
+
+	[SerializeField]
+	private CountdownDelay invincibiltyFlash;
+
+	private bool invincible;
+
 	public override void Hit(Projectile proj) {
-		base.Hit (proj);
-		float radius = deathCancelRadius * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
-		Projectile[] toCanccel = Field.GetAllBullets (Transform.position, radius);
-		for(int i = 0; i < toCanccel.Length; i++) {
-			toCanccel[i].Deactivate();
+		if(!invincible) {
+			base.Hit (proj);
+			BulletCancelArea cancelArea = (BulletCancelArea)Instantiate (cancelPrefab, Transform.position, Quaternion.identity);
+			cancelArea.Run(deathCancelDuration, deathCancelRadius);
+			StartCoroutine(DeathInvincibiilty());
 		}
+	}
+
+	private IEnumerator DeathInvincibiilty() {
+		invincible = true;
+		deathInvincibiiltyPeriod.Reset ();
+		invincibiltyFlash.Reset ();
+		WaitForFixedUpdate wffu = new WaitForFixedUpdate ();
+		SpriteRenderer render = GetComponent<SpriteRenderer> ();
+		bool flash = false;
+		Color normalColor = render.color;
+		Color flashColor = normalColor;
+		flashColor.a = 0;
+		float dt = Time.fixedDeltaTime;
+		while(!deathInvincibiiltyPeriod.Tick(dt)) {
+			if(invincibiltyFlash.Tick(dt)) {
+				flash = !flash;
+				render.color = (flash) ? flashColor : normalColor;
+			}
+			yield return wffu;
+			dt = Time.fixedDeltaTime;
+		}
+		invincible = false;
+		render.color = normalColor;
 	}
 	
 	/// <summary>

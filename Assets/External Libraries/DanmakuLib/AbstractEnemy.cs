@@ -81,4 +81,9 @@ public abstract class AbstractEnemy : CachedObject {
 
 	protected virtual void OnDamage() {
 	}
+
+	void OnProjectileCollision(Projectile proj) {
+		Hit (proj.Damage);
+		proj.Deactivate();
+	}
 }

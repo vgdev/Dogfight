@@ -6,7 +6,7 @@ using UnityUtilLib;
 /// <summary>
 /// Field movement pattern.
 /// </summary>
-public class FieldMovementPattern : CachedObject {
+public class FieldMovementPattern : AbstractMovementPattern {
 
 	/// <summary>
 	/// The field.
@@ -110,7 +110,7 @@ public class FieldMovementPattern : CachedObject {
 	/// <summary>
 	/// Move this instance.
 	/// </summary>
-	protected IEnumerator Move() {
+	protected override IEnumerator Move() {
 		for(int i = 0; i < movements.Length; i++) {
 			if(movements[i] != null) {
 				float totalTime = movements[i].time;
@@ -119,8 +119,11 @@ public class FieldMovementPattern : CachedObject {
 				Vector3 targetLocation = movements[i].NextLocation(field, startLocation);
 				Vector3 control1 = movements[i].NextControlPoint1(field, startLocation);
 				Vector3 control2 = movements[i].NextControlPoint2(field, startLocation);
+				Vector3 oldPosition;
 				while(t < 1f) {
+					oldPosition = Transform.position;
 					Transform.position = Util.BerzierCurveVectorLerp(startLocation, targetLocation, control1, control2, t);
+					Transform.rotation = Util.RotationBetween2D(oldPosition, Transform.position);
 					yield return new WaitForFixedUpdate();
 					t += Time.deltaTime / totalTime;
 				}

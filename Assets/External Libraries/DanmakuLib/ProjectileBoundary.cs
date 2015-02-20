@@ -22,7 +22,8 @@ public class ProjectileBoundary : MonoBehaviour {
 	void Awake() {
 		if(tagFilter == null)
 			tagFilter = "";
-		validTags = new List<string>(tagFilter.Split ('|'));
+		validTags = new List<string> ();
+		validTags.AddRange(tagFilter.Split ('|'));
 	}
 
 	/// <summary>
@@ -36,6 +37,13 @@ public class ProjectileBoundary : MonoBehaviour {
 			if(proj != null) {
 				ProcessProjectile(proj);
 			}
+		}
+	}
+
+	void OnProjectileCollision(Projectile proj) {
+		if(proj != null) {
+			ProcessProjectile(proj);
+			proj.Deactivate();
 		}
 	}
 

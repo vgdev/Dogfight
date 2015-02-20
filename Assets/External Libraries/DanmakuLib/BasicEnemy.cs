@@ -25,6 +25,7 @@ public class BasicEnemy : AbstractEnemy {
 		base.Awake ();
 		currentHealth = maxHealth;
 		movementPattern = GetComponent<AbstractMovementPattern> ();
+		movementPattern.DestroyOnEnd = true;
 		attackPattern = GetComponent<AbstractAttackPattern> ();
 		if (attackPattern != null) {
 			attackPattern.TargetField = Field.TargetField;
@@ -33,16 +34,13 @@ public class BasicEnemy : AbstractEnemy {
 		movementPattern.StartMovement ();
 	}
 
-	public override void Start () {
-		base.Start ();
-	}
-
 	protected override void Damage (float damage) {
 		currentHealth -= damage;
 	}
 	
 	public override bool IsDead {
 		get {
+
 			return currentHealth <= 0;
 		}
 	}

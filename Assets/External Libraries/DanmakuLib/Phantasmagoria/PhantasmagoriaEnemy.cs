@@ -4,6 +4,9 @@ using UnityUtilLib;
 
 public class PhantasmagoriaEnemy : BasicEnemy {
 
+	[SerializeField]
+	private float deathReflectDuration;
+
 	/// <summary>
 	/// The death reflect radius.
 	/// </summary>

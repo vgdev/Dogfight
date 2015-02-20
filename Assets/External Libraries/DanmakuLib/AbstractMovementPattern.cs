@@ -30,5 +30,4 @@ public abstract class AbstractMovementPattern : CachedObject {
 	}
 
 	protected abstract IEnumerator Move();
-
 }

@@ -34,13 +34,10 @@ public class PlayerDeathHitbox : CachedObject {
 		}
 	}
 
-//	/// <summary>
-//	/// Raises the bullet collision event.
-//	/// </summary>
-//	/// <param name="other">Other.</param>
-//	void OnBulletCollision(ProjectileData other) {
-//		if (player != null) {
-//			player.Hit ();
-//		}
-//	}
+	void OnProjectileCollision(Projectile proj) {
+		if (player != null) {
+			player.Hit (proj);
+			proj.Deactivate();
+		}
+	}
 }

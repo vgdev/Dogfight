@@ -164,8 +164,25 @@ namespace UnityUtilLib
 			return returnValue;
 		}
 
-		public static T InstantiatePrefab<T>(T component) where T : Component {
-			return ((GameObject)GameObject.Instantiate (component.gameObject)).GetComponent<T> ();
+		/// <summary>
+		/// Angles the between 2d.
+		/// </summary>
+		/// <returns>The between2 d.</returns>
+		/// <param name="v1">V1.</param>
+		/// <param name="v2">V2.</param>
+		public static float AngleBetween2D(Vector2 v1, Vector2 v2) {
+			Vector2 diff = v2 - v1;
+			return Mathf.Atan2 (diff.y, diff.x) * 180f / Mathf.PI - 90f; 
+		}
+		
+		/// <summary>
+		/// Rotations the between2 d.
+		/// </summary>
+		/// <returns>The between2 d.</returns>
+		/// <param name="v1">V1.</param>
+		/// <param name="v2">V2.</param>
+		public static Quaternion RotationBetween2D(Vector2 v1, Vector2 v2) {
+			return Quaternion.Euler (0f, 0f, AngleBetween2D (v1, v2));
 		}
 	}
 }

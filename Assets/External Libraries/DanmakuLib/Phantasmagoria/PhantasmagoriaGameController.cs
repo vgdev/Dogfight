@@ -119,8 +119,12 @@ public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 		}
 		roundTimeRemaining -= Time.fixedDeltaTime;
 		if (roundTimeRemaining < 0f && !guardianSummoned) {
-			SpawnEnemy(guardian, guardianSpawnLocation);
-			guardianSummoned = true;
+			if(guardian != null) {
+				SpawnEnemy(guardian, guardianSpawnLocation);
+				guardianSummoned = true;
+			} else {
+				Debug.LogWarning("Tried to summon a Guardian enemy that doesn't exist");
+			}
 		}
 	}
 
