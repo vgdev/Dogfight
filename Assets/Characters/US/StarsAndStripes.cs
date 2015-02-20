@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using BaseLib;
+using UnityUtilLib;
 
 /// <summary>
 /// An example attack pattern for those trying to make new bullet patterns for new characters or enemies.

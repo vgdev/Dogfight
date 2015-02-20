@@ -1,17 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityUtilLib.GUI;
 
 /// <summary>
 /// Player life indicator.
 /// </summary>
 public class PlayerLifeIndicator : MultiObjectValueIndicator {
 
+	private PhantasmagoriaGameController gameControl;
+
+	void Awake() {
+		gameControl = (PhantasmagoriaGameController)GameController;
+	}
+
 	/// <summary>
 	/// Gets the max value.
 	/// </summary>
 	/// <returns>The max value.</returns>
 	protected override int GetMaxValue () {
-		return gameController.MaximumLives;
+		return gameControl.MaximumLives;
 	}
 
 	/// <summary>
@@ -19,6 +26,6 @@ public class PlayerLifeIndicator : MultiObjectValueIndicator {
 	/// </summary>
 	/// <returns>The value.</returns>
 	protected override int GetValue () {
-		return ((player) ? gameController.player1 : gameController.player2).Field.LivesRemaining;
+		return ((player) ? gameControl.player1 : gameControl.player2).Field.LivesRemaining;
 	}
 }
