@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using BaseLib;
+using UnityUtilLib;
 
 public class KnightsCross : AbstractTimedAttackPattern
 {
