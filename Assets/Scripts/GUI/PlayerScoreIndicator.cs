@@ -1,17 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityUtilLib.GUI;
 
 /// <summary>
 /// Player score indicator.
 /// </summary>
 public class PlayerScoreIndicator : MultiObjectValueIndicator {
 
+	private PhantasmagoriaGameController gameControl;
+	
+	void Awake() {
+		gameControl = (PhantasmagoriaGameController)GameController;
+	}
+
+
 	/// <summary>
 	/// Gets the max value.
 	/// </summary>
-	/// <returns>The max value.</returns>
+	/// <returns>The max value.</return>
 	protected override int GetMaxValue () {
-		return gameController.winningScore;
+		return gameControl.WinningScore;
 	}
 
 	/// <summary>
@@ -19,6 +27,6 @@ public class PlayerScoreIndicator : MultiObjectValueIndicator {
 	/// </summary>
 	/// <returns>The value.</returns>
 	protected override int GetValue() {
-		return ((player) ? gameController.player1 : gameController.player2).score;
+		return ((player) ? gameControl.player1 : gameControl.player2).score;
 	}
 }

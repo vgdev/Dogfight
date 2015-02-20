@@ -1,27 +1,30 @@
-﻿using UnityEngine;
-using BaseLib;
+using UnityEngine;
+using UnityUtilLib;
 using System.Collections;
 
 public class PlayerGrazeHitbox : CachedObject {
 
-	private Avatar player;
+	private AbstractPlayableCharacter player;
 
 	void Start() {
-		player = Transform.parent.GetComponent<Avatar> ();
+		player = Transform.parent.GetComponent<AbstractPlayableCharacter> ();
 		if (player == null) {
 			Debug.LogError("PlayerGrazeHitbox should be on a child object of a GameObject with an Avatar sublcass script");
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D other) {
+	void OnTriggerExit2D(Collider2D other) {
 		if (player != null) {
-			player.Graze();
+			Projectile proj = other.GetComponent<Projectile>();
+			if(proj != null) {
+				player.Graze(proj);
+			}
 		}
 	}
 
-	void OnBulletCollision(ProjectileData other) {
-		if (player != null) {
-			player.Graze();
-		}
-	}
+//	void OnBulletCollision(ProjectileData other) {
+//		if (player != null) {
+//			player.Graze();
+//		}
+//	}
 }

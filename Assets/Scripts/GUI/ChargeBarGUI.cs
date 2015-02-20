@@ -10,8 +10,8 @@ public class ChargeBarGUI : MonoBehaviour {
 	/// The field controller.
 	/// </summary>
 	[SerializeField]
-	private PhantasmagoriaField fieldController;
-	private Avatar player;
+	private PhantasmagoriaField field;
+	private PhantasmagoriaPlayableCharacter player;
 
 	/// <summary>
 	/// The charge capacity.
@@ -35,7 +35,7 @@ public class ChargeBarGUI : MonoBehaviour {
 	/// Start this instance.
 	/// </summary>
 	void Start() {
-		player = fieldController.PlayerController.PlayerAvatar;
+		player = (PhantasmagoriaPlayableCharacter)field.Player;
 		int maxIndicatorLevel = player.MaxChargeLevel - 1;
 		float inc = 0.5f / (float)player.MaxChargeLevel;
 		Vector3 ls = indicator.transform.localScale;
