@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
-using BaseLib;
+using UnityUtilLib;
 using System.Collections.Generic;
 
 public enum FieldCoordinateSystem { Screen, FieldRelative, AbsoluteWorld }
 
 public abstract class AbstractDanmakuField : CachedObject {
-	
 	/// <summary>
 	/// The player spawn location.
 	/// </summary>
@@ -16,7 +15,6 @@ public abstract class AbstractDanmakuField : CachedObject {
 	public abstract AbstractDanmakuField TargetField { get; }
 
 	private AbstractDanmakuGameController gameController;
-
 	public AbstractDanmakuGameController GameController {
 		get {
 			if(gameController == null) {
@@ -26,26 +24,18 @@ public abstract class AbstractDanmakuField : CachedObject {
 		}
 	}
 
+	private AbstractPlayableCharacter player;
+	public AbstractPlayableCharacter Player {
+		get {
+			return player;
+		}
+	}
+
 	public ProjectilePool BulletPool {
 		get {
 			return GameController.BulletPool;
 		}
 	}
-
-	private PlayerAgent playerController;
-	/// <summary>
-	/// Gets or sets the player controller.
-	/// </summary>
-	/// <value>The player controller.</value>
-	public PlayerAgent PlayerController {
-		get {
-			return playerController;
-		}
-		set {
-			playerController = value;
-		}
-	}
-
 	
 	/// <summary>
 	/// The field camera.
@@ -210,8 +200,8 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// <value>The lives remaining.</value>
 	public int LivesRemaining {
 		get {
-			if(playerController != null && playerController.PlayerAvatar != null) {
-				return playerController.PlayerAvatar.LivesRemaining;
+			if(player != null) {
+				return player.LivesRemaining;
 			} else {
 				Debug.Log("Player Field without Player");
 				return int.MinValue;
@@ -225,8 +215,8 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// <value>The player position.</value>
 	public Vector3 PlayerPosition {
 		get {
-			if(playerController != null && playerController.PlayerAvatar != null) {
-				return playerController.PlayerAvatar.Transform.position;
+			if(player != null) {
+				return player.Transform.position;
 			} else {
 				Debug.Log("Player Field without Player");
 				return Vector3.zero;
@@ -242,23 +232,12 @@ public abstract class AbstractDanmakuField : CachedObject {
 	public float AngleTowardPlayer(Vector3 startLocation) {
 		return Projectile.AngleBetween2D (startLocation, PlayerPosition);
 	}
-	
-	/// <summary>
-	/// Start this instance.
-	/// </summary>
-	void Start() {
+
+	public override void Awake () {
+		base.Awake ();
 		fieldCamera.orthographic = true;
 		cameraTransform = fieldCamera.transform;
 		RecomputeWorldPoints ();
-	}
-	
-	/// <summary>
-	/// Fixeds the update.
-	/// </summary>
-	void FixedUpdate ()  {
-		if(playerController != null) {
-			playerController.Update(Time.fixedDeltaTime);
-		}
 	}
 
 	/// <summary>
@@ -266,13 +245,15 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// </summary>
 	/// <param name="character">Character prefab, defines character behavior and attack patterns.</param>
 	/// <param name="controller">Controller for the player, allows for a user to manually control it or let an AI take over.</param>
-	public void SpawnPlayer(GameObject character, PlayerAgent controller) {
+	public AbstractPlayableCharacter SpawnPlayer(AbstractPlayableCharacter playerCharacter) {
 		Vector3 spawnPos = WorldPoint(Util.To3D(playerSpawnLocation, gamePlaneDistance));
-		Avatar avatar = ((GameObject)Instantiate (character, spawnPos, Quaternion.identity)).GetComponent<Avatar>();
-		avatar.Reset (5);
-		avatar.Transform.parent = Transform;
-		playerController = controller;
-		playerController.Initialize(this, avatar);
+		player = ((GameObject)Instantiate (playerCharacter.GameObject, spawnPos, Quaternion.identity)).GetComponent<AbstractPlayableCharacter>();
+		if(player != null) {
+			player.Reset (5);
+			player.Transform.parent = Transform;
+			player.Field = this;
+		}
+		return player;
 	}
 	
 	/// <summary>
@@ -311,11 +292,10 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// </summary>
 	/// <param name="prefab">Prefab.</param>
 	/// <param name="fieldLocation">Field location.</param>
-	public void SpawnEnemy(GameObject prefab, Vector2 fieldLocation) {
-		FieldMovementPattern enemy = ((GameObject)Instantiate (prefab)).GetComponent<FieldMovementPattern> ();
+	public void SpawnEnemy(AbstractEnemy prefab, Vector2 fieldLocation) {
+		AbstractEnemy enemy = Util.InstantiatePrefab<AbstractEnemy> (prefab);
 		enemy.Transform.position = WorldPoint (Util.To3D (fieldLocation, gamePlaneDistance));
 	}
-
 	
 	/// <summary>
 	/// Gets all bullets.

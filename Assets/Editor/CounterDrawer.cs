@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.Collections;
+using UnityUtilLib;
 
-[CustomPropertyDrawer(typeof(BaseLib.Counter))]
+[CustomPropertyDrawer(typeof(Counter))]
 public class CounterDrawer : PropertyDrawer {
 
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
