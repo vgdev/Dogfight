@@ -7,6 +7,11 @@ public class BasicEnemy : AbstractEnemy {
 	[SerializeField]
 	private float maxHealth;
 	private float currentHealth;
+	public float CurrentHealth {
+		get {
+			return currentHealth;
+		}
+	}
 
 	private AbstractMovementPattern movementPattern;
 
@@ -36,6 +41,7 @@ public class BasicEnemy : AbstractEnemy {
 
 	protected override void Damage (float damage) {
 		currentHealth -= damage;
+		Debug.Log (currentHealth);
 	}
 	
 	public override bool IsDead {

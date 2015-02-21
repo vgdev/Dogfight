@@ -4,8 +4,8 @@ using System.Collections;
 public class ProjectileTransferBoundary : ProjectileBoundary {
 
 	[SerializeField]
-	private PhantasmagoriaField field;
-	public PhantasmagoriaField Field {
+	private AbstractDanmakuField field;
+	public AbstractDanmakuField Field {
 		get {
 			return field;
 		}
@@ -15,8 +15,8 @@ public class ProjectileTransferBoundary : ProjectileBoundary {
 	}
 
 	[SerializeField]
-	private PhantasmagoriaField targetField;
-	public PhantasmagoriaField TargetField {
+	private AbstractDanmakuField targetField;
+	public AbstractDanmakuField TargetField {
 		get {
 			return targetField;
 		}

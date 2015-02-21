@@ -19,7 +19,7 @@ public abstract class AbstractEnemy : CachedObject {
 		}
 	}
 
-	public AbstractDanmakuField field;
+	private AbstractDanmakuField field;
 	/// <summary>
 	/// Gets or sets the field.
 	/// </summary>

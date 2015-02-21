@@ -180,7 +180,6 @@ public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 			Destroy (bcas[i].GameObject);
 		}
 		while (t > 0f) {
-			Debug.Log(t);
 			scale.y = t;
 			closureTop.localScale = scale;
 			closureBottom.localScale = scale;

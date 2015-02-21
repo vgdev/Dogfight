@@ -13,8 +13,11 @@ public class PhantasmagoriaEnemy : BasicEnemy {
 	[SerializeField]
 	private float deathReflectRadius;
 
+	[SerializeField]
+	private BulletTransferArea bulletTransferPrefab;
+
 	protected override void OnDeath () {
-		float radius = Util.MaxComponent3 (Transform.lossyScale) * deathReflectRadius;
-		//TODO: FINISH
+		BulletTransferArea transferArea = (BulletTransferArea)Instantiate (bulletTransferPrefab, Transform.position, Quaternion.identity);
+		transferArea.Run (deathReflectDuration, deathReflectRadius, Field, Field.TargetField);
 	}
 }

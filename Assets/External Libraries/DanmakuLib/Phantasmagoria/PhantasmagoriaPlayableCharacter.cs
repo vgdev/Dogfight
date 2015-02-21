@@ -46,6 +46,9 @@ public class PhantasmagoriaPlayableCharacter : AbstractAgentCharacter {
 	[SerializeField]
 	private ProjectilePrefab shotType;
 
+	[SerializeField]
+	private int shotDamage = 5;
+
 	private bool charging;
 	/// <summary>
 	/// Gets a value indicating whether this instance is charging.
@@ -204,5 +207,6 @@ public class PhantasmagoriaPlayableCharacter : AbstractAgentCharacter {
 		Projectile shot1 = Field.SpawnProjectile(shotType, location + offset1, 0f, FieldCoordinateSystem.AbsoluteWorld);
 		Projectile shot2 = Field.SpawnProjectile(shotType, location + offset2, 0f, FieldCoordinateSystem.AbsoluteWorld);
 		shot1.Velocity = shot2.Velocity = shotVelocity;
+		shot1.Damage = shot2.Damage = shotDamage;
 	}
 }
