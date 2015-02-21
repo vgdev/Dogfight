@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  tags:
+  - Bullet
+  - Player Shot
+  - Enemy
+  - 
+  Builtin Layer 0: Default
+  Builtin Layer 1: TransparentFX
+  Builtin Layer 2: Ignore Raycast
+  Builtin Layer 3: 
+  Builtin Layer 4: Water
+  Builtin Layer 5: UI
+  Builtin Layer 6: 
+  Builtin Layer 7: 
+  User Layer 8: Player/Damage
+  User Layer 9: Player/Graze
+  User Layer 10: Player/Bullet
+  User Layer 11: 
+  User Layer 12: Player/Movement
+  User Layer 13: Enemy/Damage
+  User Layer 14: Enemy/Bullet
+  User Layer 15: Boundary
+  User Layer 16: 
+  User Layer 17: 
+  User Layer 18: 
+  User Layer 19: 
+  User Layer 20: 
+  User Layer 21: 
+  User Layer 22: 
+  User Layer 23: 
+  User Layer 24: 
+  User Layer 25: 
+  User Layer 26: 
+  User Layer 27: 
+  User Layer 28: 
+  User Layer 29: GUI/Player 1
+  User Layer 30: GUI/Player 2
+  User Layer 31: GUI/Shared
+  m_SortingLayers:
+  - name: Default
+    userID: 0
+    uniqueID: 0
+    locked: 0
+  - name: Player Shot
+    userID: 3
+    uniqueID: 959430727
+    locked: 0
+  - name: Player
+    userID: 1
+    uniqueID: 4051134229
+    locked: 0
+  - name: Bullet
+    userID: 2
+    uniqueID: 3746238291
+    locked: 0
