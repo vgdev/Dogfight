@@ -1,0 +1,6 @@
+[submodule "Assets/External Libraries/DanmakuUnity2D"]
+	path = Assets/External Libraries/DanmakuUnity2D
+	url = https://github.com/james7132/DanmakuUnity2D.git
+[submodule "Assets/External Libraries/UnityUtilLib"]
+	path = Assets/External Libraries/UnityUtilLib
+	url = https://github.com/james7132/UnityUtilLib.git
