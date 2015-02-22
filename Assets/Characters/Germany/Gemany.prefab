@@ -164,31 +164,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 130092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1947f18dbf359214f9687a2e72cec3c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ebcec34caf3f5e44a0354dd374d66b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalMovementSpeed: 15
-  focusMovementSpeed: 10
+  normalMovementSpeed: 5
+  focusMovementSpeed: 3
   fireRate: 20
   attackPatterns:
-  - {fileID: 11436200}
   - {fileID: 11436200}
   shotOffset: {x: .5, y: 0}
   shotVelocity: 200
   chargeRate: 1
-  chargeCapacityRegen: 4
+  chargeCapacityRegen: 1
   currentChargeCapacity: 0
   shotType: {fileID: 11472154, guid: 757e39eb56fa122418e58d715653d773, type: 2}
   shotDamage: 5
-  cancelPrefab: {fileID: 11451472, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-  deathCancelDuration: 1
+  cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
+  deathCancelDuration: .5
   deathCancelRadius: 30
   deathInvincibiiltyPeriod:
-    maxDelay: 1
-    currentDelay: 1
+    maxDelay: 2
+    currentDelay: 2
   invincibiltyFlash:
-    maxDelay: .200000003
-    currentDelay: .200000003
+    maxDelay: .100000001
+    currentDelay: .100000001
 --- !u!114 &11430092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,7 +196,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 130090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3930b93bf5e8aec4ca5a68b7aa87e76b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fb4b20b90d935146b4622eac1468c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11430094
@@ -208,7 +207,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 130088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1455a8bb584f88e42845bc04fdbb6483, type: 3}
+  m_Script: {fileID: 11500000, guid: 80cf408cccaf01e4cadc4be03b2543d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11436200

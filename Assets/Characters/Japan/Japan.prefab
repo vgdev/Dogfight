@@ -46,8 +46,7 @@ GameObject:
   - 212: {fileID: 21271688}
   - 61: {fileID: 6171688}
   - 50: {fileID: 5071690}
-  - 114: {fileID: 11471694}
-  - 114: {fileID: 11471692}
+  - 114: {fileID: 11462282}
   m_Layer: 12
   m_Name: Japan
   m_TagString: Player
@@ -156,6 +155,37 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: 2.6510725, y: 4.05488825}
   m_Center: {x: -.0134963989, y: .164588928}
+--- !u!114 &11462282
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ebcec34caf3f5e44a0354dd374d66b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMovementSpeed: 5
+  focusMovementSpeed: 3
+  fireRate: 4
+  attackPatterns: []
+  shotOffset: {x: .5, y: 0}
+  shotVelocity: 200
+  chargeRate: 1
+  chargeCapacityRegen: 1
+  currentChargeCapacity: 0
+  shotType: {fileID: 11472154, guid: 757e39eb56fa122418e58d715653d773, type: 2}
+  shotDamage: 5
+  cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
+  deathCancelDuration: .5
+  deathCancelRadius: 30
+  deathInvincibiiltyPeriod:
+    maxDelay: 2
+    currentDelay: 2
+  invincibiltyFlash:
+    maxDelay: .100000001
+    currentDelay: .100000001
 --- !u!114 &11471688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,62 +208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248531994a117b14782e96eb5018b462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11471692
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 171692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87e16c388915f4c46b83ba556cc01a32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
-  spawnLocation: {x: .5, y: .5}
-  spawnArea: {x: .25, y: .25}
-  bulletCount: 15
-  velocity: 15
-  angV: -5
-  burstCount:
-    maxCount: 5
-    count: 5
-  burstDelay:
-    maxDelay: .100000001
-    currentDelay: .100000001
-  burstInitialRotation: 0
-  burstRotationDelta: 5
---- !u!114 &11471694
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 171692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d1e0d7f3e440c4b98863f24c28118f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalMovementSpeed: 5
-  focusMovementSpeed: 3
-  fireRate: 4
-  attackPatterns: []
-  shotOffset: {x: 0, y: 0}
-  shotVelocity: 0
-  chargeRate: 1
-  chargeCapacityRegen: 0
-  currentChargeCapacity: 0
-  shotType: {fileID: 0}
-  shotDamage: 5
-  cancelPrefab: {fileID: 0}
-  deathCancelDuration: 0
-  deathCancelRadius: 0
-  deathInvincibiiltyPeriod:
-    maxDelay: 0
-    currentDelay: 0
-  invincibiltyFlash:
-    maxDelay: 0
-    currentDelay: 0
 --- !u!212 &21271688
 SpriteRenderer:
   m_ObjectHideFlags: 1
