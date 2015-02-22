@@ -250,20 +250,20 @@ MonoBehaviour:
   - {fileID: 11452054}
   shotOffset: {x: .5, y: 0}
   shotVelocity: 200
-  chargeRate: 4
+  chargeRate: 1
   chargeCapacityRegen: 4
   currentChargeCapacity: 0
-  shotType: {fileID: 0}
+  shotType: {fileID: 11472154, guid: 757e39eb56fa122418e58d715653d773, type: 2}
   shotDamage: 5
-  cancelPrefab: {fileID: 0}
-  deathCancelDuration: 0
-  deathCancelRadius: 0
+  cancelPrefab: {fileID: 11451472, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
+  deathCancelDuration: 1
+  deathCancelRadius: 30
   deathInvincibiiltyPeriod:
-    maxDelay: 0
-    currentDelay: 0
+    maxDelay: 1
+    currentDelay: 1
   invincibiltyFlash:
-    maxDelay: 0
-    currentDelay: 0
+    maxDelay: .200000003
+    currentDelay: .200000003
 --- !u!212 &21262242
 SpriteRenderer:
   m_ObjectHideFlags: 1

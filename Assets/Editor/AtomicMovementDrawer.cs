@@ -14,7 +14,6 @@ public class AtomicMovementDrawer : PropertyDrawer {
 
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 		EditorGUI.BeginProperty(position, label, property);
-		float half = position.width / 2;
 		Rect timeRect = new Rect (position.x, position.y, position.width, individualHeight);
 		Rect targetLocationRect = new Rect (position.x, position.y +  1 * individualHeight, position.width, individualHeight);
 		SerializedProperty tl = property.FindPropertyRelative ("targetLocation");

@@ -1367,7 +1367,7 @@ Transform:
   - {fileID: 667707920}
   - {fileID: 183541227}
   m_Father: {fileID: 787077637}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!92 &723055556
 Behaviour:
   m_ObjectHideFlags: 0
@@ -1529,7 +1529,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 827357117}
-  - {fileID: 2023493315}
   - {fileID: 1487214531}
   - {fileID: 723055555}
   - {fileID: 1292919921}
@@ -1561,6 +1560,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a0a1f3a812d0348b19698a748c7f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keepBetweenScenes: 0
+  destroyNewInstances: 0
   bulletPool: {fileID: 787077641}
   maximumLives: 5
   player1:
@@ -1729,6 +1730,7 @@ Transform:
   - {fileID: 1675727871}
   - {fileID: 1865623786}
   - {fileID: 1563338784}
+  - {fileID: 2023493315}
   m_Father: {fileID: 787077637}
   m_RootOrder: 0
 --- !u!114 &827357119
@@ -1963,7 +1965,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1271618845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 309948a47c04a97468f3ee78b2970cee, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f4d74a778c2ab84ebc78a438253d01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   differential: {x: 0, y: .25}
@@ -2020,7 +2022,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 787077637}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &1301531368
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,7 +2174,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1357636970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69f0aea854dd3e340b80513ae5c5e2db, type: 3}
+  m_Script: {fileID: 11500000, guid: d45ecb1baf1c5b54d8208bbf6f1740aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   originalScreenWidth: 1024
@@ -2184,7 +2186,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1357636970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6ed1bf8a9b2e7c4b95cb84e98217d21, type: 3}
+  m_Script: {fileID: 11500000, guid: 221f957ddd4aef14381156f592874a87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1404291633
@@ -2335,7 +2337,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 787077637}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!20 &1487214533
 Camera:
   m_ObjectHideFlags: 0
@@ -2568,7 +2570,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1563338783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 309948a47c04a97468f3ee78b2970cee, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f4d74a778c2ab84ebc78a438253d01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   differential: {x: 0, y: .25}
@@ -3413,14 +3415,14 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2023493314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: 0, z: -10}
+  m_LocalPosition: {x: 200, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 805752040}
   - {fileID: 1219067052}
   - {fileID: 1271618846}
-  m_Father: {fileID: 787077637}
-  m_RootOrder: 1
+  m_Father: {fileID: 827357117}
+  m_RootOrder: 3
 --- !u!114 &2023493317
 MonoBehaviour:
   m_ObjectHideFlags: 0
