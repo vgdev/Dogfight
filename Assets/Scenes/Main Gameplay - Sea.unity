@@ -130,10 +130,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 27305402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a55488b172612184b84414f7696bd2d9, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagFilter: Bullet
+  referenceCamera: {fileID: 1219067051}
+  location: 2
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
+  constantlyUpdate: 0
 --- !u!114 &27305407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,14 +147,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 27305402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f40176d26ab77b4b8e6b3c75840b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceCamera: {fileID: 1219067051}
-  location: 2
-  cameraSizeBufferRatio: 2
-  cameraSizeSpaceRatio: 1
-  constantlyUpdate: 0
+  tagFilter: Bullet
 --- !u!61 &27305408
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -359,10 +359,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 41754252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a55488b172612184b84414f7696bd2d9, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagFilter: Bullet
+  referenceCamera: {fileID: 1219067051}
+  location: 1
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
+  constantlyUpdate: 0
 --- !u!114 &41754257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,14 +376,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 41754252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f40176d26ab77b4b8e6b3c75840b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceCamera: {fileID: 1219067051}
-  location: 1
-  cameraSizeBufferRatio: 2
-  cameraSizeSpaceRatio: 1
-  constantlyUpdate: 0
+  tagFilter: Bullet
 --- !u!61 &41754258
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -432,14 +432,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 72502546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f40176d26ab77b4b8e6b3c75840b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceCamera: {fileID: 1865623787}
-  location: 1
-  cameraSizeBufferRatio: 2
-  cameraSizeSpaceRatio: 1
-  constantlyUpdate: 0
+  tagFilter: Bullet
 --- !u!114 &72502549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,10 +445,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 72502546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a55488b172612184b84414f7696bd2d9, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagFilter: Bullet
+  referenceCamera: {fileID: 1865623787}
+  location: 1
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
+  constantlyUpdate: 0
 --- !u!61 &72502550
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -521,14 +521,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 75874562}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f40176d26ab77b4b8e6b3c75840b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceCamera: {fileID: 1865623787}
-  location: 2
-  cameraSizeBufferRatio: 2
-  cameraSizeSpaceRatio: 1
-  constantlyUpdate: 0
+  tagFilter: Bullet
 --- !u!114 &75874565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,10 +534,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 75874562}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a55488b172612184b84414f7696bd2d9, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagFilter: Bullet
+  referenceCamera: {fileID: 1865623787}
+  location: 2
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
+  constantlyUpdate: 0
 --- !u!61 &75874566
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -673,14 +673,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 125483950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1219067051}
   location: 1
   cameraSizeBufferRatio: .100000001
   cameraSizeSpaceRatio: 0
-  constantlyUpdate: 0
+  constantlyUpdate: 1
 --- !u!114 &125483954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,14 +747,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 156844437}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f40176d26ab77b4b8e6b3c75840b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceCamera: {fileID: 1865623787}
-  location: 0
-  cameraSizeBufferRatio: 2
-  cameraSizeSpaceRatio: 1
-  constantlyUpdate: 0
+  tagFilter: Bullet
 --- !u!114 &156844440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -764,10 +760,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 156844437}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a55488b172612184b84414f7696bd2d9, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagFilter: Bullet
+  referenceCamera: {fileID: 1865623787}
+  location: 0
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
+  constantlyUpdate: 0
 --- !u!61 &156844441
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -946,10 +946,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 310377343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a55488b172612184b84414f7696bd2d9, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagFilter: Bullet
+  referenceCamera: {fileID: 1219067051}
+  location: 3
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
+  constantlyUpdate: 0
 --- !u!114 &310377348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -959,14 +963,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 310377343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f40176d26ab77b4b8e6b3c75840b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceCamera: {fileID: 1219067051}
-  location: 3
-  cameraSizeBufferRatio: 2
-  cameraSizeSpaceRatio: 1
-  constantlyUpdate: 0
+  tagFilter: Bullet
 --- !u!61 &310377349
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1019,14 +1019,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 327851338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 1
   cameraSizeBufferRatio: .100000001
   cameraSizeSpaceRatio: 0
-  constantlyUpdate: 0
+  constantlyUpdate: 1
 --- !u!114 &327851341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1203,14 +1203,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 600698829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1219067051}
   location: 2
   cameraSizeBufferRatio: .100000001
   cameraSizeSpaceRatio: 0
-  constantlyUpdate: 0
+  constantlyUpdate: 1
 --- !u!114 &600698833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1447,14 +1447,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 769358470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 3
   cameraSizeBufferRatio: .100000001
   cameraSizeSpaceRatio: 0
-  constantlyUpdate: 0
+  constantlyUpdate: 1
 --- !u!114 &769358473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1558,7 +1558,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 787077636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07880ed37e5cbad4c8cf22d82ec3f117, type: 3}
+  m_Script: {fileID: 11500000, guid: 98a0a1f3a812d0348b19698a748c7f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPool: {fileID: 787077641}
@@ -1584,24 +1584,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 787077636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7d28ab54cb7a824d9fb756a2ae27278, type: 3}
+  m_Script: {fileID: 11500000, guid: b88c2e15564d7e24698ea7efd6a36b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   keepBetweenScenes: 0
   destroyNewInstances: 0
-  roundStartSafeZone: 5
-  chains:
-  - weight: 25
-    delay: 2
-    chain:
-    - EnemyPrefab: {fileID: 11467384, guid: 3dc71b7a1457aee49ae6b4af4a27db25, type: 2}
-      spawnArea:
-        serializedVersion: 2
-        x: .25
-        y: 1.10000002
-        width: .75
-        height: 0
-      timeUntilNext: 0
+  roundStartSafeZone: 0
+  chains: []
 --- !u!114 &787077641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1610,7 +1599,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 787077636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dabb15c3274b0454a8207ff9f283c403, type: 3}
+  m_Script: {fileID: 11500000, guid: 20f5d4aa48f1abb42a49e39f3b279ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   initialSpawnCount: 100
@@ -1751,60 +1740,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 827357116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a15baaf7e49a11458d850c88245550a, type: 3}
+  m_Script: {fileID: 11500000, guid: d3ace5ccf7c9f084d95310e3a2fd815e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpawnLocation: {x: .5, y: .125}
+  playerSpawnLocation: {x: .5, y: .25}
   fieldCamera: {fileID: 1865623787}
   gamePlaneDistance: 10
---- !u!1001 &870450264
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 450996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -107.550003
-      objectReference: {fileID: 0}
-    - target: {fileID: 450996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -12.8500004
-      objectReference: {fileID: 0}
-    - target: {fileID: 450996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 450996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 450996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 450996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 450996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 450996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 150996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-      propertyPath: m_Name
-      value: Bullet Cancel Area
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-  m_RootGameObject: {fileID: 1690841518}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1 &1062475509
 GameObject:
   m_ObjectHideFlags: 0
@@ -2022,7 +1963,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1271618845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21501c8c74bfecf4bad4f10cd92fa515, type: 3}
+  m_Script: {fileID: 11500000, guid: 309948a47c04a97468f3ee78b2970cee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   differential: {x: 0, y: .25}
@@ -2120,14 +2061,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1301531368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 0
   cameraSizeBufferRatio: .100000001
   cameraSizeSpaceRatio: 0
-  constantlyUpdate: 0
+  constantlyUpdate: 1
 --- !u!114 &1301531371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2231,9 +2172,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1357636970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33b1a3f1087717a4c845dd2014700cd9, type: 3}
+  m_Script: {fileID: 11500000, guid: 69f0aea854dd3e340b80513ae5c5e2db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalScreenWidth: 1024
 --- !u!114 &1357636974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2242,10 +2184,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1357636970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d838de1a78b0494197775ee9ba5c2e3, type: 3}
+  m_Script: {fileID: 11500000, guid: d6ed1bf8a9b2e7c4b95cb84e98217d21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalScreenWidth: 1024
 --- !u!1 &1404291633
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,14 +2258,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1434238936}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 2
   cameraSizeBufferRatio: .100000001
   cameraSizeSpaceRatio: 0
-  constantlyUpdate: 0
+  constantlyUpdate: 1
 --- !u!114 &1434238939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2627,7 +2568,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1563338783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21501c8c74bfecf4bad4f10cd92fa515, type: 3}
+  m_Script: {fileID: 11500000, guid: 309948a47c04a97468f3ee78b2970cee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   differential: {x: 0, y: .25}
@@ -2668,7 +2609,6 @@ GameObject:
   - 4: {fileID: 1595988482}
   - 132: {fileID: 1595988483}
   - 114: {fileID: 1595988484}
-  - 114: {fileID: 1595988485}
   m_Layer: 31
   m_Name: Timer
   m_TagString: Untagged
@@ -2728,18 +2668,6 @@ MonoBehaviour:
     maxDelay: .200000003
     currentDelay: .200000003
   flashThreshold: 30
---- !u!114 &1595988485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1595988481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d838de1a78b0494197775ee9ba5c2e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalScreenWidth: 1024
 --- !u!1 &1675727870
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,7 +2701,7 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 150996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-  m_PrefabInternal: {fileID: 870450264}
+  m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1690841523}
@@ -2793,11 +2721,11 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62,
     type: 2}
-  m_PrefabInternal: {fileID: 870450264}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1690841518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e954ee467def874393195557a0ddca1, type: 3}
+  m_Script: {fileID: 11500000, guid: b7e9ca4eb3cbb3d479b43ff7975b2693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1690841520
@@ -2805,22 +2733,20 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11451472, guid: 142a11794179a9942bc577454c2d8c62,
     type: 2}
-  m_PrefabInternal: {fileID: 870450264}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1690841518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 950349c822782f3469b12607e14a5986, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f40176d26ab77b4b8e6b3c75840b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tagFilter: Bullet
-  field: {fileID: 0}
-  targetField: {fileID: 0}
 --- !u!212 &1690841521
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 21250996, guid: 142a11794179a9942bc577454c2d8c62,
     type: 2}
-  m_PrefabInternal: {fileID: 870450264}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1690841518}
   m_Enabled: 1
   m_CastShadows: 0
@@ -2843,7 +2769,7 @@ CircleCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 5850996, guid: 142a11794179a9942bc577454c2d8c62,
     type: 2}
-  m_PrefabInternal: {fileID: 870450264}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1690841518}
   m_Enabled: 1
   m_Material: {fileID: 0}
@@ -2854,7 +2780,7 @@ CircleCollider2D:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 450996, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
-  m_PrefabInternal: {fileID: 870450264}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1690841518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -107.550003, y: -12.8500004, z: 0}
@@ -2902,14 +2828,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1692740191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f40176d26ab77b4b8e6b3c75840b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceCamera: {fileID: 1865623787}
-  location: 3
-  cameraSizeBufferRatio: 2
-  cameraSizeSpaceRatio: 1
-  constantlyUpdate: 0
+  tagFilter: Bullet
 --- !u!114 &1692740194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2919,10 +2841,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1692740191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a55488b172612184b84414f7696bd2d9, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagFilter: Bullet
+  referenceCamera: {fileID: 1865623787}
+  location: 3
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
+  constantlyUpdate: 0
 --- !u!61 &1692740195
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3007,14 +2933,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1703471714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1219067051}
   location: 3
   cameraSizeBufferRatio: .100000001
   cameraSizeSpaceRatio: 0
-  constantlyUpdate: 0
+  constantlyUpdate: 1
 --- !u!114 &1703471718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3164,10 +3090,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1779336969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a55488b172612184b84414f7696bd2d9, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagFilter: Bullet
+  referenceCamera: {fileID: 1219067051}
+  location: 0
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
+  constantlyUpdate: 0
 --- !u!114 &1779336974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3177,14 +3107,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1779336969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f40176d26ab77b4b8e6b3c75840b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceCamera: {fileID: 1219067051}
-  location: 0
-  cameraSizeBufferRatio: 2
-  cameraSizeSpaceRatio: 1
-  constantlyUpdate: 0
+  tagFilter: Bullet
 --- !u!61 &1779336975
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3253,14 +3179,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1827213147}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d22529b459b96478f36c13cee542f5, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acb44f3c6d6184ca85797fc0651666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1219067051}
   location: 0
   cameraSizeBufferRatio: .100000001
   cameraSizeSpaceRatio: 0
-  constantlyUpdate: 0
+  constantlyUpdate: 1
 --- !u!114 &1827213151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3504,10 +3430,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2023493314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a15baaf7e49a11458d850c88245550a, type: 3}
+  m_Script: {fileID: 11500000, guid: d3ace5ccf7c9f084d95310e3a2fd815e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpawnLocation: {x: .5, y: .125}
+  playerSpawnLocation: {x: .5, y: .25}
   fieldCamera: {fileID: 1219067051}
   gamePlaneDistance: 10
 --- !u!1 &2025513146

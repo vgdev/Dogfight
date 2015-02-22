@@ -192,7 +192,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 162242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2979fc024d4a4844489b5a58c897e517, type: 3}
+  m_Script: {fileID: 11500000, guid: 1455a8bb584f88e42845bc04fdbb6483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11462244
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 162244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248531994a117b14782e96eb5018b462, type: 3}
+  m_Script: {fileID: 11500000, guid: 3930b93bf5e8aec4ca5a68b7aa87e76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11462246
@@ -214,23 +214,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 162246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87e16c388915f4c46b83ba556cc01a32, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d75cd202779c6c4ba4ba8925391c92f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
-  spawnLocation: {x: .5, y: .5}
-  spawnArea: {x: .25, y: .25}
-  bulletCount: 10
-  velocity: 15
-  angV: -5
+  spawnLocation: {x: 0, y: 0}
+  spawnArea: {x: 0, y: 0}
+  bulletCount: 0
+  velocity: 0
+  angV: 0
   burstCount:
-    maxCount: 5
-    count: 5
+    maxCount: 0
+    count: 0
   burstDelay:
-    maxDelay: .100000001
-    currentDelay: .100000001
+    maxDelay: 0
+    currentDelay: 0
   burstInitialRotation: 0
-  burstRotationDelta: 5
+  burstRotationDelta: 0
 --- !u!114 &11462248
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 162246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d1e0d7f3e440c4b98863f24c28118f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1947f18dbf359214f9687a2e72cec3c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   normalMovementSpeed: 15
@@ -248,22 +248,22 @@ MonoBehaviour:
   attackPatterns:
   - {fileID: 11462246}
   - {fileID: 11452054}
-  shotOffset: {x: .5, y: 3}
+  shotOffset: {x: .5, y: 0}
   shotVelocity: 200
-  chargeRate: 1
-  chargeCapacityRegen: 1
+  chargeRate: 4
+  chargeCapacityRegen: 4
   currentChargeCapacity: 0
-  shotType: {fileID: 11472154, guid: 757e39eb56fa122418e58d715653d773, type: 2}
+  shotType: {fileID: 0}
   shotDamage: 5
-  cancelPrefab: {fileID: 11434766, guid: befe16b54a4c41a469bbc734c1a31398, type: 2}
-  deathCancelDuration: 1
-  deathCancelRadius: 35
+  cancelPrefab: {fileID: 0}
+  deathCancelDuration: 0
+  deathCancelRadius: 0
   deathInvincibiiltyPeriod:
-    maxDelay: 1.5
-    currentDelay: 1.5
+    maxDelay: 0
+    currentDelay: 0
   invincibiltyFlash:
-    maxDelay: .200000003
-    currentDelay: .200000003
+    maxDelay: 0
+    currentDelay: 0
 --- !u!212 &21262242
 SpriteRenderer:
   m_ObjectHideFlags: 1
