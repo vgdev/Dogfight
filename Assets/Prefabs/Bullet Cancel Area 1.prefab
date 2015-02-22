@@ -50,10 +50,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 150996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f40176d26ab77b4b8e6b3c75840b7e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a1a899b9950ff84f8cc2deea6e3b260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagFilter: Bullet
 --- !u!114 &11451472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -62,9 +61,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 150996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7e9ca4eb3cbb3d479b43ff7975b2693, type: 3}
+  m_Script: {fileID: 11500000, guid: f3398acc99d91cf4f99566c3f852530e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tagFilter: Bullet
 --- !u!212 &21250996
 SpriteRenderer:
   m_ObjectHideFlags: 1
