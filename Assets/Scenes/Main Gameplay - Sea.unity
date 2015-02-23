@@ -450,8 +450,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 1
-  cameraSizeBufferRatio: 1
-  cameraSizeSpaceRatio: 2
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
   constantlyUpdate: 0
 --- !u!61 &72502550
 BoxCollider2D:
@@ -539,8 +539,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 2
-  cameraSizeBufferRatio: 1
-  cameraSizeSpaceRatio: 2
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
   constantlyUpdate: 0
 --- !u!61 &75874566
 BoxCollider2D:
@@ -765,8 +765,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 0
-  cameraSizeBufferRatio: 1
-  cameraSizeSpaceRatio: 2
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
   constantlyUpdate: 0
 --- !u!61 &156844441
 BoxCollider2D:
@@ -1024,8 +1024,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 1
-  cameraSizeBufferRatio: 0
-  cameraSizeSpaceRatio: .100000001
+  cameraSizeBufferRatio: .100000001
+  cameraSizeSpaceRatio: 0
   constantlyUpdate: 0
 --- !u!114 &327851341
 MonoBehaviour:
@@ -1452,8 +1452,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 3
-  cameraSizeBufferRatio: 0
-  cameraSizeSpaceRatio: .100000001
+  cameraSizeBufferRatio: .100000001
+  cameraSizeSpaceRatio: 0
   constantlyUpdate: 0
 --- !u!114 &769358473
 MonoBehaviour:
@@ -1547,7 +1547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffe5fd47d5f47764f86abda5acb80eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character1: {fileID: 11430088, guid: 5792a94721e1f1f4f83ea33719cb6f58, type: 2}
+  character1: {fileID: 11497978, guid: 4b3d02a81643e054f93e700a51d0e6d7, type: 2}
   character2: {fileID: 11462248, guid: ce2275843d8b7ed4eb01649f027b069b, type: 2}
 --- !u!114 &787077639
 MonoBehaviour:
@@ -2068,8 +2068,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 0
-  cameraSizeBufferRatio: 0
-  cameraSizeSpaceRatio: .100000001
+  cameraSizeBufferRatio: .100000001
+  cameraSizeSpaceRatio: 0
   constantlyUpdate: 0
 --- !u!114 &1301531371
 MonoBehaviour:
@@ -2265,8 +2265,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 2
-  cameraSizeBufferRatio: 0
-  cameraSizeSpaceRatio: .100000001
+  cameraSizeBufferRatio: .100000001
+  cameraSizeSpaceRatio: 0
   constantlyUpdate: 0
 --- !u!114 &1434238939
 MonoBehaviour:
@@ -2848,8 +2848,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceCamera: {fileID: 1865623787}
   location: 3
-  cameraSizeBufferRatio: 1
-  cameraSizeSpaceRatio: 2
+  cameraSizeBufferRatio: 2
+  cameraSizeSpaceRatio: 1
   constantlyUpdate: 0
 --- !u!61 &1692740195
 BoxCollider2D:

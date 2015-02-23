@@ -15,7 +15,7 @@ public abstract class AbstractTimedAttackPattern : AbstractAttackPattern {
 		timeout.Reset ();
 	}
 
-	protected override bool IsFinished {
+	protected sealed override bool IsFinished {
 		get {
 			return timeout.Ready();
 		}
