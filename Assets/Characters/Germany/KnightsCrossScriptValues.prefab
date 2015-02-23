@@ -48,11 +48,8 @@ MonoBehaviour:
   fatBullet: {fileID: 11420942, guid: 53a04669cc266574082aafa42d1e95da, type: 2}
   thinBullet: {fileID: 11483526, guid: fd93b1802e3f9c94ea450691f812cacc, type: 2}
   bulletVelocity: 7
-  center: {x: .5, y: .5}
-  upperLeft: {x: .25, y: .75}
-  upperRight: {x: .75, y: .75}
-  lowerLeft: {x: .25, y: .25}
-  lowerRight: {x: .75, y: .25}
+  centerArea: {x: 1, y: 1}
+  bulletSeparationDist: .0500000007
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
