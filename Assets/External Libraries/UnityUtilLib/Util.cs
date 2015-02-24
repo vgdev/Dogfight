@@ -18,6 +18,103 @@ namespace UnityUtilLib
 		/// </summary>
 		public const float Rad2Degree = 180f / Mathf.PI;
 
+		
+		private static Mesh quadMesh;
+		private static Material standardSpriteMat;
+
+		public static Vector2 SpriteScale(Sprite sprite, Vector2 scale) {
+			float width = sprite.textureRect.width;
+			float height = sprite.textureRect.height;
+			Vector2 scaled = Util.ComponentProduct2(scale, new Vector2(width, height) / sprite.pixelsPerUnit);
+			return scaled;
+		}
+
+		public static MaterialPropertyBlock SpriteToMPB(Sprite sprite, Color color, MaterialPropertyBlock mpb = null) {
+			Debug.Log (mpb);
+			if(mpb == null) {
+				Debug.Log("Hi!");
+				mpb = new MaterialPropertyBlock();
+			}
+			mpb.AddTexture("_MainTex", sprite.texture);
+			mpb.AddColor("_Color", color);
+			return mpb;
+		}
+		
+		public static void DrawSprite(Sprite sprite,
+		                              Vector3 position, 
+		                              Quaternion rotation, 
+		                              Vector3 scale, 
+		                              Color color = default(Color), 
+		                              Material material = null,
+		                              MaterialPropertyBlock materialProperties = null,
+		                              Camera camera = null,
+		                              int layer = 0) {
+			Matrix4x4 transform = Matrix4x4.TRS(position, rotation, Util.SpriteScale(sprite, scale));
+			DrawSpriteUnscaled(sprite, transform, color, material, materialProperties, camera, layer);
+		}
+
+		public static void DrawSpriteUnscaled(Sprite sprite, 
+				                              Matrix4x4 transform, 
+				                              Color color = default(Color), 
+				                              Material material = null, 
+				                              MaterialPropertyBlock materialProperties = null,
+				                              Camera camera = null,
+				                              int layer = 0) {
+			Debug.Log (color);
+			if(material == null) {
+				if(standardSpriteMat == null) {
+					standardSpriteMat = new Material(Shader.Find("Sprites/Default"));
+				}
+				material = standardSpriteMat;
+			}
+			materialProperties = SpriteToMPB (sprite, color, materialProperties);
+			DrawSpriteUnscaled (transform, material, materialProperties, camera, layer);
+		}
+		
+		public static void DrawSpriteUnscaled(Matrix4x4 transform, 
+				                              Material material, 
+				                              MaterialPropertyBlock materialProperties,
+		                                      Camera camera = null,
+		                                      int layer = 0) {
+			if (quadMesh == null) {
+				quadMesh = CreateQuad();
+			}
+			Debug.Log (quadMesh.vertexCount);
+			Graphics.DrawMesh(quadMesh, transform, material, layer, camera, 0, materialProperties, false, false);
+		}
+		
+		private static Mesh CreateQuad() {
+			Mesh mesh = new Mesh
+			{
+				vertices = new[]
+				{
+					new Vector3(-.5f, -.5f, 0),
+					new Vector3(-.5f, +.5f, 0),
+					new Vector3(+.5f, +.5f, 0),
+					new Vector3(+.5f, -.5f, 0),
+				},
+				
+				normals = new[]
+				{
+					Vector3.forward,
+					Vector3.forward,
+					Vector3.forward,
+					Vector3.forward,
+				},
+				
+				triangles = new[] { 0, 1, 2, 2, 3, 0 },
+				
+				uv = new[]
+				{
+					new Vector2(0, 0),
+					new Vector2(0, 1),
+					new Vector2(1, 1),
+					new Vector2(1, 0),
+				}
+			};
+			return mesh;
+		}
+
 		/// <summary>
 		/// Sign the specified e.
 		/// </summary>

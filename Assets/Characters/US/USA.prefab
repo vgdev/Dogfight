@@ -217,18 +217,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cab6263c08337b469ad50a12cae5d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  spawnLocation: {x: 0, y: 0}
-  spawnArea: {x: 0, y: 0}
-  bulletCount: 0
-  velocity: 0
+  prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
+  spawnLocation: {x: .5, y: .5}
+  spawnArea: {x: .5, y: .5}
+  bulletCount: 20
+  velocity: 20
   angV: 0
   burstCount:
-    maxCount: 0
-    count: 0
+    maxCount: 10
+    count: 10
   burstDelay:
-    maxDelay: 0
-    currentDelay: 0
+    maxDelay: .100000001
+    currentDelay: .100000001
   burstInitialRotation: 0
   burstRotationDelta: 0
 --- !u!114 &11462248
@@ -245,7 +245,8 @@ MonoBehaviour:
   normalMovementSpeed: 5
   focusMovementSpeed: 3
   fireRate: 20
-  attackPatterns: []
+  attackPatterns:
+  - {fileID: 11462246}
   shotOffset: {x: .5, y: 0}
   shotVelocity: 200
   chargeRate: 1

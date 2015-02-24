@@ -101,6 +101,11 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	/// </summary>
 	[SerializeField]
 	private SpriteRenderer spriteRenderer;
+	public SpriteRenderer SpriteRenderer {
+		get {
+			return spriteRenderer;
+		}
+	}
 
 	private float fireTimer;
 
@@ -110,16 +115,20 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		}
 	}
 
+	private RaycastHit2D[] hits;
+
 	/// <summary>
 	/// Awake this instance.
 	/// </summary>
 	public override void Awake() {
+		base.Awake ();
 		properties = new Dictionary<string, object> ();
 		controllers = new List<ProjectileController> ();
 		if(spriteRenderer == null)
 			spriteRenderer = GetComponent<SpriteRenderer> ();
 		if(collisionMask == null)
 			RecomputeProjectileCollisions();
+		hits = new RaycastHit2D[10];
 	}
 
 	/// <summary>
@@ -129,36 +138,40 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		float dt = Time.fixedDeltaTime;
 		fireTimer += dt;
 		//Rotate
-		Transform.rotation = Quaternion.Slerp (Transform.rotation, Transform.rotation * angularVelocity, dt);
+		if(angularVelocity != Quaternion.identity) {
+			Transform.rotation = Quaternion.Slerp (Transform.rotation, Transform.rotation * angularVelocity, dt);
+		}
 		float movementDistance = linearVelocity * dt;
+		
 		Vector3 movementVector = Transform.up * movementDistance;
-
-		Vector2 offset = Util.ComponentProduct2(Transform.lossyScale, circleCenter);
-		float radius = circleRaidus * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
-		RaycastHit2D[] hits = Physics2D.CircleCastAll(Transform.position + Util.To3D(offset), 
-		                           radius, 
-		                           movementVector, 
-		                           movementDistance,
-		                           collisionMask[GameObject.layer]);
-		Debug.DrawRay (Transform.position, movementVector);
-
-		//Translate
+		//Debug.DrawRay (Transform.position, movementVector);
+		int count = Physics2D.CircleCastNonAlloc(Transform.position + Util.To3D(circleCenter), 
+						                           circleRaidus,
+							                       Transform.up,
+			                                       hits,
+						                           movementDistance,
+						                           collisionMask[GameObject.layer]);
 		Transform.position += movementVector;
 
-		for (int i = 0; i < hits.Length; i++) {
-			RaycastHit2D hit = hits[i];
-			if (hit.collider != null) {
-				hit.collider.SendMessage("OnProjectileCollision", this, SendMessageOptions.DontRequireReceiver);
-			}
-			if(to_deactivate){
-				Transform.position = hit.point;
-				break;
+		//Translate
+		if(count > 0) {
+			int i;
+			for (i = 0; i < count; i++) {
+				RaycastHit2D hit = hits[i];
+				if (hit.collider != null) {
+					hit.collider.SendMessage("OnProjectileCollision", this, SendMessageOptions.DontRequireReceiver);
+				}
+				if(to_deactivate){
+					Transform.position = hits[i].point;
+					break;
+				}
 			}
 		}
 
-		for(int i = 0; i < controllers.Count; i++)
-			if(controllers[i] != null)
-				controllers[i].UpdateBullet(this, dt);
+		if(controllers.Count > 0)
+			for(int i = 0; i < controllers.Count; i++)
+				if(controllers[i] != null)
+					controllers[i].UpdateBullet(this, dt);
 
 		if (to_deactivate) {
 			DeactivateImmediate();
@@ -200,8 +213,8 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		if(cc != null) {//circleCollider.enabled = cc != null) {
 //			circleCollider.center = cc.center;
 //			circleCollider.radius = cc.radius;
-			circleCenter = cc.center;
-			circleRaidus = cc.radius;
+			circleCenter = Util.ComponentProduct2(Transform.lossyScale, cc.center);
+			circleRaidus = cc.radius * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
 		}
 		else
 			Debug.LogError("The provided prefab should a CircleCollider2D!");
@@ -270,12 +283,12 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	}
 
 	public void DeactivateImmediate() {
-		base.Deactivate();
 		properties.Clear ();
 		controllers.Clear ();
 		linearVelocity = 0f;
 		fireTimer = 0f;
 		damage = 0;
 		angularVelocity = Quaternion.identity;
+		base.Deactivate();
 	}
 }

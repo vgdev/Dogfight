@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 
@@ -7,45 +7,13 @@ using UnityUtilLib;
 /// </summary>
 public class ProjectileData {
 
-	/// <summary>
-	/// The quad mesh.
-	/// </summary>
 	private static Mesh quadMesh;
-
-	/// <summary>
-	/// The group.
-	/// </summary>
 	private ProjectileGroup group;
-
-	/// <summary>
-	/// The position.
-	/// </summary>
 	private Vector3 position = Vector3.zero;
-
-	/// <summary>
-	/// The rotation.
-	/// </summary>
 	private Quaternion rotation = Quaternion.identity;
-
-	/// <summary>
-	/// The scale.
-	/// </summary>
 	private Vector3 scale = Vector3.zero;
-
-	/// <summary>
-	/// The velocity.
-	/// </summary>
 	private float velocity = 0f;
-
-	/// <summary>
-	/// The angular velocity.
-	/// </summary>
 	private Quaternion angularVelocity = Quaternion.identity;
-
-	/// <summary>
-	/// The collision handler.
-	/// </summary>
-	private ProjectileCollisionHandler collisionHandler;
 	
 	public static Mesh ProjectileMesh {
 		get {
@@ -139,19 +107,6 @@ public class ProjectileData {
 	}
 
 	/// <summary>
-	/// Gets or sets the collision handler.
-	/// </summary>
-	/// <value>The collision handler.</value>
-	public ProjectileCollisionHandler CollisionHandler {
-		get {
-			return collisionHandler;
-		}
-		set {
-			collisionHandler = value;
-		}
-	}
-
-	/// <summary>
 	/// Gets or sets the group.
 	/// </summary>
 	/// <value>The group.</value>
@@ -175,8 +130,7 @@ public class ProjectileData {
 	/// Update the specified dt.
 	/// </summary>
 	/// <param name="dt">Dt.</param>
-	public void Update(float dt)
-	{
+	public void Update(float dt) {
 		Quaternion newRotation = Quaternion.Slerp (rotation, rotation * angularVelocity, dt);
 		Vector3 movementVector = velocity * dt * (newRotation * Vector3.up);
 

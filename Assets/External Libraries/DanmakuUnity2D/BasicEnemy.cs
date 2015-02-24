@@ -46,7 +46,6 @@ public class BasicEnemy : AbstractEnemy {
 	
 	public override bool IsDead {
 		get {
-
 			return currentHealth <= 0;
 		}
 	}

@@ -4,11 +4,31 @@ using System.Collections.Generic;
 
 namespace UnityUtilLib {
 
+	public interface IPooledObject {
+		IPool Pool { get; set; }
+		bool IsActive { get; }
+		void Activate();
+		void Deactivate();
+	}
+
+	public interface IPooledObject<T> : IPooledObject {
+		T Prefab { get; set; }
+		void MatchPrefab(T prefab);
+	}
+
 	/// <summary>
 	/// Pooled object.
 	/// </summary>
-	public abstract class PooledObject<T> : CachedObject where T : MonoBehaviour {
-		private IPool parentPool;
+	public abstract class PooledObject<T> : CachedObject, IPooledObject<T> where T : MonoBehaviour {
+		private IPool pool;
+		public IPool Pool {
+			get {
+				return pool;
+			}
+			set {
+				pool = value;
+			}
+		}
 
 		private T prefab;
 
@@ -41,17 +61,8 @@ namespace UnityUtilLib {
 		/// <summary>
 		/// Start this instance.
 		/// </summary>
-		void Start() {
+		public override void Awake () {
 			GameObject.SetActive (false);
-		}
-
-		/// <summary>
-		/// Initialize the specified pool.
-		/// </summary>
-		/// <param name="pool">Pool.</param>
-		public void Initialize(IPool pool) {
-			//Debug.Log ("initlaized");
-			parentPool = pool;
 		}
 
 		/// <summary>
@@ -74,7 +85,7 @@ namespace UnityUtilLib {
 		public virtual void Deactivate() {
 			is_active = false;
 			GameObject.SetActive (false);
-			parentPool.Return (this);
+			pool.Return (this);
 		}
 	}
 }

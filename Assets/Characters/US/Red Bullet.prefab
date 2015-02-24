@@ -49,7 +49,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 114182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8823d59fa8fb2e44c89d158549cce38d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d455abbca205534bbe1c646accadd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   circleCollider: {fileID: 5814182}

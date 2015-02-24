@@ -46,6 +46,18 @@ namespace UnityUtilLib {
 		/// The active count.
 		/// </summary>
 		private int activeCount = 0;
+		public int ActiveCount {
+			get {
+				return activeCount;
+			}
+		}
+
+		private int totalCount = 0;
+		public int TotalCount {
+			get {
+				return totalCount;
+			}
+		}
 
 		/// <summary>
 		/// Awake this instance.
@@ -74,6 +86,9 @@ namespace UnityUtilLib {
 			}
 		}
 
+		public virtual void OnSpawn(T newPO) {
+		}
+
 		/// <summary>
 		/// Return the specified obj.
 		/// </summary>
@@ -88,10 +103,12 @@ namespace UnityUtilLib {
 		/// <param name="prefab">Prefab.</param>
 		public PooledObject<P> Get(P prefab = null) {
 			if(valid) {
-				if(inactive.Count <= 0)
+				if(inactive.Count <= 0) {
 					Spawn (spawnCount);
+					Debug.Log(inactive.Count);
+				}
 				T po = inactive.Dequeue ();
-				if(prefab != default(P))
+				if(prefab != null)
 					po.Prefab = prefab;
 				activeCount++;
 				//Debug.Log(active);
@@ -109,8 +126,10 @@ namespace UnityUtilLib {
 			for(int i = 0; i < count; i++) {
 				T newPO = (T)Instantiate(basePrefab);
 				newPO.Transform.parent = parentTrans;
-				newPO.Initialize(this);
+				newPO.Pool = this;
 				inactive.Enqueue(newPO);
+				OnSpawn(newPO);
+				totalCount++;
 			}
 		}
 	}
