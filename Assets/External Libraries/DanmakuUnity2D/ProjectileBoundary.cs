@@ -26,20 +26,6 @@ public class ProjectileBoundary : MonoBehaviour {
 		validTags.AddRange(tagFilter.Split ('|'));
 	}
 
-	/// <summary>
-	/// Raises the trigger enter2 d event.
-	/// </summary>
-	/// <param name="other">Other.</param>
-	void OnTriggerEnter2D(Collider2D other) {
-		//Debug.Log ("Entered");
-		if(validTags.Contains(other.tag)) {
-			Projectile proj = other.GetComponent<Projectile>();
-			if(proj != null) {
-				ProcessProjectile(proj);
-			}
-		}
-	}
-
 	void OnProjectileCollision(Projectile proj) {
 		if(proj != null) {
 			ProcessProjectile(proj);

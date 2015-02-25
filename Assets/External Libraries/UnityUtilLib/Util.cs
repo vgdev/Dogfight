@@ -18,6 +18,27 @@ namespace UnityUtilLib
 		/// </summary>
 		public const float Rad2Degree = 180f / Mathf.PI;
 
+		public static int[] CollisionLayers2D() {
+			int[] collisionMask = new int[32];
+			for(int i = 0; i < 32; i++) {
+				collisionMask[i] = 0;
+				for (int j = 0; j < 32; j++) {
+					collisionMask[i] |= (Physics2D.GetIgnoreLayerCollision(i, j)) ? 0 : (1 << j);
+				}
+			}
+			return collisionMask;
+		}
+
+		public static int[] CollisionLayers3D() {
+			int[] collisionMask = new int[32];
+			for(int i = 0; i < 32; i++) {
+				collisionMask[i] = 0;
+				for (int j = 0; j < 32; j++) {
+					collisionMask[i] |= (Physics.GetIgnoreLayerCollision(i, j)) ? 0 : (1 << j);
+				}
+			}
+			return collisionMask;
+		}
 		
 		private static Mesh quadMesh;
 		private static Material standardSpriteMat;

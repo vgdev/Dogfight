@@ -18,8 +18,8 @@ public class TestDrawSprite : TestScript {
 
 	void Update() {
 		for(int i = 0; i < 10; i++) {
-			Matrix4x4 transform = Matrix4x4.TRS(position + Vector2.right * i, Quaternion.Euler(0f, 0f, rotation), Util.SpriteScale(sprite, scale));
-			Util.DrawSprite(sprite, position , Quaternion.Euler(0f, 0f, rotation), scale, color, material, mpb);
+			//Matrix4x4 transform = Matrix4x4.TRS(position + Vector2.right * i, Quaternion.Euler(0f, 0f, rotation), Util.SpriteScale(sprite, scale));
+			//Util.DrawSprite(sprite, position , Quaternion.Euler(0f, 0f, rotation), scale, color, material, mpb);
 		}
 	}
 }

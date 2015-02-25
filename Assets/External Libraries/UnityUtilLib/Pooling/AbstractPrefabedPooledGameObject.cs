@@ -3,23 +3,10 @@ using System;
 using System.Collections.Generic;
 
 namespace UnityUtilLib {
-
-	public interface IPooledObject {
-		IPool Pool { get; set; }
-		bool IsActive { get; }
-		void Activate();
-		void Deactivate();
-	}
-
-	public interface IPooledObject<T> : IPooledObject {
-		T Prefab { get; set; }
-		void MatchPrefab(T prefab);
-	}
-
 	/// <summary>
 	/// Pooled object.
 	/// </summary>
-	public abstract class PooledObject<T> : CachedObject, IPooledObject<T> where T : MonoBehaviour {
+	public abstract class AbstractPrefabedPooledGameObject<T> : CachedObject, IPrefabPooledObject<T> {
 		private IPool pool;
 		public IPool Pool {
 			get {
@@ -62,6 +49,7 @@ namespace UnityUtilLib {
 		/// Start this instance.
 		/// </summary>
 		public override void Awake () {
+			base.Awake ();
 			GameObject.SetActive (false);
 		}
 

@@ -13,13 +13,16 @@ public class PlayerGrazeHitbox : CachedObject {
 		}
 	}
 
+
+	//TODO: FIX
+
 	void OnTriggerExit2D(Collider2D other) {
-		if (player != null) {
-			Projectile proj = other.GetComponent<Projectile>();
-			if(proj != null) {
-				player.Graze(proj);
-			}
-		}
+//		if (player != null) {
+//			Projectile proj = other.GetComponent<Projectile>();
+//			if(proj != null) {
+//				player.Graze(proj);
+//			}
+//		}
 	}
 
 //	void OnBulletCollision(ProjectileData other) {

@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &27305402
 GameObject:
@@ -1606,8 +1607,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialSpawnCount: 100
   spawnCount: 100
-  basePrefab: {fileID: 11435490, guid: 3f445b745c0a0a7439108a095ac843b8, type: 2}
-  container: {fileID: 1292919920}
 --- !u!82 &787077642
 AudioSource:
   m_ObjectHideFlags: 0

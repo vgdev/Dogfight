@@ -19,21 +19,6 @@ public class PlayerDeathHitbox : CachedObject {
 		}
 	}
 
-	/// <summary>
-	/// Raises the trigger enter2 d event.
-	/// </summary>
-	/// <param name="other">Other.</param>
-	void OnTriggerEnter2D(Collider2D other) {
-		//Debug.Log ("Hit");
-		if (player != null) {
-			Projectile proj = other.GetComponent<Projectile>();
-			if(proj != null) {
-				player.Hit(proj);
-				proj.Deactivate();
-			}
-		}
-	}
-
 	void OnProjectileCollision(Projectile proj) {
 		if (player != null) {
 			player.Hit (proj);

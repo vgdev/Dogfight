@@ -43,21 +43,6 @@ public abstract class AbstractEnemy : CachedObject {
 	}
 
 	/// <summary>
-	/// Raises the trigger enter2 d event.
-	/// </summary>
-	/// <param name="other">Other.</param>
-	void OnTriggerEnter2D(Collider2D other) {
-		if (other.CompareTag ("Player Shot")) {
-			Projectile proj = other.GetComponent<Projectile>();
-			if(proj != null) {
-				Hit (proj.Damage);
-				proj.Deactivate ();
-				OnDamage();
-			}
-		}
-	}
-
-	/// <summary>
 	/// Hit the specified proj.
 	/// </summary>
 	/// <param name="proj">Proj.</param>

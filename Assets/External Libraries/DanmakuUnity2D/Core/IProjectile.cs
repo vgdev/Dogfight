@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityUtilLib;
 
-public interface IProjectile : IPooledObject<ProjectilePrefab> {
+public interface IProjectile : IPrefabPooledObject<ProjectilePrefab> {
 
 	Vector2 Position { get; set; }
 	float Rotation { get; set; }

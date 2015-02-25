@@ -304,15 +304,15 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// <param name="position">Position.</param>
 	/// <param name="radius">Radius.</param>
 	/// <param name="layerMask">Layer mask.</param>
-	public Projectile[] GetAllBullets(Vector3 position, float radius, int layerMask = 1 << 14) {
-		Collider2D[] hits = Physics2D.OverlapCircleAll (position, radius, layerMask);
-		List<Projectile> projectiles = new List<Projectile> ();
-		for (int i = 0; i < hits.Length; i++) {
-			Projectile proj = hits[i].GetComponent<Projectile>();
-			if(proj != null) {
-				projectiles.Add(proj);
-			}
-		}
-		return projectiles.ToArray ();
-	}
+//	public Projectile[] GetAllBullets(Vector3 position, float radius, int layerMask = 1 << 14) {
+//		Collider2D[] hits = Physics2D.OverlapCircleAll (position, radius, layerMask);
+//		List<Projectile> projectiles = new List<Projectile> ();
+//		for (int i = 0; i < hits.Length; i++) {
+//			Projectile proj = hits[i].GetComponent<Projectile>();
+//			if(proj != null) {
+//				projectiles.Add(proj);
+//			}
+//		}
+//		return projectiles.ToArray ();
+//	}
 }

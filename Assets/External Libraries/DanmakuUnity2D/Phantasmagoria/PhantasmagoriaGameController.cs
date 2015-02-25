@@ -90,7 +90,8 @@ public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 	/// <summary>
 	/// Awake this instance.
 	/// </summary>
-	void Awake() {
+	public override void Awake() {
+		base.Awake ();
 		Physics2D.raycastsHitTriggers = true;
 		if(player1.Field != null && player2.Field != null) {
 			player1.Field.SetTargetField(player2.Field);
@@ -167,10 +168,7 @@ public class PhantasmagoriaGameController : AbstractDanmakuGameController {
 		closureBottom.localScale = scale;
 		player1.Field.RoundReset ();
 		player2.Field.RoundReset ();
-		Projectile[] allProjectiles = FindObjectsOfType<Projectile> ();
-		for(int i = 0; i < allProjectiles.Length; i++) {
-			allProjectiles[i].DeactivateImmediate();
-		}
+		BulletPool.DeactivateAll ();
 		AbstractEnemy[] allEnemies = FindObjectsOfType<AbstractEnemy> ();
 		for(int i = 0; i < allEnemies.Length; i++) {
 			Destroy (allEnemies[i].GameObject);

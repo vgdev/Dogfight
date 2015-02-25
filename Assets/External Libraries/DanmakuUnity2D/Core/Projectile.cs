@@ -7,21 +7,14 @@ using System.Collections;
 /// Projectile.
 /// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
-public class Projectile : PooledObject<ProjectilePrefab> {
+public class Projectile : AbstractPrefabedPooledObject<ProjectilePrefab> {
 
 	private static int[] collisionMask;
-
-	public static void RecomputeProjectileCollisions() {
-		collisionMask = new int[32];
-		for(int i = 0; i < 32; i++) {
-			collisionMask[i] = 0;
-			for (int j = 0; j < 32; j++) {
-				collisionMask[i] |= (Physics2D.GetIgnoreLayerCollision(i, j)) ? 0 : (1 << j);
-			}
-		}
-	}
-
 	private bool to_deactivate;
+
+	private GameObject gameObject;
+	private Transform transform;
+	private SpriteRenderer renderer;
 
 	/// <summary>
 	/// The damage.
@@ -96,14 +89,15 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	/// </summary>
 	private float circleRaidus = 1f;
 
-	/// <summary>
-	/// The sprite renderer.
-	/// </summary>
-	[SerializeField]
-	private SpriteRenderer spriteRenderer;
 	public SpriteRenderer SpriteRenderer {
 		get {
-			return spriteRenderer;
+			return renderer;
+		}
+	}
+
+	public Transform Transform {
+		get {
+			return transform;
 		}
 	}
 
@@ -120,38 +114,37 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 	/// <summary>
 	/// Awake this instance.
 	/// </summary>
-	public override void Awake() {
-		base.Awake ();
+	public Projectile() {
 		properties = new Dictionary<string, object> ();
 		controllers = new List<ProjectileController> ();
-		if(spriteRenderer == null)
-			spriteRenderer = GetComponent<SpriteRenderer> ();
 		if(collisionMask == null)
-			RecomputeProjectileCollisions();
+			collisionMask = Util.CollisionLayers2D();
+		gameObject = new GameObject ("Projectile");
+		renderer = gameObject.AddComponent<SpriteRenderer> ();
+		transform = gameObject.transform;
 		hits = new RaycastHit2D[10];
 	}
 
 	/// <summary>
 	/// Fixeds the update.
 	/// </summary>
-	void FixedUpdate() {
-		float dt = Time.fixedDeltaTime;
+	public void Update(float dt) {
 		fireTimer += dt;
 		//Rotate
 		if(angularVelocity != Quaternion.identity) {
-			Transform.rotation = Quaternion.Slerp (Transform.rotation, Transform.rotation * angularVelocity, dt);
+			transform.rotation = Quaternion.Slerp (transform.rotation, transform.rotation * angularVelocity, dt);
 		}
 		float movementDistance = linearVelocity * dt;
 		
-		Vector3 movementVector = Transform.up * movementDistance;
+		Vector3 movementVector = transform.up * movementDistance;
 		//Debug.DrawRay (Transform.position, movementVector);
-		int count = Physics2D.CircleCastNonAlloc(Transform.position + Util.To3D(circleCenter), 
+		int count = Physics2D.CircleCastNonAlloc(transform.position + Util.To3D(circleCenter), 
 						                           circleRaidus,
 							                       Transform.up,
 			                                       hits,
 						                           movementDistance,
-						                           collisionMask[GameObject.layer]);
-		Transform.position += movementVector;
+						                           collisionMask[gameObject.layer]);
+		transform.position += movementVector;
 
 		//Translate
 		if(count > 0) {
@@ -196,16 +189,16 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		CircleCollider2D cc = prefab.CircleCollider;
 		SpriteRenderer sr = prefab.SpriteRenderer;
 
-		Transform.localScale = prefab.Transform.localScale;
+		transform.localScale = prefab.Transform.localScale;
 		gameObject.tag = prefab.GameObject.tag;
 		gameObject.layer = prefab.GameObject.layer;
 
-		if(spriteRenderer != null) {
-			spriteRenderer.sprite = sr.sprite;
-			spriteRenderer.color = sr.color;
-			//spriteRenderer.material = spriteTest.material;
-			spriteRenderer.sortingOrder = sr.sortingOrder;
-			spriteRenderer.sortingLayerID = sr.sortingLayerID;
+		if(sr != null) {
+			renderer.sprite = sr.sprite;
+			renderer.color = sr.color;
+			renderer.sharedMaterial = sr.sharedMaterial;
+			renderer.sortingOrder = sr.sortingOrder;
+			renderer.sortingLayerID = sr.sortingLayerID;
 		}
 		else
 			Debug.LogError("The provided prefab should have a SpriteRenderer!");
@@ -270,9 +263,9 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 			controller.OnControllerRemove(this);
 	}
 
-	public override void Activate () {
-		base.Activate ();
+	public void Activate () {
 		to_deactivate = false;
+		gameObject.SetActive (true);
 	}
 
 	/// <summary>
@@ -289,6 +282,7 @@ public class Projectile : PooledObject<ProjectilePrefab> {
 		fireTimer = 0f;
 		damage = 0;
 		angularVelocity = Quaternion.identity;
-		base.Deactivate();
+		gameObject.SetActive (false);
+		base.Deactivate ();
 	}
 }
