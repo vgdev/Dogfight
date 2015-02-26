@@ -266,8 +266,8 @@ public abstract class AbstractDanmakuField : CachedObject {
 	/// <param name="location">The location within the field to spawn the projectile.</param>
 	/// <param name="rotation">Rotation.</param>
 	/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
-	/// <param name="extraControllers">Extra ProjectileControllers to change the behavior of the projectile.</param>
-	public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, float rotation, FieldCoordinateSystem coordSys = FieldCoordinateSystem.Screen, ProjectileController[] extraControllers = null) {
+	/// <param name="extraControllers">Extra AbstractProjectileControllers to change the behavior of the projectile.</param>
+	public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, float rotation, FieldCoordinateSystem coordSys = FieldCoordinateSystem.Screen, AbstractProjectileController[] extraControllers = null) {
 		Vector3 worldLocation = Vector3.zero;
 		switch(coordSys) {
 			case FieldCoordinateSystem.Screen:

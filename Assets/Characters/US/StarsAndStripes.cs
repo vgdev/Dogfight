@@ -62,7 +62,7 @@ public class StarsAndStripes : AbstractTimedAttackPattern {
 	}
 }
 
-public class RedirectAtPLayer : ProjectileController {
+public class RedirectAtPLayer : AbstractProjectileController {
 
 	public override bool IsFinite {
 		get {

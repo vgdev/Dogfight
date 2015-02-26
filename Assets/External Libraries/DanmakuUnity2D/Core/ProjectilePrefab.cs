@@ -12,6 +12,9 @@ public class ProjectilePrefab : CachedObject {
 		get {
 			return circleCollider;
 		}
+		set {
+			circleCollider = value;
+		}
 	}
 
 	[SerializeField]
@@ -21,10 +24,12 @@ public class ProjectilePrefab : CachedObject {
 		get {
 			return spriteRenderer;
 		}
+		set {
+			spriteRenderer = value;
+		}
 	}
 
-	public override void Awake()
-	{
+	public override void Awake() {
 		base.Awake ();
 		if(circleCollider == null)
 			circleCollider = GetComponent<CircleCollider2D> ();

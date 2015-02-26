@@ -72,7 +72,7 @@ public class Projectile : AbstractPrefabedPooledObject<ProjectilePrefab> {
 	/// <summary>
 	/// The controllers.
 	/// </summary>
-	private List<ProjectileController> controllers;
+	private List<AbstractProjectileController> controllers;
 
 	/// <summary>
 	/// The properties.
@@ -116,7 +116,7 @@ public class Projectile : AbstractPrefabedPooledObject<ProjectilePrefab> {
 	/// </summary>
 	public Projectile() {
 		properties = new Dictionary<string, object> ();
-		controllers = new List<ProjectileController> ();
+		controllers = new List<AbstractProjectileController> ();
 		if(collisionMask == null)
 			collisionMask = Util.CollisionLayers2D();
 		gameObject = new GameObject ("Projectile");
@@ -249,7 +249,7 @@ public class Projectile : AbstractPrefabedPooledObject<ProjectilePrefab> {
 	/// Adds the controller.
 	/// </summary>
 	/// <param name="controller">Controller.</param>
-	public void AddController(ProjectileController controller) {
+	public void AddController(AbstractProjectileController controller) {
 		controllers.Add (controller);
 		controller.OnControllerAdd (this);
 	}
@@ -258,12 +258,12 @@ public class Projectile : AbstractPrefabedPooledObject<ProjectilePrefab> {
 	/// Removes the controller.
 	/// </summary>
 	/// <param name="controller">Controller.</param>
-	public void RemoveController (ProjectileController controller) {
+	public void RemoveController (AbstractProjectileController controller) {
 		if(controllers.Remove(controller))
 			controller.OnControllerRemove(this);
 	}
 
-	public void Activate () {
+	public override void Activate () {
 		to_deactivate = false;
 		gameObject.SetActive (true);
 	}

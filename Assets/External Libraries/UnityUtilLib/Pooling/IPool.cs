@@ -16,7 +16,7 @@ namespace UnityUtilLib {
 	}
 
 	public interface IPool<T> : IPool where T : IPooledObject {
-		T Get();
+		new T Get();
 		void Return(T obj);
 	}
 }

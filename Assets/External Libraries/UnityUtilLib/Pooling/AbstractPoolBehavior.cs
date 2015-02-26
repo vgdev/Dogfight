@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace UnityUtilLib {
 	public abstract class AbstractPoolBehavior<T> : CachedObject, IPool<T> where T : IPooledObject {
-		private Queue<T> inactive;
-		private HashSet<T> active;
+		private Queue<T> inactiveObjs;
+		private HashSet<T> activeObjs;
 		private HashSet<T> all;
 
 		/// <summary>
@@ -22,15 +22,15 @@ namespace UnityUtilLib {
 
 		public T[] Active {
 			get {
-				T[] array = new T[active.Count];
-				active.CopyTo(array);
+				T[] array = new T[activeObjs.Count];
+				activeObjs.CopyTo(array);
 				return array;
 			}
 		}
 
 		public T[] Inactive {
 			get {
-				return inactive.ToArray();
+				return inactiveObjs.ToArray();
 			}
 		}
 
@@ -44,17 +44,19 @@ namespace UnityUtilLib {
 
 		public int ActiveCount {
 			get {
+				#pragma warning disable 0168
 				try {
-					return totalCount - inactive.Count;
+					return totalCount - inactiveObjs.Count;
 				} catch (System.NullReferenceException nre) {
 					return totalCount;
 				}
+				#pragma warning restore 0168
 			}
 		}
 
 		private int InactiveCount {
 			get {
-				return inactive.Count;
+				return inactiveObjs.Count;
 			}
 		}
 		
@@ -67,8 +69,8 @@ namespace UnityUtilLib {
 
 		public override void Awake () {
 			base.Awake ();
-			inactive = new Queue<T> ();
-			active = new HashSet<T> ();
+			inactiveObjs = new Queue<T> ();
+			activeObjs = new HashSet<T> ();
 			all = new HashSet<T> ();
 			Spawn (initialSpawnCount);
 		}
@@ -78,8 +80,8 @@ namespace UnityUtilLib {
 		/// </summary>
 		/// <param name="po">Po.</param>
 		public void Return(T po) {
-			inactive.Enqueue (po);
-			active.Remove (po);
+			inactiveObjs.Enqueue (po);
+			activeObjs.Remove (po);
 			//Debug.Log(activeCount);
 		}
 		
@@ -91,8 +93,8 @@ namespace UnityUtilLib {
 			if(InactiveCount <= 0) {
 				Spawn (spawnCount);
 			}
-			T po = inactive.Dequeue();
-			active.Add (po);
+			T po = inactiveObjs.Dequeue();
+			activeObjs.Add (po);
 			OnGet (po);
 			//Debug.Log(active);
 			return po;
@@ -106,7 +108,7 @@ namespace UnityUtilLib {
 			for(int i = 0; i < count; i++) {
 				T newPO = CreateNew();
 				newPO.Pool = this;
-				inactive.Enqueue(newPO);
+				inactiveObjs.Enqueue(newPO);
 				all.Add(newPO);
 				OnSpawn(newPO);
 				totalCount++;
