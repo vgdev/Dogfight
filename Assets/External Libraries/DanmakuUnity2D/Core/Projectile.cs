@@ -120,8 +120,10 @@ public class Projectile : AbstractPrefabedPooledObject<ProjectilePrefab> {
 		if(collisionMask == null)
 			collisionMask = Util.CollisionLayers2D();
 		gameObject = new GameObject ("Projectile");
+		gameObject.hideFlags = HideFlags.HideInHierarchy;
 		renderer = gameObject.AddComponent<SpriteRenderer> ();
 		transform = gameObject.transform;
+		gameObject.SetActive (false);
 		hits = new RaycastHit2D[10];
 	}
 

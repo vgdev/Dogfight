@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityUtilLib;
 
-public class EnemyManager : StaticGameObject<EnemyManager> {
+public class EnemyManager : SingletonBehavior<EnemyManager> {
 
 	private List<AbstractEnemy> registeredEnemies;
 
