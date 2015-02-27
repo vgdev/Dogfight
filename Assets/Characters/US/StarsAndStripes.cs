@@ -49,8 +49,8 @@ public class StarsAndStripes : AbstractTimedAttackPattern {
 		}
 	}
 
-	protected override void MainLoop () {
-		base.MainLoop ();
+	protected override void MainLoop (AttackPatternExecution execution) {
+		base.MainLoop (execution);
 		if (stripesDelay.Tick ()) {
 			Vector2 origin = Vector2.up + stripeOffset * ((horizontal) ? -Vector2.up : Vector2.right);
 			Vector2 dif = (1f - 2 * stripeOffset) / ((float) stripeCount - 1) * ((horizontal) ? -Vector2.up : Vector2.right);

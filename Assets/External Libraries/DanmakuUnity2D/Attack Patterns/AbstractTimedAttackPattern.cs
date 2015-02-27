@@ -8,7 +8,7 @@ namespace Danmaku2D {
 		[SerializeField]
 		private FrameCounter timeout;
 
-		protected override void MainLoop () {
+		protected override void MainLoop (AttackPatternExecution execution) {
 			if(timeout.Tick (false)) {
 				return;
 			}

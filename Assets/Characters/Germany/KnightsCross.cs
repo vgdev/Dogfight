@@ -34,8 +34,8 @@ public class KnightsCross : AbstractTimedAttackPattern {
         fire();
     }
 
-    protected override void MainLoop() {
-        base.MainLoop();
+    protected override void MainLoop(AttackPatternExecution execution) {
+        base.MainLoop(execution);
         if (crossDelay.Tick()) {
             fire();
         }

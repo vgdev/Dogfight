@@ -50,7 +50,7 @@ namespace Danmaku2D.AttackPattern {
 			currentBurstSource = spawnLocation - 0.5f * spawnArea + Util.RandomVect2 (spawnArea);
 		}
 		
-		protected override void MainLoop () {
+		protected override void MainLoop (AttackPatternExecution execution) {
 			if(burstDelay.Tick()) {
 				float offset = (burstCount.MaxCount - burstCount.Count) * burstRotationDelta;
 				for(int i = 0; i < bulletCount; i++) {

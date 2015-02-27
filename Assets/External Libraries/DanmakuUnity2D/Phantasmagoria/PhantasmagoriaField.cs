@@ -34,6 +34,7 @@ namespace Danmaku2D.Phantasmagoria {
 
 		public void RoundReset() {
 			Player.Reset (5);
+			CameraTransform.rotation = Quaternion.identity;
 		}
 	}
 }

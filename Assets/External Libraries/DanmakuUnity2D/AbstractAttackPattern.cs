@@ -2,9 +2,22 @@ using UnityEngine;
 using UnityUtilLib;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Danmaku2D {
+
+	[Serializable]
+	public class AttackPatternExecution {
+		[SerializeField]
+		public bool Active {
+			get;
+			set;
+		}
+	}
+
 	public abstract class AbstractAttackPattern : PausableGameObject {
+
+		private List<AttackPatternExecution> executions;
 
 		private AbstractDanmakuField targetField;
 		public AbstractDanmakuField TargetField {
@@ -26,12 +39,17 @@ namespace Danmaku2D {
 			}
 		}
 
+		public override void Awake () {
+			base.Awake ();
+			executions = new List<AttackPatternExecution> ();
+		}
+
 		private bool attackActive;
 
 		protected virtual void OnExecutionStart() {
 		}
 
-		protected abstract void MainLoop();
+		protected abstract void MainLoop(AttackPatternExecution execution);
 
 		protected virtual void OnExecutionFinish() {
 		}
@@ -54,23 +72,35 @@ namespace Danmaku2D {
 			return bullet;
 		}
 
-		protected void Terminate() {
-			attackActive = false;
+		protected virtual AttackPatternExecution OnGenerateAttackPatternExecution() {
+			return new AttackPatternExecution ();
+		}
+
+		protected void Terminate(AttackPatternExecution execution) {
+			execution.Active = false;
 		}
 
 		public void Fire() {
 			StartCoroutine (Execute ());
 		}
 
+		public void TerminateAll() {
+			for(int i = 0; i < executions.Count; i++) {
+				executions[i].Active = false;
+			}
+		}
+
 		private IEnumerator Execute() {
-			attackActive = true;
+			AttackPatternExecution execution = OnGenerateAttackPatternExecution ();
+			execution.Active = true;
+			executions.Add (execution);
 			OnExecutionStart ();
-			while(!IsFinished && attackActive) {
-				MainLoop();
+			while(!IsFinished && execution.Active) {
+				MainLoop(execution);
 				yield return WaitForUnpause();
-				Debug.Log(IsFinished.ToString() + attackActive.ToString ());
 			}
 			OnExecutionFinish ();
+			executions.Remove (execution);
 		}
 	}
 }

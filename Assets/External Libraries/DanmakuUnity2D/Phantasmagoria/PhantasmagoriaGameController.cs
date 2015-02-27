@@ -141,6 +141,10 @@ namespace Danmaku2D.Phantasmagoria {
 			for(int i = 0; i < bcas.Length; i++) {
 				Destroy (bcas[i].GameObject);
 			}
+			AbstractAttackPattern[] attackPatterns = FindObjectsOfType<AbstractAttackPattern> ();
+			for (int i = 0; i < attackPatterns.Length; i++) {
+				attackPatterns[i].TerminateAll();
+			}
 			while (t > 0f) {
 				scale.y = t;
 				closureTop.localScale = scale;

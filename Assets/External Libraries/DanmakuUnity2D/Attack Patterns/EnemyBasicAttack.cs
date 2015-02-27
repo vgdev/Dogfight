@@ -29,7 +29,7 @@ namespace Danmaku2D.AttackPattern {
 			}
 		}
 		
-		protected override void MainLoop () {
+		protected override void MainLoop (AttackPatternExecution execution) {
 			if (fireDelay.Tick()) {
 				float angle = TargetField.AngleTowardPlayer(transform.position) + Random.Range(-generalRange, generalRange);
 				Projectile proj = TargetField.SpawnProjectile(basicPrefab, Transform.position,

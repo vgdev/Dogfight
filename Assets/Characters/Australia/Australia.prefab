@@ -168,8 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeout:
-    maxDelay: 5
-    currentDelay: 5
+    delay: 5
   flipDuration: 1
 --- !u!114 &11497972
 MonoBehaviour:
@@ -220,11 +219,9 @@ MonoBehaviour:
   deathCancelDuration: .5
   deathCancelRadius: 30
   deathInvincibiiltyPeriod:
-    maxDelay: 2
-    currentDelay: 2
+    delay: 0
   invincibiltyFlash:
-    maxDelay: .100000001
-    currentDelay: .100000001
+    delay: 0
 --- !u!212 &21297972
 SpriteRenderer:
   m_ObjectHideFlags: 1
