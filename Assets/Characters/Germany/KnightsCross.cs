@@ -5,7 +5,7 @@ using Danmaku2D;
 
 public class KnightsCross : AbstractTimedAttackPattern {
     [SerializeField]
-    private CountdownDelay crossDelay;
+    private FrameCounter crossDelay;
 
     [SerializeField]
     private ProjectilePrefab fatBullet;
@@ -34,10 +34,9 @@ public class KnightsCross : AbstractTimedAttackPattern {
         fire();
     }
 
-    protected override void MainLoop(float dt) {
-        base.MainLoop(dt);
-        if (crossDelay.Tick(dt))
-        {
+    protected override void MainLoop() {
+        base.MainLoop();
+        if (crossDelay.Tick()) {
             fire();
         }
     }

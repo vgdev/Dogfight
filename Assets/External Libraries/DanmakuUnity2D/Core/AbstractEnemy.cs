@@ -5,7 +5,7 @@ using System.Collections;
 namespace Danmaku2D {
 	[RequireComponent(typeof(Rigidbody2D))]
 	[RequireComponent(typeof(Collider2D))]
-	public abstract class AbstractEnemy : CachedObject {
+	public abstract class AbstractEnemy : PausableGameObject {
 
 		public virtual AbstractAttackPattern CurrentAttackPattern { 
 			get {

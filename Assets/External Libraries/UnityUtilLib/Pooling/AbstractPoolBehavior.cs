@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace UnityUtilLib {
-	public abstract class AbstractPoolBehavior<T> : CachedObject, IPool<T> where T : IPooledObject {
+	public abstract class AbstractPoolBehavior<T> : PausableGameObject, IPool<T> where T : IPooledObject {
 		private Queue<T> inactiveObjs;
 		private HashSet<T> activeObjs;
 		private HashSet<T> all;

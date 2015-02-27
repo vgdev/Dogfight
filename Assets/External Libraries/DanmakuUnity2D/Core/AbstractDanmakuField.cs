@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Danmaku2D {
 	public enum FieldCoordinateSystem { Screen, FieldRelative, AbsoluteWorld }
 
-	public abstract class AbstractDanmakuField : CachedObject {
+	public abstract class AbstractDanmakuField : PausableGameObject {
 		/// <summary>
 		/// The player spawn location.
 		/// </summary>

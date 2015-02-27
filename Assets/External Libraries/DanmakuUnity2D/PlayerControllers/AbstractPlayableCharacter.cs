@@ -20,13 +20,15 @@ namespace Danmaku2D {
 			agent.Player = this;
 		}
 
-		public virtual void FixedUpdate() {
-			agent.Update (Time.fixedDeltaTime);
+		public override void NormalUpdate () {
+			base.NormalUpdate ();
+			if(agent != null)
+				agent.Update();
 		}
 	}
 
 	[RequireComponent(typeof(Collider2D))]
-	public abstract class AbstractPlayableCharacter : CachedObject {
+	public abstract class AbstractPlayableCharacter : PausableGameObject {
 
 		private AbstractDanmakuField field;
 		public AbstractDanmakuField Field { 
@@ -75,7 +77,8 @@ namespace Danmaku2D {
 			get { return -(int)Util.Sign(forbiddenMovement.y); }
 		}
 
-		public virtual void Move(float horizontalDirection, float verticalDirection, bool focus, float dt = 1.0f) {
+		public virtual void Move(float horizontalDirection, float verticalDirection, bool focus) {
+			float dt = Util.TargetDeltaTime;
 			float movementSpeed = (focus) ? focusMovementSpeed : normalMovementSpeed;
 			Vector2 dir = new Vector2 (Util.Sign(horizontalDirection), Util.Sign(verticalDirection));
 			Vector3 movementVector = movementSpeed * Vector3.one;

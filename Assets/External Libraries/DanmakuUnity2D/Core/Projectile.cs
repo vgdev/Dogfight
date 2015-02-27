@@ -131,7 +131,8 @@ namespace Danmaku2D {
 		/// <summary>
 		/// Fixeds the update.
 		/// </summary>
-		public void Update(float dt) {
+		public void Update() {
+			float dt = Util.TargetDeltaTime;
 			fireTimer += dt;
 			//Rotate
 			if(angularVelocity != Quaternion.identity) {

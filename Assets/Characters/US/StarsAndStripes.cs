@@ -7,7 +7,7 @@ using Danmaku2D.AttackPattern;
 public class StarsAndStripes : AbstractTimedAttackPattern {
 
 	[SerializeField]
-	private CountdownDelay stripesDelay;
+	private FrameCounter stripesDelay;
 
 	[SerializeField]
 	private ProjectilePrefab stripesBullet;
@@ -49,9 +49,9 @@ public class StarsAndStripes : AbstractTimedAttackPattern {
 		}
 	}
 
-	protected override void MainLoop (float dt) {
-		base.MainLoop (dt);
-		if (stripesDelay.Tick (dt)) {
+	protected override void MainLoop () {
+		base.MainLoop ();
+		if (stripesDelay.Tick ()) {
 			Vector2 origin = Vector2.up + stripeOffset * ((horizontal) ? -Vector2.up : Vector2.right);
 			Vector2 dif = (1f - 2 * stripeOffset) / ((float) stripeCount - 1) * ((horizontal) ? -Vector2.up : Vector2.right);
 			for(int i = 0; i < stripeCount; i++) {
@@ -72,6 +72,4 @@ public class RedirectAtPLayer : AbstractProjectileController {
 	public override void UpdateBullet (Projectile bullet, float dt) {
 		base.UpdateBullet (bullet, dt);
 	}
-
-
 }

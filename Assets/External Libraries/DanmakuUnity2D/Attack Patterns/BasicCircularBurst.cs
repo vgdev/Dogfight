@@ -27,7 +27,7 @@ namespace Danmaku2D.AttackPattern {
 		private Counter burstCount;
 		
 		[SerializeField]
-		private CountdownDelay burstDelay;
+		private FrameCounter burstDelay;
 		
 		[SerializeField]
 		[Range(-180f, 180f)]
@@ -50,15 +50,13 @@ namespace Danmaku2D.AttackPattern {
 			currentBurstSource = spawnLocation - 0.5f * spawnArea + Util.RandomVect2 (spawnArea);
 		}
 		
-		protected override void MainLoop (float dt) {
-			if (burstCount.Count > 0) {
-				if(burstDelay.Tick(dt)) {
-					float offset = (burstCount.MaxCount - burstCount.Count) * burstRotationDelta;
-					for(int i = 0; i < bulletCount; i++) {
-						FireCurvedBullet(prefab, currentBurstSource, offset + 360f / (float) bulletCount * (float)i, velocity, angV);
-					}
-					burstCount.Tick();
+		protected override void MainLoop () {
+			if(burstDelay.Tick()) {
+				float offset = (burstCount.MaxCount - burstCount.Count) * burstRotationDelta;
+				for(int i = 0; i < bulletCount; i++) {
+					FireCurvedBullet(prefab, currentBurstSource, offset + 360f / (float) bulletCount * (float)i, velocity, angV);
 				}
+				burstCount.Tick();
 			}
 		}
 	}

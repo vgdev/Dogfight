@@ -1,12 +1,11 @@
-using UnityEngine;
-using System;
+﻿using UnityEngine;
+using System.Collections;
 
 namespace UnityUtilLib {
 	[RequireComponent(typeof(StaticGameObject))]
-	public abstract class SingletonBehavior<T> : CachedObject where T : SingletonBehavior<T> {
-
+	public abstract class PausableSingleton<T> : PausableGameObject where T : PausableSingleton<T> {
 		private static T instance;
-
+		
 		public static T Instance {
 			get { 
 				if(instance == null) {
@@ -15,9 +14,9 @@ namespace UnityUtilLib {
 				return instance; 
 			}
 		}
-
+		
 		public bool destroyNewInstances;
-
+		
 		public override void Awake () {
 			base.Awake ();
 			if(instance != null) {

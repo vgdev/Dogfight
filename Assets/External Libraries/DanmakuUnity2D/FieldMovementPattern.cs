@@ -72,12 +72,13 @@ namespace Danmaku2D {
 					Vector3 control1 = movements[i].NextControlPoint1(field, startLocation);
 					Vector3 control2 = movements[i].NextControlPoint2(field, startLocation);
 					Vector3 oldPosition;
+					float dt = Util.TargetDeltaTime;
 					while(t < 1f) {
 						oldPosition = Transform.position;
 						Transform.position = Util.BerzierCurveVectorLerp(startLocation, targetLocation, control1, control2, t);
 						Transform.rotation = Util.RotationBetween2D(oldPosition, Transform.position);
-						yield return new WaitForFixedUpdate();
-						t += Time.deltaTime / totalTime;
+						yield return WaitForUnpause();
+						t += dt / totalTime;
 					}
 				}
 			}

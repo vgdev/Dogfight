@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityUtilLib;
 
 namespace Danmaku2D {
-	public class EnemyManager : SingletonBehavior<EnemyManager> {
+	public class EnemyManager : PausableSingleton<EnemyManager> {
 
 		private List<AbstractEnemy> registeredEnemies;
 
@@ -19,8 +19,8 @@ namespace Danmaku2D {
 		private AbstractDanmakuGameController controller;
 
 		[SerializeField]
-		private float roundStartSafeZone;
-		private float chainSpawnCountdown;
+		private FrameCounter roundStartSafeZone;
+		private FrameCounter chainSpawnCountdown;
 
 		[System.Serializable]
 		public class EnemySpawnData {
@@ -50,23 +50,20 @@ namespace Danmaku2D {
 		}
 
 		void Start() {
-			chainSpawnCountdown = roundStartSafeZone;
 			weightSum = 0f;
 			for (int i = 0; i < chains.Length; i++) {
 				weightSum += chains[i].weight;
 			}
 		}
 
-		void FixedUpdate() {
-			chainSpawnCountdown -= Time.fixedDeltaTime;
-			//Debug.Log (chainSpawnCountdown);
-			if (chainSpawnCountdown <= 0f) {
+		public override void NormalUpdate () {
+			if (chainSpawnCountdown.Tick()) {
 				float randSelect = Random.value * weightSum;
 				for(int i = 0; i < chains.Length; i++) {
 					randSelect -= chains[i].weight;
 					if(randSelect <= 0f) {
 						StartCoroutine(SpawnEnemyChain(chains[i]));
-						chainSpawnCountdown = chains[i].delay;
+						chainSpawnCountdown = new FrameCounter(chains[i].delay);
 						break;
 					}
 				}
@@ -90,8 +87,8 @@ namespace Danmaku2D {
 					controller.SpawnEnemy(chainData[i].EnemyPrefab, new Vector2(rx, ry));
 					float time = 0f;
 					while(time < chainData[i].timeUntilNext) {
-						yield return new WaitForFixedUpdate();
-						time += Time.fixedDeltaTime;
+						yield return WaitForUnpause();
+						time += Util.TargetDeltaTime;
 					}
 				}
 			}

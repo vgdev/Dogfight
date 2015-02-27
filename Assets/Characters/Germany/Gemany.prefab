@@ -183,11 +183,9 @@ MonoBehaviour:
   deathCancelDuration: .5
   deathCancelRadius: 30
   deathInvincibiiltyPeriod:
-    maxDelay: 2
-    currentDelay: 2
+    delay: 0
   invincibiltyFlash:
-    maxDelay: .100000001
-    currentDelay: .100000001
+    delay: 0
 --- !u!114 &11430092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -222,11 +220,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeout:
-    maxDelay: 3.5
-    currentDelay: 3.5
+    delay: 5
   crossDelay:
-    maxDelay: .25
-    currentDelay: .25
+    delay: .200000003
   fatBullet: {fileID: 11420942, guid: 53a04669cc266574082aafa42d1e95da, type: 2}
   thinBullet: {fileID: 11483526, guid: fd93b1802e3f9c94ea450691f812cacc, type: 2}
   bulletVelocity: 7

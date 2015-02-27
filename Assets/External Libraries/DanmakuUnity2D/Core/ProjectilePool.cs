@@ -12,11 +12,10 @@ namespace Danmaku2D {
 
 		#endregion
 
-		void FixedUpdate() {
-			float dt = Time.fixedDeltaTime;
+		public override void NormalUpdate () {
 			Projectile[] active = Active;
 			for(int i = 0; i < active.Length; i++) {
-				active[i].Update(dt);
+				active[i].Update();
 			}
 		}
 

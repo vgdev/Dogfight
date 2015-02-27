@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 
 namespace Danmaku2D {
-	public abstract class AbstractAttackPattern : CachedObject {
+	public abstract class AbstractAttackPattern : PausableGameObject {
 
 		private AbstractDanmakuField targetField;
 		public AbstractDanmakuField TargetField {
@@ -31,7 +31,7 @@ namespace Danmaku2D {
 		protected virtual void OnExecutionStart() {
 		}
 
-		protected abstract void MainLoop(float dt);
+		protected abstract void MainLoop();
 
 		protected virtual void OnExecutionFinish() {
 		}
@@ -65,10 +65,10 @@ namespace Danmaku2D {
 		private IEnumerator Execute() {
 			attackActive = true;
 			OnExecutionStart ();
-			WaitForFixedUpdate wffu = new WaitForFixedUpdate ();
 			while(!IsFinished && attackActive) {
-				MainLoop(Time.fixedDeltaTime);
-				yield return wffu;
+				MainLoop();
+				yield return WaitForUnpause();
+				Debug.Log(IsFinished.ToString() + attackActive.ToString ());
 			}
 			OnExecutionFinish ();
 		}

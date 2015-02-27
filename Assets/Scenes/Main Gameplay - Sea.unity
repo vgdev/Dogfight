@@ -1587,7 +1587,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyNewInstances: 0
-  roundStartSafeZone: 0
+  roundStartSafeZone:
+    delay: 0
   chains: []
 --- !u!114 &787077641
 MonoBehaviour:
@@ -2643,8 +2644,7 @@ MonoBehaviour:
   gameController: {fileID: 787077639}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashInterval:
-    maxDelay: .200000003
-    currentDelay: .200000003
+    delay: 0
   flashThreshold: 30
 --- !u!1 &1675727870
 GameObject:

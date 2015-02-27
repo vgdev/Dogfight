@@ -118,10 +118,10 @@ namespace Danmaku2D.Phantasmagoria {
 		private float deathCancelRadius;
 
 		[SerializeField]
-		private CountdownDelay deathInvincibiiltyPeriod;
+		private FrameCounter deathInvincibiiltyPeriod;
 
 		[SerializeField]
-		private CountdownDelay invincibiltyFlash;
+		private FrameCounter invincibiltyFlash;
 
 		private bool invincible;
 
@@ -138,20 +138,18 @@ namespace Danmaku2D.Phantasmagoria {
 			invincible = true;
 			deathInvincibiiltyPeriod.Reset ();
 			invincibiltyFlash.Reset ();
-			WaitForFixedUpdate wffu = new WaitForFixedUpdate ();
+			WaitForEndOfFrame wfeof = new WaitForEndOfFrame();
 			SpriteRenderer render = GetComponent<SpriteRenderer> ();
 			bool flash = false;
 			Color normalColor = render.color;
 			Color flashColor = normalColor;
 			flashColor.a = 0;
-			float dt = Time.fixedDeltaTime;
-			while(!deathInvincibiiltyPeriod.Tick(dt)) {
-				if(invincibiltyFlash.Tick(dt)) {
+			while(!deathInvincibiiltyPeriod.Tick()) {
+				if(invincibiltyFlash.Tick()) {
 					flash = !flash;
 					render.color = (flash) ? flashColor : normalColor;
 				}
-				yield return wffu;
-				dt = Time.fixedDeltaTime;
+				yield return wfeof;
 			}
 			invincible = false;
 			render.color = normalColor;
@@ -181,12 +179,9 @@ namespace Danmaku2D.Phantasmagoria {
 					attackPatterns[i].TargetField = Field.TargetField;
 		}
 
-		/// <summary>
-		/// Fixeds the update.
-		/// </summary>
-		public override void FixedUpdate() {
-			base.FixedUpdate ();
-			float dt = Time.fixedDeltaTime;
+		public override void NormalUpdate () {
+			base.NormalUpdate ();
+			float dt = Util.TargetDeltaTime;
 			currentChargeCapacity += chargeCapacityRegen * dt;
 			if(currentChargeCapacity > MaxChargeLevel) {
 				currentChargeCapacity = MaxChargeLevel;

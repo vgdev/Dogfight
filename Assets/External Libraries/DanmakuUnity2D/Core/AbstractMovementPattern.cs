@@ -3,7 +3,7 @@ using System.Collections;
 using UnityUtilLib;
 
 namespace Danmaku2D {
-	public abstract class AbstractMovementPattern : CachedObject {
+	public abstract class AbstractMovementPattern : PausableGameObject {
 		
 		/// <summary>
 		/// The destroy on end.

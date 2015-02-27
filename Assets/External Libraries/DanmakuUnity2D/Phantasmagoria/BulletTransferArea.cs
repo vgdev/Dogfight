@@ -6,7 +6,7 @@ namespace Danmaku2D.Phantasmagoria {
 	[RequireComponent(typeof(SpriteRenderer))]
 	[RequireComponent(typeof(ProjectileTransferBoundary))]
 	[RequireComponent(typeof(Collider2D))]
-	public class BulletTransferArea : CachedObject {
+	public class BulletTransferArea : PausableGameObject {
 
 		public void Run(float duration, float maxScale, AbstractDanmakuField origin, AbstractDanmakuField target) {
 			ProjectileTransferBoundary ptb = GetComponent<ProjectileTransferBoundary> ();
@@ -25,12 +25,13 @@ namespace Danmaku2D.Phantasmagoria {
 			Color spriteColor = rend.color;
 			Color targetColor = spriteColor;
 			targetColor.a = 0f;
+			float dt = Util.TargetDeltaTime;
 			float t = 0;
 			while (t < 1f) {
 				Transform.localScale = Vector3.Lerp(startScale, maxScaleV, t);
 				rend.color = Color.Lerp(spriteColor, targetColor, t);
-				yield return new WaitForFixedUpdate();
-				t += Time.fixedDeltaTime / duration;
+				yield return WaitForUnpause();
+				t += dt / duration;
 			}
 			Destroy (GameObject);
 		}

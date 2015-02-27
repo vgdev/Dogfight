@@ -169,11 +169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeout:
-    maxDelay: 3.5
-    currentDelay: 3.5
+    delay: 5
   stripesDelay:
-    maxDelay: .0500000007
-    currentDelay: .0500000007
+    delay: .200000003
   stripesBullet: {fileID: 11442872, guid: aa7fd1a17cd4c41419dff35fb7b893de, type: 2}
   stripeCount: 7
   stripeOffset: .100000001
@@ -220,15 +218,14 @@ MonoBehaviour:
   prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
   spawnLocation: {x: .5, y: .5}
   spawnArea: {x: .5, y: .5}
-  bulletCount: 1000
+  bulletCount: 20
   velocity: 20
   angV: 0
   burstCount:
     maxCount: 10
     count: 10
   burstDelay:
-    maxDelay: .100000001
-    currentDelay: .100000001
+    delay: .100000001
   burstInitialRotation: 0
   burstRotationDelta: 0
 --- !u!114 &11462248
@@ -258,11 +255,9 @@ MonoBehaviour:
   deathCancelDuration: .5
   deathCancelRadius: 30
   deathInvincibiiltyPeriod:
-    maxDelay: 2
-    currentDelay: 2
+    delay: 2
   invincibiltyFlash:
-    maxDelay: .100000001
-    currentDelay: .100000001
+    delay: .200000003
 --- !u!212 &21262242
 SpriteRenderer:
   m_ObjectHideFlags: 1

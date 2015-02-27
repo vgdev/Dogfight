@@ -32,6 +32,6 @@ namespace Danmaku2D {
 		/// Update the specified dt.
 		/// </summary>
 		/// <param name="dt">Dt.</param>
-		public abstract void Update(float dt);
+		public abstract void Update();
 	}
 }
