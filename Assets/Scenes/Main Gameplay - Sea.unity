@@ -2220,7 +2220,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1434238937}
   - 61: {fileID: 1434238940}
-  - 114: {fileID: 1434238939}
   - 114: {fileID: 1434238938}
   - 50: {fileID: 1434238941}
   m_Layer: 15
@@ -2259,20 +2258,6 @@ MonoBehaviour:
   cameraSizeBufferRatio: .100000001
   cameraSizeSpaceRatio: 0
   constantlyUpdate: 0
---- !u!114 &1434238939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11480890, guid: 83afd05b51f4f9248b96e2412c62d0fd,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1434238936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71b33ba592148d04cb0f9a0b38f23352, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tagCheck: Player
-  lockedMovementVector: {x: -1, y: 0}
 --- !u!61 &1434238940
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2469,7 +2454,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1518786336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 591453aa302cd834b9f54573abac3028, type: 3}
+  m_Script: {fileID: 11500000, guid: 5870ca566be46e44d835829dd28776e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   field: {fileID: 827357119}
@@ -2909,7 +2894,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1772426189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 591453aa302cd834b9f54573abac3028, type: 3}
+  m_Script: {fileID: 11500000, guid: 5870ca566be46e44d835829dd28776e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   field: {fileID: 2023493317}

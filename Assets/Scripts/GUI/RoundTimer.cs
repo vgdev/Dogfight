@@ -1,34 +1,20 @@
 using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
+using Danmaku2D.Phantasmagoria;
 
-/// <summary>
-/// Round timer.
-/// </summary>
 [RequireComponent(typeof(GUIText))]
 public class RoundTimer : MonoBehaviour {
 
-	/// <summary>
-	/// The game controller.
-	/// </summary>
 	[SerializeField]
 	private PhantasmagoriaGameController gameController;
 
-	/// <summary>
-	/// The color of the flash.
-	/// </summary>
 	[SerializeField]
 	private Color flashColor;
 
-	/// <summary>
-	/// The flash interval.
-	/// </summary>
 	[SerializeField]
 	private CountdownDelay flashInterval;
 
-	/// <summary>
-	/// The flash threshold.
-	/// </summary>
 	[SerializeField]
 	private float flashThreshold;
 
@@ -36,18 +22,12 @@ public class RoundTimer : MonoBehaviour {
 	private bool flashState;
 	private GUIText label;
 
-	/// <summary>
-	/// Start this instance.
-	/// </summary>
 	void Start() {
 		label = guiText;
 		normalColor = label.color;
 		flashState = false;
 	}
 
-	/// <summary>
-	/// Update this instance.
-	/// </summary>
 	void Update() {
 		int timeSec = Mathf.FloorToInt (gameController.RemainingRoundTime);
 		int seconds = timeSec % 60;

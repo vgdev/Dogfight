@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.Collections;
+using Danmaku2D;
 
 [CustomPropertyDrawer(typeof(FieldMovementPattern.AtomicMovement))]
 public class AtomicMovementDrawer : PropertyDrawer {

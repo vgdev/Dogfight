@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
+using Danmaku2D;
+using Danmaku2D.AttackPattern;
 
-/// <summary>
-/// An example attack pattern for those trying to make new bullet patterns for new characters or enemies.
-/// </summary>
 public class StarsAndStripes : AbstractTimedAttackPattern {
 
 	[SerializeField]

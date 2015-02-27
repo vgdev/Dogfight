@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using Danmaku2D;
 
 [CustomEditor(typeof(ProjectilePool))]
 public class ProjectilePoolEditor : Editor {

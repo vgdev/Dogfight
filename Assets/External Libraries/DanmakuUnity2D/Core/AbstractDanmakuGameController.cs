@@ -2,30 +2,32 @@
 using System.Collections;
 using UnityUtilLib;
 
-[RequireComponent(typeof(ProjectilePool))]
-[RequireComponent(typeof(EnemyManager))]
-public abstract class AbstractDanmakuGameController : AbstractGameController {
+namespace Danmaku2D {
+	[RequireComponent(typeof(ProjectilePool))]
+	[RequireComponent(typeof(EnemyManager))]
+	public abstract class AbstractDanmakuGameController : AbstractGameController {
 
-	[SerializeField]
-	private ProjectilePool bulletPool;
+		[SerializeField]
+		private ProjectilePool bulletPool;
 
-	public ProjectilePool BulletPool {
-		get {
-			return bulletPool;
+		public ProjectilePool BulletPool {
+			get {
+				return bulletPool;
+			}
 		}
-	}
 
-	[SerializeField]
-	private int maximumLives;
-	/// <summary>
-	/// Gets the maximum lives.
-	/// </summary>
-	/// <value>The maximum lives.</value>
-	public int MaximumLives {
-		get {
-			return maximumLives;
+		[SerializeField]
+		private int maximumLives;
+		/// <summary>
+		/// Gets the maximum lives.
+		/// </summary>
+		/// <value>The maximum lives.</value>
+		public int MaximumLives {
+			get {
+				return maximumLives;
+			}
 		}
-	}
 
-	public abstract void SpawnEnemy (AbstractEnemy prefab, Vector2 relativeLocations);
+		public abstract void SpawnEnemy (AbstractEnemy prefab, Vector2 relativeLocations);
+	}
 }

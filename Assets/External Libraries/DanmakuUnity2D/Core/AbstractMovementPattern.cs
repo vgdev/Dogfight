@@ -2,32 +2,34 @@
 using System.Collections;
 using UnityUtilLib;
 
-public abstract class AbstractMovementPattern : CachedObject {
-	
-	/// <summary>
-	/// The destroy on end.
-	/// </summary>
-	[SerializeField]
-	private bool destroyOnEnd;
-	public bool DestroyOnEnd {
-		get {
-			return destroyOnEnd;
+namespace Danmaku2D {
+	public abstract class AbstractMovementPattern : CachedObject {
+		
+		/// <summary>
+		/// The destroy on end.
+		/// </summary>
+		[SerializeField]
+		private bool destroyOnEnd;
+		public bool DestroyOnEnd {
+			get {
+				return destroyOnEnd;
+			}
+			set {
+				destroyOnEnd = value;
+			}
 		}
-		set {
-			destroyOnEnd = value;
+
+		public void StartMovement() {
+			StartCoroutine (MoveImpl ());
 		}
-	}
 
-	public void StartMovement() {
-		StartCoroutine (MoveImpl ());
-	}
-
-	private IEnumerator MoveImpl() {
-		yield return StartCoroutine(Move());
-		if(destroyOnEnd) {
-			Destroy (gameObject);
+		private IEnumerator MoveImpl() {
+			yield return StartCoroutine(Move());
+			if(destroyOnEnd) {
+				Destroy (gameObject);
+			}
 		}
-	}
 
-	protected abstract IEnumerator Move();
+		protected abstract IEnumerator Move();
+	}
 }

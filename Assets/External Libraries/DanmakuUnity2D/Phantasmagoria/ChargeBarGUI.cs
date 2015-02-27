@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Danmaku2D.Phantasmagoria;
 
 /// <summary>
 /// Charge bar GU.

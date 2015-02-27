@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
+using Danmaku2D;
 
-
-public class KnightsCross : AbstractTimedAttackPattern
-{
+public class KnightsCross : AbstractTimedAttackPattern {
     [SerializeField]
     private CountdownDelay crossDelay;
 

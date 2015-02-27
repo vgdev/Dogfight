@@ -1,12 +1,10 @@
 using UnityEngine;
+using UnityUtilLib;
 using System.Collections;
+using Danmaku2D.Phantasmagoria;
 
-/// <summary>
-/// Test spawn player.
-/// </summary>
 [RequireComponent(typeof(PhantasmagoriaGameController))]
-public class TestSpawnPlayer : TestScript 
-{
+public class TestSpawnPlayer : TestScript {
 	public PhantasmagoriaPlayableCharacter character1;
 	public PhantasmagoriaPlayableCharacter character2;
 

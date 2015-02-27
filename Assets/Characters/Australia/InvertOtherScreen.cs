@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Danmaku2D;
+using Danmaku2D.Phantasmagoria;
 
 public class InvertOtherScreen : AbstractTimedAttackPattern {
 
@@ -21,14 +23,14 @@ public class InvertOtherScreen : AbstractTimedAttackPattern {
 		euler.z += 180f;
 		Quaternion altRot = Quaternion.Euler (euler);
 		float t = 0;
-		//Time.timeScale = 0f;
+		Time.timeScale = 0f;
 		while (t < 1f) {
 			TargetField.CameraTransform.rotation = Quaternion.Slerp(rot, altRot, t);
 			yield return new WaitForEndOfFrame();
 			t += Time.unscaledDeltaTime / flipDuration;
 		}
 		TargetField.CameraTransform.rotation = altRot;
-		//Time.timeScale = 1f;
+		Time.timeScale = 1f;
 
 	}
 }

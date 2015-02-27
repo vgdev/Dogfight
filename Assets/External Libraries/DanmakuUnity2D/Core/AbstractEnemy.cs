@@ -2,73 +2,57 @@
 using UnityUtilLib;
 using System.Collections;
 
-/// <summary>
-/// Enemy.
-/// </summary>
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Collider2D))]
-public abstract class AbstractEnemy : CachedObject {
+namespace Danmaku2D {
+	[RequireComponent(typeof(Rigidbody2D))]
+	[RequireComponent(typeof(Collider2D))]
+	public abstract class AbstractEnemy : CachedObject {
 
-	/// <summary>
-	/// Gets the current attack pattern.
-	/// </summary>
-	/// <value>The current attack pattern.</value>
-	public virtual AbstractAttackPattern CurrentAttackPattern { 
-		get {
-			return null;
+		public virtual AbstractAttackPattern CurrentAttackPattern { 
+			get {
+				return null;
+			}
 		}
-	}
 
-	private AbstractDanmakuField field;
-	/// <summary>
-	/// Gets or sets the field.
-	/// </summary>
-	/// <value>The field.</value>
-	public AbstractDanmakuField Field {
-		get {
-			return field;
+		private AbstractDanmakuField field;
+		public AbstractDanmakuField Field {
+			get {
+				return field;
+			}
+			set {
+				field = value;
+			}
 		}
-		set {
-			field = value;
+
+		public abstract bool IsDead { get; }
+
+		public virtual void Start() {
+			EnemyManager.RegisterEnemy (this);
 		}
-	}
 
-	public abstract bool IsDead { get; }
-
-	/// <summary>
-	/// Start this instance.
-	/// </summary>
-	public virtual void Start() {
-		EnemyManager.RegisterEnemy (this);
-	}
-
-	/// <summary>
-	/// Hit the specified proj.
-	/// </summary>
-	/// <param name="proj">Proj.</param>
-	public void Hit(float damage) {
-		Damage (damage);
-		if(IsDead) {
-			Die ();
+		public void Hit(float damage) {
+			Damage (damage);
+			if(IsDead) {
+				Die ();
+			}
 		}
-	}
 
-	protected abstract void Damage (float damage);
+		protected abstract void Damage (float damage);
 
-	private void Die () {
-		EnemyManager.UnregisterEnemy (this);
-		Destroy (GameObject);
-		OnDeath ();
-	}
+		private void Die () {
+			EnemyManager.UnregisterEnemy (this);
+			Destroy (GameObject);
+			OnDeath ();
+		}
 
-	protected virtual void OnDeath() {
-	}
+		protected virtual void OnDeath() {
+		}
 
-	protected virtual void OnDamage() {
-	}
+		protected virtual void OnDamage() {
+		}
 
-	void OnProjectileCollision(Projectile proj) {
-		Hit (proj.Damage);
-		proj.Deactivate();
+		void OnProjectileCollision(Projectile proj) {
+			Hit (proj.Damage);
+			proj.Deactivate();
+		}
 	}
 }

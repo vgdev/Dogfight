@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEditor;
 using UnityUtilLib;
+using Danmaku2D;
 
 [CustomEditor(typeof(FieldMovementPattern))]
 public class MovementEditor : Editor {

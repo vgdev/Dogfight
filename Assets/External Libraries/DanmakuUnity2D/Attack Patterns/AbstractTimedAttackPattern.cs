@@ -2,22 +2,24 @@
 using System.Collections;
 using UnityUtilLib;
 
-public abstract class AbstractTimedAttackPattern : AbstractAttackPattern {
+namespace Danmaku2D {
+	public abstract class AbstractTimedAttackPattern : AbstractAttackPattern {
 
-	[SerializeField]
-	private CountdownDelay timeout;
+		[SerializeField]
+		private CountdownDelay timeout;
 
-	protected override void MainLoop (float dt) {
-		timeout.Tick (dt, false);
-	}
+		protected override void MainLoop (float dt) {
+			timeout.Tick (dt, false);
+		}
 
-	protected override void OnExecutionStart () {
-		timeout.Reset ();
-	}
+		protected override void OnExecutionStart () {
+			timeout.Reset ();
+		}
 
-	protected sealed override bool IsFinished {
-		get {
-			return timeout.Ready();
+		protected sealed override bool IsFinished {
+			get {
+				return timeout.Ready();
+			}
 		}
 	}
 }

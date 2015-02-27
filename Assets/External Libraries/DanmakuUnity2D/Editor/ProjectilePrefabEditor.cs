@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using Danmaku2D;
 
 [CustomEditor(typeof(ProjectilePrefab))]
 public class ProjectilePrefabEditor : Editor {
