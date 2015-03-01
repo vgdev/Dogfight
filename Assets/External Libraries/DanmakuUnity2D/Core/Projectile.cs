@@ -1,25 +1,22 @@
 using UnityEngine;
 using UnityUtilLib;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Danmaku2D {
-	/// <summary>
-	/// Projectile.
-	/// </summary>
+
 	[RequireComponent(typeof(SpriteRenderer))]
-	public class Projectile : AbstractPrefabedPooledObject<ProjectilePrefab> {
-		
+	public sealed class Projectile : PooledObject, IPrefabed<ProjectilePrefab> {
+
+		private static Vector2 unchanged = Vector2.zero;
 		private static int[] collisionMask;
+
 		private bool to_deactivate;
 		
 		private GameObject gameObject;
 		private Transform transform;
 		private SpriteRenderer renderer;
-		
-		/// <summary>
-		/// The damage.
-		/// </summary>
+
 		private int damage;
 		public int Damage {
 			get {
@@ -29,67 +26,25 @@ namespace Danmaku2D {
 				damage = value;
 			}
 		}
-		
-		/// <summary>
-		/// The linear velocity.
-		/// </summary>
-		private float linearVelocity = 0f;
-		public float Velocity {
-			get {
-				return linearVelocity;
-			}
-			set {
-				linearVelocity = value;
-			}
+
+		public IProjectileController Controller {
+			get;
+			set;
 		}
-		
-		/// <summary>
-		/// The angular velocity.
-		/// </summary>
-		private Quaternion angularVelocity = Quaternion.identity;
-		public float AngularVelocity {
-			get {
-				return angularVelocity.eulerAngles.z;
-			}
-			set {
-				angularVelocity = Quaternion.Euler(new Vector3(0f, 0f, value));
-			}
+
+		#region IPrefabed implementation
+
+		public ProjectilePrefab Prefab {
+			get;
+			set;
 		}
-		
-		/// <summary>
-		/// Gets or sets the angular velocity radians.
-		/// </summary>
-		/// <value>The angular velocity radians.</value>
-		public float AngularVelocityRadians
-		{
-			get {
-				return AngularVelocity * Util.Degree2Rad;
-			}
-			set {
-				AngularVelocity = value * Util.Rad2Degree;
-			}
-		}
-		
-		/// <summary>
-		/// The controllers.
-		/// </summary>
-		private List<AbstractProjectileController> controllers;
-		
-		/// <summary>
-		/// The properties.
-		/// </summary>
-		private Dictionary<string, object> properties;
-		
-		/// <summary>
-		/// The circle center.
-		/// </summary>
+
+		#endregion
+
+		private List<ProjectileGroup> groups;
+
 		private Vector2 circleCenter = Vector2.zero; 
-		
-		/// <summary>
-		/// The circle raidus.
-		/// </summary>
 		private float circleRaidus = 1f;
-		
 		public SpriteRenderer SpriteRenderer {
 			get {
 				return renderer;
@@ -102,24 +57,20 @@ namespace Danmaku2D {
 			}
 		}
 		
-		private float fireTimer;
+		private int bulletFrames;
 		
 		public float BulletTime {
 			get {
-				return fireTimer;
+				return bulletFrames * Util.TargetDeltaTime;
 			}
 		}
 		
 		private RaycastHit2D[] hits;
-		
-		/// <summary>
-		/// Awake this instance.
-		/// </summary>
+
 		public Projectile() {
-			properties = new Dictionary<string, object> ();
-			controllers = new List<AbstractProjectileController> ();
 			if(collisionMask == null)
 				collisionMask = Util.CollisionLayers2D();
+			groups = new List<ProjectileGroup> ();
 			gameObject = new GameObject ("Projectile");
 			gameObject.hideFlags = HideFlags.HideInHierarchy;
 			renderer = gameObject.AddComponent<SpriteRenderer> ();
@@ -127,29 +78,24 @@ namespace Danmaku2D {
 			gameObject.SetActive (false);
 			hits = new RaycastHit2D[10];
 		}
-		
-		/// <summary>
-		/// Fixeds the update.
-		/// </summary>
+
 		public void Update() {
-			float dt = Util.TargetDeltaTime;
-			fireTimer += dt;
-			//Rotate
-			if(angularVelocity != Quaternion.identity) {
-				transform.rotation = Quaternion.Slerp (transform.rotation, transform.rotation * angularVelocity, dt);
-			}
-			float movementDistance = linearVelocity * dt;
-			
-			Vector3 movementVector = transform.up * movementDistance;
+			bulletFrames++;
+			Vector3 oldScale = transform.localScale;
+
+			Vector2 movementVector = Controller.UpdateProjectile (this, Util.TargetDeltaTime);
+
 			//Debug.DrawRay (Transform.position, movementVector);
 			int count = Physics2D.CircleCastNonAlloc(transform.position + Util.To3D(circleCenter), 
 			                                         circleRaidus,
-			                                         Transform.up,
+			                                         movementVector,
 			                                         hits,
-			                                         movementDistance,
+			                                         movementVector.magnitude,
 			                                         collisionMask[gameObject.layer]);
-			transform.position += movementVector;
 			
+			if(movementVector != unchanged)
+				transform.position += (Vector3)movementVector;
+
 			//Translate
 			if(count > 0) {
 				int i;
@@ -165,17 +111,12 @@ namespace Danmaku2D {
 				}
 			}
 			
-			if(controllers.Count > 0)
-				for(int i = 0; i < controllers.Count; i++)
-					if(controllers[i] != null)
-						controllers[i].UpdateBullet(this, dt);
-			
 			if (to_deactivate) {
 				DeactivateImmediate();
 			}
 		}
 
-		public override void MatchPrefab(ProjectilePrefab prefab) {
+		public void MatchPrefab(ProjectilePrefab prefab) {
 			CircleCollider2D cc = prefab.CircleCollider;
 			SpriteRenderer sr = prefab.SpriteRenderer;
 			
@@ -200,31 +141,6 @@ namespace Danmaku2D {
 			else
 				Debug.LogError("The provided prefab should a CircleCollider2D!");
 		}
-
-		public bool HasProperty<T>(string key) {
-			return (properties.ContainsKey(key)) && (properties[key] is T);
-		}
-
-		public T GetProperty<T>(string key) {
-			if(properties.ContainsKey(key))
-				return (T)properties[key];
-			else 
-				return default(T);
-		}
-
-		public void SetProperty<T>(string key, T value) {
-			properties [key] = value;
-		}
-
-		public void AddController(AbstractProjectileController controller) {
-			controllers.Add (controller);
-			controller.OnControllerAdd (this);
-		}
-
-		public void RemoveController (AbstractProjectileController controller) {
-			if(controllers.Remove(controller))
-				controller.OnControllerRemove(this);
-		}
 		
 		public override void Activate () {
 			to_deactivate = false;
@@ -236,12 +152,12 @@ namespace Danmaku2D {
 		}
 		
 		public void DeactivateImmediate() {
-			properties.Clear ();
-			controllers.Clear ();
-			linearVelocity = 0f;
-			fireTimer = 0f;
+			Controller = null;
+			for (int i = 0; i < groups.Count; i++) {
+				groups[i].Remove(this);
+			}
+			groups.Clear ();
 			damage = 0;
-			angularVelocity = Quaternion.identity;
 			gameObject.SetActive (false);
 			base.Deactivate ();
 		}

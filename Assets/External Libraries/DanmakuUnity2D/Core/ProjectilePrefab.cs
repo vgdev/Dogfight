@@ -30,6 +30,10 @@ namespace Danmaku2D {
 			}
 		}
 
+		/// <summary>
+		/// Called upon Component instantiation
+		/// <see href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html">Unity Script Reference: MonoBehavior.Awake()</see>
+		/// </summary>
 		public override void Awake() {
 			base.Awake ();
 			if(circleCollider == null)

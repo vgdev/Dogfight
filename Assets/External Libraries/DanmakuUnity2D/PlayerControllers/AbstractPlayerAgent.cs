@@ -17,8 +17,8 @@ namespace Danmaku2D {
 			}
 		}
 		
-		private AbstractDanmakuField field;
-		public AbstractDanmakuField Field {
+		private DanmakuField field;
+		public DanmakuField Field {
 			get {
 				return field;
 			}

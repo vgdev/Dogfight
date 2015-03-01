@@ -27,7 +27,7 @@ namespace Danmaku2D {
 			while (t < 1f) {
 				Transform.localScale = Vector3.Lerp(startScale, maxScaleV, t);
 				rend.color = Color.Lerp(spriteColor, targetColor, t);
-				yield return WaitForUnpause();
+				yield return UtilCoroutines.WaitForUnpause(this);
 				t += dt / duration;
 			}
 			Destroy (GameObject);

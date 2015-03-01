@@ -4,10 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Danmaku2D.Phantasmagoria {
-	public class PhantasmagoriaField : AbstractDanmakuField {
+	public class PhantasmagoriaField : DanmakuField {
 
-		private AbstractDanmakuField targetField;
-		public override AbstractDanmakuField TargetField {
+		private DanmakuField targetField;
+		public override DanmakuField TargetField {
 			get {
 				return targetField;
 			}
@@ -24,11 +24,11 @@ namespace Danmaku2D.Phantasmagoria {
 		}
 
 		public void Transfer(Projectile projectile) {
-			Vector2 relativePos = FieldPoint (Transform.position);
+			Vector2 relativePos = ViewPoint (Transform.position);
 			projectile.Transform.position = targetField.WorldPoint (relativePos);
 		}
 
-		public void SetTargetField(AbstractDanmakuField field) {
+		public void SetTargetField(DanmakuField field) {
 			targetField = field;
 		}
 

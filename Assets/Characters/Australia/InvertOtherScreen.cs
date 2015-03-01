@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using Danmaku2D;
 using Danmaku2D.Phantasmagoria;
 
-public class InvertOtherScreen : AbstractTimedAttackPattern {
+public class InvertOtherScreen : TimedAttackPattern {
 
 	[SerializeField]
 	private float flipDuration;

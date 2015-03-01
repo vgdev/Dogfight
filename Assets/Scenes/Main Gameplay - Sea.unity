@@ -1511,9 +1511,9 @@ GameObject:
   - 114: {fileID: 787077638}
   - 114: {fileID: 787077640}
   - 114: {fileID: 787077641}
-  - 114: {fileID: 787077644}
   - 81: {fileID: 787077643}
   - 82: {fileID: 787077642}
+  - 114: {fileID: 787077644}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -1542,11 +1542,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 787077636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffe5fd47d5f47764f86abda5acb80eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 09f2b8da3385252478b4fbabd6e78cf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character1: {fileID: 11462248, guid: ce2275843d8b7ed4eb01649f027b069b, type: 2}
-  character2: {fileID: 11462248, guid: ce2275843d8b7ed4eb01649f027b069b, type: 2}
+  destroyNewInstances: 0
+  initialCount: 1000
+  spawnOnEmpty: 1000
 --- !u!114 &787077639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1560,7 +1561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyNewInstances: 1
-  bulletPool: {fileID: 787077641}
+  bulletPool: {fileID: 787077638}
   maximumLives: 5
   player1:
     field: {fileID: 827357119}
@@ -1598,11 +1599,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 787077636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02c0b8c36b7da4d4299e27170d00fd1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6645de88f9cf1474a9c1d81147b97ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialSpawnCount: 100
-  spawnCount: 100
+  destroyNewInstances: 0
 --- !u!82 &787077642
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1676,10 +1676,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 787077636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaf2db7d8bf95bf499eec89f545936d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 5314b63a06c652f44a6e992b74158c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyNewInstances: 0
+  character1: {fileID: 11462248, guid: ce2275843d8b7ed4eb01649f027b069b, type: 2}
+  character2: {fileID: 11462248, guid: ce2275843d8b7ed4eb01649f027b069b, type: 2}
 --- !u!114 &787077645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1688,7 +1689,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 787077636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af99c3232d2311245b177764ea620cd1, type: 3}
+  m_Script: {fileID: 11500000, guid: 96988a1092ee1044094ddfd6445d0cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   keepBetweenScenes: 1
@@ -1984,7 +1985,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1271618845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21501c8c74bfecf4bad4f10cd92fa515, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d7fb6dae9d043d44819410e752ae12d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   differential: {x: 0, y: .25}
@@ -2547,7 +2548,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1563338783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21501c8c74bfecf4bad4f10cd92fa515, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d7fb6dae9d043d44819410e752ae12d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   differential: {x: 0, y: .25}

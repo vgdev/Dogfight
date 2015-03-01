@@ -2,9 +2,8 @@ using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 using Danmaku2D;
-using Danmaku2D.AttackPattern;
 
-public class StarsAndStripes : AbstractTimedAttackPattern {
+public class StarsAndStripes : TimedAttackPattern {
 
 	[SerializeField]
 	private FrameCounter stripesDelay;
@@ -49,8 +48,8 @@ public class StarsAndStripes : AbstractTimedAttackPattern {
 		}
 	}
 
-	protected override void MainLoop (AttackPatternExecution execution) {
-		base.MainLoop (execution);
+	protected override void MainLoop () {
+		base.MainLoop ();
 		if (stripesDelay.Tick ()) {
 			Vector2 origin = Vector2.up + stripeOffset * ((horizontal) ? -Vector2.up : Vector2.right);
 			Vector2 dif = (1f - 2 * stripeOffset) / ((float) stripeCount - 1) * ((horizontal) ? -Vector2.up : Vector2.right);
@@ -58,18 +57,5 @@ public class StarsAndStripes : AbstractTimedAttackPattern {
 				FireLinearBullet(stripesBullet, origin + (i * dif), (horizontal) ? 270f : 180f, stripeVelocity);
 			}
 		}
-	}
-}
-
-public class RedirectAtPLayer : AbstractProjectileController {
-
-	public override bool IsFinite {
-		get {
-			return true;
-		}
-	}
-
-	public override void UpdateBullet (Projectile bullet, float dt) {
-		base.UpdateBullet (bullet, dt);
 	}
 }

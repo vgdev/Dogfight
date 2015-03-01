@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 
-namespace Danmaku2D.AttackPattern {
-	public class BasicCircularBurst : AbstractAttackPattern {
+namespace Danmaku2D.AttackPatterns {
+	public class BasicCircularBurst : AttackPattern {
 		[SerializeField]
 		private ProjectilePrefab prefab;
 
@@ -50,7 +50,7 @@ namespace Danmaku2D.AttackPattern {
 			currentBurstSource = spawnLocation - 0.5f * spawnArea + Util.RandomVect2 (spawnArea);
 		}
 		
-		protected override void MainLoop (AttackPatternExecution execution) {
+		protected override void MainLoop () {
 			if(burstDelay.Tick()) {
 				float offset = (burstCount.MaxCount - burstCount.Count) * burstRotationDelta;
 				for(int i = 0; i < bulletCount; i++) {

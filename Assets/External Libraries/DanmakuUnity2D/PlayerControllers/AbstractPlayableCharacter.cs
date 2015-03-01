@@ -30,8 +30,8 @@ namespace Danmaku2D {
 	[RequireComponent(typeof(Collider2D))]
 	public abstract class AbstractPlayableCharacter : PausableGameObject {
 
-		private AbstractDanmakuField field;
-		public AbstractDanmakuField Field { 
+		private DanmakuField field;
+		public DanmakuField Field { 
 			get {
 				return field;
 			}

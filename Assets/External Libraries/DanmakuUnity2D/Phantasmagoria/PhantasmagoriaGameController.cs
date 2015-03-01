@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using UnityUtilLib;
 
 namespace Danmaku2D.Phantasmagoria {
-	public class PhantasmagoriaGameController : AbstractDanmakuGameController {
+	public class PhantasmagoriaGameController : DanmakuGameController {
 
 		[Serializable]
 		public class PlayerData {
@@ -72,7 +72,6 @@ namespace Danmaku2D.Phantasmagoria {
 		}
 
 		void Update() {
-			bool reset = false;
 			if (!reseting && (player1.Field.LivesRemaining <= 0 || player2.Field.LivesRemaining <= 0)) {
 				StartCoroutine(RoundReset ());
 			}
@@ -96,7 +95,6 @@ namespace Danmaku2D.Phantasmagoria {
 			if(reseting)
 				yield break;
 			reseting = true;
-			Debug.Log ("hi");
 			WaitForEndOfFrame wfeof = new WaitForEndOfFrame ();
 			float duration = closureDuration / 2f;
 			Vector3 scale = closureTop.localScale;
@@ -104,7 +102,7 @@ namespace Danmaku2D.Phantasmagoria {
 			float dt = Util.TargetDeltaTime;
 			float t = 0;
 			scale.y = t;
-			Pause ();
+			PauseGame ();
 			while (t <= 1f) {
 				scale.y = t;
 				closureTop.localScale = scale;
@@ -132,8 +130,8 @@ namespace Danmaku2D.Phantasmagoria {
 			}
 			player1.Field.RoundReset ();
 			player2.Field.RoundReset ();
-			BulletPool.DeactivateAll ();
-			AbstractEnemy[] allEnemies = FindObjectsOfType<AbstractEnemy> ();
+			ProjectileManager.DeactivateAll ();
+			Enemy[] allEnemies = FindObjectsOfType<Enemy> ();
 			for(int i = 0; i < allEnemies.Length; i++) {
 				Destroy (allEnemies[i].GameObject);
 			}
@@ -141,10 +139,10 @@ namespace Danmaku2D.Phantasmagoria {
 			for(int i = 0; i < bcas.Length; i++) {
 				Destroy (bcas[i].GameObject);
 			}
-			AbstractAttackPattern[] attackPatterns = FindObjectsOfType<AbstractAttackPattern> ();
-			for (int i = 0; i < attackPatterns.Length; i++) {
-				attackPatterns[i].TerminateAll();
-			}
+//			AttackPattern[] attackPatterns = FindObjectsOfType<AttackPattern> ();
+//			for (int i = 0; i < attackPatterns.Length; i++) {
+//				attackPatterns[i].Terminate();
+//			}
 			while (t > 0f) {
 				scale.y = t;
 				closureTop.localScale = scale;
@@ -154,11 +152,11 @@ namespace Danmaku2D.Phantasmagoria {
 			}
 			closureTop.localScale = oldScale;
 			closureBottom.localScale = oldScale;
-			Unpause ();
+			UnpauseGame ();
 			reseting = false;
 		}
 
-		public override void SpawnEnemy(AbstractEnemy prefab, Vector2 relativeLocations) {
+		public override void SpawnEnemy(Enemy prefab, Vector2 relativeLocations) {
 			if(player1.Field != null && player2.Field != null) {
 				player1.Field.SpawnEnemy(prefab, relativeLocations);
 				player2.Field.SpawnEnemy(prefab, relativeLocations);

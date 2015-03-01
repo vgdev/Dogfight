@@ -3,7 +3,7 @@ using System.Collections;
 using UnityUtilLib;
 using Danmaku2D;
 
-public class KnightsCross : AbstractTimedAttackPattern {
+public class KnightsCross : TimedAttackPattern {
     [SerializeField]
     private FrameCounter crossDelay;
 
@@ -29,13 +29,13 @@ public class KnightsCross : AbstractTimedAttackPattern {
     protected override void OnExecutionStart() {
         base.OnExecutionStart();
         crossDelay.Reset();
-        Vector2 center = new Vector2(.5f, .5f);//Util.RandomVect2(centerArea);
-        float angleToPlayer = TargetField.AngleTowardPlayer(TargetField.WorldPoint(center));
+        //Vector2 center = new Vector2(.5f, .5f);//Util.RandomVect2(centerArea);
+        //float angleToPlayer = TargetField.AngleTowardPlayer(TargetField.ViewToWorld(center));
         fire();
     }
 
-    protected override void MainLoop(AttackPatternExecution execution) {
-        base.MainLoop(execution);
+    protected override void MainLoop() {
+        base.MainLoop();
         if (crossDelay.Tick()) {
             fire();
         }
