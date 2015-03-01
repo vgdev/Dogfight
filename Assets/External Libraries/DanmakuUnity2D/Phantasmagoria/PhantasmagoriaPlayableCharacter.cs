@@ -153,8 +153,8 @@ namespace Danmaku2D.Phantasmagoria {
 		public override void Fire () {
 			Vector2 location;
 			location = Util.To2D(Transform.position);
-			ProjectileManager.FireLinearBullet (shotType, location + shotOffset, 0f, shotVelocity);
-			ProjectileManager.FireLinearBullet (shotType, location - shotOffset, 0f, shotVelocity);
+			ProjectileManager.FireLinearProjectile (shotType, location + shotOffset, 0f, shotVelocity);
+			ProjectileManager.FireLinearProjectile (shotType, location - shotOffset, 0f, shotVelocity);
 		}
 	}
 }

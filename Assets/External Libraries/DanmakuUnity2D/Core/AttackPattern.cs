@@ -56,7 +56,11 @@ namespace Danmaku2D {
 		}
 
 		public virtual void Fire () {
-			StartCoroutine (Execute ());
+			if (!Active) {
+				StartCoroutine (Execute ());
+			} else {
+				Debug.Log("Tried Executing Already Running Attack Pattern");
+			}
 		}
 
 		private IEnumerator Execute() {
@@ -67,6 +71,7 @@ namespace Danmaku2D {
 				yield return UtilCoroutines.WaitForUnpause(this);
 			}
 			OnExecutionFinish ();
+			Active = false;
 		}
 
 		protected LinearProjectile FireLinearBullet(ProjectilePrefab bulletType, 

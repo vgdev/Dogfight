@@ -55,33 +55,38 @@ namespace Danmaku2D {
 			return proj;
 		}
 
-		public static LinearProjectile FireLinearBullet(ProjectilePrefab bulletType, 
+		public static Projectile Spawn(ProjectilePrefab bulletType, Vector2 location, float rotation) {
+			Projectile bullet = Get (bulletType);
+			bullet.Transform.position = location;
+			bullet.Transform.rotation = Quaternion.Euler(0f, 0f, rotation);
+			bullet.Activate ();
+			return bullet;
+		}
+
+		public static LinearProjectile FireLinearProjectile(ProjectilePrefab bulletType, 
 		                                            Vector2 location, 
 		                                            float rotation, 
 		                                            float velocity) {
 			LinearProjectile linearProjectile = new LinearProjectile (velocity);
-			FireControlledBullet (bulletType, location, rotation, linearProjectile);
+			FireControlledProjectile (bulletType, location, rotation, linearProjectile);
 			return linearProjectile;
 		}
 		
-		public static CurvedProjectile FireCurvedBullet(ProjectilePrefab bulletType,
+		public static CurvedProjectile FireCurvedProjectile(ProjectilePrefab bulletType,
 		                                            Vector2 location,
 		                                            float rotation,
 		                                            float velocity,
 		                                            float angularVelocity) {
 			CurvedProjectile curvedProjectile = new CurvedProjectile (velocity, angularVelocity);
-			FireControlledBullet (bulletType, location, rotation, curvedProjectile);
+			FireControlledProjectile (bulletType, location, rotation, curvedProjectile);
 			return curvedProjectile;
 		}
 		
-		public static void FireControlledBullet(ProjectilePrefab bulletType, 
-		                                    Vector2 location, 
-		                                    float rotation, 
-		                                    IProjectileController controller) {
-			Projectile bullet = Get (bulletType);
-			bullet.Transform.position = location;
-			bullet.Transform.rotation = Quaternion.Euler(0f, 0f, rotation);
-			bullet.Activate ();
+		public static void FireControlledProjectile(ProjectilePrefab bulletType, 
+				                                    Vector2 location, 
+				                                    float rotation, 
+				                                    IProjectileController controller) {
+			Projectile bullet = Spawn (bulletType, location, rotation);
 			bullet.Controller = controller;
 		}
 

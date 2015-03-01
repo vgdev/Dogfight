@@ -231,7 +231,7 @@ namespace Danmaku2D {
 		                                         float rotation, 
 		                                         float velocity,
 		                                         DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			return ProjectileManager.FireLinearBullet (bulletType, WorldPoint (Util.To3D (location), coordSys), rotation, velocity);
+			return ProjectileManager.FireLinearProjectile (bulletType, WorldPoint (Util.To3D (location), coordSys), rotation, velocity);
 		}
 		
 		public CurvedProjectile FireCurvedBullet(ProjectilePrefab bulletType,
@@ -240,7 +240,7 @@ namespace Danmaku2D {
 		                                         float velocity,
 		                                         float angularVelocity,
 		                                         DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			return ProjectileManager.FireCurvedBullet (bulletType, WorldPoint(Util.To3D(location), coordSys), rotation, velocity, angularVelocity);
+			return ProjectileManager.FireCurvedProjectile (bulletType, WorldPoint(Util.To3D(location), coordSys), rotation, velocity, angularVelocity);
 		}
 		
 		public void FireControlledBullet(ProjectilePrefab bulletType, 
@@ -248,7 +248,7 @@ namespace Danmaku2D {
 		                                 float rotation, 
 		                                 IProjectileController controller,
 		                                 CoordinateSystem coordSys = CoordinateSystem.View) {
-			ProjectileManager.FireControlledBullet (bulletType, WorldPoint(Util.To3D(location), coordSys), rotation, controller);
+			ProjectileManager.FireControlledProjectile (bulletType, WorldPoint(Util.To3D(location), coordSys), rotation, controller);
 		}
 
 		public void SpawnEnemy(Enemy prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {

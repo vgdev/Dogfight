@@ -83,7 +83,10 @@ namespace Danmaku2D {
 			bulletFrames++;
 			Vector3 oldScale = transform.localScale;
 
-			Vector2 movementVector = Controller.UpdateProjectile (this, Util.TargetDeltaTime);
+			Vector2 movementVector = Vector3.zero;
+
+			if(Controller != null)
+				movementVector += Controller.UpdateProjectile (this, Util.TargetDeltaTime);
 
 			//Debug.DrawRay (Transform.position, movementVector);
 			int count = Physics2D.CircleCastNonAlloc(transform.position + Util.To3D(circleCenter), 
