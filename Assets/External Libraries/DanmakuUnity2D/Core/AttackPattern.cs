@@ -74,6 +74,13 @@ namespace Danmaku2D {
 			Active = false;
 		}
 
+		protected Projectile SpawnProjectile(ProjectilePrefab bulletType,
+		                                     Vector2 location,
+		                                     float rotation,
+		                                     DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
+			return targetField.SpawnProjectile (bulletType, location, rotation, coordSys);
+		}
+
 		protected LinearProjectile FireLinearBullet(ProjectilePrefab bulletType, 
 		                                      Vector2 location, 
 		                                      float rotation, 

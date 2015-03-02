@@ -38,6 +38,13 @@ namespace Danmaku2D.AttackPatterns {
 		private float burstRotationDelta;
 
 		private Vector2 currentBurstSource;
+		private ProjectileGroup burstGroup;
+
+		public override void Awake () {
+			base.Awake ();
+			burstGroup = new ProjectileGroup ();
+			burstGroup.Controller = new CurvedProjectile (velocity, angV);
+		}
 
 		protected override bool IsFinished {
 			get {
@@ -54,7 +61,8 @@ namespace Danmaku2D.AttackPatterns {
 			if(burstDelay.Tick()) {
 				float offset = (burstCount.MaxCount - burstCount.Count) * burstRotationDelta;
 				for(int i = 0; i < bulletCount; i++) {
-					FireCurvedBullet(prefab, currentBurstSource, offset + 360f / (float) bulletCount * (float)i, velocity, angV);
+					Projectile temp = SpawnProjectile (prefab, currentBurstSource, offset + 360f / (float) bulletCount * (float)i);
+					burstGroup.Add(temp);
 				}
 				burstCount.Tick();
 			}

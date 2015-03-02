@@ -57,8 +57,8 @@ namespace Danmaku2D {
 
 		public static Projectile Spawn(ProjectilePrefab bulletType, Vector2 location, float rotation) {
 			Projectile bullet = Get (bulletType);
-			bullet.Transform.position = location;
-			bullet.Transform.rotation = Quaternion.Euler(0f, 0f, rotation);
+			bullet.Position = location;
+			bullet.Rotation = rotation;
 			bullet.Activate ();
 			return bullet;
 		}

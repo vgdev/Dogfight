@@ -60,12 +60,9 @@ namespace Danmaku2D {
 			z = Transform.forward * gamePlaneDistance;
 
 			scale = new Vector3 (x.magnitude, y.magnitude, gamePlaneDistance);
-			matW2F.SetTRS (bottomLeft, Quaternion.identity, scale);
-			matF2W = matW2F.inverse;
 		}
 	
 		private Vector3 x, y, z, scale, bottomLeft;
-		private Matrix4x4 matW2F, matF2W;
 
 		public float XSize {
 			get { return scale.x; }
@@ -217,13 +214,7 @@ namespace Danmaku2D {
 		/// <param name="rotation">Rotation.</param>
 		/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
 		public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
-			Vector3 worldLocation = Vector3.zero;
-			worldLocation = WorldPoint (location, coordSys);
-			Projectile projectile = ProjectileManager.Get (prefab);
-			projectile.Transform.position = worldLocation;
-			projectile.Transform.rotation = Quaternion.Euler(0f, 0f, rotation);
-			projectile.Activate ();
-			return projectile;
+			return ProjectileManager.Spawn (prefab, WorldPoint (location, coordSys), rotation);
 		}
 
 		public LinearProjectile FireLinearBullet(ProjectilePrefab bulletType, 

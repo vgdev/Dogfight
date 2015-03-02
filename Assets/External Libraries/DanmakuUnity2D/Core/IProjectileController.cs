@@ -3,46 +3,78 @@ using System;
 using System.Collections.Generic;
 
 namespace Danmaku2D {
-	public interface IProjectileController  {
-		ProjectileGroup ProjectileGroup { get; }
-		Vector2 UpdateProjectile(Projectile projectile, float dt);
+
+	public interface IProjectileController {
+		Projectile Projectile { get; }
+		Vector2 UpdateProjectile (Projectile projectile, float dt);
+	}
+
+	public interface IProjectileGroupController {
+		ProjectileGroup ProjectileGroup { get; set; }
+		Vector2 UpdateProjectile (Projectile projectile, float dt);
 	}
 
 	public abstract class ProjectileController : IProjectileController {
 
-		private ProjectileGroup projectileGroup;
-		public ProjectileGroup ProjectileGroup {
+		private Projectile projectile;
+
+		#region IProjectileController implementation
+
+		public virtual Vector2 UpdateProjectile (Projectile projectile, float dt) {
+			this.projectile = projectile;
+			return Vector2.zero;
+		}
+
+		public Projectile Projectile {
 			get {
-				return projectileGroup;
+				return projectile;
 			}
 		}
 
-		public ProjectileController() {
-			projectileGroup = new ProjectileGroup ();
-		}
-
-		public virtual Vector2 UpdateProjectile(Projectile projectile, float dt) {
-			ProjectileGroup.Add (projectile);
-			return Vector2.zero;
-		}
+		#endregion
 	}
 
-	public abstract class ProjectileControlBehavior : MonoBehaviour, IProjectileController {
+	[RequireComponent(typeof(ProjectilePrefab))]
+	public abstract class ProjectileControlBehavior : MonoBehaviour, IProjectileGroupController {
 
-		private ProjectileGroup projectileGroup;
-		public ProjectileGroup ProjectileGroup {
+		private SpriteRenderer spriteRenderer;
+		public SpriteRenderer SpriteRenderer {
 			get {
-				return projectileGroup;
+				if(spriteRenderer == null)
+					spriteRenderer = (SpriteRenderer)renderer;
+				return spriteRenderer;
 			}
 		}
 
-		public virtual void Awake () {
-			projectileGroup = new ProjectileGroup ();
+		private CircleCollider2D circleColldier;
+		public CircleCollider2D CircleCollider {
+			get {
+				if(circleColldier == null)
+					circleColldier = (CircleCollider2D)collider2D;
+				return circleColldier;
+			}
 		}
 
-		public virtual Vector2 UpdateProjectile(Projectile projectile, float dt) {
-			ProjectileGroup.Add (projectile);
-			return Vector2.zero;
+		private bool initialized = false;
+
+		public ProjectileGroup ProjectileGroup {
+			get;
+			set;
 		}
+
+		internal void Init() {
+			if(!initialized) {
+				Initialize ();
+				initialized = true;
+			}
+		}
+
+		public virtual void Initialize() {
+			Debug.Log ("Hello");
+			ProjectileGroup = new ProjectileGroup ();
+			ProjectileGroup.Controller = this;
+		}
+
+		public abstract Vector2 UpdateProjectile(Projectile projectile, float dt);
 	}
 }

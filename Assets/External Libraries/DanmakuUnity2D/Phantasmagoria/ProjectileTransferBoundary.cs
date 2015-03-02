@@ -28,8 +28,8 @@ namespace Danmaku2D.Phantasmagoria {
 
 		protected override void ProcessProjectile (Projectile proj) {
 			if (field != null && targetField != null) {
-				Vector2 relativePos = field.ViewPoint(proj.Transform.position);
-				proj.Transform.position = targetField.WorldPoint(relativePos);
+				Vector2 relativePos = field.ViewPoint(proj.Position);
+				proj.Position = targetField.WorldPoint(relativePos);
 			}
 		}
 	}

@@ -5,14 +5,9 @@ using UnityUtilLib;
 namespace Danmaku2D {
 	public class CurvedProjectile : LinearProjectile {
 
-		private Quaternion angularVelocity = Quaternion.identity;
 		public float AngularVelocity {
-			get {
-				return angularVelocity.eulerAngles.z;
-			}
-			set {
-				angularVelocity = Quaternion.Euler(new Vector3(0f, 0f, value));
-			}
+			get;
+			set;
 		}
 		
 		public float AngularVelocityRadians {
@@ -30,10 +25,8 @@ namespace Danmaku2D {
 		}
 
 		public override Vector2 UpdateProjectile (Projectile projectile, float dt) {
-			if(angularVelocity != Quaternion.identity) {
-				Transform transform = projectile.Transform;
-				Quaternion rot = transform.rotation;
-				transform.rotation = Quaternion.Slerp (rot, rot * angularVelocity, dt);
+			if(AngularVelocity != 0f) {
+				projectile.Rotation += AngularVelocity * dt;
 			}
 			return base.UpdateProjectile (projectile, dt);
 		}

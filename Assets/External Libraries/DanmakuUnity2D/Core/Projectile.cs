@@ -43,17 +43,60 @@ namespace Danmaku2D {
 
 		private List<ProjectileGroup> groups;
 
+		internal List<ProjectileGroup> Groups {
+			get {
+				return groups;
+			}
+		}
+
 		private Vector2 circleCenter = Vector2.zero; 
 		private float circleRaidus = 1f;
+
+		public Sprite Sprite {
+			get {
+				return renderer.sprite;
+			}
+			set {
+				renderer.sprite = value;
+			}
+		}
+
+		public Color Color {
+			get {
+				return renderer.color;
+			}
+			set {
+				renderer.color = value;
+			}
+		}
+
 		public SpriteRenderer SpriteRenderer {
 			get {
 				return renderer;
 			}
 		}
-		
-		public Transform Transform {
+
+		public Vector2 Position {
 			get {
-				return transform;
+				return transform.position;
+			}
+			set {
+				transform.position = value;
+			}
+		}
+
+		public float Rotation {
+			get {
+				return transform.rotation.eulerAngles.z;
+			}
+			set {
+				transform.rotation = Quaternion.Euler(0f, 0f, value);
+			}
+		}
+
+		public Vector2 Direction {
+			get {
+				return transform.up;
 			}
 		}
 		
@@ -79,16 +122,21 @@ namespace Danmaku2D {
 			hits = new RaycastHit2D[10];
 		}
 
-		public void Update() {
+		internal void Update() {
 			bulletFrames++;
-			Vector3 oldScale = transform.localScale;
+			float dt = Util.TargetDeltaTime;
 
 			Vector2 movementVector = Vector3.zero;
 
 			if(Controller != null)
-				movementVector += Controller.UpdateProjectile (this, Util.TargetDeltaTime);
+				movementVector += Controller.UpdateProjectile (this, dt);
 
-			//Debug.DrawRay (Transform.position, movementVector);
+			if(groups.Count > 0) {
+				for (int i = 0; i < groups.Count; i++) {
+					movementVector += groups[i].UpdateProjectile(this, dt);
+				}
+			}
+
 			int count = Physics2D.CircleCastNonAlloc(transform.position + Util.To3D(circleCenter), 
 			                                         circleRaidus,
 			                                         movementVector,
@@ -108,7 +156,7 @@ namespace Danmaku2D {
 						hit.collider.SendMessage("OnProjectileCollision", this, SendMessageOptions.DontRequireReceiver);
 					}
 					if(to_deactivate){
-						Transform.position = hits[i].point;
+						Position = hits[i].point;
 						break;
 					}
 				}
@@ -120,29 +168,35 @@ namespace Danmaku2D {
 		}
 
 		public void MatchPrefab(ProjectilePrefab prefab) {
-			CircleCollider2D cc = prefab.CircleCollider;
-			SpriteRenderer sr = prefab.SpriteRenderer;
+			ProjectilePrefab runtime = prefab.GetRuntime ();
+			CircleCollider2D cc = runtime.CircleCollider;
+			SpriteRenderer sr = runtime.SpriteRenderer;
+			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
 			
-			transform.localScale = prefab.Transform.localScale;
-			gameObject.tag = prefab.GameObject.tag;
-			gameObject.layer = prefab.GameObject.layer;
+			transform.localScale = runtime.Transform.localScale;
+			gameObject.tag = runtime.GameObject.tag;
+			gameObject.layer = runtime.GameObject.layer;
 			
 			if(sr != null) {
 				renderer.sprite = sr.sprite;
 				renderer.color = sr.color;
 				renderer.sharedMaterial = sr.sharedMaterial;
 				renderer.sortingOrder = sr.sortingOrder;
-				renderer.sortingLayerID = sr.sortingLayerID;
 			}
 			else
 				Debug.LogError("The provided prefab should have a SpriteRenderer!");
 			
 			if(cc != null) {
-				circleCenter = Util.ComponentProduct2(Transform.lossyScale, cc.center);
-				circleRaidus = cc.radius * Util.MaxComponent2(Util.To2D(Transform.lossyScale));
+				circleCenter = Util.ComponentProduct2(transform.lossyScale, cc.center);
+				circleRaidus = cc.radius * Util.MaxComponent2(Util.To2D(transform.lossyScale));
 			}
 			else
 				Debug.LogError("The provided prefab should a CircleCollider2D!");
+
+			for(int i = 0; i < pcbs.Length; i++) {
+				pcbs[i].Init();
+				pcbs[i].ProjectileGroup.Add(this);
+			}
 		}
 		
 		public override void Activate () {
@@ -156,11 +210,12 @@ namespace Danmaku2D {
 		
 		public void DeactivateImmediate() {
 			Controller = null;
-			for (int i = 0; i < groups.Count; i++) {
-				groups[i].Remove(this);
+			ProjectileGroup[] temp = groups.ToArray ();
+			for (int i = 0; i < temp.Length; i++) {
+				temp[i].Remove(this);
 			}
-			groups.Clear ();
 			damage = 0;
+			bulletFrames = 0;
 			gameObject.SetActive (false);
 			base.Deactivate ();
 		}
