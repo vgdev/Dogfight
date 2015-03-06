@@ -39,5 +39,27 @@ namespace Danmaku2D {
 		/// The actual movement coroutine. 
 		/// </summary>
 		protected abstract IEnumerator Move();
+
+		protected IEnumerator LinearMove(Vector3 end, float time) {
+			float t = 0;
+			Vector3 start = Transform.position;
+			float dt = Util.TargetDeltaTime;
+			while (t <= 1f) {
+				Transform.position = Vector3.Lerp(start, end, t);
+				yield return UtilCoroutines.WaitForUnpause(this);
+				t += time / dt;
+			}
+		}
+
+		protected IEnumerator BerzierMove(Vector3 end, Vector3 controlPoint1, Vector3 controlPoint2, float time) {
+			float t = 0;
+			Vector3 start = Transform.position;
+			float dt = Util.TargetDeltaTime;
+			while (t <= 1f) {
+				Transform.position = Vector3.Lerp(start, end, t);
+				yield return UtilCoroutines.WaitForUnpause(this);
+				t += time / dt;
+			}
+		}
 	}
 }

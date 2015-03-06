@@ -13,26 +13,10 @@ namespace Danmaku2D {
 
 		public abstract DanmakuField TargetField { get; }
 
-		private DanmakuGameController gameController;
-		public DanmakuGameController GameController {
-			get {
-				if(gameController == null) {
-					gameController = FindObjectOfType<DanmakuGameController>();
-				}
-				return gameController;
-			}
-		}
-
-		private AbstractPlayableCharacter player;
-		public AbstractPlayableCharacter Player {
+		private DanmakuPlayerCharacter player;
+		public DanmakuPlayerCharacter Player {
 			get {
 				return player;
-			}
-		}
-
-		public ProjectileManager BulletPool {
-			get {
-				return GameController.BulletPool;
 			}
 		}
 
@@ -40,13 +24,9 @@ namespace Danmaku2D {
 		private Camera fieldCamera;
 		
 		private Transform cameraTransform;
-
 		public Transform CameraTransform {
 			get {
 				return cameraTransform;
-			}
-			set {
-				cameraTransform = value;
 			}
 		}
 
@@ -161,30 +141,8 @@ namespace Danmaku2D {
 			}
 		}
 
-		public int LivesRemaining {
-			get {
-				if(player != null) {
-					return player.LivesRemaining;
-				} else {
-					Debug.Log("Player Field without Player");
-					return int.MinValue;
-				}
-			}
-		}
-		
-		public Vector3 PlayerPosition {
-			get {
-				if(player != null) {
-					return player.Transform.position;
-				} else {
-					Debug.Log("Player Field without Player");
-					return Vector3.zero;
-				}
-			}
-		}
-
 		public float AngleTowardPlayer(Vector2 startLocation, CoordinateSystem coordinateSystem = CoordinateSystem.Relative) {
-			return Util.AngleBetween2D (startLocation, PlayerPosition);
+			return Util.AngleBetween2D (startLocation, Player.Transform.position);
 		}
 
 		/// <summary>
@@ -192,9 +150,9 @@ namespace Danmaku2D {
 		/// </summary>
 		/// <param name="character">Character prefab, defines character behavior and attack patterns.</param>
 		/// <param name="controller">Controller for the player, allows for a user to manually control it or let an AI take over.</param>
-		public AbstractPlayableCharacter SpawnPlayer(AbstractPlayableCharacter playerCharacter, CoordinateSystem coordSys = CoordinateSystem.View) {
+		public DanmakuPlayerCharacter SpawnPlayer(DanmakuPlayerCharacter playerCharacter, CoordinateSystem coordSys = CoordinateSystem.View) {
 			Vector3 spawnPos = WorldPoint(Util.To3D(playerSpawnLocation), coordSys);
-			player =  (AbstractPlayableCharacter) Instantiate(playerCharacter, spawnPos, Quaternion.identity);
+			player =  (DanmakuPlayerCharacter) Instantiate(playerCharacter, spawnPos, Quaternion.identity);
 			if(player != null) {
 				player.Reset (1);
 				player.Transform.parent = Transform;
@@ -221,7 +179,7 @@ namespace Danmaku2D {
 		                                         Vector2 location, 
 		                                         float rotation, 
 		                                         float velocity,
-		                                         DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
+		                                         CoordinateSystem coordSys = CoordinateSystem.View) {
 			return ProjectileManager.FireLinearProjectile (bulletType, WorldPoint (Util.To3D (location), coordSys), rotation, velocity);
 		}
 		
@@ -230,7 +188,7 @@ namespace Danmaku2D {
 		                                         float rotation,
 		                                         float velocity,
 		                                         float angularVelocity,
-		                                         DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
+		                                         CoordinateSystem coordSys = CoordinateSystem.View) {
 			return ProjectileManager.FireCurvedProjectile (bulletType, WorldPoint(Util.To3D(location), coordSys), rotation, velocity, angularVelocity);
 		}
 		

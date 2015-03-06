@@ -36,7 +36,7 @@ namespace UnityUtilLib {
 
 		public override void Awake () {
 			base.Awake ();
-			audioSource = audio;
+			audioSource = GetComponent<AudioSource>();
 		}
 
 	}

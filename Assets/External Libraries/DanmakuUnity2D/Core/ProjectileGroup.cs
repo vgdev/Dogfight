@@ -33,15 +33,16 @@ namespace Danmaku2D {
 		#region ICollection implementation
 
 		public void Add (Projectile item) {
-			item.Groups.Add (this);
-			set.Add (item);
+			if (!set.Contains (item)) {
+				set.Add(item);
+				item.AddToGroup(this);
+			}
 		}
 
 		public void Clear () {
 			foreach(Projectile proj in set) {
-				proj.Groups.Remove(this);
+				proj.RemoveFromGroup(this);
 			}
-			set.Clear ();
 		}
 
 		public bool Contains (Projectile item) {
@@ -53,8 +54,12 @@ namespace Danmaku2D {
 		}
 
 		public bool Remove (Projectile item) {
-			item.Groups.Remove (this);
-			return set.Remove (item);
+			bool success = false;
+			if (set.Contains (item)) {
+				success = set.Remove(item);
+				item.RemoveFromGroup(this);
+			}
+			return success;
 		}
 
 		public int Count {

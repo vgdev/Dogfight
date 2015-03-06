@@ -34,10 +34,6 @@ namespace Danmaku2D {
 
 		protected abstract void MainLoop();
 
-		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="Danmaku2D.AttackPattern+Execution"/> is active.
-		/// </summary>
-		/// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
 		public bool Active {
 			get;
 			set;

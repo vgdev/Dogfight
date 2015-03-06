@@ -9,15 +9,6 @@ namespace Danmaku2D {
 	public abstract class DanmakuGameController : GameController {
 
 		[SerializeField]
-		private ProjectileManager bulletPool;
-
-		public ProjectileManager BulletPool {
-			get {
-				return bulletPool;
-			}
-		}
-
-		[SerializeField]
 		private int maximumLives;
 
 		/// <summary>

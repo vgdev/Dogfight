@@ -6,8 +6,8 @@ namespace Danmaku2D {
 	[Serializable]
 	public abstract class AbstractPlayerAgent {
 
-		private AbstractPlayableCharacter player;
-		public AbstractPlayableCharacter Player {
+		private DanmakuPlayerCharacter player;
+		public DanmakuPlayerCharacter Player {
 			get {
 				return player;
 			}

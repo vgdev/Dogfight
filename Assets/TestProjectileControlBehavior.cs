@@ -14,7 +14,7 @@ public class TestProjectileControlBehavior : ProjectileControlBehavior {
 	private float endTime;
 
 	public override Vector2 UpdateProjectile (Projectile projectile, float dt) {
-		float bulletTime = projectile.BulletTime;
+		float bulletTime = projectile.Time;
 		Color startColor = SpriteRenderer.color;
 		if (bulletTime < startTime)
 			projectile.Color = startColor;

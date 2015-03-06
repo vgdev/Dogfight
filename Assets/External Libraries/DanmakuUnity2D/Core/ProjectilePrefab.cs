@@ -4,9 +4,10 @@ using UnityUtilLib;
 using System.Collections.Generic;
 
 namespace Danmaku2D {
+
 	[RequireComponent(typeof(CircleCollider2D))]
 	[RequireComponent(typeof(SpriteRenderer))]
-	public class ProjectilePrefab : CachedObject {
+	public sealed class ProjectilePrefab : MonoBehaviour {
 
 		private static Dictionary<ProjectilePrefab, ProjectilePrefab> runtimeInstances;
 
@@ -50,8 +51,8 @@ namespace Danmaku2D {
 
 		private static ProjectilePrefab CreateRuntimeInstance(ProjectilePrefab prefab) {
 			ProjectilePrefab runtime = (ProjectilePrefab)Instantiate (prefab);
-			runtime.GameObject.hideFlags = HideFlags.HideInHierarchy;
-			runtime.GameObject.SetActive (false);
+			runtime.gameObject.hideFlags = HideFlags.HideInHierarchy;
+			runtime.gameObject.SetActive (false);
 			return runtime;
 		}
 

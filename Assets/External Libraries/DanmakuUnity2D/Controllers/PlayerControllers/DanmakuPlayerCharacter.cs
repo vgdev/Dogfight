@@ -3,7 +3,7 @@ using UnityUtilLib;
 using System.Collections.Generic;
 
 namespace Danmaku2D {
-	public abstract class AbstractAgentCharacter : AbstractPlayableCharacter {
+	public abstract class AbstractAgentCharacter : DanmakuPlayerCharacter {
 
 		private AbstractPlayerAgent agent;
 		public AbstractPlayerAgent Agent {
@@ -28,7 +28,7 @@ namespace Danmaku2D {
 	}
 
 	[RequireComponent(typeof(Collider2D))]
-	public abstract class AbstractPlayableCharacter : PausableGameObject {
+	public abstract class DanmakuPlayerCharacter : PausableGameObject {
 
 		private DanmakuField field;
 		public DanmakuField Field { 

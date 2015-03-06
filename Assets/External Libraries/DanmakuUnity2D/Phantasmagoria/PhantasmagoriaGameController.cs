@@ -72,7 +72,7 @@ namespace Danmaku2D.Phantasmagoria {
 		}
 
 		void Update() {
-			if (!reseting && (player1.Field.LivesRemaining <= 0 || player2.Field.LivesRemaining <= 0)) {
+			if (!reseting && (player1.Field.Player.LivesRemaining <= 0 || player2.Field.Player.LivesRemaining <= 0)) {
 				StartCoroutine(RoundReset ());
 			}
 			roundTimeRemaining -= Util.TargetDeltaTime;
@@ -113,8 +113,8 @@ namespace Danmaku2D.Phantasmagoria {
 			scale.y = 1f;
 			closureTop.localScale = scale;
 			closureBottom.localScale = scale;
-			bool p1dead = player1.Field.LivesRemaining <= 0;
-			bool p2dead = player2.Field.LivesRemaining <= 0;
+			bool p1dead = player1.Field.Player.LivesRemaining <= 0;
+			bool p2dead = player2.Field.Player.LivesRemaining <= 0;
 			player1.score += (p2dead && !p1dead) ? 1 : 0;
 			player2.score += (p1dead && !p2dead) ? 1 : 0;
 			bool p1win = player1.score >= winningScore;
@@ -139,10 +139,10 @@ namespace Danmaku2D.Phantasmagoria {
 			for(int i = 0; i < bcas.Length; i++) {
 				Destroy (bcas[i].GameObject);
 			}
-//			AttackPattern[] attackPatterns = FindObjectsOfType<AttackPattern> ();
-//			for (int i = 0; i < attackPatterns.Length; i++) {
-//				attackPatterns[i].Terminate();
-//			}
+			AttackPattern[] attackPatterns = FindObjectsOfType<AttackPattern> ();
+			for (int i = 0; i < attackPatterns.Length; i++) {
+				attackPatterns[i].Active = false;
+			}
 			while (t > 0f) {
 				scale.y = t;
 				closureTop.localScale = scale;

@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Danmaku2D {
+
+	[Serializable]
 	public class LinearProjectile : ProjectileController, IProjectileGroupController {
 
+		[SerializeField]
+		private float velocity;
 
 		public float Velocity {
-			get;
-			set;
+			get {
+				return velocity;
+			}
+			set {
+				velocity = value;
+			}
 		}
 
 		public LinearProjectile (float velocity) : base() {
@@ -17,12 +25,8 @@ namespace Danmaku2D {
 		
 		#region IProjectileController implementation
 		
-		public override Vector2 UpdateProjectile (Projectile projectile, float dt) {
-			base.UpdateProjectile (projectile, dt);
-			if (Velocity != 0)
-				return projectile.Direction * Velocity * dt;
-			else
-				return Vector2.zero;
+		public sealed override Vector2 UpdateProjectile (float dt) {
+			return UpdateProjectile (Projectile, dt);
 		}
 		
 		#endregion
@@ -32,6 +36,13 @@ namespace Danmaku2D {
 		public ProjectileGroup ProjectileGroup {
 			get;
 			set;
+		}
+
+		public virtual Vector2 UpdateProjectile (Projectile projectile, float dt) {
+			if (Velocity != 0)
+				return projectile.Direction * Velocity * dt;
+			else
+				return Vector2.zero;
 		}
 
 		#endregion

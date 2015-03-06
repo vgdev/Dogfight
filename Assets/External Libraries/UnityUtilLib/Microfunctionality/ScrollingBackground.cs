@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace UnityUtilLib {
 
-	[RequireComponent(typeof(MeshRenderer))]
+	[RequireComponent(typeof(Renderer))]
 	public class ScrollingBackground : CachedObject {
 
 		private Renderer rend;
@@ -11,7 +11,7 @@ namespace UnityUtilLib {
 		private Vector2 offset;
 
 		void Start() {
-			rend = renderer;
+			rend = GetComponent<Renderer>();
 			rend.material.mainTexture.wrapMode = TextureWrapMode.Repeat;
 		}
 

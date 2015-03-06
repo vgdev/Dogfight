@@ -23,7 +23,7 @@ public class RoundTimer : MonoBehaviour {
 	private GUIText label;
 
 	void Start() {
-		label = guiText;
+		label = GetComponent<GUIText>();
 		normalColor = label.color;
 		flashState = false;
 	}

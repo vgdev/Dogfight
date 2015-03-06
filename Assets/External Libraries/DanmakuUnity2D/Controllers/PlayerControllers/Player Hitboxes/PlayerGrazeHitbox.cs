@@ -5,10 +5,10 @@ using System.Collections;
 namespace Danmaku2D {
 	public class PlayerGrazeHitbox : MonoBehaviour {
 
-		private AbstractPlayableCharacter player;
+		private DanmakuPlayerCharacter player;
 
 		void Start() {
-			player = GetComponentInParent<AbstractPlayableCharacter> ();
+			player = GetComponentInParent<DanmakuPlayerCharacter> ();
 			if (player == null) {
 				Debug.LogError("PlayerGrazeHitbox should be on a child object of a GameObject with an Avatar sublcass script");
 			}
