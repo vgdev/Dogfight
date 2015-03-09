@@ -212,7 +212,7 @@ namespace Danmaku2D {
 				}
 			}
 
-			int count = Physics2D.CircleCastNonAlloc(transform.position + Util.To3D(circleCenter), 
+			int count = Physics2D.CircleCastNonAlloc(transform.position + (Vector3)circleCenter, 
 			                                         circleRaidus,
 			                                         movementVector,
 			                                         hits,
@@ -272,8 +272,8 @@ namespace Danmaku2D {
 				Debug.LogError("The provided prefab should have a SpriteRenderer!");
 			
 			if(cc != null) {
-				circleCenter = Util.ComponentProduct2(transform.lossyScale, cc.offset);
-				circleRaidus = cc.radius * Util.MaxComponent2(Util.To2D(transform.lossyScale));
+				circleCenter = Util.HadamardProduct2(transform.lossyScale, cc.offset);
+				circleRaidus = cc.radius * Util.MaxComponent2(transform.lossyScale);
 			}
 			else
 				Debug.LogError("The provided prefab should a CircleCollider2D!");

@@ -12,14 +12,27 @@ namespace UnityUtilLib.Editor {
 	/// </summary>
 	public static class EditorUtil {
 
+		/// <summary>
+		/// Returns the EditorWindow containing the Game View.
+		/// Note: this method uses Reflection to access internal variables in the Unity Editor. This is prone to change with future releases of Unity.
+		/// Currently tested and working with Unity 5.0.
+		/// </summary>
+		/// <returns>The Game View EditorWindow.</returns>
 		public static EditorWindow GetMainGameView() {
 			Type T = System.Type.GetType("UnityEditor.GameView,UnityEditor");
 			MethodInfo GetMainGameView = T.GetMethod("GetMainGameView",System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
 			object Res = GetMainGameView.Invoke(null,null);
 			return (UnityEditor.EditorWindow)Res;
 		}
-		
-		public static Vector2 GetGameViewScreenSize() {
+
+		/// <summary>
+		/// Gets the Editor Game View aspect ratio.
+		/// Will return Vector2.zero if the Game View is set to Free Aspect.
+		/// Note: this method uses Reflection to access internal variables in the Unity Editor. This is prone to change with future releases of Unity.
+		/// Currently tested and working with Unity 5.0.
+		/// </summary>
+		/// <returns>The Game View's aspect ratio.</returns>
+		public static Vector2 GetGameViewAspectRatio() {
 			EditorWindow gameView = GetMainGameView();
 			PropertyInfo prop = gameView.GetType().GetProperty("currentGameViewSize", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 			object gvsize = prop.GetValue(gameView, new object[0]{});

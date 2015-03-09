@@ -16,7 +16,7 @@ public class FixedScreenAreaCameraEditor : Editor {
 			}
 			SerializedProperty nativeAspectRatioProp = serializedObject.FindProperty("nativeAspectRatio");
 			SerializedProperty nativeBoundsProp = serializedObject.FindProperty("nativeBounds");
-			Vector2 screenSize = EditorUtil.GetGameViewScreenSize();
+			Vector2 screenSize = EditorUtil.GetGameViewAspectRatio();
 			if(screenSize == Vector2.zero) {
 				Debug.LogWarning("Warning: Game View in Free Aspect. Native Aspect Ratio is improperly initialized. Try again with a fixed aspect ratio.");
 			}
