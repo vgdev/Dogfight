@@ -2014,6 +2014,7 @@ GameObject:
   - 4: {fileID: 1219067052}
   - 20: {fileID: 1219067051}
   - 92: {fileID: 1219067050}
+  - 114: {fileID: 1219067053}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -2074,6 +2075,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2023493315}
   m_RootOrder: 1
+--- !u!114 &1219067053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1219067049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1bb8e5374baaae40aec0b1745c2d736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorPoint: .5
+  nativeAspectRatio: 1.33333337
+  nativeBounds:
+    serializedVersion: 2
+    x: .502499998
+    y: .0199999996
+    width: .492500007
+    height: .959999979
 --- !u!1 &1269431525
 GameObject:
   m_ObjectHideFlags: 0
@@ -3204,6 +3224,7 @@ GameObject:
   - 4: {fileID: 1865623786}
   - 20: {fileID: 1865623787}
   - 92: {fileID: 1865623788}
+  - 114: {fileID: 1865623789}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -3264,6 +3285,25 @@ Behaviour:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1865623785}
   m_Enabled: 1
+--- !u!114 &1865623789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1865623785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1bb8e5374baaae40aec0b1745c2d736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorPoint: .5
+  nativeAspectRatio: 1.33333337
+  nativeBounds:
+    serializedVersion: 2
+    x: .00499999989
+    y: .0199999996
+    width: .492500007
+    height: .959999979
 --- !u!1 &1975261491
 GameObject:
   m_ObjectHideFlags: 0
