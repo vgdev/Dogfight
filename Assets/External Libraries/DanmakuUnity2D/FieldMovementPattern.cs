@@ -77,7 +77,7 @@ namespace Danmaku2D {
 						oldPosition = Transform.position;
 						Transform.position = Util.BerzierCurveVectorLerp(startLocation, targetLocation, control1, control2, t);
 						Transform.rotation = Util.RotationBetween2D(oldPosition, Transform.position);
-						yield return UtilCoroutines.WaitForUnpause(this);
+						yield return UtilCoroutines.AbstractProjectileController(this);
 						t += dt / totalTime;
 					}
 				}

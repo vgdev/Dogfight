@@ -135,7 +135,7 @@ namespace Danmaku2D {
 
 		/// <summary>
 		/// The amount of time, in seconds,that has passed since this bullet has been fired.
-		/// This is calculated based on the number of unpaused frames that has passed since the bullet has fired
+		/// This is calculated based on the number of AbstractProjectileControllerd frames that has passed since the bullet has fired
 		/// Pausing will cause this value to stop increasing
 		/// </summary>
 		/// <value>The time since the projectile has been fired.</value>

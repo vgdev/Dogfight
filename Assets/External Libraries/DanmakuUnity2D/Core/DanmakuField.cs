@@ -97,6 +97,11 @@ namespace Danmaku2D {
 
 		[SerializeField]
 		private float gamePlaneDistance = 10;
+		public float GamePlaneDistance {
+			get {
+				return gamePlaneDistance;
+			}
+		}
 
 		public Vector3 WorldPoint(Vector3 point, CoordinateSystem coordSys = CoordinateSystem.View) {
 			switch (coordSys) {
@@ -154,7 +159,7 @@ namespace Danmaku2D {
 			Vector3 spawnPos = WorldPoint(Util.To3D(playerSpawnLocation), coordSys);
 			player =  (DanmakuPlayerCharacter) Instantiate(playerCharacter, spawnPos, Quaternion.identity);
 			if(player != null) {
-				player.Reset (1);
+				player.Reset (5);
 				player.Transform.parent = Transform;
 				player.Field = this;
 			}
