@@ -254,29 +254,19 @@ namespace Danmaku2D {
 		public void MatchPrefab(ProjectilePrefab prefab) {
 			this.prefab = prefab;
 			ProjectilePrefab runtime = prefab.GetRuntime ();
-			CircleCollider2D cc = runtime.CircleCollider;
-			SpriteRenderer sr = runtime.SpriteRenderer;
 			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
 			
 			transform.localScale = runtime.transform.localScale;
 			gameObject.tag = runtime.gameObject.tag;
 			gameObject.layer = runtime.gameObject.layer;
-			
-			if(sr != null) {
-				renderer.sprite = sr.sprite;
-				renderer.color = sr.color;
-				renderer.sharedMaterial = sr.sharedMaterial;
-				renderer.sortingLayerID = renderer.sortingLayerID;
-			}
-			else
-				Debug.LogError("The provided prefab should have a SpriteRenderer!");
-			
-			if(cc != null) {
-				circleCenter = Util.HadamardProduct2(transform.lossyScale, cc.offset);
-				circleRaidus = cc.radius * Util.MaxComponent2(transform.lossyScale);
-			}
-			else
-				Debug.LogError("The provided prefab should a CircleCollider2D!");
+
+			renderer.sprite = runtime.Sprite;
+			renderer.color = runtime.Color;
+			renderer.sharedMaterial = runtime.Material;
+			renderer.sortingLayerID = renderer.sortingLayerID;
+
+			circleCenter = Util.HadamardProduct2(transform.lossyScale, runtime.ColliderOffset);
+			circleRaidus = runtime.ColliderRadius * Util.MaxComponent2(transform.lossyScale);
 
 			for(int i = 0; i < pcbs.Length; i++) {
 				pcbs[i].ProjectileGroup.Add(this);
