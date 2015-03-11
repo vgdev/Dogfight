@@ -175,6 +175,12 @@ namespace Danmaku2D {
 			}
 		}
 
+		/// <summary>
+		/// Compares the tag of the Projectile instance to the given string.
+		/// Mirrors <a href="http://docs.unity3d.com/ScriptReference/GameObject.CompareTag.html>GameObject.CompareTag</a>.
+		/// </summary>
+		/// <returns><c>true</c>, if tag is an exact match to the string, <c>false</c> otherwise.</returns>
+		/// <param name="tag">Tag.</param>
 		public bool CompareTag(string tag) {
 			return gameObject.CompareTag (tag);
 		}
