@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace UnityUtilLib {
+namespace UnityUtilLib.Pooling {
 	public abstract class Pool<T> : IPool<T> where T : IPooledObject {
 		private Queue<T> inactiveObjs;
 		private HashSet<T> activeObjs;

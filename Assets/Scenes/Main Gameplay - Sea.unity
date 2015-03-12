@@ -296,7 +296,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 36195106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 540ec571544598b45aa142b4cff38dd1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fd7c15c8bef28b4cbe718ddf624796c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 787077639}
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 36195106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 540ec571544598b45aa142b4cff38dd1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fd7c15c8bef28b4cbe718ddf624796c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 787077639}
@@ -2599,11 +2599,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1518786336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5870ca566be46e44d835829dd28776e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1caa3cd050dcf534dbf0568021c0c20d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   field: {fileID: 827357119}
-  chargeCapacity: {fileID: 1990498015}
+  chargeCapacity: {fileID: 96955232}
   chargeLevel: {fileID: 96955232}
   indicator: {fileID: 1559619104}
 --- !u!1 &1559619104
@@ -2973,7 +2973,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1772426189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5870ca566be46e44d835829dd28776e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1caa3cd050dcf534dbf0568021c0c20d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   field: {fileID: 2023493317}

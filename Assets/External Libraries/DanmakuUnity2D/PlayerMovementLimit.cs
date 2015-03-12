@@ -13,7 +13,7 @@ namespace Danmaku2D {
 
 		void OnTriggerEnter2D(Collider2D other) {
 			if(other.CompareTag(tagCheck)) {
-				DanmakuPlayerCharacter player = other.gameObject.GetComponent<DanmakuPlayerCharacter> ();
+				DanmakuPlayer player = other.gameObject.GetComponent<DanmakuPlayer> ();
 				if(player != null) {
 					player.ForbidMovement(lockedMovementVector);
 				}
@@ -22,7 +22,7 @@ namespace Danmaku2D {
 
 		void OnTriggerExit2D(Collider2D other) {
 			if(other.CompareTag(tagCheck)) {
-				DanmakuPlayerCharacter player = other.gameObject.GetComponent<DanmakuPlayerCharacter> ();
+				DanmakuPlayer player = other.gameObject.GetComponent<DanmakuPlayer> ();
 				if(player != null) {
 					player.AllowMovement(lockedMovementVector);
 				}

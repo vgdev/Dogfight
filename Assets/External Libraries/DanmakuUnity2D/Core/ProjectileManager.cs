@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
+using UnityUtilLib.Pooling;
 
 namespace Danmaku2D {
 	public class ProjectileManager : SingletonBehavior<ProjectileManager>, IPausable {

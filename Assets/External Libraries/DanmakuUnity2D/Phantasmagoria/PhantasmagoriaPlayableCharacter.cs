@@ -3,7 +3,7 @@ using System.Collections;
 using UnityUtilLib;
 
 namespace Danmaku2D.Phantasmagoria {
-	public class PhantasmagoriaPlayableCharacter : DanmakuPlayerCharacter {
+	public class PhantasmagoriaPlayableCharacter : DanmakuPlayer {
 
 		[SerializeField]
 		private AttackPattern[] attackPatterns;

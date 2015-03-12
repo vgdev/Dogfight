@@ -13,8 +13,8 @@ namespace Danmaku2D {
 
 		public abstract DanmakuField TargetField { get; }
 
-		private DanmakuPlayerCharacter player;
-		public DanmakuPlayerCharacter Player {
+		private DanmakuPlayer player;
+		public DanmakuPlayer Player {
 			get {
 				return player;
 			}
@@ -155,9 +155,9 @@ namespace Danmaku2D {
 		/// </summary>
 		/// <param name="character">Character prefab, defines character behavior and attack patterns.</param>
 		/// <param name="controller">Controller for the player, allows for a user to manually control it or let an AI take over.</param>
-		public DanmakuPlayerCharacter SpawnPlayer(DanmakuPlayerCharacter playerCharacter, CoordinateSystem coordSys = CoordinateSystem.View) {
+		public DanmakuPlayer SpawnPlayer(DanmakuPlayer playerCharacter, CoordinateSystem coordSys = CoordinateSystem.View) {
 			Vector3 spawnPos = WorldPoint((Vector3)playerSpawnLocation, coordSys);
-			player =  (DanmakuPlayerCharacter) Instantiate(playerCharacter, spawnPos, Quaternion.identity);
+			player =  (DanmakuPlayer) Instantiate(playerCharacter, spawnPos, Quaternion.identity);
 			if(player != null) {
 				player.Reset (5);
 				player.Transform.parent = Transform;

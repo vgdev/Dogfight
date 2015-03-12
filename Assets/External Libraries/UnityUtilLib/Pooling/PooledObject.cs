@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace UnityUtilLib {
+namespace UnityUtilLib.Pooling {
 
 	public abstract class PooledObject : IPooledObject {
 		public IPool Pool {

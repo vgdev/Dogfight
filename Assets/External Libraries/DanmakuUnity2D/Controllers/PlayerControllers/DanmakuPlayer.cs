@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Danmaku2D {
 
 	[RequireComponent(typeof(Collider2D))]
-	public abstract class DanmakuPlayerCharacter : PausableGameObject {
+	public abstract class DanmakuPlayer : PausableGameObject {
 
 		private DanmakuField field;
 		public DanmakuField Field { 

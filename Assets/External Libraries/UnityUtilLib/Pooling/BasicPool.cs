@@ -1,6 +1,6 @@
 using System;
 
-namespace UnityUtilLib {
+namespace UnityUtilLib.Pooling {
 	public class BasicPool<T> : Pool<T> where T : IPooledObject, new() {
 
 		public BasicPool(int initial, int spawn) : base(initial, spawn) {
