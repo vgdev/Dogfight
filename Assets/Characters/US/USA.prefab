@@ -225,8 +225,6 @@ MonoBehaviour:
   spawnLocation: {x: .5, y: .5}
   spawnArea: {x: .5, y: .5}
   bulletCount: 15
-  velocity: 20
-  angV: 0
   burstCount:
     maxCount: 10
     count: 10
@@ -234,6 +232,8 @@ MonoBehaviour:
     delay: .100000001
   burstInitialRotation: 0
   burstRotationDelta: 5
+  LinearController:
+    velocity: 15
 --- !u!114 &11462248
 MonoBehaviour:
   m_ObjectHideFlags: 1
