@@ -2,8 +2,14 @@ using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 
+/// <summary>
+/// A set of scripts for commonly created Attack Patterns
+/// </summary>
 namespace Danmaku2D.AttackPatterns {
 
+	/// <summary>
+	/// A basic enemy attack pattern. It fires a set of bullets in a fixed pattern at a fixed interval.
+	/// </summary>
 	[AddComponentMenu("Danmaku 2D/Attack Patterns/Enemy Basic Attack")]
 	public class EnemyBasicAttack : AttackPattern {
 		

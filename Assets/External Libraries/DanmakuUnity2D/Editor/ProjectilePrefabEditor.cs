@@ -3,11 +3,21 @@ using UnityEditor;
 using System.Collections;
 using Danmaku2D;
 
+/// <summary>
+/// Custom editor scripts for various components of the Danmaku2D development kit
+/// </summary>
 namespace Danmaku2D.Editor {
 
+	/// <summary>
+	/// Custom <a href="http://docs.unity3d.com/ScriptReference/Editor.html">Editor</a> for ProjectilePrefab
+	/// </summary>
 	[CustomEditor(typeof(ProjectilePrefab))]
 	public class ProjectilePrefabEditor : UnityEditor.Editor {
 
+		/// <summary>
+		/// Creates the custom Inspector GUI for an instance of ProjectilePrefab
+		/// Adds an extra button to quickly set all the values of the instance so that the user does not need to manually drag in each one.
+		/// </summary>
 		public override void OnInspectorGUI () {
 			base.OnInspectorGUI ();
 			ProjectilePrefab prefab = target as ProjectilePrefab;

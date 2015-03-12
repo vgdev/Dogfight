@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A utilty library of random useful and portable scripts for Unity
+/// </summary>
 namespace UnityUtilLib {
 
 	/// <summary>
