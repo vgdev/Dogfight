@@ -133,8 +133,10 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: .730000019}
+  serializedVersion: 2
   m_Radius: .340000004
-  m_Center: {x: 0, y: .730000019}
 --- !u!58 &5862244
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -144,8 +146,10 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: .730000019}
+  serializedVersion: 2
   m_Radius: 2.04999995
-  m_Center: {x: 0, y: .730000019}
 --- !u!61 &6162242
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -155,8 +159,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: -.0134963989, y: .164588928}
+  serializedVersion: 2
   m_Size: {x: 2.6510725, y: 4.05488825}
-  m_Center: {x: -.0134963989, y: .164588928}
 --- !u!114 &11452054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,11 +175,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeout:
-    maxDelay: 3.5
-    currentDelay: 3.5
+    delay: 5
   stripesDelay:
-    maxDelay: .0500000007
-    currentDelay: .0500000007
+    delay: .200000003
   stripesBullet: {fileID: 11442872, guid: aa7fd1a17cd4c41419dff35fb7b893de, type: 2}
   stripeCount: 7
   stripeOffset: .100000001
@@ -217,20 +221,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cab6263c08337b469ad50a12cae5d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  spawnLocation: {x: 0, y: 0}
-  spawnArea: {x: 0, y: 0}
-  bulletCount: 0
-  velocity: 0
-  angV: 0
+  prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
+  spawnLocation: {x: .5, y: .5}
+  spawnArea: {x: .5, y: .5}
+  bulletCount: 15
   burstCount:
-    maxCount: 0
-    count: 0
+    maxCount: 10
+    count: 10
   burstDelay:
-    maxDelay: 0
-    currentDelay: 0
+    delay: .100000001
   burstInitialRotation: 0
-  burstRotationDelta: 0
+  burstRotationDelta: 5
+  LinearController:
+    velocity: 15
 --- !u!114 &11462248
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -245,7 +248,8 @@ MonoBehaviour:
   normalMovementSpeed: 5
   focusMovementSpeed: 3
   fireRate: 20
-  attackPatterns: []
+  attackPatterns:
+  - {fileID: 11462246}
   shotOffset: {x: .5, y: 0}
   shotVelocity: 200
   chargeRate: 1
@@ -257,11 +261,9 @@ MonoBehaviour:
   deathCancelDuration: .5
   deathCancelRadius: 30
   deathInvincibiiltyPeriod:
-    maxDelay: 2
-    currentDelay: 2
+    delay: 2
   invincibiltyFlash:
-    maxDelay: .100000001
-    currentDelay: .100000001
+    delay: .200000003
 --- !u!212 &21262242
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -271,16 +273,20 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 4051134229
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -243833067
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 93cba88b1c5b656408c976e73b84609a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -295,4 +301,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 162246}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

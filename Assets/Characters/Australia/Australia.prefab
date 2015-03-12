@@ -47,6 +47,7 @@ GameObject:
   - 61: {fileID: 6197972}
   - 50: {fileID: 5097974}
   - 114: {fileID: 11497978}
+  - 114: {fileID: 11423826}
   m_Layer: 12
   m_Name: Australia
   m_TagString: Player
@@ -155,6 +156,20 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: 2.6510725, y: 4.05488825}
   m_Center: {x: -.0134963989, y: .164588928}
+--- !u!114 &11423826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4984ca4d61515804990afd1eadd130fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeout:
+    delay: 5
+  flipDuration: 1
 --- !u!114 &11497972
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -163,7 +178,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 197972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2979fc024d4a4844489b5a58c897e517, type: 3}
+  m_Script: {fileID: 11500000, guid: 80cf408cccaf01e4cadc4be03b2543d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11497974
@@ -174,7 +189,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 197974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248531994a117b14782e96eb5018b462, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fb4b20b90d935146b4622eac1468c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11497978
@@ -191,7 +206,8 @@ MonoBehaviour:
   normalMovementSpeed: 5
   focusMovementSpeed: 3
   fireRate: 4
-  attackPatterns: []
+  attackPatterns:
+  - {fileID: 11423826}
   shotOffset: {x: .5, y: 0}
   shotVelocity: 200
   chargeRate: 1
@@ -203,11 +219,9 @@ MonoBehaviour:
   deathCancelDuration: .5
   deathCancelRadius: 30
   deathInvincibiiltyPeriod:
-    maxDelay: 2
-    currentDelay: 2
+    delay: 0
   invincibiltyFlash:
-    maxDelay: .100000001
-    currentDelay: .100000001
+    delay: 0
 --- !u!212 &21297972
 SpriteRenderer:
   m_ObjectHideFlags: 1

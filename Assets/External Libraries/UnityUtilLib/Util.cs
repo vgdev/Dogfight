@@ -1,138 +1,220 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace UnityUtilLib
-{
+namespace UnityUtilLib {
+
 	/// <summary>
-	/// Util.
+	/// A static utility class of random functions and constants that are useful in various Unity projects
 	/// </summary>
 	public static class Util {
 
 		/// <summary>
-		/// The degree2 RAD.
+		/// A constant used to convert degrees to radians
+		/// Multiply a degree measure by this to convert.
 		/// </summary>
 		public const float Degree2Rad = Mathf.PI / 180f;
 
 		/// <summary>
-		/// The rad2 degree.
+		/// A constant used to convert radians to degrees
+		/// Multiply a radian measure by this to convert.
 		/// </summary>
 		public const float Rad2Degree = 180f / Mathf.PI;
 
 		/// <summary>
-		/// Sign the specified e.
+		/// The normal target frames per second
+		/// This is the value used by <see cref="TargetFPS"/> if Time.timeScale is not 0 but Application.targetFrameRate is 0. 
 		/// </summary>
-		/// <param name="e">E.</param>
+		public static float NormalTargetFPS = 60f;
+
+		/// <summary>
+		/// Gets the expected frames per second of the current Application.
+		/// Normally this is set to Application.targetFrameRate if it is not 0.
+		/// If the game is paused via setting Time.timeScale to 0, this evaluates to Infinity
+		/// </summary>
+		/// <value>The expected frames per second.</value>
+		public static float TargetFPS {
+			get {
+				if(Time.timeScale != 0)
+					return (Application.targetFrameRate > 0f) ? Application.targetFrameRate : NormalTargetFPS;
+				else
+					return float.PositiveInfinity;
+			}
+		}
+
+		/// <summary>
+		/// Gets the expected time between each frame for the current Application.
+		/// It is equal to the inverse of <see cref="TargetFPS"/>
+		/// TargetDeltaTime = 1/TargetFPS
+		/// </summary>
+		/// <value>The expected delta time.</value>
+		public static float TargetDeltaTime {
+			get {
+				return 1f / TargetFPS;
+			}
+		}
+
+		/// <summary>
+		/// Converts floating point time to an integer number of frames based on TargetDeltaTime/TargetFPS.
+		/// Useful in converting a fixed time to a count for frames.
+		/// </summary>
+		/// <returns>the time elapsed in the given frames</returns>
+		/// <param name="time">the elapsed time to convert to frames</param>
+		public static int TimeToFrames(float time) {
+			return Mathf.CeilToInt (time * TargetFPS);
+		}
+
+		/// <summary>
+		/// Converts floating point time to an integer number of frames based on TargetDeltaTime/TargetFPS.
+		/// Useful in converting a fixed time to a count for frames.
+		/// </summary>
+		/// <returns>the time elapsed in the given frames</returns>
+		/// <param name="time">the elapsed time to convert to frames</param>
+		public static float FramesToTime(int frames) {
+			return (float)frames * TargetDeltaTime;
+		}
+
+		/// <summary>
+		/// Creates an array of masks for collisions/raycasts in 2D physics
+		/// Useful for mirroring collision behavior.
+		/// </summary>
+		/// <returns>the masks for each layer</returns>
+		public static int[] CollisionLayers2D() {
+			int[] collisionMask = new int[32];
+			for(int i = 0; i < 32; i++) {
+				collisionMask[i] = 0;
+				for (int j = 0; j < 32; j++) {
+					collisionMask[i] |= (Physics2D.GetIgnoreLayerCollision(i, j)) ? 0 : (1 << j);
+				}
+			}
+			return collisionMask;
+		}
+		
+		/// <summary>
+		/// Creates an array of masks for collisions/raycasts in 3D physics
+		/// Useful for mirroring collision behavior.
+		/// </summary>
+		/// <returns>the masks for each layer</returns>
+		public static int[] CollisionLayers3D() {
+			int[] collisionMask = new int[32];
+			for(int i = 0; i < 32; i++) {
+				collisionMask[i] = 0;
+				for (int j = 0; j < 32; j++) {
+					collisionMask[i] |= (Physics.GetIgnoreLayerCollision(i, j)) ? 0 : (1 << j);
+				}
+			}
+			return collisionMask;
+		}
+	
+		/// <summary>
+		/// Actually computes the sign of a floating point number
+		///  * If it is less than 0: returns -1
+		///  * If it is equal to 0: returns 0
+		///  * If it is more than 0: returns 1
+		/// </summary>
+		/// <param name="e">the sign of the given floating point value</param>
 		public static float Sign(float e) {
 			return (e == 0f) ? 0f : Mathf.Sign (e);
 		}
 
 		/// <summary>
-		/// To2s the d.
+		/// Creates a random Vector2 between (0,0) and the given vector's components.
 		/// </summary>
-		/// <returns>The d.</returns>
-		/// <param name="v">V.</param>
-		public static Vector2 To2D(Vector3 v) {
-			return new Vector2(v.x, v.y);
-		}
-
-		/// <summary>
-		/// To3s the d.
-		/// </summary>
-		/// <returns>The d.</returns>
-		/// <param name="v">V.</param>
-		/// <param name="z">The z coordinate.</param>
-		public static Vector3 To3D(Vector2 v, float z = 0f) {
-			return new Vector3 (v.x, v.y, z);
-		}
-
-		/// <summary>
-		/// Randoms the vect2.
-		/// </summary>
-		/// <returns>The vect2.</returns>
-		/// <param name="v">V.</param>
+		/// <returns>the random vector</returns>
+		/// <param name="v">the maximum component values</param>
 		public static Vector2 RandomVect2(Vector2 v) {
 			return new Vector2 (Random.value * v.x, Random.value * v.y);
 		}
 
 		/// <summary>
-		/// Randoms the vect3.
+		/// Creates a random Vector3 between (0,0) and the given vector's components.
 		/// </summary>
-		/// <returns>The vect3.</returns>
-		/// <param name="v">V.</param>
+		/// <returns>the random vector</returns>
+		/// <param name="v">the maximum component values</param>
 		public static Vector3 RandomVect3(Vector3 v) {
 			return new Vector3 (Random.value * v.x, Random.value * v.y, Random.value * v.z);
 		}
 
 		/// <summary>
-		/// Components the product2.
+		/// Creates a random Vector4 between (0,0) and the given vector's components.
 		/// </summary>
-		/// <returns>The product2.</returns>
-		/// <param name="v1">V1.</param>
-		/// <param name="v2">V2.</param>
-		public static Vector2 ComponentProduct2(Vector2 v1, Vector2 v2) {
+		/// <returns>the random vector</returns>
+		/// <param name="v">the maximum component values</param>
+		public static Vector4 RandomVect4(Vector4 v) {
+			return new Vector4 (Random.value * v.x, Random.value * v.y, Random.value * v.z, Random.value * v.y);
+		}
+
+		/// <summary>
+		/// Computes the <see href="http://en.wikipedia.org/wiki/Hadamard_product_%28matrices%29">Hadamard Product</see> between two Vector2s
+		/// </summary>
+		/// <returns>The Hadamard product between the two vectors.</returns>
+		/// <param name="v1">the first vector</param>
+		/// <param name="v2">the second vector</param>
+		public static Vector2 HadamardProduct2(Vector2 v1, Vector2 v2) {
 			return new Vector2(v1.x * v2.x, v1.y * v2.y);
 		}
 
 		/// <summary>
-		/// Components the product3.
+		/// Computes the <see href="http://en.wikipedia.org/wiki/Hadamard_product_%28matrices%29">Hadamard Product</see> between two Vector3s
 		/// </summary>
-		/// <returns>The product3.</returns>
-		/// <param name="v1">V1.</param>
-		/// <param name="v2">V2.</param>
-		public static Vector3 ComponentProduct3(Vector3 v1, Vector3 v2) {
+		/// <returns>The Hadamard product between the two vectors.</returns>
+		/// <param name="v1">the first vector</param>
+		/// <param name="v2">the second vector</param>
+		public static Vector3 HadamardProduct3(Vector3 v1, Vector3 v2) {
 			return new Vector3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
 		}
 
 		/// <summary>
-		/// Maxs the component2.
+		/// Computes the <see href="http://en.wikipedia.org/wiki/Hadamard_product_%28matrices%29">Hadamard Product</see> between two Vector4s
 		/// </summary>
-		/// <returns>The component2.</returns>
-		/// <param name="v">V.</param>
+		/// <returns>The Hadamard product between the two vectors.</returns>
+		/// <param name="v1">the first vector</param>
+		/// <param name="v2">the second vector</param>
+		public static Vector4 HadamardProduct4(Vector4 v1, Vector4 v2) {
+			return new Vector4(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z, v1.w * v2.w);
+		}
+		
+		/// <summary>
+		/// Finds the largest component in the given Vector2
+		/// </summary>
+		/// <returns> the value of the smallest component</returns>
+		/// <param name="v">the vector to evaluate</param>
 		public static float MaxComponent2(Vector2 v) {
 			return (v.x > v.y) ? v.x : v.y;
 		}
-
+		
 		/// <summary>
-		/// Maxs the component3.
+		/// Finds the largest component in the given Vector3
 		/// </summary>
-		/// <returns>The component3.</returns>
-		/// <param name="v">V.</param>
+		/// <returns> the value of the smallest component</returns>
+		/// <param name="v">the vector to evaluate</param>
 		public static float MaxComponent3(Vector3 v) {
 			if(v.x > v.y)
 				return (v.z > v.y) ? v.z : v.y;
 			else
 				return (v.z > v.x) ? v.z : v.x;
 		}
-
+		
 		/// <summary>
-		/// Minimums the component2.
+		/// Finds the smallest component in the given Vector2
 		/// </summary>
-		/// <returns>The component2.</returns>
-		/// <param name="v">V.</param>
+		/// <returns> the value of the smallest component</returns>
+		/// <param name="v">the vector to evaluate</param>
 		public static float MinComponent2(Vector2 v) {
 			return (v.x < v.y) ? v.x : v.y;
 		}
 
 		/// <summary>
-		/// Minimums the component3.
+		/// Finds the smallest component in the given Vector3
 		/// </summary>
-		/// <returns>The component3.</returns>
-		/// <param name="v">V.</param>
+		/// <returns> the value of the smallest component</returns>
+		/// <param name="v">the vector to evaluate</param>
 		public static float MinComponent3(Vector3 v) {
 			if(v.x < v.y)
 				return (v.z < v.y) ? v.z : v.y;
 			else
 				return (v.z < v.x) ? v.z : v.x;
 		}
-		/// <summary>
-		/// Berziers the curve vector lerp.
-		/// </summary>
-		/// <returns>The curve vector lerp.</returns>
-		/// <param name="start">Start.</param>
-		/// <param name="end">End.</param>
-		/// <param name="c1">C1.</param>
-		/// <param name="c2">C2.</param>
-		/// <param name="t">T.</param>
+
 		public static Vector3 BerzierCurveVectorLerp(Vector3 start, Vector3 end, Vector3 c1, Vector3 c2, float t) {
 			float u, uu, uuu, tt, ttt;
 			Vector3 p, p0 = start, p1 = c1, p2 = c2, p3 = end;
@@ -150,9 +232,15 @@ namespace UnityUtilLib
 			return p;
 		}
 
+		/// <summary>
+		/// Finds the closest described component to the given point
+		/// </summary>
+		/// <returns>The closest instance of the given Component type</returns>
+		/// <param name="position">The closest instance of T to the given point</param>
+		/// <typeparam name="T">The Component Type to search for</typeparam>
 		public static T FindClosest<T>(Vector3 position) where T : Component {
 			T returnValue = default(T);
-			T[] objects = GameObject.FindObjectsOfType<T> ();
+			T[] objects = Object.FindObjectsOfType<T> ();
 			float minDist = float.MaxValue;
 			for (int i = 0; i < objects.Length; i++) {
 				float dist = (objects[i].transform.position - position).magnitude;
@@ -164,23 +252,11 @@ namespace UnityUtilLib
 			return returnValue;
 		}
 
-		/// <summary>
-		/// Angles the between 2d.
-		/// </summary>
-		/// <returns>The between2 d.</returns>
-		/// <param name="v1">V1.</param>
-		/// <param name="v2">V2.</param>
 		public static float AngleBetween2D(Vector2 v1, Vector2 v2) {
 			Vector2 diff = v2 - v1;
 			return Mathf.Atan2 (diff.y, diff.x) * 180f / Mathf.PI - 90f; 
 		}
-		
-		/// <summary>
-		/// Rotations the between2 d.
-		/// </summary>
-		/// <returns>The between2 d.</returns>
-		/// <param name="v1">V1.</param>
-		/// <param name="v2">V2.</param>
+
 		public static Quaternion RotationBetween2D(Vector2 v1, Vector2 v2) {
 			return Quaternion.Euler (0f, 0f, AngleBetween2D (v1, v2));
 		}

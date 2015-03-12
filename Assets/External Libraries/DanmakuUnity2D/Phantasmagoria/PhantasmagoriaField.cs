@@ -1,46 +1,40 @@
-using UnityEngine;
+	using UnityEngine;
 using UnityUtilLib;
 using System.Collections;
 using System.Collections.Generic;
 
-/// <summary>
-/// Player field controller.
-/// </summary>
-public class PhantasmagoriaField : AbstractDanmakuField {
+namespace Danmaku2D.Phantasmagoria {
+	public class PhantasmagoriaField : DanmakuField {
 
-	private AbstractDanmakuField targetField;
-	/// <summary>
-	/// Sets the target field.
-	/// </summary>
-	/// <value>The target field.</value>
-	public override AbstractDanmakuField TargetField {
-		get {
-			return targetField;
+		private DanmakuField targetField;
+		public override DanmakuField TargetField {
+			get {
+				return targetField;
+			}
 		}
-	}
 
-	private int playerNumber = 1;
-	/// <summary>
-	/// Gets or sets the player number.
-	/// </summary>
-	/// <value>The player number.</value>
-	public int PlayerNumber {
-		get {
-			return playerNumber; 
+		private int playerNumber = 1;
+		public int PlayerNumber {
+			get {
+				return playerNumber; 
+			}
+			set { 
+				playerNumber = value; 
+			}
 		}
-		set { 
-			playerNumber = value; 
+
+		public void Transfer(Projectile projectile) {
+			Vector2 relativePos = ViewPoint (Transform.position);
+			projectile.Position = targetField.WorldPoint (relativePos);
 		}
-	}
 
-	public void SetTargetField(AbstractDanmakuField field) {
-		targetField = field;
-	}
+		public void SetTargetField(DanmakuField field) {
+			targetField = field;
+		}
 
-	/// <summary>
-	/// Reset this instance.
-	/// </summary>
-	public void RoundReset() {
-		Player.Reset (5);
+		public void RoundReset() {
+			Player.Reset (5);
+			CameraTransform.rotation = Quaternion.identity;
+		}
 	}
 }

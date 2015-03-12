@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21214182}
   - 114: {fileID: 11414182}
   - 58: {fileID: 5814182}
+  - 114: {fileID: 11438258}
   m_Layer: 14
   m_Name: Red Bullet
   m_TagString: Bullet
@@ -39,8 +40,10 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
   m_Radius: .330000013
-  m_Center: {x: 0, y: 0}
 --- !u!114 &11414182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -49,11 +52,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 114182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8823d59fa8fb2e44c89d158549cce38d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d455abbca205534bbe1c646accadd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   circleCollider: {fileID: 5814182}
   spriteRenderer: {fileID: 21214182}
+  extraControllers:
+  - {fileID: 11438258}
+--- !u!114 &11438258
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d779184468eae4ab3fcf4057a6786a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endColor: {r: 0, g: 0, b: 1, a: 1}
+  startTime: .25
+  endTime: 1
 --- !u!212 &21214182
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -63,16 +82,20 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 318bb75f28a02844f98c0bb8880684c2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 3746238291
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -548729005
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 29897b6e236362a48bb348d749205e30, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
@@ -87,4 +110,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 114182}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

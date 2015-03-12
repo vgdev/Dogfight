@@ -2,52 +2,51 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/// <summary>
-/// Projectile boundary.
-/// </summary>
-[RequireComponent(typeof(Collider2D))]
-public class ProjectileBoundary : MonoBehaviour {
+namespace Danmaku2D {
 
 	/// <summary>
-	/// The tag filter.
+	/// A script for defining boundaries for detecting collision with Projectiles
 	/// </summary>
-	[SerializeField]
-	private string tagFilter;
+	[RequireComponent(typeof(Collider2D))]
+	public class ProjectileBoundary : MonoBehaviour {
 
-	private List<string> validTags;
+		/// <summary>
+		/// A filter for a set of tags, delimited by "|" for selecting which bullets to affect
+		/// Leaving this blank will affect all bullets
+		/// </summary>
+		[SerializeField]
+		private string tagFilter;
 
-	/// <summary>
-	/// Awake this instance.
-	/// </summary>
-	void Awake() {
-		if(tagFilter == null)
-			tagFilter = "";
-		validTags = new List<string> ();
-		validTags.AddRange(tagFilter.Split ('|'));
-	}
+		private List<string> validTags;
 
-	/// <summary>
-	/// Raises the trigger enter2 d event.
-	/// </summary>
-	/// <param name="other">Other.</param>
-	void OnTriggerEnter2D(Collider2D other) {
-		//Debug.Log ("Entered");
-		if(validTags.Contains(other.tag)) {
-			Projectile proj = other.GetComponent<Projectile>();
-			if(proj != null) {
+		/// <summary>
+		/// Called on Component instantiation
+		/// </summary>
+		void Awake() {
+			if(tagFilter == null)
+				tagFilter = "";
+			validTags = new List<string> ();
+			validTags.AddRange(tagFilter.Split ('|'));
+		}
+
+		/// <summary>
+		/// Called on collision with any Projectile
+		/// </summary>
+		/// <param name="proj">Proj.</param>
+		void OnProjectileCollision(Projectile proj) {
+			if(proj != null && (validTags.Count <= 0 || validTags.Contains(proj.Tag))) {
 				ProcessProjectile(proj);
 			}
 		}
-	}
 
-	void OnProjectileCollision(Projectile proj) {
-		if(proj != null) {
-			ProcessProjectile(proj);
+		/// <summary>
+		/// Processes a projectile.
+		/// By default, this deactivates all Projectiles that come in contact with the ProjectileBoundary
+		/// Override this in subclasses for alternative behavior.
+		/// </summary>
+		/// <param name="proj">the projectile to process</param>
+		protected virtual void ProcessProjectile(Projectile proj) {
 			proj.Deactivate();
 		}
-	}
-
-	protected virtual void ProcessProjectile(Projectile proj) {
-		proj.Deactivate();
 	}
 }

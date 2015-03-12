@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
+using Danmaku2D;
 
-
-public class KnightsCross : AbstractTimedAttackPattern
-{
+public class KnightsCross : TimedAttackPattern {
     [SerializeField]
-    private CountdownDelay crossDelay;
+    private FrameCounter crossDelay;
 
     [SerializeField]
     private ProjectilePrefab fatBullet;
@@ -27,64 +26,63 @@ public class KnightsCross : AbstractTimedAttackPattern
     private float angleToPlayer;
 
     // this is called every time the attack pattern starts
-    protected override void OnExecutionStart()
-    {
+    protected override void OnExecutionStart() {
         base.OnExecutionStart();
         crossDelay.Reset();
-        Vector2 center = new Vector2(.5f, .5f);//Util.RandomVect2(centerArea);
-        float angleToPlayer = TargetField.AngleTowardPlayer(TargetField.WorldPoint(center));
+        //Vector2 center = new Vector2(.5f, .5f);//Util.RandomVect2(centerArea);
+        //float angleToPlayer = TargetField.AngleTowardPlayer(TargetField.ViewToWorld(center));
         fire();
     }
 
-    protected override void MainLoop(float dt)
-    {
-        base.MainLoop(dt);
-        if (crossDelay.Tick(dt))
-        {
+    protected override void MainLoop() {
+        base.MainLoop();
+        if (crossDelay.Tick()) {
             fire();
         }
     }
 
-    void fire()
-    {
-
+    void fire() {
         Debug.Log(angleToPlayer);
 
+		float left = angleToPlayer + 90f;
+		float right = angleToPlayer + 270f;
+		float away = angleToPlayer + 180f;
+
         //left
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x - .05f, center.y), angleToPlayer), angleToPlayer + 90f, bulletVelocity);
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x - .05f, center.y + .05f + bulletSeparationDist), angleToPlayer), angleToPlayer + 90f, bulletVelocity);
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x - .05f, center.y - .05f - bulletSeparationDist), angleToPlayer), angleToPlayer + 90f, bulletVelocity);
+        FireLinearBullet(fatBullet, rotate(center + new Vector2(-0.05f, 0f), angleToPlayer), left, bulletVelocity);
+		FireLinearBullet(fatBullet, rotate(center + new Vector2(-0.05f, 0.05f + bulletSeparationDist), angleToPlayer), left, bulletVelocity);
+		FireLinearBullet(fatBullet, rotate(center + new Vector2(-0.05f, -0.05f - bulletSeparationDist), angleToPlayer), left, bulletVelocity);
 
         //right
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x + .05f, center.y), angleToPlayer), angleToPlayer + 270f, bulletVelocity);
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x + .05f, center.y + .05f + bulletSeparationDist), angleToPlayer), angleToPlayer + 270f, bulletVelocity);
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x + .05f, center.y - .05f - bulletSeparationDist), angleToPlayer), angleToPlayer + 270f, bulletVelocity);
+        FireLinearBullet(fatBullet, rotate(center + new Vector2(0.05f, 0f), angleToPlayer), right, bulletVelocity);
+		FireLinearBullet(fatBullet, rotate(center + new Vector2(0.05f, 0.05f + bulletSeparationDist), angleToPlayer), right, bulletVelocity);
+		FireLinearBullet(fatBullet, rotate(center + new Vector2(0.05f, -0.05f - bulletSeparationDist), angleToPlayer), right, bulletVelocity);
 
         //up
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x, center.y - .05f), angleToPlayer), angleToPlayer + 0f, bulletVelocity);
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x - .05f - bulletSeparationDist, center.y - .05f), angleToPlayer), angleToPlayer + 0f, bulletVelocity);
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x + .05f + bulletSeparationDist, center.y - .05f), angleToPlayer), angleToPlayer + 0f, bulletVelocity);
+		FireLinearBullet(fatBullet, rotate(center + new Vector2(0f, -0.05f), angleToPlayer), angleToPlayer + 0f, bulletVelocity);
+		FireLinearBullet(fatBullet, rotate(center + new Vector2(-0.05f - bulletSeparationDist, -0.05f), angleToPlayer), angleToPlayer + 0f, bulletVelocity);
+		FireLinearBullet(fatBullet, rotate(center + new Vector2(0.05f + bulletSeparationDist, -0.05f), angleToPlayer), angleToPlayer + 0f, bulletVelocity);
 
         //down
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x, center.y + .05f), angleToPlayer), angleToPlayer + 180f, bulletVelocity);
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x - .05f - bulletSeparationDist, center.y + .05f), angleToPlayer), angleToPlayer + 180f, bulletVelocity);
-        FireLinearBullet(fatBullet, rotate(new Vector2(center.x + .05f + bulletSeparationDist, center.y + .05f), angleToPlayer), angleToPlayer + 180f, bulletVelocity);
+		FireLinearBullet(fatBullet, rotate(center + new Vector2(0f, 0.05f), angleToPlayer), away, bulletVelocity);
+		FireLinearBullet(fatBullet, rotate(center + new Vector2( - .05f - bulletSeparationDist,  + .05f), angleToPlayer), away, bulletVelocity);
+		FireLinearBullet(fatBullet, rotate(center + new Vector2( + .05f + bulletSeparationDist,  + .05f), angleToPlayer), away, bulletVelocity);
 
         //upperLeft
-        FireLinearBullet(thinBullet, rotate(new Vector2(center.x - .0125f - bulletSeparationDist * 4, center.y + 0.125f + bulletSeparationDist * 2), angleToPlayer), angleToPlayer + 0f, bulletVelocity);
-        FireLinearBullet(thinBullet, rotate(new Vector2(center.x - .0125f - bulletSeparationDist * 4, center.y + 0.125f + bulletSeparationDist * 2), angleToPlayer), angleToPlayer + 90f, bulletVelocity);
+		FireLinearBullet(thinBullet, rotate(center + new Vector2(-0.0125f - bulletSeparationDist * 4, 0.125f + bulletSeparationDist * 2), angleToPlayer), angleToPlayer + 0f, bulletVelocity);
+		FireLinearBullet(thinBullet, rotate(center + new Vector2(-0.0125f - bulletSeparationDist * 4, 0.125f + bulletSeparationDist * 2), angleToPlayer), left, bulletVelocity);
 
         //uperRight
-        FireLinearBullet(thinBullet, rotate(new Vector2(center.x + .0125f + bulletSeparationDist * 4, center.y + 0.125f + bulletSeparationDist * 2), angleToPlayer), angleToPlayer + 0f, bulletVelocity);
-        FireLinearBullet(thinBullet, rotate(new Vector2(center.x + .0125f + bulletSeparationDist * 4, center.y + 0.125f + bulletSeparationDist * 2), angleToPlayer), angleToPlayer + 270f, bulletVelocity);
+		FireLinearBullet(thinBullet, rotate(center + new Vector2(0.0125f + bulletSeparationDist * 4, 0.125f + bulletSeparationDist * 2), angleToPlayer), angleToPlayer + 0f, bulletVelocity);
+		FireLinearBullet(thinBullet, rotate(center + new Vector2(0.0125f + bulletSeparationDist * 4, 0.125f + bulletSeparationDist * 2), angleToPlayer), right, bulletVelocity);
 
         //lowerLeft
-        FireLinearBullet(thinBullet, rotate(new Vector2(center.x - .0125f - bulletSeparationDist * 4, center.y - 0.125f - bulletSeparationDist * 2), angleToPlayer), angleToPlayer + 180f, bulletVelocity);
-        FireLinearBullet(thinBullet, rotate(new Vector2(center.x - .0125f - bulletSeparationDist * 4, center.y - 0.125f - bulletSeparationDist * 2), angleToPlayer), angleToPlayer + 90f, bulletVelocity);
+		FireLinearBullet(thinBullet, rotate(center + new Vector2(-0.0125f - bulletSeparationDist * 4, -0.125f - bulletSeparationDist * 2), angleToPlayer), away, bulletVelocity);
+		FireLinearBullet(thinBullet, rotate(center + new Vector2(-0.0125f - bulletSeparationDist * 4, -0.125f - bulletSeparationDist * 2), angleToPlayer), left, bulletVelocity);
 
         //lowerRight
-        FireLinearBullet(thinBullet, rotate(new Vector2(center.x + .0125f + bulletSeparationDist * 4, center.y - 0.125f - bulletSeparationDist * 2), angleToPlayer), angleToPlayer + 180f, bulletVelocity);
-        FireLinearBullet(thinBullet, rotate(new Vector2(center.x + .0125f + bulletSeparationDist * 4, center.y - 0.125f - bulletSeparationDist * 2), angleToPlayer), angleToPlayer + 270f, bulletVelocity);
+		FireLinearBullet(thinBullet, rotate(center + new Vector2( + .0125f + bulletSeparationDist * 4, - 0.125f - bulletSeparationDist * 2), angleToPlayer), away, bulletVelocity);
+		FireLinearBullet(thinBullet, rotate(center + new Vector2( + .0125f + bulletSeparationDist * 4, - 0.125f - bulletSeparationDist * 2), angleToPlayer), right, bulletVelocity);
     }
 
     Vector2 rotate(Vector2 orig, float angle)

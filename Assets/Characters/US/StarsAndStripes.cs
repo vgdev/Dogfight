@@ -1,14 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
+using Danmaku2D;
 
-/// <summary>
-/// An example attack pattern for those trying to make new bullet patterns for new characters or enemies.
-/// </summary>
-public class StarsAndStripes : AbstractTimedAttackPattern {
+public class StarsAndStripes : TimedAttackPattern {
 
 	[SerializeField]
-	private CountdownDelay stripesDelay;
+	private FrameCounter stripesDelay;
 
 	[SerializeField]
 	private ProjectilePrefab stripesBullet;
@@ -50,9 +48,9 @@ public class StarsAndStripes : AbstractTimedAttackPattern {
 		}
 	}
 
-	protected override void MainLoop (float dt) {
-		base.MainLoop (dt);
-		if (stripesDelay.Tick (dt)) {
+	protected override void MainLoop () {
+		base.MainLoop ();
+		if (stripesDelay.Tick ()) {
 			Vector2 origin = Vector2.up + stripeOffset * ((horizontal) ? -Vector2.up : Vector2.right);
 			Vector2 dif = (1f - 2 * stripeOffset) / ((float) stripeCount - 1) * ((horizontal) ? -Vector2.up : Vector2.right);
 			for(int i = 0; i < stripeCount; i++) {
@@ -60,19 +58,4 @@ public class StarsAndStripes : AbstractTimedAttackPattern {
 			}
 		}
 	}
-}
-
-public class RedirectAtPLayer : ProjectileController {
-
-	public override bool IsFinite {
-		get {
-			return true;
-		}
-	}
-
-	public override void UpdateBullet (Projectile bullet, float dt) {
-		base.UpdateBullet (bullet, dt);
-	}
-
-
 }

@@ -2,60 +2,40 @@ using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 
-/// <summary>
-/// Enemy basic attack.
-/// </summary>
-public class EnemyBasicAttack : AbstractAttackPattern {
+namespace Danmaku2D.AttackPatterns {
 
-	/// <summary>
-	/// The fire delay.
-	/// </summary>
-	public CountdownDelay fireDelay;
+	[AddComponentMenu("Danmaku 2D/Attack Patterns/Enemy Basic Attack")]
+	public class EnemyBasicAttack : AttackPattern {
+		
+		[SerializeField]
+		private FrameCounter fireDelay;
 
-	/// <summary>
-	/// The velocity.
-	/// </summary>
-	public float velocity;
+		[SerializeField]
+		private float velocity;
 
-	/// <summary>
-	/// The ang v.
-	/// </summary>
-	public float angV;
+		[SerializeField]
+		public float angV;
 
-	/// <summary>
-	/// The current delay.
-	/// </summary>
-	private float currentDelay;
+		[SerializeField]
+		private float currentDelay;
 
-	/// <summary>
-	/// The general range.
-	/// </summary>
-	[SerializeField]
-	private float generalRange;
+		[SerializeField]
+		private float generalRange;
 
-	/// <summary>
-	/// The basic prefab.
-	/// </summary>
-	public ProjectilePrefab basicPrefab;
+		[SerializeField]
+		private ProjectilePrefab basicPrefab;
 
-	protected override bool IsFinished {
-		get {
-			return false;
+		protected override bool IsFinished {
+			get {
+				return false;
+			}
 		}
-	}
-
-	/// <summary>
-	/// Mains the loop.
-	/// </summary>
-	/// <param name="dt">Dt.</param>
-	protected override void MainLoop (float dt) {
-		if (fireDelay.Tick(dt)) {
-			float angle = TargetField.AngleTowardPlayer(transform.position) + Random.Range(-generalRange, generalRange);
-			Projectile proj = TargetField.SpawnProjectile(basicPrefab, Transform.position,
-			                            angle, 
-			                            FieldCoordinateSystem.AbsoluteWorld);
-			proj.Velocity = velocity;
-			proj.AngularVelocity = angV;
+		
+		protected override void MainLoop () {
+			if (fireDelay.Tick()) {
+				float angle = TargetField.AngleTowardPlayer(transform.position) + Random.Range(-generalRange, generalRange);
+				FireCurvedBullet(basicPrefab, Transform.position, angle, velocity, angV, DanmakuField.CoordinateSystem.World);
+			}
 		}
 	}
 }
