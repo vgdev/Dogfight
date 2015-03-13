@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityUtilLib;
 using System.Collections;
 
 namespace Danmaku2D {

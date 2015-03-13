@@ -13,10 +13,10 @@ namespace UnityUtilLib {
 		/// Gets the cached GameObject's transform.
 		/// </summary>
 		/// <value>The transform.</value>
-		public Transform Transform {
+		public new Transform transform {
 			get {
 				if(trans == null)
-					trans = transform;
+					trans = base.transform;
 				return trans;
 			}
 		}
@@ -25,21 +25,21 @@ namespace UnityUtilLib {
 		/// Gets the cached GameObject
 		/// </summary>
 		/// <value>The game object.</value>
-		public GameObject GameObject {
+		public new GameObject gameObject {
 			get {
 				if(gameObj == null)
-					gameObj = gameObject;
+					gameObj = base.gameObject;
 				return gameObj;
 			}
 		}
 
 		/// <summary>
 		/// Called upon Component instantiation <br>
-		/// See <a href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html">Unity Script Reference: MonoBehavior.Awake()</see>
+		/// See <a href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html">MonoBehavior.Awake()</see>
 		/// </summary>
 		public virtual void Awake() {
-			trans = transform;
-			gameObj = gameObject;
+			trans = base.transform;
+			gameObj = base.gameObject;
 		}
 	}
 }

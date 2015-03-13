@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityUtilLib;
-using System;
 using System.Collections;
+using Danmaku2D;
 using System.Collections.Generic;
 
+/// <summary>
+/// A development kit for quick development of 2D Danmaku games
+/// </summary>
 namespace Danmaku2D {
 
 	/// <summary>
@@ -35,7 +38,7 @@ namespace Danmaku2D {
 		/// <param name="position">The position to evaluate the angle to the player from.</param>
 		/// <param name="coordSys">The cordinate system used to evaluate the true location of the source location</param>
 		protected float AngleToPlayer(Vector2 position, DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.World) {
-			return targetField.AngleTowardPlayer(Transform.position, coordSys);
+			return targetField.AngleTowardPlayer(transform.position, coordSys);
 		}
 
 		/// <summary>

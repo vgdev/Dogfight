@@ -42,10 +42,10 @@ namespace Danmaku2D {
 
 		protected IEnumerator LinearMove(Vector3 end, float time) {
 			float t = 0;
-			Vector3 start = Transform.position;
+			Vector3 start = transform.position;
 			float dt = Util.TargetDeltaTime;
 			while (t <= 1f) {
-				Transform.position = Vector3.Lerp(start, end, t);
+				transform.position = Vector3.Lerp(start, end, t);
 				yield return UtilCoroutines.AbstractProjectileController(this);
 				t += time / dt;
 			}
@@ -53,10 +53,10 @@ namespace Danmaku2D {
 
 		protected IEnumerator BerzierMove(Vector3 end, Vector3 controlPoint1, Vector3 controlPoint2, float time) {
 			float t = 0;
-			Vector3 start = Transform.position;
+			Vector3 start = transform.position;
 			float dt = Util.TargetDeltaTime;
 			while (t <= 1f) {
-				Transform.position = Vector3.Lerp(start, end, t);
+				transform.position = Vector3.Lerp(start, end, t);
 				yield return UtilCoroutines.AbstractProjectileController(this);
 				t += time / dt;
 			}

@@ -37,7 +37,7 @@ namespace Danmaku2D {
 			BR = fieldCamera.ViewportToWorldPoint (Vector3.right);
 			x = (BR - bottomLeft);
 			y = (UL - bottomLeft);
-			z = Transform.forward * gamePlaneDistance;
+			z = transform.forward * gamePlaneDistance;
 
 			scale = new Vector3 (x.magnitude, y.magnitude, gamePlaneDistance);
 		}
@@ -147,7 +147,7 @@ namespace Danmaku2D {
 		}
 
 		public float AngleTowardPlayer(Vector2 startLocation, CoordinateSystem coordinateSystem = CoordinateSystem.Relative) {
-			return Util.AngleBetween2D (startLocation, Player.Transform.position);
+			return Util.AngleBetween2D (startLocation, Player.transform.position);
 		}
 
 		/// <summary>
@@ -160,7 +160,7 @@ namespace Danmaku2D {
 			player =  (DanmakuPlayer) Instantiate(playerCharacter, spawnPos, Quaternion.identity);
 			if(player != null) {
 				player.Reset (5);
-				player.Transform.parent = Transform;
+				player.transform.parent = transform;
 				player.Field = this;
 			}
 			return player;
@@ -207,7 +207,7 @@ namespace Danmaku2D {
 
 		public void SpawnEnemy(Enemy prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {
 			Enemy enemy = (Enemy)Instantiate(prefab);
-			Transform transform = enemy.Transform;
+			Transform transform = enemy.transform;
 			transform.position = WorldPoint((Vector3)location, coordSys);
 			enemy.Field = this;
 		}

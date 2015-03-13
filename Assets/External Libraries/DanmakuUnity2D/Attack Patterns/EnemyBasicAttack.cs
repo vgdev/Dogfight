@@ -40,7 +40,7 @@ namespace Danmaku2D.AttackPatterns {
 		protected override void MainLoop () {
 			if (fireDelay.Tick()) {
 				float angle = TargetField.AngleTowardPlayer(transform.position) + Random.Range(-generalRange, generalRange);
-				FireCurvedBullet(basicPrefab, Transform.position, angle, velocity, angV, DanmakuField.CoordinateSystem.World);
+				FireCurvedBullet(basicPrefab, transform.position, angle, velocity, angV, DanmakuField.CoordinateSystem.World);
 			}
 		}
 	}

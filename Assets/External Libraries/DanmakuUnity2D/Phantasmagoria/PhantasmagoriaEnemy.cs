@@ -15,7 +15,7 @@ namespace Danmaku2D.Phantasmagoria {
 		private BulletTransferArea bulletTransferPrefab;
 
 		protected override void OnDeath () {
-			BulletTransferArea transferArea = (BulletTransferArea)Instantiate (bulletTransferPrefab, Transform.position, Quaternion.identity);
+			BulletTransferArea transferArea = (BulletTransferArea)Instantiate (bulletTransferPrefab, transform.position, Quaternion.identity);
 			transferArea.Run (deathReflectDuration, deathReflectRadius, Field, Field.TargetField);
 		}
 	}

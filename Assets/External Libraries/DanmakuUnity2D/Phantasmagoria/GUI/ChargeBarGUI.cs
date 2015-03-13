@@ -5,7 +5,7 @@ using UnityUtilLib;
 
 namespace Danmaku2D.Phantasmagoria.GUI {
 
-	public class ChargeBarGUI : PausableGameObject {
+	public class ChargeBarGUI : MonoBehaviour {
 
 		[SerializeField]
 		private PhantasmagoriaField field;
@@ -35,7 +35,7 @@ namespace Danmaku2D.Phantasmagoria.GUI {
 			}
 		}
 
-		public override void NormalUpdate () {
+		void Update () {
 			Vector3 capacityScale = chargeCapacity.localScale;
 			Vector3 levelScale = chargeCapacity.localScale;
 			capacityScale.x = player.CurrentChargeCapacity / (float)player.MaxChargeLevel;

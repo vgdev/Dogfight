@@ -4,8 +4,7 @@ using System.Collections;
 namespace Danmaku2D {
 
 	/// <summary>
-	/// A basic enemy. <br>
-	/// Usually used as cannon fodder in Danmaku games.
+	/// A basic enemy that is usually used as cannon fodder in Danmaku games.
 	/// </summary>
 	[RequireComponent(typeof(MovementPattern))]
 	public class BasicEnemy : Enemy {

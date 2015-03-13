@@ -24,7 +24,7 @@ namespace Danmaku2D.Phantasmagoria {
 		}
 
 		public void Transfer(Projectile projectile) {
-			Vector2 relativePos = ViewPoint (Transform.position);
+			Vector2 relativePos = ViewPoint (transform.position);
 			projectile.Position = targetField.WorldPoint (relativePos);
 		}
 
