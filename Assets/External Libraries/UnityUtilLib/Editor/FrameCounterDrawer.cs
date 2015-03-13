@@ -2,7 +2,7 @@
 using UnityEditor;
 
 /// <summary>
-/// Custom editor scripts for various components of UnityUtilLib
+/// Custom editor scripts for various components of UnityUtilLib as well as 
 /// </summary>
 namespace UnityUtilLib.Editor {
 
@@ -10,7 +10,7 @@ namespace UnityUtilLib.Editor {
 	/// Custom <a href="http://docs.unity3d.com/ScriptReference/PropertyDrawer.html">PropertyDrawer</a> for FrameCounter
 	/// </summary>
 	[CustomPropertyDrawer(typeof(FrameCounter))]
-	public class FrameCounterEditor : PropertyDrawer {
+	internal class FrameCounterEditor : PropertyDrawer {
 
 		/// <summary>
 		/// Creates the custom GUI an instance of FrameCounter

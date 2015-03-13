@@ -14,12 +14,15 @@ using System.Threading;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace UnityUtilLib.Editor.Doxygen {
+/// <summary>
+/// Custom editor scripts for various components of UnityUtilLib
+/// </summary>
+namespace UnityUtilLib.Editor {
 
 	/// <summary> 
 	/// <para>A small data structure class hold values for making Doxygen config files </para>
 	/// </summary>
-	public class DoxygenConfig {
+	internal class DoxygenConfig {
 		public string Project = PlayerSettings.productName;
 		public string Synopsis = "";
 		public string Version = "";
@@ -29,11 +32,11 @@ namespace UnityUtilLib.Editor.Doxygen {
 	}
 
 	/// <summary>
-	/// <para> A Editor Plugin for automatic doc generation through Doxygen</para>
+	/// An Editor Plugin for automatic doc generation through Doxygen
 	/// <para> Author: Jacob Pennock (http://Jacobpennock.com)</para>
-	/// <para> Version: 1.0</para>	 
+	/// <para> Version: 1.0</para>
 	/// </summary>
-	public class DoxygenWindow : EditorWindow  {
+	internal class DoxygenWindow : EditorWindow  {
 		public static DoxygenWindow Instance;
 		public enum WindowModes{Generate,Configuration,About}
 		public string UnityProjectID = PlayerSettings.productName+":";
@@ -289,7 +292,7 @@ namespace UnityUtilLib.Editor.Doxygen {
 			   BaseFileString = reader.ReadToEnd();
 		}
 
-		public void MakeNewDoxyFile(DoxygenConfig config) {
+		internal void MakeNewDoxyFile(DoxygenConfig config) {
 			SaveConfigtoEditor(config);
 			CreateProgressString = "Creating Output Folder";
 			DoxyfileCreateProgress = 0.1f;
@@ -317,6 +320,7 @@ namespace UnityUtilLib.Editor.Doxygen {
 					newfile = newfile.Replace("CLASS_DIAGRAMS         = YES", "CLASS_DIAGRAMS         = NO");
 				break;
 			}
+			newfile = newfile.Replace("HIDE_SCOPE_NAMES       = NO", "HIDE_SCOPE_NAMES       = YES");
 
 			CreateProgressString = "New Options Set";
 
@@ -377,18 +381,14 @@ namespace UnityUtilLib.Editor.Doxygen {
 			return false;
 		}
 
-		public static void OnDoxygenFinished(int code)
-		{
-			if(code != 0)
-			{
+		public static void OnDoxygenFinished(int code) {
+			if(code != 0) {
 				UnityEngine.Debug.LogError("Doxygen finsished with Error: return code " + code +"\nCheck the Doxgen Log for Errors.\nAlso try regenerating your Doxyfile,\nyou will new to close and reopen the\ndocumentation window before regenerating.");
 			}
 		}
 
-		void SetTheme(int theme)
-		{
-			switch(theme)
-			{
+		void SetTheme(int theme) {
+			switch(theme) {
 				case 1:
 	    			FileUtil.ReplaceFile(AssestsFolder + "/External Libraries/UnityUtilLib/Editor/Doxygen/Resources/DarkTheme/doxygen.css", Config.DocDirectory+"/html/doxygen.css");
 	    			FileUtil.ReplaceFile(AssestsFolder + "/External Libraries/UnityUtilLib/Editor/Doxygen/Resources/DarkTheme/tabs.css", Config.DocDirectory+"/html/tabs.css");
@@ -403,8 +403,7 @@ namespace UnityUtilLib.Editor.Doxygen {
 			}
 		}
 
-		public void RunDoxygen()
-		{
+		public void RunDoxygen() {
 			string[] Args = new string[1];
 			Args[0] = Config.DocDirectory + "/Doxyfile";
 
@@ -418,14 +417,13 @@ namespace UnityUtilLib.Editor.Doxygen {
 	      	Thread DoxygenThread = new Thread(new ThreadStart(Doxygen.RunThreadedDoxy));
 	      	DoxygenThread.Start();
 		}
-
 	}
 
 	/// <summary>
 	///  This class spawns and runs Doxygen in a separate thread, and could serve as an example of how to create 
 	///  plugins for unity that call a command line application and then get the data back into Unity safely.	 
 	/// </summary>
-	public class DoxyRunner
+	internal class DoxyRunner
 	{
 		DoxyThreadSafeOutput SafeOutput;
 		public Action<int> onCompleteCallBack;
@@ -590,7 +588,7 @@ namespace UnityUtilLib.Editor.Doxygen {
 	/// <summary>
 	///  This class encapsulates the data output by Doxygen so it can be shared with Unity in a thread share way.	 
 	/// </summary>
-	public class DoxyThreadSafeOutput
+	internal class DoxyThreadSafeOutput
 	{
 	   private ReaderWriterLockSlim outputLock = new ReaderWriterLockSlim();
 	   private string CurrentOutput = "";  

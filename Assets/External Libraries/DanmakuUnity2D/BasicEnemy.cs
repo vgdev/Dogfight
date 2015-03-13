@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A development kit for quick development of 2D Danmaku games
+/// </summary>
 namespace Danmaku2D {
 
 	/// <summary>

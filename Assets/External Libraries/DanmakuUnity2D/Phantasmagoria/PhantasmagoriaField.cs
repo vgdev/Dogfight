@@ -1,4 +1,4 @@
-	using UnityEngine;
+using UnityEngine;
 using UnityUtilLib;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,8 +33,8 @@ namespace Danmaku2D.Phantasmagoria {
 		}
 
 		public void RoundReset() {
-			Player.Reset (5);
-			CameraTransform.rotation = Quaternion.identity;
+			Player.Reset (DanmakuGameController.MaximumLives);
+			CameraTransform2D.rotation = Quaternion.identity;
 		}
 	}
 }

@@ -1,8 +1,9 @@
 using UnityEngine;
-using System.Collections;
 using UnityUtilLib;
-using System.Collections.Generic;
 
+/// <summary>
+/// A development kit for quick development of 2D Danmaku games
+/// </summary>
 namespace Danmaku2D {
 
 	public abstract class DanmakuField : PausableGameObject {
@@ -23,10 +24,10 @@ namespace Danmaku2D {
 		[SerializeField]
 		private Camera fieldCamera;
 		
-		private Transform cameraTransform;
-		public Transform CameraTransform {
+		private Transform cameraTransform2D;
+		public Transform CameraTransform2D {
 			get {
-				return cameraTransform;
+				return cameraTransform2D;
 			}
 		}
 
@@ -91,7 +92,7 @@ namespace Danmaku2D {
 		public override void Awake () {
 			base.Awake ();
 			fieldCamera.orthographic = true;
-			cameraTransform = fieldCamera.transform;
+			cameraTransform2D = fieldCamera.transform;
 			RecomputeWorldPoints ();
 		}
 

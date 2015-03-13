@@ -1,13 +1,16 @@
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// Custom editor scripts for various components of UnityUtilLib
+/// </summary>
 namespace UnityUtilLib.Editor {
 
 	/// <summary>
 	/// Custom <a href="http://docs.unity3d.com/ScriptReference/PropertyDrawer.html">PropertyDrawer</a> for Counter
 	/// </summary>
 	[CustomPropertyDrawer(typeof(Counter))]
-	public class CounterDrawer : PropertyDrawer {
+	internal class CounterDrawer : PropertyDrawer {
 
 		/// <summary>
 		/// Creates the custom GUI an instance of Counter

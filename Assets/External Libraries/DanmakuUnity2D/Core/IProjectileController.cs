@@ -33,13 +33,6 @@ namespace Danmaku2D {
 		int Damage { get; set; }
 
 		/// <summary>
-		/// Gets the prefab used to spawn the Projectile controlled by this controller.
-		/// See <see cref="Projectile.Prefab"/>.
-		/// </summary>
-		/// <value>The prefab used to spawn the Projectile controlled by this controller.</value>
-		ProjectilePrefab Prefab { get; }
-
-		/// <summary>
 		/// Gets the sprite of the Projectile controlled by this controller.
 		/// See <see cref="Projectile.Sprite"/>.
 		/// </summary>

@@ -10,7 +10,7 @@ namespace Danmaku2D.Editor {
 	/// Custom <a href="http://docs.unity3d.com/ScriptReference/Editor.html">Editor</a> for ProjectilePrefab
 	/// </summary>
 	[CustomEditor(typeof(ProjectilePrefab))]
-	public class ProjectilePrefabEditor : UnityEditor.Editor {
+	internal class ProjectilePrefabEditor : UnityEditor.Editor {
 
 		/// <summary>
 		/// Creates the custom Inspector GUI for an instance of ProjectilePrefab.

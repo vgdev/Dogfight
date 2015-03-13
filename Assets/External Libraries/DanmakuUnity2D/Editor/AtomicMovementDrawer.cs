@@ -12,7 +12,7 @@ namespace Danmaku2D.Editor {
 	/// Custom <a href="http://docs.unity3d.com/ScriptReference/PropertyDrawer.html">PropertyDrawer</a> for FieldMovementPattern.AtomicMovement
 	/// </summary>
 	[CustomPropertyDrawer(typeof(FieldMovementPattern.AtomicMovement))]
-	public class AtomicMovementDrawer : PropertyDrawer {
+	internal class AtomicMovementDrawer : PropertyDrawer {
 
 		float individualHeight = 17f;
 

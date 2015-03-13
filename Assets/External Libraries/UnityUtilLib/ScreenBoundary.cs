@@ -1,12 +1,19 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A utilty library of random useful and portable scripts for Unity
+/// </summary>
 namespace UnityUtilLib {
 
+	/// <summary>
+	/// A behavior that defines a Camera bound 2D collider.
+	/// Useful for defining 2D boundaries where the player cannot outside of.
+	/// </summary>
 	[RequireComponent(typeof(BoxCollider2D))]
 	public class ScreenBoundary : UnityUtilLib.CachedObject {
 
-		public enum Edge { Top = 0, Bottom = 1, Left = 2, Right = 3}
+		private enum Edge { Top = 0, Bottom = 1, Left = 2, Right = 3}
 
 		private static Vector2[] fixedPoints = new Vector2[] {
 					new Vector2 (0.5f, 1f),

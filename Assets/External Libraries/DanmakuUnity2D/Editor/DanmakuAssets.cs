@@ -12,7 +12,7 @@ namespace Danmaku2D.Editor {
 	/// <summary>
 	/// A static class full of editor shortcuts for faster development
 	/// </summary>
-	public static class DanmakuAssets {
+	internal static class DanmakuAssets {
 
 		/// <summary>
 		/// Creates a blank ProjectilePrefab asset

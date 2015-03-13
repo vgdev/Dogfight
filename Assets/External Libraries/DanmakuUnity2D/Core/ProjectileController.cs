@@ -13,6 +13,11 @@ namespace Danmaku2D {
 	public abstract class ProjectileController : IProjectileController {
 		#region IProjectileController implementation
 
+		/// <summary>
+		/// Updates the Projectile controlled by the controller instance.
+		/// </summary>
+		/// <returns>the displacement from the Projectile's original position after udpating</returns>
+		/// <param name="dt">the change in time since the last update</param>
 		public abstract Vector2 UpdateProjectile (float dt);
 
 		/// <summary>
@@ -35,17 +40,6 @@ namespace Danmaku2D {
 			}
 			set {
 				Projectile.Damage = value;
-			}
-		}
-
-		/// <summary>
-		/// Gets the prefab used to spawn the Projectile controlled by this controller.
-		/// See <see cref="Projectile.Prefab"/>.
-		/// </summary>
-		/// <value>The prefab used to spawn the Projectile controlled by this controller.</value>
-		public ProjectilePrefab Prefab {
-			get {
-				return Projectile.Prefab;
 			}
 		}
 

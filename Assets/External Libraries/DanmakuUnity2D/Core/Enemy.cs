@@ -58,14 +58,14 @@ namespace Danmaku2D {
 		}
 
 		/// <summary>
-		/// An abstract method 
+		/// Damages this enemy with agiven amount of damage.
 		/// </summary>
-		/// <param name="damage">Damage.</param>
+		/// <param name="damage">the damage taken.</param>
 		protected abstract void Damage (float damage);
 
 		private void Die () {
 			EnemyManager.UnregisterEnemy (this);
-			Destroy (GameObject);
+			Destroy (gameObject);
 			OnDeath ();
 		}
 

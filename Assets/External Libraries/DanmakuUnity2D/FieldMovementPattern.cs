@@ -1,15 +1,17 @@
 using UnityEngine;
-using System;
-using System.Collections;
 using UnityUtilLib;
+using System.Collections;
 
+/// <summary>
+/// A development kit for quick development of 2D Danmaku games
+/// </summary>
 namespace Danmaku2D {
 	public class FieldMovementPattern : MovementPattern {
 
 		[SerializeField]
 		private DanmakuField field;
 
-		[Serializable]
+		[System.Serializable]
 		public class AtomicMovement {
 			[SerializeField]
 			private float time;
@@ -77,7 +79,7 @@ namespace Danmaku2D {
 						oldPosition = transform.position;
 						transform.position = Util.BerzierCurveVectorLerp(startLocation, targetLocation, control1, control2, t);
 						transform.rotation = Util.RotationBetween2D(oldPosition, transform.position);
-						yield return UtilCoroutines.AbstractProjectileController(this);
+						yield return UtilCoroutines.WaitForUnpause(this);
 						t += dt / totalTime;
 					}
 				}

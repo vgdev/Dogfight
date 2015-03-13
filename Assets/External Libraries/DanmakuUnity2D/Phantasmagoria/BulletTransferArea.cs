@@ -1,18 +1,17 @@
 using UnityEngine;
-using System.Collections;
 using UnityUtilLib;
+using System.Collections;
 
 namespace Danmaku2D.Phantasmagoria {
 
-	[RequireComponent(typeof(SpriteRenderer))]
+	[DisallowMultipleComponent]
 	[RequireComponent(typeof(ProjectileTransferBoundary))]
 	[RequireComponent(typeof(Collider2D))]
 	public class BulletTransferArea : PausableGameObject {
 
-		public void Run(float duration, float maxScale, DanmakuField origin, DanmakuField target) {
+		public void Run(float duration, float maxScale, PhantasmagoriaField origin) {
 			ProjectileTransferBoundary ptb = GetComponent<ProjectileTransferBoundary> ();
 			ptb.Field = origin;
-			ptb.TargetField = target;
 			StartCoroutine (Execute (duration, maxScale));
 		}
 
@@ -28,10 +27,10 @@ namespace Danmaku2D.Phantasmagoria {
 			while (t < 1f) {
 				transform.localScale = Vector3.Lerp(startScale, maxScaleV, t);
 				rend.color = Color.Lerp(spriteColor, targetColor, t);
-				yield return UtilCoroutines.AbstractProjectileController(this);
+				yield return UtilCoroutines.WaitForUnpause(this);
 				t += dt / duration;
 			}
-			Destroy (GameObject);
+			Destroy (gameObject);
 		}
 	}
 }

@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 
+/// <summary>
+/// A development kit for quick development of 2D Danmaku games
+/// </summary>
 namespace Danmaku2D {
 	[RequireComponent(typeof(SpriteRenderer))]
 	[RequireComponent(typeof(ProjectileBoundary))]
@@ -27,10 +30,10 @@ namespace Danmaku2D {
 			while (t < 1f) {
 				transform.localScale = Vector3.Lerp(startScale, maxScaleV, t);
 				rend.color = Color.Lerp(spriteColor, targetColor, t);
-				yield return UtilCoroutines.AbstractProjectileController(this);
+				yield return UtilCoroutines.WaitForUnpause(this);
 				t += dt / duration;
 			}
-			Destroy (GameObject);
+			Destroy (gameObject);
 		}
 	}
 }

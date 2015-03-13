@@ -1,4 +1,3 @@
-using System;
 
 namespace UnityUtilLib.Pooling {
 	public interface IPooledObject {

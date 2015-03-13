@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityUtilLib;
 using System.Collections;
-using Danmaku2D;
-using System.Collections.Generic;
 
 /// <summary>
 /// A development kit for quick development of 2D Danmaku games
@@ -91,7 +89,7 @@ namespace Danmaku2D {
 			OnExecutionStart ();
 			while(!IsFinished && Active) {
 				MainLoop();
-				yield return UtilCoroutines.AbstractProjectileController(this);
+				yield return UtilCoroutines.WaitForUnpause(this);
 			}
 			OnExecutionFinish ();
 			Active = false;

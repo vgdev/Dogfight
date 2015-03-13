@@ -10,7 +10,7 @@ namespace Danmaku2D.Editor {
 	/// Custom <a href="http://docs.unity3d.com/ScriptReference/Editor.html">Editor</a> for ProjectileManager
 	/// </summary>
 	[CustomEditor(typeof(ProjectileManager))]
-	public class ProjectileManagerEditor : UnityEditor.Editor {
+	internal class ProjectileManagerEditor : UnityEditor.Editor {
 
 		/// <summary>
 		/// Creates custom GUI useful for statistics/debug on the Scene View

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
+/// <summary>
+/// A utilty library of random useful and portable scripts for Unity
+/// </summary>
 namespace UnityUtilLib {
 
 	/// <summary>
@@ -230,6 +233,42 @@ namespace UnityUtilLib {
 			p += ttt * p3; //fourth term
 
 			return p;
+		}
+
+		/// <summary>
+		/// Finds the <a href="http://docs.unity3d.com/ScriptReference/Object.html">UnityEngine.Object</a> that derive from a certain type.
+		/// Unlike <a href="http://docs.unity3d.com/ScriptReference/Object.FindObjectsOfType.html">UnityEngine.Object.FindObjectsOfType</a>, this method works on interface types as well.
+		/// This method is for general search. For a more efficent search that only works on classes derived from <a href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.html">MonoBehavior</a> 
+		/// use FindBehaviorsOfType instead.
+		/// </summary>
+		/// <returns>The objects of type T.</returns>
+		/// <typeparam name="T">the type to search for</typeparam>
+		public static object[] FindObjectsOfType<T>() {
+			return FindObjectByType<T, Object> ();
+		}
+
+		/// <summary>
+		/// Finds the <a href="http://docs.unity3d.com/ScriptReference/Object.html">UnityEngine.Object</a> that derive from a certain type.
+		/// Unlike <a href="http://docs.unity3d.com/ScriptReference/Object.FindObjectsOfType.html">UnityEngine.Object.FindObjectsOfType</a>, this method works on interface types as well.
+		/// This method is for specific search on classes derived from <a href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.html">MonoBehavior</a>.
+		/// For a more general search over all objects, use FindObjectsOfType instead.
+		/// </summary>
+		/// <returns>The objects of type T.</returns>
+		/// <typeparam name="T">the type to search for</typeparam>
+		public static object[] FindBehaviorsOfType<T> () {
+			return FindObjectByType<T, MonoBehaviour> ();
+		}
+
+		private static object[] FindObjectByType<T, V> () where V : Object {
+			T returnValue = default(T);
+			Object[] objects = Object.FindObjectsOfType<V> ();
+			List<object> matches = new List<object> ();
+			for(int i = 0; i < objects.Length; i++) {
+				if(objects[i] is T) {
+					matches.Add (objects[i]);
+				}
+			}
+			return matches.ToArray ();
 		}
 
 		/// <summary>

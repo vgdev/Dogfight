@@ -10,7 +10,7 @@ namespace UnityUtilLib.Editor {
 	/// Custom <a href="http://docs.unity3d.com/ScriptReference/PropertyDrawer.html">PropertyDrawer</a> for CountdownDelay
 	/// </summary>
 	[CustomPropertyDrawer(typeof(CountdownDelay))]
-	public class CountdownDelayDrawer : PropertyDrawer {
+	internal class CountdownDelayDrawer : PropertyDrawer {
 
 		/// <summary>
 		/// Creates the custom GUI an instance of CountdownDelay
@@ -19,7 +19,7 @@ namespace UnityUtilLib.Editor {
 		/// <param name="position"> the rectangle on the screen to use for the property GUI.</param>
 		/// <param name="property">The <a href="http://docs.unity3d.com/ScriptReference/SerializedProperty.html">SerializedProperty</a> to make the custom GUI for.</param>
 		/// <param name="label">The label of this property</param>
-		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+		public override  void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 			EditorGUI.BeginProperty(position, label, property);
 			SerializedProperty maxDelayProp = property.FindPropertyRelative ("maxDelay");
 			SerializedProperty currentDelayProp = property.FindPropertyRelative ("currentDelay");

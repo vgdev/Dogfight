@@ -11,6 +11,11 @@ namespace UnityUtilLib.Pooling {
 	/// </summary>
 	public class BasicPool<T> : Pool<T> where T : IPooledObject, new() {
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="UnityUtilLib.Pooling.BasicPool`1"/> class.
+		/// </summary>
+		/// <param name="initial">the initial number of objects to spawn on instantiation.</param>
+		/// <param name="spawn">the number of objects to spawn when the pool is empty.</param>
 		public BasicPool(int initial, int spawn) : base(initial, spawn) {
 		}
 
