@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Danmaku2D {
 
-	[RequireComponent(typeof(ProjectilePrefab))]
 	public abstract class ProjectileControlBehavior : MonoBehaviour, IProjectileGroupController {
 		
 		private SpriteRenderer spriteRenderer;

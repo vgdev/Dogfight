@@ -260,7 +260,6 @@ namespace UnityUtilLib {
 		}
 
 		private static object[] FindObjectByType<T, V> () where V : Object {
-			T returnValue = default(T);
 			Object[] objects = Object.FindObjectsOfType<V> ();
 			List<object> matches = new List<object> ();
 			for(int i = 0; i < objects.Length; i++) {

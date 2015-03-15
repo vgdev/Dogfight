@@ -1,21 +1,35 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+namespace Danmaku2D.ProjectileControllers {
+
+	public class LinearProjectileControl : ControllerWrapperBehavior<LinearProjectile> {
+		[SerializeField]
+		private LinearProjectile controller;
+
+		#region implemented abstract members of ControllerWrapperBehavior
+		protected override LinearProjectile CreateController () {
+			return controller;
+		}
+		#endregion
+	}
+
+}
+
 
 /// <summary>
 /// A development kit for quick development of 2D Danmaku games
 /// </summary>
 namespace Danmaku2D {
-
+	
 	/// <summary>
 	/// A ProjectileController or ProjectileGroupController for creating bullets that move along a straight path.
 	/// </summary>
-	[Serializable]
+	[System.Serializable]
 	public class LinearProjectile : ProjectileController, IProjectileGroupController {
-
+		
 		[SerializeField]
 		private float velocity;
-
+		
 		/// <summary>
 		/// Gets or sets the velocity of the controlled Projectile(s)
 		/// </summary>
@@ -28,7 +42,7 @@ namespace Danmaku2D {
 				velocity = value;
 			}
 		}
-
+		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Danmaku2D.ProjectileControllers.LinearProjectile"/> class.
 		/// </summary>
@@ -44,21 +58,21 @@ namespace Danmaku2D {
 		}
 		
 		#endregion
-
+		
 		#region IProjectileGroupController implementation
-
+		
 		public ProjectileGroup ProjectileGroup {
 			get;
 			set;
 		}
-
+		
 		public virtual Vector2 UpdateProjectile (Projectile projectile, float dt) {
 			if (Velocity != 0)
 				return projectile.Direction * Velocity * dt;
 			else
 				return Vector2.zero;
 		}
-
+		
 		#endregion
 	}
 }

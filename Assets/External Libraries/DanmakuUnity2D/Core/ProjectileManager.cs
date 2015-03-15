@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.ObjectModel;
 using UnityUtilLib;
 using UnityUtilLib.Pooling;
 
@@ -14,9 +15,9 @@ namespace Danmaku2D {
 		[SerializeField]
 		private int spawnOnEmpty = 1000;
 
-		public override void Awake () {
-			base.Awake ();
-			projectilePool = new BasicPool<Projectile> (initialCount, spawnOnEmpty);
+		public void Start () {
+			if(projectilePool == null)
+				projectilePool = new BasicPool<Projectile> (initialCount, spawnOnEmpty);
 		}
 
 		public int TotalCount {
@@ -38,14 +39,14 @@ namespace Danmaku2D {
 
 		public virtual void NormalUpdate () {
 			Projectile[] active = projectilePool.Active;
-			for(int i = 0; i < active.Length; i++) {
+			for(int i = 0; i < projectilePool.ActiveCount; i++) {
 				active[i].Update();
 			}
 		}
 
 		public static void DeactivateAll() {
 			Projectile[] active = projectilePool.Active;
-			for(int i = 0; i < active.Length; i++) {
+			for(int i = 0; i < projectilePool.ActiveCount; i++) {
 				active[i].DeactivateImmediate();
 			}
 		}

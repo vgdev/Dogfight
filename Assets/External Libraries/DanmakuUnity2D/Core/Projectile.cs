@@ -20,6 +20,13 @@ namespace Danmaku2D {
 		private GameObject gameObject;
 		private Transform transform;
 		private SpriteRenderer renderer;
+		private ProjectilePrefab prefab;
+		private ProjectilePrefab runtime;
+		
+		private Sprite sprite;
+		private Color color;
+		private string tag;
+		private int layer;
 
 		/// <summary>
 		/// Gets or sets the damage this projectile does to entities.
@@ -42,8 +49,9 @@ namespace Danmaku2D {
 			}
 			set {
 				controller = value;
-				if(controller != null)
+				if(controller != null) {
 					controller.Projectile = this;
+				}
 			}
 		}
 
@@ -58,7 +66,7 @@ namespace Danmaku2D {
 		/// <value>The sprite.</value>
 		public Sprite Sprite {
 			get {
-				return renderer.sprite;
+				return sprite;
 			}
 		}
 
@@ -69,10 +77,11 @@ namespace Danmaku2D {
 		/// <value>The renderer color.</value>
 		public Color Color {
 			get {
-				return renderer.color;
+				return color;
 			}
 			set {
 				renderer.color = value;
+				color = value;
 			}
 		}
 
@@ -82,10 +91,10 @@ namespace Danmaku2D {
 		/// <value>The position of the projectile.</value>
 		public Vector2 Position {
 			get {
-				return transform.position;
+				return transform.localPosition;
 			}
 			set {
-				transform.position = value;
+				transform.localPosition = value;
 			}
 		}
 
@@ -149,7 +158,7 @@ namespace Danmaku2D {
 		/// <value>The tag of the projectile.</value>
 		public string Tag {
 			get {
-				return gameObject.tag;
+				return tag;
 			}
 		}
 
@@ -159,13 +168,13 @@ namespace Danmaku2D {
 		/// <value>The layer of the projectile.</value>
 		public int Layer {
 			get {
-				return gameObject.layer;
+				return layer;
 			}
 		}
 
 		/// <summary>
 		/// Compares the tag of the Projectile instance to the given string.
-		/// Mirrors <a href="http://docs.unity3d.com/ScriptReference/GameObject.CompareTag.html>GameObject.CompareTag</a>.
+		/// Mirrors <a href="http://docs.unity3d.com/ScriptReference/GameObject.CompareTag.html">GameObject.CompareTag</a>.
 		/// </summary>
 		/// <returns><c>true</c>, if tag is an exact match to the string, <c>false</c> otherwise.</returns>
 		/// <param name="tag">Tag.</param>
@@ -186,11 +195,11 @@ namespace Danmaku2D {
 			gameObject.hideFlags = HideFlags.HideInHierarchy;
 			renderer = gameObject.AddComponent<SpriteRenderer> ();
 			transform = gameObject.transform;
-			gameObject.SetActive (false);
+			//gameObject.SetActive (false);
 			hits = new RaycastHit2D[10];
 		}
 
-		internal void Update() {
+		public void Update() {
 			frames++;
 			float dt = Util.TargetDeltaTime;
 
@@ -206,15 +215,17 @@ namespace Danmaku2D {
 				}
 			}
 
-			int count = Physics2D.CircleCastNonAlloc(transform.position + (Vector3)circleCenter, 
+			Vector2 position = transform.localPosition;
+
+			int count = Physics2D.CircleCastNonAlloc(position + circleCenter, 
 			                                         circleRaidus,
 			                                         movementVector,
 			                                         hits,
 			                                         movementVector.magnitude,
-			                                         collisionMask[gameObject.layer]);
-			
+			                                         collisionMask[layer]);
+
 			if(movementVector != unchanged)
-				transform.position += (Vector3)movementVector;
+				transform.localPosition = position + movementVector;
 
 			//Translate
 			if(count > 0) {
@@ -246,21 +257,23 @@ namespace Danmaku2D {
 		/// </summary>
 		/// <param name="prefab">the ProjectilePrefab to match.</param>
 		public void MatchPrefab(ProjectilePrefab prefab) {
-			ProjectilePrefab runtime = prefab.GetRuntime ();
-			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
-			
-			transform.localScale = runtime.transform.localScale;
-			gameObject.tag = runtime.gameObject.tag;
-			gameObject.layer = runtime.gameObject.layer;
 
-			renderer.sprite = runtime.Sprite;
+			if (prefab != this.prefab) {
+				this.prefab = prefab;
+				runtime = prefab.GetRuntime();
+				transform.localScale = runtime.Scale;
+				renderer.sprite = runtime.Sprite;
+				renderer.sharedMaterial = runtime.Material;
+				renderer.sortingLayerID = renderer.sortingLayerID;
+				circleCenter = Util.HadamardProduct2(transform.lossyScale, runtime.ColliderOffset);
+				circleRaidus = runtime.ColliderRadius * Util.MaxComponent2(transform.lossyScale);
+				tag = gameObject.tag = runtime.Tag;
+				layer = runtime.Layer;
+			}
+
 			renderer.color = runtime.Color;
-			renderer.sharedMaterial = runtime.Material;
-			renderer.sortingLayerID = renderer.sortingLayerID;
 
-			circleCenter = Util.HadamardProduct2(transform.lossyScale, runtime.ColliderOffset);
-			circleRaidus = runtime.ColliderRadius * Util.MaxComponent2(transform.lossyScale);
-
+			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
 			for(int i = 0; i < pcbs.Length; i++) {
 				pcbs[i].ProjectileGroup.Add(this);
 			}
@@ -273,7 +286,8 @@ namespace Danmaku2D {
 		/// </summary>
 		public override void Activate () {
 			to_deactivate = false;
-			gameObject.SetActive (true);
+			//gameObject.SetActive (true);
+			renderer.enabled = true;
 		}
 
 		/// <summary>
@@ -316,7 +330,8 @@ namespace Danmaku2D {
 			}
 			Damage = 0;
 			frames = 0;
-			gameObject.SetActive (false);
+			//gameObject.SetActive (false);
+			renderer.enabled = false;
 			base.Deactivate ();
 		}
 	}

@@ -8,13 +8,19 @@ namespace UnityUtilLib.Pooling {
 		private HashSet<T> activeObjs;
 		private HashSet<T> all;
 
+		private T[] activeArray;
+		private T[] inactiveArray;
+		private T[] allArray;
+
 		private int spawnCount;
 
 		public T[] Active {
 			get {
-				T[] array = new T[activeObjs.Count];
-				activeObjs.CopyTo(array);
-				return array;
+				if(activeArray == null || activeObjs.Count > activeArray.Length) {
+					activeArray = new T[Mathf.NextPowerOfTwo(activeObjs.Count)];
+				}
+				activeObjs.CopyTo(activeArray);
+				return activeArray;
 			}
 		}
 
@@ -26,21 +32,17 @@ namespace UnityUtilLib.Pooling {
 
 		public T[] All {
 			get {
-				T[] array = new T[all.Count];
-				all.CopyTo(array);
-				return array;
+				if(allArray == null || all.Count > allArray.Length) {
+					allArray = new T[Mathf.NextPowerOfTwo(all.Count)];
+				}
+				all.CopyTo(allArray);
+				return allArray;
 			}
 		}
 
 		public int ActiveCount {
 			get {
-				#pragma warning disable 0168
-				try {
-					return totalCount - inactiveObjs.Count;
-				} catch (System.NullReferenceException nre) {
-					return totalCount;
-				}
-				#pragma warning restore 0168
+				return totalCount - ((inactiveObjs == null) ? 0 : inactiveObjs.Count);
 			}
 		}
 

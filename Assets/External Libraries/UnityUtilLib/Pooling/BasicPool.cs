@@ -1,7 +1,7 @@
 using System;
 
 /// <summary>
-/// A set of useful classes to implement any from of <a href="http://en.wikipedia.org/wiki/Object_pool_pattern>object pooling</a> that is commonly used in video games
+/// A set of useful classes to implement any from of <a href="http://en.wikipedia.org/wiki/Object_pool_pattern">object pooling</a> that is commonly used in video games
 /// </summary>
 namespace UnityUtilLib.Pooling {
 
