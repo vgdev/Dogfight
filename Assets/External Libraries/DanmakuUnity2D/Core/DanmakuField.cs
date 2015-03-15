@@ -147,7 +147,7 @@ namespace Danmaku2D {
 			}
 		}
 
-		public float AngleTowardPlayer(Vector2 startLocation, CoordinateSystem coordinateSystem = CoordinateSystem.Relative) {
+		public float AngleTowardPlayer(Vector2 startLocation, CoordinateSystem coordinateSystem = CoordinateSystem.World) {
 			return Util.AngleBetween2D (startLocation, Player.transform.position);
 		}
 
@@ -178,32 +178,42 @@ namespace Danmaku2D {
 		/// <param name="rotation">Rotation.</param>
 		/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
 		public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
-			return ProjectileManager.Spawn (prefab, WorldPoint (location, coordSys), rotation);
+			Projectile bullet = ProjectileManager.Get (prefab);
+			bullet.Position = WorldPoint(location, coordSys);
+			bullet.Rotation = rotation;
+			bullet.Field = this;
+			bullet.Activate ();
+			return bullet;
 		}
 
-		public LinearProjectile FireLinearBullet(ProjectilePrefab bulletType, 
+		public LinearProjectile FireLinearProjectile(ProjectilePrefab bulletType, 
 		                                         Vector2 location, 
 		                                         float rotation, 
 		                                         float velocity,
 		                                         CoordinateSystem coordSys = CoordinateSystem.View) {
-			return ProjectileManager.FireLinearProjectile (bulletType, WorldPoint ((Vector3)location, coordSys), rotation, velocity);
+			LinearProjectile linearProjectile = new LinearProjectile (velocity);
+			FireControlledProjectile (bulletType, location, rotation, linearProjectile);
+			return linearProjectile;
 		}
 		
-		public CurvedProjectile FireCurvedBullet(ProjectilePrefab bulletType,
+		public CurvedProjectile FireCurvedProjectile(ProjectilePrefab bulletType,
 		                                         Vector2 location,
 		                                         float rotation,
 		                                         float velocity,
 		                                         float angularVelocity,
 		                                         CoordinateSystem coordSys = CoordinateSystem.View) {
-			return ProjectileManager.FireCurvedProjectile (bulletType, WorldPoint((Vector3)location, coordSys), rotation, velocity, angularVelocity);
+			CurvedProjectile curvedProjectile = new CurvedProjectile (velocity, angularVelocity);
+			FireControlledProjectile (bulletType, location, rotation, curvedProjectile);
+			return curvedProjectile;
 		}
 		
-		public void FireControlledBullet(ProjectilePrefab bulletType, 
+		public void FireControlledProjectile(ProjectilePrefab bulletType, 
 		                                 Vector2 location, 
 		                                 float rotation, 
 		                                 IProjectileController controller,
 		                                 CoordinateSystem coordSys = CoordinateSystem.View) {
-			ProjectileManager.FireControlledProjectile (bulletType, WorldPoint((Vector3)location, coordSys), rotation, controller);
+			Projectile bullet = SpawnProjectile (bulletType, location, rotation);
+			bullet.Controller = controller;
 		}
 
 		public void SpawnEnemy(Enemy prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {

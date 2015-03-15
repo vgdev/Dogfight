@@ -8,35 +8,23 @@ namespace UnityUtilLib.Pooling {
 		private HashSet<T> activeObjs;
 		private HashSet<T> all;
 
-		private T[] activeArray;
-		private T[] inactiveArray;
-		private T[] allArray;
-
 		private int spawnCount;
 
-		public T[] Active {
+		public IEnumerable<T> Active {
 			get {
-				if(activeArray == null || activeObjs.Count > activeArray.Length) {
-					activeArray = new T[Mathf.NextPowerOfTwo(activeObjs.Count)];
-				}
-				activeObjs.CopyTo(activeArray);
-				return activeArray;
+				return activeObjs as IEnumerable<T>;
 			}
 		}
 
-		public T[] Inactive {
+		public IEnumerable<T> Inactive {
 			get {
-				return inactiveObjs.ToArray();
+				return inactiveObjs as IEnumerable<T>;
 			}
 		}
 
-		public T[] All {
+		public IEnumerable<T> All {
 			get {
-				if(allArray == null || all.Count > allArray.Length) {
-					allArray = new T[Mathf.NextPowerOfTwo(all.Count)];
-				}
-				all.CopyTo(allArray);
-				return allArray;
+				return all as IEnumerable<T>;
 			}
 		}
 

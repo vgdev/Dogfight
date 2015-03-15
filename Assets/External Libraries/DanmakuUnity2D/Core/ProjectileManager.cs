@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using UnityUtilLib;
 using UnityUtilLib.Pooling;
 
@@ -8,6 +8,7 @@ namespace Danmaku2D {
 	public class ProjectileManager : SingletonBehavior<ProjectileManager>, IPausable {
 
 		private static BasicPool<Projectile> projectilePool;
+		private static HashSet<Projectile> toReturn;
 
 		[SerializeField]
 		private int initialCount = 1000;
@@ -16,8 +17,10 @@ namespace Danmaku2D {
 		private int spawnOnEmpty = 1000;
 
 		public void Start () {
-			if(projectilePool == null)
+			if(projectilePool == null) {
 				projectilePool = new BasicPool<Projectile> (initialCount, spawnOnEmpty);
+				toReturn = new HashSet<Projectile>();
+			}
 		}
 
 		public int TotalCount {
@@ -38,58 +41,29 @@ namespace Danmaku2D {
 		}
 
 		public virtual void NormalUpdate () {
-			Projectile[] active = projectilePool.Active;
-			for(int i = 0; i < projectilePool.ActiveCount; i++) {
-				active[i].Update();
+			foreach(Projectile proj in projectilePool.Active) {
+				proj.Update();
 			}
+			foreach (Projectile proj in toReturn) {
+				projectilePool.Return(proj);
+			}
+			toReturn.Clear ();
 		}
 
 		public static void DeactivateAll() {
-			Projectile[] active = projectilePool.Active;
-			for(int i = 0; i < projectilePool.ActiveCount; i++) {
-				active[i].DeactivateImmediate();
+			foreach(Projectile proj in projectilePool.Active) {
+				proj.DeactivateImmediate();
 			}
 		}
 
-		public static Projectile Get (ProjectilePrefab projectileType) {
+		internal static void Return(Projectile proj) {
+			toReturn.Add (proj);
+		}
+
+		internal static Projectile Get (ProjectilePrefab projectileType) {
 			Projectile proj = projectilePool.Get ();
 			proj.MatchPrefab (projectileType);
 			return proj;
-		}
-
-		public static Projectile Spawn(ProjectilePrefab bulletType, Vector2 location, float rotation) {
-			Projectile bullet = Get (bulletType);
-			bullet.Position = location;
-			bullet.Rotation = rotation;
-			bullet.Activate ();
-			return bullet;
-		}
-
-		public static LinearProjectile FireLinearProjectile(ProjectilePrefab bulletType, 
-		                                            Vector2 location, 
-		                                            float rotation, 
-		                                            float velocity) {
-			LinearProjectile linearProjectile = new LinearProjectile (velocity);
-			FireControlledProjectile (bulletType, location, rotation, linearProjectile);
-			return linearProjectile;
-		}
-		
-		public static CurvedProjectile FireCurvedProjectile(ProjectilePrefab bulletType,
-		                                            Vector2 location,
-		                                            float rotation,
-		                                            float velocity,
-		                                            float angularVelocity) {
-			CurvedProjectile curvedProjectile = new CurvedProjectile (velocity, angularVelocity);
-			FireControlledProjectile (bulletType, location, rotation, curvedProjectile);
-			return curvedProjectile;
-		}
-		
-		public static void FireControlledProjectile(ProjectilePrefab bulletType, 
-				                                    Vector2 location, 
-				                                    float rotation, 
-				                                    IProjectileController controller) {
-			Projectile bullet = Spawn (bulletType, location, rotation);
-			bullet.Controller = controller;
 		}
 
 		#region IPausable implementation

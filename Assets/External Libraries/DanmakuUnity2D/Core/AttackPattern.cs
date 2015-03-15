@@ -118,7 +118,7 @@ namespace Danmaku2D {
 		                                      float rotation, 
 		                                      float velocity,
 		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			return TargetField.FireLinearBullet (bulletType, location, rotation, velocity, coordSys);
+			return TargetField.FireLinearProjectile (bulletType, location, rotation, velocity, coordSys);
 		}
 
 		/// <summary>
@@ -135,7 +135,7 @@ namespace Danmaku2D {
 		                                      float velocity,
 		                                      float angularVelocity,
 		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			return TargetField.FireCurvedBullet (bulletType, location, rotation, velocity, angularVelocity, coordSys);
+			return TargetField.FireCurvedProjectile (bulletType, location, rotation, velocity, angularVelocity, coordSys);
 		}
 
 		/// <summary>
@@ -151,7 +151,7 @@ namespace Danmaku2D {
 		                                    float rotation, 
 		                                    IProjectileController controller,
 		                                    DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			TargetField.FireControlledBullet (bulletType, location, rotation, controller, coordSys);
+			TargetField.FireControlledProjectile (bulletType, location, rotation, controller, coordSys);
 		}
 	}
 }

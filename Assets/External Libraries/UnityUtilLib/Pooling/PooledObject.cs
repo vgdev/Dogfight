@@ -15,6 +15,9 @@ namespace UnityUtilLib.Pooling {
 			get { 
 				return is_active; 
 			}
+			protected set {
+				is_active = value;
+			}
 		}
 
 		public virtual void Activate() {
