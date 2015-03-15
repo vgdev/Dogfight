@@ -250,6 +250,7 @@ MonoBehaviour:
   fireRate: 20
   attackPatterns:
   - {fileID: 11462246}
+  - {fileID: 11452054}
   shotOffset: {x: .5, y: 0}
   shotVelocity: 200
   chargeRate: 1

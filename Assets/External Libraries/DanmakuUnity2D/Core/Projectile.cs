@@ -95,11 +95,12 @@ namespace Danmaku2D {
 		/// 0 - Straight up
 		/// 90 - Straight Left
 		/// 180 - Straight Down
-		/// 279 -  Straight Right
+		/// 270 -  Straight Right
 		/// </summary>
 		/// <value>The rotation of the bullet in degrees.</value>
 		public float Rotation {
 			get {
+				Debug.Log(transform.rotation.eulerAngles);
 				return transform.rotation.eulerAngles.z;
 			}
 			set {
@@ -161,6 +162,15 @@ namespace Danmaku2D {
 			get {
 				return gameObject.layer;
 			}
+		}
+
+		/// <summary>
+		/// Gets the DanmakuField this instance was fired from.
+		/// </summary>
+		/// <value>The field the projectile was fired from.</value>
+		public DanmakuField Field {
+			get;
+			internal set;
 		}
 
 		/// <summary>

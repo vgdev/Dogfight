@@ -50,45 +50,10 @@ namespace Danmaku2D {
 			}
 		}
 
-		public static Projectile Get (ProjectilePrefab projectileType) {
+		internal static Projectile Get (ProjectilePrefab projectileType) {
 			Projectile proj = projectilePool.Get ();
 			proj.MatchPrefab (projectileType);
 			return proj;
-		}
-
-		public static Projectile Spawn(ProjectilePrefab bulletType, Vector2 location, float rotation) {
-			Projectile bullet = Get (bulletType);
-			bullet.Position = location;
-			bullet.Rotation = rotation;
-			bullet.Activate ();
-			return bullet;
-		}
-
-		public static LinearProjectile FireLinearProjectile(ProjectilePrefab bulletType, 
-		                                            Vector2 location, 
-		                                            float rotation, 
-		                                            float velocity) {
-			LinearProjectile linearProjectile = new LinearProjectile (velocity);
-			FireControlledProjectile (bulletType, location, rotation, linearProjectile);
-			return linearProjectile;
-		}
-		
-		public static CurvedProjectile FireCurvedProjectile(ProjectilePrefab bulletType,
-		                                            Vector2 location,
-		                                            float rotation,
-		                                            float velocity,
-		                                            float angularVelocity) {
-			CurvedProjectile curvedProjectile = new CurvedProjectile (velocity, angularVelocity);
-			FireControlledProjectile (bulletType, location, rotation, curvedProjectile);
-			return curvedProjectile;
-		}
-		
-		public static void FireControlledProjectile(ProjectilePrefab bulletType, 
-				                                    Vector2 location, 
-				                                    float rotation, 
-				                                    IProjectileController controller) {
-			Projectile bullet = Spawn (bulletType, location, rotation);
-			bullet.Controller = controller;
 		}
 
 		#region IPausable implementation
