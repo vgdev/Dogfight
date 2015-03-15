@@ -35,9 +35,10 @@ namespace UnityUtilLib {
 				return;
 
 			//pause all pausable objects
-			IPausable[] pausables = (IPausable[])Util.FindBehaviorsOfType<IPausable> ();
+			MonoBehaviour[] pausables = FindObjectsOfType<MonoBehaviour> ();
 			for (int i = 0; i < pausables.Length; i++) {
-				pausables[i].Paused = true;
+				if(pausables[i] is IPausable)
+					(pausables[i] as IPausable).Paused = true;
 			}
 
 			//state that the game is paused
@@ -60,9 +61,10 @@ namespace UnityUtilLib {
 				return;
 
 			//unpause all paused objects
-			IPausable[] pausables = (IPausable[])Util.FindBehaviorsOfType<IPausable> ();
+			MonoBehaviour[] pausables = FindObjectsOfType<MonoBehaviour> ();
 			for (int i = 0; i < pausables.Length; i++) {
-				pausables[i].Paused = false;
+				if(pausables[i] is IPausable)
+					(pausables[i] as IPausable).Paused = false;
 			}
 
 			//state that the game is no longer paused

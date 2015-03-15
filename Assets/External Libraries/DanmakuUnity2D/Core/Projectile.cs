@@ -284,8 +284,10 @@ namespace Danmaku2D {
 			renderer.color = runtime.Color;
 
 			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
-			for(int i = 0; i < pcbs.Length; i++) {
-				pcbs[i].ProjectileGroup.Add(this);
+			if (pcbs.Length > 0) {
+				for (int i = 0; i < pcbs.Length; i++) {
+					pcbs [i].ProjectileGroup.Add (this);
+				}
 			}
 		}
 
