@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityUtilLib.Interface;
 
-namespace UnityUtilLib
-{
+namespace UnityUtilLib {
     /// <summary>
     /// Class with util extension methods.
     /// The class is organized for easy reading.
     /// #region alphabetic order
     /// inside the region, method alphabetic order
     /// </summary>
-    public static class UtilExtensionMethods
-    {
+    public static class UtilExtensionMethods {
         #region Array
 
         /// <summary>

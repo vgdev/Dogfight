@@ -1,7 +1,10 @@
-using System;
 using UnityEngine;
 
+/// <summary>
+/// A utilty library of random useful and portable scripts for Unity
+/// </summary>
 namespace UnityUtilLib {
+
 	/// <summary>
 	/// A abstract class for "cached" object. It caches commonly both the behaviour's GameObject and Transform to increase efficency
 	/// </summary>
@@ -11,35 +14,37 @@ namespace UnityUtilLib {
 
 		/// <summary>
 		/// Gets the cached GameObject's transform.
+		/// Replaces <a href="http://docs.unity3d.com/ScriptReference/Component-transform.html">Component.transform</a> for easier use.
 		/// </summary>
 		/// <value>The transform.</value>
-		public Transform Transform {
+		public new Transform transform {
 			get {
 				if(trans == null)
-					trans = transform;
+					trans = base.transform;
 				return trans;
 			}
 		}
 
 		/// <summary>
-		/// Gets the cached GameObject
+		/// Gets the cached GameObject.
+		/// Replaces <a href="http://docs.unity3d.com/ScriptReference/Component-transform.html">Component.gameObject</a> for easier use.
 		/// </summary>
 		/// <value>The game object.</value>
-		public GameObject GameObject {
+		public new GameObject gameObject {
 			get {
 				if(gameObj == null)
-					gameObj = gameObject;
+					gameObj = base.gameObject;
 				return gameObj;
 			}
 		}
 
 		/// <summary>
 		/// Called upon Component instantiation <br>
-		/// See <a href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html">Unity Script Reference: MonoBehavior.Awake()</see>
+		/// See <a href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html">MonoBehavior.Awake()</a>
 		/// </summary>
 		public virtual void Awake() {
-			trans = transform;
-			gameObj = gameObject;
+			trans = base.transform;
+			gameObj = base.gameObject;
 		}
 	}
 }

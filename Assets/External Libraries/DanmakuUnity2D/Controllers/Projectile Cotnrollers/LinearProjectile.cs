@@ -2,14 +2,24 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A development kit for quick development of 2D Danmaku games
+/// </summary>
 namespace Danmaku2D {
 
+	/// <summary>
+	/// A ProjectileController or ProjectileGroupController for creating bullets that move along a straight path.
+	/// </summary>
 	[Serializable]
 	public class LinearProjectile : ProjectileController, IProjectileGroupController {
 
 		[SerializeField]
 		private float velocity;
 
+		/// <summary>
+		/// Gets or sets the velocity of the controlled Projectile(s)
+		/// </summary>
+		/// <value>The velocity of the controlled Projectile(s) in absolute world coordinates per second</value>
 		public float Velocity {
 			get {
 				return velocity;
@@ -19,6 +29,10 @@ namespace Danmaku2D {
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Danmaku2D.ProjectileControllers.LinearProjectile"/> class.
+		/// </summary>
+		/// <value>The velocity of the controlled Projectile(s) in absolute world coordinates per second</value>
 		public LinearProjectile (float velocity) : base() {
 			Velocity = velocity;
 		}

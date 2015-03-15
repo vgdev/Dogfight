@@ -1,16 +1,18 @@
 using UnityEngine;
 using UnityUtilLib;
 using UnityUtilLib.Pooling;
-using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// A development kit for quick development of 2D Danmaku games
+/// </summary>
 namespace Danmaku2D {
 
 	/// <summary>
 	/// A single projectile fired.
 	/// The base object that represents a single bullet in a Danmaku game
 	/// </summary>
-	public sealed class Projectile : PooledObject, IPrefabed<ProjectilePrefab> {
+	public sealed class Projectile : PooledObject, IColorable, IPrefabed<ProjectilePrefab> {
 
 		private static Vector2 unchanged = Vector2.zero;
 		private static int[] collisionMask;
@@ -44,21 +46,6 @@ namespace Danmaku2D {
 					controller.Projectile = this;
 			}
 		}
-
-		#region IPrefabed implementation
-
-		private ProjectilePrefab prefab;
-		/// <summary>
-		/// Gets the prefab that this projectile is currently based on.
-		/// </summary>
-		/// <value>The prefab it is currently based on.</value>
-		public ProjectilePrefab Prefab {
-			get {
-				return prefab;
-			}
-		}
-
-		#endregion
 
 		private List<ProjectileGroup> groups;
 		private Vector2 circleCenter = Vector2.zero; 
@@ -259,7 +246,6 @@ namespace Danmaku2D {
 		/// </summary>
 		/// <param name="prefab">the ProjectilePrefab to match.</param>
 		public void MatchPrefab(ProjectilePrefab prefab) {
-			this.prefab = prefab;
 			ProjectilePrefab runtime = prefab.GetRuntime ();
 			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
 			

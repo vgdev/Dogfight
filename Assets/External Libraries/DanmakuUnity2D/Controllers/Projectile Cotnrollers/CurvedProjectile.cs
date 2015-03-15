@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityUtilLib;
 
+/// <summary>
+/// A development kit for quick development of 2D Danmaku games
+/// </summary>
 namespace Danmaku2D {
 
 	/// <summary>
@@ -42,7 +45,11 @@ namespace Danmaku2D {
 			}
 		}
 
-
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Danmaku2D.ProjectileControllers.CurvedProjectile"/> class.
+		/// </summary>
+		/// <param name="velocity">the velocity in absolute world coordinates traveled by the projectiles in one second.</param>
+		/// <param name="angularVelocity">the change in rotation in degrees the bullets rotate by in one second</param>
 		public CurvedProjectile(float velocity, float angularVelocity) : base(velocity) {
 			AngularVelocity = angularVelocity;
 		}

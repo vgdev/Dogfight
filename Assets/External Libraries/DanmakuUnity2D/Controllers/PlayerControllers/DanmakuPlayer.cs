@@ -83,7 +83,7 @@ namespace Danmaku2D {
 			movementVector.x *= (dir.x == Util.Sign(forbiddenMovement.x)) ? 0f : dir.x;
 			movementVector.y *= (dir.y == Util.Sign(forbiddenMovement.y)) ? 0f : dir.y;
 			movementVector.z = 0f;
-			Transform.position += movementVector * dt;
+			transform.position += movementVector * dt;
 		}
 
 		public void AllowMovement(Vector2 direction) {

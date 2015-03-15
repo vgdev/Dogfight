@@ -1,6 +1,9 @@
 using UnityEngine;
-using System.Collections;
+using UnityUtilLib;
 
+/// <summary>
+/// A development kit for quick development of 2D Danmaku games
+/// </summary>
 namespace Danmaku2D {
 	[RequireComponent(typeof(ScreenBoundary))]
 	public class PlayerMovementLimit : MonoBehaviour {

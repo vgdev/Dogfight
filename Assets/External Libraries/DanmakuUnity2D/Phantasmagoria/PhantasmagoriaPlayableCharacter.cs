@@ -87,7 +87,7 @@ namespace Danmaku2D.Phantasmagoria {
 		public override void Hit(Projectile proj) {
 			if(!invincible) {
 				base.Hit (proj);
-				BulletCancelArea cancelArea = (BulletCancelArea)Instantiate (cancelPrefab, Transform.position, Quaternion.identity);
+				BulletCancelArea cancelArea = (BulletCancelArea)Instantiate (cancelPrefab, transform.position, Quaternion.identity);
 				cancelArea.Run(deathCancelDuration, deathCancelRadius);
 				StartCoroutine(DeathInvincibiilty());
 			}
@@ -152,7 +152,7 @@ namespace Danmaku2D.Phantasmagoria {
 
 		public override void Fire () {
 			Vector2 location;
-			location = Transform.position;
+			location = transform.position;
 			Projectile proj1 = ProjectileManager.FireLinearProjectile (shotType, location + shotOffset, 0f, shotVelocity).Projectile;
 			Projectile proj2 = ProjectileManager.FireLinearProjectile (shotType, location - shotOffset, 0f, shotVelocity).Projectile;
 			proj1.Damage = proj2.Damage = shotDamage;

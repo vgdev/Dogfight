@@ -92,7 +92,7 @@ namespace Danmaku2D {
 					controller.SpawnEnemy(chainData[i].EnemyPrefab, new Vector2(rx, ry));
 					float time = 0f;
 					while(time < chainData[i].timeUntilNext) {
-						yield return UtilCoroutines.AbstractProjectileController(this);
+						yield return UtilCoroutines.WaitForUnpause(this);
 						time += Util.TargetDeltaTime;
 					}
 				}

@@ -4,20 +4,35 @@ using UnityUtilLib;
 using Danmaku2D.Phantasmagoria;
 using System.IO;
 
+/// <summary>
+/// Custom editor scripts for various components of the Danmaku2D development kit
+/// </summary>
 namespace Danmaku2D.Editor {
 
-	public static class DanmakuAssets {
+	/// <summary>
+	/// A static class full of editor shortcuts for faster development
+	/// </summary>
+	internal static class DanmakuAssets {
 
+		/// <summary>
+		/// Creates a blank ProjectilePrefab asset
+		/// Found under Assets/Create/Danmaku 2D/Projectile Prefab
+		/// </summary>
 		[MenuItem("Assets/Create/Danmaku 2D/Projectile Prefab", false, 51)]
 		public static void AddProjectilePrefab() {
 			GameObject temp = new GameObject ("Projectile Prefab");
 			temp.AddComponent<SpriteRenderer> ();
 			temp.AddComponent<CircleCollider2D> ();
 			temp.AddComponent<ProjectilePrefab> ();
+			ProjectWindowUtil.CreatePrefab ();
 			PrefabUtility.CreatePrefab ("Assets/Projectile Prefab.prefab", temp);
 			Object.DestroyImmediate (temp);
 		}
 
+		/// <summary>
+		/// Creates the base of a full Phantasmagoria game with a single click
+		/// Found under GameObject/Create/Danmaku 2D/Phantasmagoria/Game Gamecontroller
+		/// </summary>
 		[MenuItem("GameObject/Create/Danmaku 2D/Phantasmagoria/Game Controller")]
 		public static void CreatePhantasmagoriaGame() {
 			GameObject temp = new GameObject ("Game Controller");
@@ -39,6 +54,11 @@ namespace Danmaku2D.Editor {
 			temp.AddComponent<MusicManager> ();
 		}
 
+		/// <summary>
+		/// Creates a PhantasmagoriaField with a single click
+		/// Found under GameObject/Create/Danmaku 2D/Phantasmagoria/Field
+		/// </summary>
+		/// <returns>The phantasmagoria field created.</returns>
 		[MenuItem("GameObject/Create/Danmaku 2D/Phantasmagoria/Field")]
 		public static PhantasmagoriaField CreatePhantasmagoriaField() {
 			GameObject temp = new GameObject ("Field");
