@@ -11,7 +11,7 @@ namespace UnityUtilLib {
 	/// Best used with the Scene's AudioListener attached on the same object.
 	/// </summary>
 	[RequireComponent(typeof(AudioSource))]
-	public class MusicManager : SingletonBehavior<MusicManager> {
+	public class MusicManager : Singleton<MusicManager> {
 
 		private AudioSource audioSource;
 

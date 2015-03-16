@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Danmaku2D {
 	public class ProjectileGroup : ICollection<Projectile> {
 
-		private HashSet<Projectile> set;
+		internal HashSet<Projectile> group;
 
 		private IProjectileGroupController controller;
 		public IProjectileGroupController Controller {
@@ -19,52 +19,52 @@ namespace Danmaku2D {
 			}
 		}
 
-		internal ProjectileGroup() {
-			set = new HashSet<Projectile> ();
+		public ProjectileGroup() {
+			group = new HashSet<Projectile> ();
 		}
 
-		internal Vector2 UpdateProjectile(Projectile projectile, float dt) {
-			if(Controller != null && Controller != projectile.Controller)
-				return Controller.UpdateProjectile(projectile, dt);
-			else
-				return Vector2.zero;
+		internal void UpdateProjectile(Projectile projectile, float dt) {
+			if(controller != null && controller != projectile.Controller)
+				controller.UpdateProjectile(projectile, dt);
 		}
 
 		#region ICollection implementation
 
 		public void Add (Projectile item) {
-			if (!set.Contains (item)) {
-				set.Add(item);
-				item.AddToGroup(this);
+			bool added = group.Add(item);
+			if (added) {
+				item.groups.Add (this);
+				item.groupCheck = item.groups.Count > 0;
 			}
 		}
 
 		public void Clear () {
-			foreach(Projectile proj in set) {
+			foreach(Projectile proj in group) {
 				proj.RemoveFromGroup(this);
 			}
 		}
 
 		public bool Contains (Projectile item) {
-			return set.Contains (item);
+			return group.Contains (item);
 		}
 
 		public void CopyTo (Projectile[] array, int arrayIndex) {
-			set.CopyTo (array, arrayIndex);
+			group.CopyTo (array, arrayIndex);
 		}
 
 		public bool Remove (Projectile item) {
 			bool success = false;
-			if (set.Contains (item)) {
-				success = set.Remove(item);
-				item.RemoveFromGroup(this);
+			success = group.Remove(item);
+			if (success) {
+				item.groups.Remove (this);
+				item.groupCheck = item.groups.Count > 0;
 			}
 			return success;
 		}
 
 		public int Count {
 			get {
-				return set.Count;
+				return group.Count;
 			}
 		}
 
@@ -79,7 +79,7 @@ namespace Danmaku2D {
 		#region IEnumerable implementation
 
 		public IEnumerator<Projectile> GetEnumerator () {
-			return set.GetEnumerator ();
+			return group.GetEnumerator ();
 		}
 
 		#endregion
@@ -87,7 +87,7 @@ namespace Danmaku2D {
 		#region IEnumerable implementation
 
 		IEnumerator IEnumerable.GetEnumerator () {
-			return set.GetEnumerator ();
+			return group.GetEnumerator ();
 		}
 
 		#endregion

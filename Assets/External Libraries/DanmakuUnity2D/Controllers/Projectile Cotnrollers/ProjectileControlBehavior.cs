@@ -33,7 +33,7 @@ namespace Danmaku2D {
 			ProjectileGroup.Controller = this;
 		}
 		
-		public abstract Vector2 UpdateProjectile(Projectile projectile, float dt);
+		public abstract void UpdateProjectile(Projectile projectile, float dt);
 	}
 }
 

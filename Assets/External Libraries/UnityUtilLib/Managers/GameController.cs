@@ -10,7 +10,7 @@ namespace UnityUtilLib {
 	/// Only one can exist at single time.
 	/// It is best to subclass this and include overarching expansive actions that affect the entire game.
 	/// </summary>
-	public abstract class GameController : SingletonBehavior<GameController> {
+	public abstract class GameController : Singleton<GameController> {
 
 		private static float oldTimeScale;
 		private static bool gamePaused;
@@ -35,10 +35,9 @@ namespace UnityUtilLib {
 				return;
 
 			//pause all pausable objects
-			MonoBehaviour[] pausables = FindObjectsOfType<MonoBehaviour> ();
+			IPausable[] pausables = Util.FindObjectsOfType<IPausable> ();
 			for (int i = 0; i < pausables.Length; i++) {
-				if(pausables[i] is IPausable)
-					(pausables[i] as IPausable).Paused = true;
+				pausables[i].Paused = true;
 			}
 
 			//state that the game is paused
@@ -61,10 +60,9 @@ namespace UnityUtilLib {
 				return;
 
 			//unpause all paused objects
-			MonoBehaviour[] pausables = FindObjectsOfType<MonoBehaviour> ();
+			IPausable[] pausables = Util.FindObjectsOfType<IPausable> ();
 			for (int i = 0; i < pausables.Length; i++) {
-				if(pausables[i] is IPausable)
-					(pausables[i] as IPausable).Paused = false;
+				pausables[i].Paused = false;
 			}
 
 			//state that the game is no longer paused

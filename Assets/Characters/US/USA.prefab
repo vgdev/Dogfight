@@ -222,8 +222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
-  spawnLocation: {x: .5, y: .5}
-  spawnArea: {x: .5, y: .5}
+  spawnLocation: {x: .5, y: .850000024}
+  spawnArea: {x: 0, y: 0}
   bulletCount: 500
   burstCount:
     maxCount: 10
@@ -234,6 +234,8 @@ MonoBehaviour:
   burstRotationDelta: 5
   LinearController:
     velocity: 15
+    acceleration: 0
+    capSpeed: 0
 --- !u!114 &11462248
 MonoBehaviour:
   m_ObjectHideFlags: 1

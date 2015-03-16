@@ -18,7 +18,7 @@ namespace Danmaku2D {
 		/// </summary>
 		/// <returns>the displacement from the Projectile's original position after udpating</returns>
 		/// <param name="dt">the change in time since the last update</param>
-		public abstract Vector2 UpdateProjectile (float dt);
+		public abstract void UpdateProjectile (float dt);
 
 		/// <summary>
 		/// Gets or sets the projectile controlled by this controller.

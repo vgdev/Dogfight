@@ -68,11 +68,11 @@ namespace Danmaku2D {
 			AngularVelocity = angularVelocity;
 		}
 		
-		public override Vector2 UpdateProjectile (Projectile projectile, float dt) {
+		public override void UpdateProjectile (Projectile projectile, float dt) {
 			if(AngularVelocity != 0f) {
 				projectile.Rotation += AngularVelocity * dt;
 			}
-			return base.UpdateProjectile (projectile, dt);
+			base.UpdateProjectile (projectile, dt);
 		}
 	}
 }

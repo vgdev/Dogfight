@@ -21,7 +21,7 @@ namespace Danmaku2D.ProjectileControllers {
 
 		#region implemented abstract members of ProjectileControlBehavior
 
-		public override Vector2 UpdateProjectile (Projectile projectile, float dt) {
+		public override void UpdateProjectile (Projectile projectile, float dt) {
 			float time = projectile.Time;
 			if(time >= delay && time - dt <= delay) {
 				float baseAngle = angle;
@@ -37,7 +37,6 @@ namespace Danmaku2D.ProjectileControllers {
 				}
 				projectile.Rotation = Random.Range(baseAngle - range, baseAngle + range);
 			}
-			return Vector2.zero;
 		}
 
 		#endregion

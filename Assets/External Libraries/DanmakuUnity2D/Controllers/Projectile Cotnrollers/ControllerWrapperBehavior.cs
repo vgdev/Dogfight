@@ -42,8 +42,8 @@ namespace Danmaku2D.ProjectileControllers {
 		protected abstract T CreateController ();
 
 		#region implemented abstract members of ProjectileControlBehavior
-		public sealed override Vector2 UpdateProjectile (Projectile projectile, float dt) {
-			return controller.UpdateProjectile(projectile, dt);
+		public sealed override void UpdateProjectile (Projectile projectile, float dt) {
+			controller.UpdateProjectile(projectile, dt);
 		}
 		#endregion
 		

@@ -12,13 +12,11 @@ namespace Danmaku2D.ProjectileControllers {
 		}
 
 		#region implemented abstract members of ProjectileController
-		public override Vector2 UpdateProjectile (float dt) {
-			Vector2 change = Vector2.zero;
+		public override void UpdateProjectile (float dt) {
 			for(int i = 0; i < children.Count; i++) {
 				children[i].Projectile = Projectile;
-				change += children[i].UpdateProjectile(dt);
+				children[i].UpdateProjectile(dt);
 			}
-			return change;
 		}
 		#endregion
 

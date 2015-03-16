@@ -75,8 +75,8 @@ namespace Danmaku2D {
 		
 		#region IProjectileController implementation
 		
-		public sealed override Vector2 UpdateProjectile (float dt) {
-			return UpdateProjectile (Projectile, dt);
+		public sealed override void UpdateProjectile (float dt) {
+			UpdateProjectile (Projectile, dt);
 		}
 		
 		#endregion
@@ -88,23 +88,21 @@ namespace Danmaku2D {
 			set;
 		}
 		
-		public virtual Vector2 UpdateProjectile (Projectile projectile, float dt) {
-			if(acceleration != 0) {
-				float accelSign = Util.Sign(acceleration);
-				if(accelSign == Util.Sign(capSpeed - velocity)) {
-					velocity += acceleration * dt;
-					if((accelSign < 0 && velocity < capSpeed) || (accelSign > 0 && velocity > capSpeed)) {
-						velocity = capSpeed;
-					}
-				} else {
-					velocity = capSpeed;
-					acceleration = 0;
-				}
-			}
+		public virtual void UpdateProjectile (Projectile projectile, float dt) {
+//			if(acceleration != 0) {
+//				float accelSign = Util.Sign(acceleration);
+//				if(accelSign == Util.Sign(capSpeed - velocity)) {
+//					velocity += acceleration * dt;
+//					if((accelSign < 0 && velocity < capSpeed) || (accelSign > 0 && velocity > capSpeed)) {
+//						velocity = capSpeed;
+//					}
+//				} else {
+//					velocity = capSpeed;
+//					acceleration = 0;
+//				}
+//			}
 			if (velocity != 0)
-				return projectile.Direction * velocity * dt;
-			else
-				return Vector2.zero;
+				projectile.Position += projectile.Direction * velocity * dt;
 		}
 		
 		#endregion

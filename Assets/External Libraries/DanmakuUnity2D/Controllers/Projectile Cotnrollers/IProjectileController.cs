@@ -23,7 +23,7 @@ namespace Danmaku2D {
 		/// </summary>
 		/// <returns>the displacement from the Projectile's original position after udpating</returns>
 		/// <param name="dt">the change in time since the last update</param>
-		Vector2 UpdateProjectile (float dt);
+		void UpdateProjectile (float dt);
 
 	}
 }

@@ -179,7 +179,7 @@ namespace Danmaku2D {
 		/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
 		public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
 			Projectile bullet = ProjectileManager.Get (prefab);
-			bullet.Position = WorldPoint(location, coordSys);
+			bullet.PositionImmediate = WorldPoint(location, coordSys);
 			bullet.Rotation = rotation;
 			bullet.Field = this;
 			bullet.Activate ();
