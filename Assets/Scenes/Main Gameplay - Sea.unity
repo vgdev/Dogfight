@@ -1766,7 +1766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyNewInstances: 0
   roundStartSafeZone:
-    delay: 0
+    Time: 0
   chains: []
 --- !u!114 &787077641
 MonoBehaviour:
@@ -1867,6 +1867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5314b63a06c652f44a6e992b74158c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keepAnyway: 1
   character1: {fileID: 11410618, guid: f23a1b6fa58981746b9262a409a267a9, type: 2}
   character2: {fileID: 11462248, guid: ce2275843d8b7ed4eb01649f027b069b, type: 2}
 --- !u!114 &787077645
@@ -2719,7 +2720,7 @@ MonoBehaviour:
   gameController: {fileID: 787077639}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashInterval:
-    delay: 0
+    Time: 0
   flashThreshold: 30
 --- !u!1 &1675727870
 GameObject:

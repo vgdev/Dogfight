@@ -3,7 +3,7 @@ using UnityUtilLib;
 using System.Collections;
 
 namespace Danmaku2D {
-	public class PlayerDeathHitbox : CachedObject {
+	public class PlayerDeathHitbox : MonoBehaviour, IProjectileCollider {
 
 		private DanmakuPlayer player;
 
@@ -14,7 +14,7 @@ namespace Danmaku2D {
 			}
 		}
 
-		void OnProjectileCollision(Projectile proj) {
+		public void OnProjectileCollision(Projectile proj) {
 			if (player != null) {
 				player.Hit (proj);
 				proj.Deactivate();

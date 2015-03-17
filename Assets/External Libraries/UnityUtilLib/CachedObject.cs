@@ -39,7 +39,7 @@ namespace UnityUtilLib {
 		}
 
 		/// <summary>
-		/// Called upon Component instantiation <br>
+		/// Called upon Component instantiation.
 		/// See <a href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html">MonoBehavior.Awake()</a>
 		/// </summary>
 		public virtual void Awake() {

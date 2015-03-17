@@ -9,7 +9,7 @@ namespace UnityUtilLib {
 	/// A static game object, one that can stay between scenes.
 	/// </summary>
 	[DisallowMultipleComponent]
-	public class StaticGameObject : MonoBehaviour {
+	public sealed class StaticGameObject : MonoBehaviour {
 
 		[SerializeField]
 		private bool keepBetweenScenes = true;
@@ -20,7 +20,7 @@ namespace UnityUtilLib {
 		/// </summary>
 		void Awake() {
 			if(keepBetweenScenes) {
-				DontDestroyOnLoad (this);
+				DontDestroyOnLoad (gameObject);
 			}
 		}
 	}

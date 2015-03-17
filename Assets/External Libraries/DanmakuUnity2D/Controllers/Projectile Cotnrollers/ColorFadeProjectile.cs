@@ -14,7 +14,7 @@ namespace Danmaku2D.ProjectileControllers {
 		[SerializeField]
 		private float endTime;
 
-		public override Vector2 UpdateProjectile (Projectile projectile, float dt) {
+		public override void UpdateProjectile (Projectile projectile, float dt) {
 			float bulletTime = projectile.Time;
 			Color startColor = SpriteRenderer.color;
 			if (bulletTime < startTime)
@@ -23,7 +23,6 @@ namespace Danmaku2D.ProjectileControllers {
 				projectile.Color = endColor;
 			else
 				projectile.Color = Color.Lerp (startColor, endColor, (bulletTime - startTime) / (endTime - startTime));
-			return Vector2.zero;
 		}
 
 	}

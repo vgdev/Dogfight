@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Danmaku2D {
 
-	[RequireComponent(typeof(ProjectilePrefab))]
 	public abstract class ProjectileControlBehavior : MonoBehaviour, IProjectileGroupController {
 		
 		private SpriteRenderer spriteRenderer;
@@ -34,7 +33,7 @@ namespace Danmaku2D {
 			ProjectileGroup.Controller = this;
 		}
 		
-		public abstract Vector2 UpdateProjectile(Projectile projectile, float dt);
+		public abstract void UpdateProjectile(Projectile projectile, float dt);
 	}
 }
 
