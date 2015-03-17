@@ -21,8 +21,8 @@ namespace UnityUtilLib.Editor {
 		/// <param name="label">The label of this property</param>
 		public override  void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 			EditorGUI.BeginProperty(position, label, property);
-			SerializedProperty maxDelayProp = property.FindPropertyRelative ("maxDelay");
-			SerializedProperty currentDelayProp = property.FindPropertyRelative ("currentDelay");
+			SerializedProperty maxDelayProp = property.FindPropertyRelative ("MaxDelay");
+			SerializedProperty currentDelayProp = property.FindPropertyRelative ("CurrentDelay");
 			EditorGUI.PropertyField (position, maxDelayProp, label);
 			currentDelayProp.floatValue = maxDelayProp.floatValue;
 			EditorGUI.EndProperty();

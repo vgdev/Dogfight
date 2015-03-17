@@ -43,6 +43,7 @@ namespace Danmaku2D {
 		private int count;
 		private RaycastHit2D[] raycastHits;
 		private Collider2D[] colliders;
+		private IProjectileCollider[] scripts;
 
 		//Cached check for controllers to avoid needing to calculate them in Update
 		internal bool groupCheck;
@@ -224,12 +225,16 @@ namespace Danmaku2D {
 		internal Projectile() {
 			groups = new List<ProjectileGroup> ();
 			gameObject = new GameObject ("Projectile");
+			#if UNITY_EDITOR
+			//This is purely for cleaning up the inspector, no need in an actual build
 			gameObject.hideFlags = HideFlags.HideInHierarchy;
+			#endif
 			renderer = gameObject.AddComponent<SpriteRenderer> ();
 			transform = gameObject.transform;
 			//gameObject.SetActive (false);
 			raycastHits = new RaycastHit2D[10];
 			colliders = new Collider2D[10];
+			scripts = new IProjectileCollider[10];
 		}
 
 		public void Update(float dt) {
@@ -246,9 +251,6 @@ namespace Danmaku2D {
 				for(int i = 0; i < groupCount; i++) {
 					groups[i].UpdateProjectile(this, dt);
 				}
-//				foreach(ProjectileGroup group in groups ) {
-//					group.UpdateProjectile(this, dt);
-//				}
 			}
 
 			movementVector = Position - originalPosition;
@@ -267,28 +269,28 @@ namespace Danmaku2D {
 				                                     distance,
 				                                     collisionMask[layer]);
 			}
-			
-			transform.localPosition = Position;
 
 			//Translate
 			if(count > 0) {
 				for (int i = 0; i < count; i++) {
 					Collider2D collider = (discrete) ? colliders[i] : raycastHits[i].collider;
-					//hit.collider.SendMessage("OnProjectileCollision", this, SendMessageOptions.DontRequireReceiver);
-					IProjectileCollider[] scripts = Util.GetComponents<IProjectileCollider>(collider);
-					for(int j = 0; j < scripts.Length; j++) {
+					int count2 = 0;
+					scripts = Util.GetComponentsPrealloc(collider, scripts, out count2);
+					for(int j = 0; j < count2; j++) {
 						scripts[j].OnProjectileCollision(this);
 					}
 					if(to_deactivate){
 						if(discrete) {
-							transform.localPosition = Physics2D.CircleCast(originalPosition + circleCenter, circleRaidus, movementVector, distance).point;
+							Position = Physics2D.CircleCast(originalPosition + circleCenter, circleRaidus, movementVector, distance).point;
 						} else {
-							transform.localPosition = raycastHits[i].point;
+							Position = raycastHits[i].point;
 						}
 						break;
 					}
 				}
 			}
+
+			transform.localPosition = Position;
 			
 			if (to_deactivate) {
 				DeactivateImmediate();

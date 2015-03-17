@@ -89,12 +89,12 @@ namespace Danmaku2D.Phantasmagoria {
 				base.Hit (proj);
 				BulletCancelArea cancelArea = (BulletCancelArea)Instantiate (cancelPrefab, transform.position, Quaternion.identity);
 				cancelArea.Run(deathCancelDuration, deathCancelRadius);
+				invincible = true;
 				StartCoroutine(DeathInvincibiilty());
 			}
 		}
 
 		private IEnumerator DeathInvincibiilty() {
-			invincible = true;
 			deathInvincibiiltyPeriod.Reset ();
 			invincibiltyFlash.Reset ();
 			WaitForEndOfFrame wfeof = new WaitForEndOfFrame();

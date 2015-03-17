@@ -177,8 +177,8 @@ namespace Danmaku2D {
 		/// <param name="location">The location within the field to spawn the projectile.</param>
 		/// <param name="rotation">Rotation.</param>
 		/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
-		public Projectile SpawnProjectile(ProjectilePrefab prefab, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
-			Projectile bullet = ProjectileManager.Get (prefab);
+		public Projectile SpawnProjectile(ProjectilePrefab bulletType, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
+			Projectile bullet = ProjectileManager.Get (bulletType);
 			bullet.PositionImmediate = WorldPoint(location, coordSys);
 			bullet.Rotation = rotation;
 			bullet.Field = this;
@@ -192,7 +192,12 @@ namespace Danmaku2D {
 		                                         float velocity,
 		                                         CoordinateSystem coordSys = CoordinateSystem.View) {
 			LinearProjectile linearProjectile = new LinearProjectile (velocity);
-			FireControlledProjectile (bulletType, location, rotation, linearProjectile);
+			Projectile bullet = ProjectileManager.Get (bulletType);
+			bullet.PositionImmediate = WorldPoint(location, coordSys);
+			bullet.Rotation = rotation;
+			bullet.Field = this;
+			bullet.Activate ();
+			bullet.Controller = linearProjectile;
 			return linearProjectile;
 		}
 		
@@ -203,7 +208,12 @@ namespace Danmaku2D {
 		                                         float angularVelocity,
 		                                         CoordinateSystem coordSys = CoordinateSystem.View) {
 			CurvedProjectile curvedProjectile = new CurvedProjectile (velocity, angularVelocity);
-			FireControlledProjectile (bulletType, location, rotation, curvedProjectile);
+			Projectile bullet = ProjectileManager.Get (bulletType);
+			bullet.PositionImmediate = WorldPoint(location, coordSys);
+			bullet.Rotation = rotation;
+			bullet.Field = this;
+			bullet.Activate ();
+			bullet.Controller = curvedProjectile;
 			return curvedProjectile;
 		}
 		
@@ -212,7 +222,11 @@ namespace Danmaku2D {
 		                                 float rotation, 
 		                                 IProjectileController controller,
 		                                 CoordinateSystem coordSys = CoordinateSystem.View) {
-			Projectile bullet = SpawnProjectile (bulletType, location, rotation);
+			Projectile bullet = ProjectileManager.Get (bulletType);
+			bullet.PositionImmediate = WorldPoint(location, coordSys);
+			bullet.Rotation = rotation;
+			bullet.Field = this;
+			bullet.Activate ();
 			bullet.Controller = controller;
 		}
 

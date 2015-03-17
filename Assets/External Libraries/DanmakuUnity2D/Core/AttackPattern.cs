@@ -19,10 +19,7 @@ namespace Danmaku2D {
 		/// <see cref="DanmakuField"/>
 		/// </summary>
 		/// <value>The AttackPattern's target danmaku field</value>
-		public DanmakuField TargetField {
-			get;
-			set;
-		}
+		public DanmakuField TargetField;
 
 		/// <summary>
 		/// Helper method to quickly get the angle needed to directly fire at the player in the AttacKPattern's target field
@@ -118,7 +115,14 @@ namespace Danmaku2D {
 		                                      float rotation, 
 		                                      float velocity,
 		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			return TargetField.FireLinearProjectile (bulletType, location, rotation, velocity, coordSys);
+			LinearProjectile linearProjectile = new LinearProjectile (velocity);
+			Projectile bullet = ProjectileManager.Get (bulletType);
+			bullet.PositionImmediate = TargetField.WorldPoint(location, coordSys);
+			bullet.Rotation = rotation;
+			bullet.Field = TargetField;
+			bullet.Activate ();
+			bullet.Controller = linearProjectile;
+			return linearProjectile;
 		}
 
 		/// <summary>
@@ -135,7 +139,14 @@ namespace Danmaku2D {
 		                                      float velocity,
 		                                      float angularVelocity,
 		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			return TargetField.FireCurvedProjectile (bulletType, location, rotation, velocity, angularVelocity, coordSys);
+			CurvedProjectile curvedProjectile = new CurvedProjectile (velocity, angularVelocity);
+			Projectile bullet = ProjectileManager.Get (bulletType);
+			bullet.PositionImmediate = TargetField.WorldPoint(location, coordSys);
+			bullet.Rotation = rotation;
+			bullet.Field = TargetField;
+			bullet.Activate ();
+			bullet.Controller = curvedProjectile;
+			return curvedProjectile;
 		}
 
 		/// <summary>
@@ -151,7 +162,12 @@ namespace Danmaku2D {
 		                                    float rotation, 
 		                                    IProjectileController controller,
 		                                    DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			TargetField.FireControlledProjectile (bulletType, location, rotation, controller, coordSys);
+			Projectile bullet = ProjectileManager.Get (bulletType);
+			bullet.PositionImmediate = TargetField.WorldPoint(location, coordSys);
+			bullet.Rotation = rotation;
+			bullet.Field = TargetField;
+			bullet.Activate ();
+			bullet.Controller = controller;
 		}
 	}
 }

@@ -255,10 +255,32 @@ namespace UnityUtilLib {
 			return temp;
 		}
 
-		
-		//		public static T[] GetBehaviors<T> (GameObject gameObject) where T : class {
-//
-//		}
+		public static T[] GetComponentsPrealloc<T>(GameObject gameObject, T[] prealloc, out int count) where T : class {
+			Component[] components = gameObject.GetComponents (typeof(T));
+			count = components.Length;
+			if (prealloc.Length < count) {
+				Debug.Log(count);
+				prealloc = new T[count];
+			}
+			for(int i = 0; i < count; i++) {
+				prealloc[i] = components[i] as T;
+			}
+			return prealloc;
+		}
+
+		public static T[] GetComponentsPrealloc<T>(Component component, T[] prealloc, out int count) where T : class  {
+			Component[] components = component.GetComponents (typeof(T));
+			count = components.Length;
+			if (prealloc.Length < count) {
+				Debug.Log(component);
+				prealloc = new T[count];
+			}
+			for(int i = 0; i < count; i++) {
+				prealloc[i] = components[i] as T;
+			}
+			return prealloc;
+		}
+
 
 		/// <summary>
 		/// Finds the <a href="http://docs.unity3d.com/ScriptReference/Object.html">UnityEngine.Object</a> that derive from a certain type.

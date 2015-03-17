@@ -13,6 +13,9 @@ namespace UnityUtilLib {
 	/// </summary>
 	public abstract class TestScript : CachedObject {
 
+		[SerializeField]
+		private bool keepAnyway;
+
 		/// <summary>
 		/// Called upon Component instantiation
 		/// Destroys the Component when included with a non-editor build
@@ -21,7 +24,10 @@ namespace UnityUtilLib {
 			#if UNITY_EDITOR
 			base.Awake ();
 			#else
-			Destroy(this);
+			if(keepAnyway)
+				base.Awake();
+			else
+				Destroy(this);
 			#endif
 		}
 	}

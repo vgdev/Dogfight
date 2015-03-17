@@ -24,7 +24,7 @@ namespace Danmaku2D {
 		}
 
 		internal void UpdateProjectile(Projectile projectile, float dt) {
-			if(controller != null && controller != projectile.Controller)
+			if(controller != null)
 				controller.UpdateProjectile(projectile, dt);
 		}
 

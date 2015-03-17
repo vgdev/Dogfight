@@ -21,8 +21,8 @@ namespace UnityUtilLib.Editor {
 		/// <param name="label">The label of this property</param>
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 			EditorGUI.BeginProperty(position, label, property);
-			SerializedProperty maxCountProp = property.FindPropertyRelative ("maxCount");
-			SerializedProperty countProp = property.FindPropertyRelative ("count");
+			SerializedProperty maxCountProp = property.FindPropertyRelative ("MaxCount");
+			SerializedProperty countProp = property.FindPropertyRelative ("Count");
 			EditorGUI.PropertyField (position, maxCountProp, label);
 			countProp.intValue = maxCountProp.intValue;
 			EditorGUI.EndProperty();
