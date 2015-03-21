@@ -12,7 +12,7 @@ namespace Danmaku2D {
 	/// A single projectile fired.
 	/// The base object that represents a single bullet in a Danmaku game
 	/// </summary>
-	public sealed class Projectile : PooledObject, IColorable, IPrefabed<ProjectilePrefab> {
+	public sealed class Projectile : IPooledObject, IColorable, IPrefabed<ProjectilePrefab> {
 
 		private static int[] collisionMask;
 
@@ -21,17 +21,16 @@ namespace Danmaku2D {
 		}
 
 		internal int index;
-
 		private bool to_deactivate;
 		private GameObject gameObject;
-		private Transform transform;
+		internal Transform transform;
 		private SpriteRenderer renderer;
 		private ProjectilePrefab prefab;
 		private ProjectilePrefab runtime;
 		
 		private IProjectileController controller;
 		internal List<ProjectileGroup> groups;
-		private ProjectileGroup[] groupCache;
+		internal int groupCountCache;
 		private Vector2 circleCenter = Vector2.zero; 
 
 		private float rotation;
@@ -41,6 +40,9 @@ namespace Danmaku2D {
 		private Vector2 originalPosition;
 		private Vector2 movementVector;
 		private int count;
+		private float distance;
+		private bool discrete;
+		private int count2;
 		private RaycastHit2D[] raycastHits;
 		private Collider2D[] colliders;
 		private IProjectileCollider[] scripts;
@@ -54,16 +56,14 @@ namespace Danmaku2D {
 		private Color color;
 		private string tag;
 		private int layer;
+		private int frames;
 
 		/// <summary>
 		/// Gets or sets the damage this projectile does to entities.
 		/// Generally speaking, this is only used for projectiles fired by the player at enemies
 		/// </summary>
 		/// <value>The damage this projectile does.</value>
-		public int Damage {
-			get;
-			set;
-		}
+		public int Damage;
 
 		/// <summary>
 		/// The controller 
@@ -76,9 +76,6 @@ namespace Danmaku2D {
 			set {
 				controller = value;
 				controllerCheck = controller != null;
-				if(controllerCheck) {
-					controller.Projectile = this;
-				}
 			}
 		}
 
@@ -155,8 +152,6 @@ namespace Danmaku2D {
 				return direction;
 			}
 		}
-		
-		private int frames;
 
 		/// <summary>
 		/// The amount of time, in seconds,that has passed since this bullet has been fired.
@@ -237,30 +232,44 @@ namespace Danmaku2D {
 			scripts = new IProjectileCollider[10];
 		}
 
-		public void Update(float dt) {
+		internal void Update(float dt) {
 			frames++;
-	
 			originalPosition = Position;
 
 			if (controllerCheck) {
-				controller.UpdateProjectile (dt);
+				controller.UpdateProjectile (this, dt);
 			}
 
 			if(groupCheck) {
-				int groupCount = groups.Count;
-				for(int i = 0; i < groupCount; i++) {
-					groups[i].UpdateProjectile(this, dt);
+				for(int i = 0; i < groupCountCache; i++) {
+					IProjectileController groupController = groups[i].Controller;
+					if(groupController != null)
+						groupController.UpdateProjectile(this, dt);
 				}
 			}
 
 			movementVector = Position - originalPosition;
 
-			float distance = movementVector.magnitude;
-			bool discrete = distance < circleRaidus;
+			distance = movementVector.magnitude;
+			discrete = distance < circleRaidus;
+			count2 = 0;
 			if (discrete) {
 				count = Physics2D.OverlapCircleNonAlloc(originalPosition + circleCenter,
 				                                        circleRaidus,
 				                                        colliders);
+				if(count > 0) {
+					for (int i = 0; i < count; i++) {
+						GameObject go = colliders[i].gameObject;
+						scripts = Util.GetComponentsPrealloc(go, scripts, out count2);
+						for(int j = 0; j < count2; j++) {
+							scripts[j].OnProjectileCollision(this);
+						}
+						if(to_deactivate){
+							Position = Physics2D.CircleCast(originalPosition + circleCenter, circleRaidus, movementVector, distance).point;
+							break;
+						}
+					}
+				}
 			} else {
 				count = Physics2D.CircleCastNonAlloc(originalPosition + circleCenter, 
 				                                     circleRaidus,
@@ -268,30 +277,25 @@ namespace Danmaku2D {
 				                                     raycastHits,
 				                                     distance,
 				                                     collisionMask[layer]);
-			}
-
-			//Translate
-			if(count > 0) {
-				for (int i = 0; i < count; i++) {
-					Collider2D collider = (discrete) ? colliders[i] : raycastHits[i].collider;
-					int count2 = 0;
-					scripts = Util.GetComponentsPrealloc(collider, scripts, out count2);
-					for(int j = 0; j < count2; j++) {
-						scripts[j].OnProjectileCollision(this);
-					}
-					if(to_deactivate){
-						if(discrete) {
-							Position = Physics2D.CircleCast(originalPosition + circleCenter, circleRaidus, movementVector, distance).point;
-						} else {
-							Position = raycastHits[i].point;
+				//Translate
+				if(count > 0) {
+					for (int i = 0; i < count; i++) {
+						RaycastHit2D hit = raycastHits[i];
+						GameObject go = hit.collider.gameObject;
+						scripts = Util.GetComponentsPrealloc(go, scripts, out count2);
+						for(int j = 0; j < count2; j++) {
+							scripts[j].OnProjectileCollision(this);
 						}
-						break;
+						if(to_deactivate){
+							Position = hit.point;
+							break;
+						}
 					}
 				}
 			}
 
 			transform.localPosition = Position;
-			
+
 			if (to_deactivate) {
 				DeactivateImmediate();
 			}
@@ -330,27 +334,47 @@ namespace Danmaku2D {
 				}
 			}
 		}
+		#region IPooledObject implementation
+
+		private IPool pool;
+		public IPool Pool {
+			get {
+				return pool;
+			}
+			set {
+				pool = value;
+			}
+		}
+
+		internal bool is_active;
+		public bool IsActive {
+			get {
+				return is_active;
+			}
+		}
 
 		/// <summary>
 		/// Activates this instance.
 		/// Calling this on a already fired projectile does nothing.
 		/// Calling this on a projectile marked for deactivation will unmark the projectile and keep it from deactivating.
 		/// </summary>
-		public override void Activate () {
-			base.Activate ();
+		public void Activate () {
+			is_active = true;
 			to_deactivate = false;
 			//gameObject.SetActive (true);
 			renderer.enabled = true;
 		}
-
+		
 		/// <summary>
 		/// Marks the Projectile for deactivation, and the Projectile will deactivate and return to the ProjectileManager after 
 		/// finishing processing current updates, or when the Projectile is next updated
 		/// If Projectile needs to be deactivated in a moment when it is not being updated (i.e. when the game is paused), use <see cref="DeactivateImmediate"/> instead.
 		/// </summary>
-		public override void Deactivate()  {
+		public void Deactivate()  {
 			to_deactivate = true;
 		}
+
+		#endregion
 
 		/// <summary>
 		/// Adds this projectile to the given ProjectileGroup
@@ -359,7 +383,8 @@ namespace Danmaku2D {
 		public void AddToGroup(ProjectileGroup group) {
 			groups.Add (group);
 			group.group.Add (this);
-			groupCheck = groups.Count > 0;
+			groupCountCache++;
+			groupCheck = groupCountCache > 0;
 		}
 
 		/// <summary>
@@ -369,7 +394,8 @@ namespace Danmaku2D {
 		public void RemoveFromGroup(ProjectileGroup group) {
 			groups.Remove (group);
 			group.group.Remove (this);
-			groupCheck = groups.Count > 0;
+			groupCountCache--;
+			groupCheck = groupCountCache > 0;
 		}
 
 		/// <summary>
@@ -382,6 +408,7 @@ namespace Danmaku2D {
 				groups[i].group.Remove (this);
 			}
 			groups.Clear ();
+			groupCountCache = 0;
 			groupCheck = false;
 			Controller = null;
 			controllerCheck = false;
@@ -389,8 +416,8 @@ namespace Danmaku2D {
 			frames = 0;
 			//gameObject.SetActive (false);
 			renderer.enabled = false;
-			IsActive = false;
-			base.Deactivate ();
+			is_active = false;
+			Pool.Return (this);
 			//ProjectileManager.Return (this);
 		}
 	}

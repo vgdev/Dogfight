@@ -6,29 +6,18 @@ using UnityUtilLib.Pooling;
 
 namespace Danmaku2D {
 
-	public class ProjectileManager : Singleton<ProjectileManager>, IPausable {
+	[DisallowMultipleComponent]
+	public sealed class ProjectileManager : Singleton<ProjectileManager>, IPausable {
 
 		private static ProjectilePool projectilePool;
 
 		private class ProjectilePool : IPool<Projectile> {
 
-			private Queue<int> pool;
+			internal Queue<int> pool;
 			internal Projectile[] all;
-			private int totalCount;
-			private int inactiveCount;
-			private int spawnCount;
-
-			public int TotalCount {
-				get {
-					return totalCount;
-				}
-			}
-
-			public int ActiveCount {
-				get {
-					return totalCount - inactiveCount;
-				}
-			}
+			internal int totalCount;
+			internal int inactiveCount;
+			internal int spawnCount;
 
 			public ProjectilePool(int initial, int spawn) {
 				this.spawnCount = spawn;
@@ -63,6 +52,7 @@ namespace Danmaku2D {
 			}
 
 			#region IPool implementation
+
 			public Projectile Get () {
 				if(inactiveCount <= 0) {
 					Spawn (spawnCount);
@@ -70,18 +60,24 @@ namespace Danmaku2D {
 				inactiveCount--;
 				return all [pool.Dequeue ()];
 			}
+
 			public void Return (Projectile obj) {
 				pool.Enqueue (obj.index);
 				inactiveCount++;
 			}
+
 			#endregion
+
 			#region IPool implementation
+
 			object IPool.Get () {
 				return Get ();
 			}
+
 			public void Return (object obj) {
 				Return (obj as Projectile);
 			}
+
 			#endregion
 		}
 
@@ -90,6 +86,9 @@ namespace Danmaku2D {
 
 		[SerializeField]
 		private int spawnOnEmpty = 100;
+	
+		[SerializeField]
+		private LayerMask defaultCollisionMask = ((LayerMask)~0);
 
 		public override void Awake () {
 			base.Awake ();
@@ -97,6 +96,7 @@ namespace Danmaku2D {
 		}
 
 		public void Start () {
+			Debug.Log (((int)defaultCollisionMask).ToString ("X8"));
 			if(projectilePool == null) {
 				projectilePool = new ProjectilePool (initialCount, spawnOnEmpty);
 			}
@@ -104,13 +104,13 @@ namespace Danmaku2D {
 
 		public int TotalCount {
 			get {
-				return (projectilePool != null) ? projectilePool.TotalCount : 0;
+				return (projectilePool != null) ? projectilePool.totalCount : 0;
 			}
 		}
 
 		public int ActiveCount {
 			get {
-				return (projectilePool != null) ? projectilePool.ActiveCount : 0;
+				return (projectilePool != null) ? projectilePool.totalCount : 0;
 			}
 		}
 
@@ -119,21 +119,34 @@ namespace Danmaku2D {
 				NormalUpdate ();
 		}
 
-		public virtual void NormalUpdate () {
+		public void NormalUpdate () {
 			float dt = Util.TargetDeltaTime;
-			Projectile[] all = projectilePool.all;
-			int totalCount = projectilePool.TotalCount;
+			int totalCount = projectilePool.totalCount;
+			DanmakuField[] fields = DanmakuField.fields.ToArray ();
+			int fieldCount = fields.Length;
 			for (int i = 0; i < totalCount; i++) {
-				if(all[i].IsActive)
-					all[i].Update(dt);
+				Projectile proj = projectilePool.all[i];
+				if(proj.is_active) {
+					proj.Update(dt);
+					bool check = true;
+					for(int j = 0; j < fieldCount; j++) {
+						if(fields[j].Bounds.Contains(proj.Position)) {
+							check = false;
+							break;
+						}
+					}
+					if(check) {
+						proj.DeactivateImmediate();
+					}
+				}
 			}
 		}
 
 		public static void DeactivateAll() {
 			Projectile[] all = projectilePool.all;
-			int totalCount = projectilePool.TotalCount;
+			int totalCount = projectilePool.totalCount;
 			for (int i = 0; i < totalCount; i++) {
-				if(all[i].IsActive)
+				if(all[i].is_active)
 					all[i].DeactivateImmediate();
 			}
 		}

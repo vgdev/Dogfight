@@ -4,28 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Danmaku2D {
-	public class ProjectileGroup : ICollection<Projectile> {
+
+	public sealed class ProjectileGroup : ICollection<Projectile> {
 
 		internal HashSet<Projectile> group;
 
-		private IProjectileGroupController controller;
-		public IProjectileGroupController Controller {
-			get {
-				return controller;
-			}
-			set {
-				controller = value;
-				controller.ProjectileGroup = this;
-			}
-		}
+		public IProjectileController Controller;
 
 		public ProjectileGroup() {
 			group = new HashSet<Projectile> ();
-		}
-
-		internal void UpdateProjectile(Projectile projectile, float dt) {
-			if(controller != null)
-				controller.UpdateProjectile(projectile, dt);
 		}
 
 		#region ICollection implementation
@@ -34,6 +21,7 @@ namespace Danmaku2D {
 			bool added = group.Add(item);
 			if (added) {
 				item.groups.Add (this);
+				item.groupCountCache++;
 				item.groupCheck = item.groups.Count > 0;
 			}
 		}
@@ -57,6 +45,7 @@ namespace Danmaku2D {
 			success = group.Remove(item);
 			if (success) {
 				item.groups.Remove (this);
+				item.groupCountCache--;
 				item.groupCheck = item.groups.Count > 0;
 			}
 			return success;
