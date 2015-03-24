@@ -41,7 +41,7 @@ public class RussianWinter : TimedAttackPattern {
 		base.MainLoop ();
 		if(delay.Tick ()) {
 			for(int i = 0; i < spawnCount; i++) {
-				group.Add (SpawnProjectile(snowPrefab, areaCenter - areaSize / 2f + Util.RandomVect2(areaSize), Random.Range(angleMin, angleMax)));
+				group.Add (SpawnProjectile(snowPrefab, areaCenter - areaSize / 2f + areaSize.Random(), Random.Range(angleMin, angleMax)));
 			}
 		}
 	}

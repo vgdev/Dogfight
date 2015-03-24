@@ -939,7 +939,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 27.3611145, y: 4}
+  m_Size: {x: 27.3611107, y: 4}
 --- !u!1 &787077636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,7 +1469,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 27.3611164, y: 4}
+  m_Size: {x: 27.3611107, y: 4}
 --- !u!1 &1269431525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,7 +1739,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 27.3611145, y: 4}
+  m_Size: {x: 27.3611107, y: 4}
 --- !u!1 &1487214530
 GameObject:
   m_ObjectHideFlags: 0
@@ -2020,7 +2020,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 27.3611164, y: 4}
+  m_Size: {x: 27.3611107, y: 4}
 --- !u!1 &1595988481
 GameObject:
   m_ObjectHideFlags: 0
@@ -2192,7 +2192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1caa3cd050dcf534dbf0568021c0c20d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  field: {fileID: 1341558597}
+  field: {fileID: 410002812}
   chargeCapacity: {fileID: 166108307}
   chargeLevel: {fileID: 1487627629}
   indicator: {fileID: 546280833}
