@@ -34,7 +34,7 @@ public class RussianWinter : TimedAttackPattern {
 	protected override void OnExecutionStart () {
 		base.OnExecutionStart ();
 		group = new ProjectileGroup ();
-		group.Controller = linearController;
+		group.AddController(linearController);
 	}
 
 	protected override void MainLoop () {

@@ -7,14 +7,9 @@ namespace Danmaku2D {
 	[RequireComponent(typeof(Collider2D))]
 	public abstract class DanmakuPlayer : PausableGameObject {
 
-		private DanmakuField field;
-		public DanmakuField Field { 
-			get {
-				return field;
-			}
-			set {
-				field = value;
-			}
+		public virtual DanmakuField Field {
+			get;
+			set;
 		}
 		
 		private PlayerAgent agent;
@@ -24,12 +19,13 @@ namespace Danmaku2D {
 			}
 			set {
 				agent = value;
+				agent.Player = this;
 			}
 		}
-		
-		public virtual void Initialize(PlayerAgent agent) {
-			this.agent = agent;
-			agent.Player = this;
+
+		public override void Awake () {
+			base.Awake ();
+			Field = Util.FindClosest<DanmakuField> (transform.position);
 		}
 		
 		public override void NormalUpdate () {
@@ -51,14 +47,9 @@ namespace Danmaku2D {
 			}
 		}
 
-		private bool firing = false;
 		public virtual bool IsFiring {
-			get { 
-				return firing;
-			}
-			set {
-				firing = value;
-			}
+			get;
+			set;
 		}
 
 		[SerializeField]

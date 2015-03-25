@@ -116,12 +116,9 @@ namespace Danmaku2D {
 		                                      float velocity,
 		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
 			LinearProjectile linearProjectile = new LinearProjectile (velocity);
-			Projectile bullet = ProjectileManager.Get (projectileType);
-			bullet.PositionImmediate = TargetField.WorldPoint(location, coordSys);
-			bullet.Rotation = rotation;
-			bullet.Field = TargetField;
+			Projectile bullet = Projectile.Get (projectileType, TargetField.WorldPoint(location, coordSys), rotation, TargetField);
 			bullet.Activate ();
-			bullet.Controller = linearProjectile;
+			bullet.AddController(linearProjectile);
 			return linearProjectile;
 		}
 
@@ -140,12 +137,9 @@ namespace Danmaku2D {
 		                                      float angularVelocity,
 		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
 			CurvedProjectile curvedProjectile = new CurvedProjectile (velocity, angularVelocity);
-			Projectile bullet = ProjectileManager.Get (projectileType);
-			bullet.PositionImmediate = TargetField.WorldPoint(location, coordSys);
-			bullet.Rotation = rotation;
-			bullet.Field = TargetField;
+			Projectile bullet = Projectile.Get (projectileType, TargetField.WorldPoint(location, coordSys), rotation, TargetField);
 			bullet.Activate ();
-			bullet.Controller = curvedProjectile;
+			bullet.AddController(curvedProjectile);
 			return curvedProjectile;
 		}
 
@@ -162,12 +156,9 @@ namespace Danmaku2D {
 		                                    float rotation, 
 		                                    IProjectileController controller,
 		                                    DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			Projectile bullet = ProjectileManager.Get (projectileType);
-			bullet.PositionImmediate = TargetField.WorldPoint(location, coordSys);
-			bullet.Rotation = rotation;
-			bullet.Field = TargetField;
+			Projectile bullet = Projectile.Get (projectileType, TargetField.WorldPoint(location, coordSys), rotation, TargetField);
 			bullet.Activate ();
-			bullet.Controller = controller;
+			bullet.AddController(controller);
 		}
 	}
 }

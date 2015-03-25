@@ -147,7 +147,7 @@ namespace Danmaku2D.Phantasmagoria {
 			player2.Field.Player.Reset (MaximumLives);
 			player1.Field.Camera2DRotation = 0f;
 			player2.Field.Camera2DRotation = 0f;
-			ProjectileManager.DeactivateAll ();
+			Projectile.DeactivateAll ();
 			Enemy[] allEnemies = FindObjectsOfType<Enemy> ();
 			for(int i = 0; i < allEnemies.Length; i++) {
 				Destroy (allEnemies[i].gameObject);

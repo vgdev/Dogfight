@@ -84,6 +84,18 @@ namespace Danmaku2D.Phantasmagoria {
 
 		private bool invincible;
 
+		public override DanmakuField Field {
+			get {
+				return base.Field;
+			}
+			set {
+				base.Field = value;
+				for(int i = 0; i < attackPatterns.Length; i++)
+					if(attackPatterns[i] != null)
+						attackPatterns[i].TargetField = base.Field.TargetField;
+			}
+		}
+
 		public override void Hit(Projectile proj) {
 			if(!invincible) {
 				base.Hit (proj);
@@ -125,13 +137,6 @@ namespace Danmaku2D.Phantasmagoria {
 			}
 			chargeLevel -= level;
 			currentChargeCapacity -= level;
-		}
-
-		public override void Initialize (PlayerAgent agent) {
-			base.Initialize (agent);
-			for(int i = 0; i < attackPatterns.Length; i++)
-				if(attackPatterns[i] != null)
-					attackPatterns[i].TargetField = Field.TargetField;
 		}
 
 		public override void NormalUpdate () {

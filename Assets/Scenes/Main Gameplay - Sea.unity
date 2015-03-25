@@ -111,7 +111,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 5400134}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.6805573, y: 0, z: 0}
+  m_LocalPosition: {x: 15.6698303, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 985566753}
@@ -569,7 +569,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 468610467}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.6805573, y: 0, z: 0}
+  m_LocalPosition: {x: -15.6698303, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 985566753}
@@ -939,7 +939,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 27.3611107, y: 4}
+  m_Size: {x: 27.3396683, y: 4}
 --- !u!1 &787077636
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,7 +950,6 @@ GameObject:
   - 4: {fileID: 787077637}
   - 114: {fileID: 787077645}
   - 114: {fileID: 787077639}
-  - 114: {fileID: 787077638}
   - 114: {fileID: 787077640}
   - 114: {fileID: 787077641}
   - 81: {fileID: 787077643}
@@ -975,24 +974,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &787077638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11490784, guid: d0d7a6570bac91e4c862b2d00b5b8937,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 787077636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09f2b8da3385252478b4fbabd6e78cf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyNewInstances: 0
-  initialCount: 1000
-  spawnOnEmpty: 1000
-  defaultCollisionMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &787077639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1008,6 +989,8 @@ MonoBehaviour:
   destroyNewInstances: 1
   fpsUpdateInterval: .5
   maximumLives: 5
+  projectileInitialCount: 1000
+  projectileSpawnOnEmpty: 100
   player1:
     field: {fileID: 1341558597}
     score: 0
@@ -1047,7 +1030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6645de88f9cf1474a9c1d81147b97ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyNewInstances: 0
+  destroyNewInstances: 1
 --- !u!82 &787077642
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1376,7 +1359,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1169142522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.6805573, y: 0, z: 0}
+  m_LocalPosition: {x: 15.6698303, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1101346460}
@@ -1469,7 +1452,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 27.3611107, y: 4}
+  m_Size: {x: 27.3396683, y: 4}
 --- !u!1 &1269431525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,7 +1722,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 27.3611107, y: 4}
+  m_Size: {x: 27.3396683, y: 4}
 --- !u!1 &1487214530
 GameObject:
   m_ObjectHideFlags: 0
@@ -2020,7 +2003,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 27.3611107, y: 4}
+  m_Size: {x: 27.3396683, y: 4}
 --- !u!1 &1595988481
 GameObject:
   m_ObjectHideFlags: 0
@@ -2240,7 +2223,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1905227237}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.6805573, y: 0, z: 0}
+  m_LocalPosition: {x: -15.6698303, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1101346460}

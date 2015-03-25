@@ -88,8 +88,18 @@ namespace Danmaku2D {
 //					acceleration = 0;
 //				}
 //			}
-			if (velocity != 0)
-				projectile.Position += projectile.Direction * velocity * dt;
+			float currentVelocity = velocity;
+			if (acceleration != 0) {
+				currentVelocity += acceleration * projectile.Time;
+				if(acceleration < 0 && currentVelocity < capSpeed) {
+					currentVelocity = capSpeed;
+				} else if(acceleration > 0 && currentVelocity > capSpeed) {
+					currentVelocity = capSpeed;
+				}
+			}
+
+			if (currentVelocity != 0)
+				projectile.Position += projectile.Direction * (currentVelocity * dt);
 		}
 		
 		#endregion

@@ -32,8 +32,8 @@ namespace Danmaku2D {
 		private float spaceRatio = 0;
 		
 		private BoxCollider2D boundary;
-		private Bounds oldBounds;
-		private Bounds newBounds;
+		private Bounds2D oldBounds;
+		private Bounds2D newBounds;
 		
 		public override void Awake () {
 			base.Awake ();
@@ -63,8 +63,8 @@ namespace Danmaku2D {
 		private void UpdatePosition() {
 			oldBounds = field.MovementBounds;
 
-			float size = oldBounds.size.Max();
-			Vector2 newPosition = (Vector2)oldBounds.center + fixedPoints [(int)location].Hadamard2(oldBounds.extents);
+			float size = oldBounds.Size.Max();
+			Vector2 newPosition = (Vector2)oldBounds.Center + fixedPoints [(int)location].Hadamard2(oldBounds.Extents);
 			float buffer = bufferRatio * size;
 			float space = spaceRatio * size;
 			float hangover = hangoverRatio * size;
@@ -74,12 +74,12 @@ namespace Danmaku2D {
 			case Edge.Top:
 			case Edge.Bottom:
 				area.y = buffer;
-				area.x = oldBounds.size.x + hangover;
+				area.x = oldBounds.Size.x + hangover;
 				break;
 			case Edge.Left:
 			case Edge.Right:
 				area.x = buffer;
-				area.y = oldBounds.size.y + hangover;
+				area.y = oldBounds.Size.y + hangover;
 				break;
 			}
 			boundary.size = area;
@@ -87,16 +87,16 @@ namespace Danmaku2D {
 			oldBounds = boundary.bounds;
 			switch(location) {
 			case Edge.Top:
-				newPosition.y += oldBounds.extents.y + space;
+				newPosition.y += oldBounds.Extents.y + space;
 				break;
 			case Edge.Bottom:
-				newPosition.y -= oldBounds.extents.y + space;
+				newPosition.y -= oldBounds.Extents.y + space;
 				break;
 			case Edge.Left:
-				newPosition.x -= oldBounds.extents.x + space;
+				newPosition.x -= oldBounds.Extents.x + space;
 				break;
 			case Edge.Right:
-				newPosition.x += oldBounds.extents.x + space;
+				newPosition.x += oldBounds.Extents.x + space;
 				break;
 			}
 

@@ -9,10 +9,45 @@ namespace Danmaku2D {
 
 		internal HashSet<Projectile> group;
 
-		public IProjectileController Controller;
+		internal HashSet<IProjectileController> controllers;
 
 		public ProjectileGroup() {
 			group = new HashSet<Projectile> ();
+		}
+
+		public void AddController(IProjectileController controller) {
+			if (controllers.Add (controller)) {
+				foreach(Projectile proj in group) {
+					proj.AddController(controller);
+				}
+			}
+		}
+
+		public void RemoveController(IProjectileController controller) {
+			if (controllers.Remove (controller)) {
+				foreach(Projectile proj in group) {
+					proj.RemoveController(controller);
+				}
+			}
+		}
+
+		public void ClearControllers() {
+			foreach (IProjectileController controller in controllers) {
+				foreach(Projectile proj in group) {
+					proj.RemoveController(controller);
+				}
+			}
+			controllers.Clear ();
+		}
+
+		public bool UsesController(IProjectileController controller) {
+			return controllers.Contains (controller);
+		}
+
+		public int ControllerCount {
+			get {
+				return controllers.Count;
+			}
 		}
 
 		#region ICollection implementation
@@ -23,6 +58,9 @@ namespace Danmaku2D {
 				item.groups.Add (this);
 				item.groupCountCache++;
 				item.groupCheck = item.groups.Count > 0;
+				foreach(IProjectileController controller in controllers) {
+					item.AddController(controller);
+				}
 			}
 		}
 
@@ -47,6 +85,9 @@ namespace Danmaku2D {
 				item.groups.Remove (this);
 				item.groupCountCache--;
 				item.groupCheck = item.groups.Count > 0;
+				foreach(IProjectileController controller in controllers) {
+					item.RemoveController(controller);
+				}
 			}
 			return success;
 		}

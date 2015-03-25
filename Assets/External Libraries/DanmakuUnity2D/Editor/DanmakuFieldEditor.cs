@@ -193,19 +193,5 @@ namespace Danmaku2D.Editor {
 				field.enabled = true;
 			}
 		}
-
-		[DrawGizmo(GizmoType.SelectedOrChild | GizmoType.NotSelected)]
-		internal static void DrawGizmos(DanmakuField field, GizmoType gizmoType) {
-			Gizmos.color = Color.yellow;
-			Gizmos.DrawWireCube (field.Bounds.center, field.Bounds.size);
-			Gizmos.color = Color.cyan;
-			Gizmos.DrawWireCube (field.MovementBounds.center, field.MovementBounds.size);
-			Vector3 newExtents = field.MovementBounds.size;
-			newExtents.z = 2 * field.GamePlaneDistance;
-			Gizmos.color = Color.white;
-			Vector3 camPos = field.MovementBounds.center;
-			Gizmos.matrix = Matrix4x4.TRS(camPos, Quaternion.Euler((camPos.z > 0) ? 180f : 0f, 0f, -field.Camera2DRotation), Vector3.one);
-			Gizmos.DrawWireCube(Vector3.zero, newExtents);
-		}
 	}
 }

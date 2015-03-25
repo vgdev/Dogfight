@@ -25,12 +25,13 @@ namespace Danmaku2D.ProjectileControllers {
 		}
 
 		public override void Awake () {
-			base.Awake ();
+			ProjectileGroup = new ProjectileGroup ();
 			if (projectileController == null) {
 				projectileController = CreateController ();
 				if (projectileController == null) {
 					throw new System.NotImplementedException(GetType().ToString() + " does not implement CreateController() properly");
 				}
+				ProjectileGroup.AddController(projectileController);
 			}
 		}
 

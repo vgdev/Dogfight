@@ -58,8 +58,8 @@ namespace Danmaku2D {
 		private DanmakuPlayer player;
 		private float currentAspectRatio;
 		private float screenOffset;
-		private Bounds bounds;
-		private Bounds movementBounds;
+		internal Bounds2D bounds;
+		private Bounds2D movementBounds;
 		private Vector2 x, y, z, scale, bottomLeft;
 
 		[SerializeField]
@@ -92,19 +92,20 @@ namespace Danmaku2D {
 				camera2DRotation = value;
 			}
 		}
+
 		public DanmakuPlayer Player {
 			get {
 				return player;
 			}
 		}
 
-		public Bounds Bounds {
+		public Bounds2D Bounds {
 			get {
 				return bounds;
 			}
 		}
 
-		public Bounds MovementBounds {
+		public Bounds2D MovementBounds {
 			get {
 				return movementBounds;
 			}
@@ -261,10 +262,10 @@ namespace Danmaku2D {
 			if (camera3D != null) {
 				camera3D.rect = camera2D.rect;
 			}
-			movementBounds.center = bounds.center = (Vector2)transform.position;
+			movementBounds.Center = bounds.Center = (Vector2)transform.position;
 			float size = camera2D.orthographicSize;
-			movementBounds.extents = new Vector2 (camera2D.aspect * size, size);
-			bounds.extents = movementBounds.extents + (Vector3)(Vector2.one * ClipBoundary * movementBounds.extents.Max());
+			movementBounds.Extents = new Vector2 (camera2D.aspect * size, size);
+			bounds.Extents = movementBounds.Extents + Vector2.one * ClipBoundary * movementBounds.Extents.Max();
 			#if UNITY_EDITOR
 			if(Application.isPlaying) {
 			#endif
@@ -368,10 +369,7 @@ namespace Danmaku2D {
 		/// <param name="rotation">Rotation.</param>
 		/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
 		public Projectile SpawnProjectile(ProjectilePrefab bulletType, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
-			Projectile bullet = ProjectileManager.Get (bulletType);
-			bullet.PositionImmediate = WorldPoint(location, coordSys);
-			bullet.Rotation = rotation;
-			bullet.Field = this;
+			Projectile bullet = Projectile.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
 			bullet.Activate ();
 			return bullet;
 		}
@@ -389,12 +387,9 @@ namespace Danmaku2D {
 		                                         float velocity,
 		                                         CoordinateSystem coordSys = CoordinateSystem.View) {
 			LinearProjectile controller = new LinearProjectile (velocity);
-			Projectile projectile = ProjectileManager.Get (bulletType);
-			projectile.PositionImmediate = WorldPoint(location, coordSys);
-			projectile.Rotation = rotation;
-			projectile.Field = this;
+			Projectile projectile = Projectile.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
 			projectile.Activate ();
-			projectile.Controller = controller;
+			projectile.AddController(controller);
 			return new FireData<LinearProjectile>(projectile, controller);
 		}
 		
@@ -405,12 +400,9 @@ namespace Danmaku2D {
 		                                         float angularVelocity,
 		                                         CoordinateSystem coordSys = CoordinateSystem.View) {
 			CurvedProjectile controller = new CurvedProjectile (velocity, angularVelocity);
-			Projectile projectile = ProjectileManager.Get (bulletType);
-			projectile.PositionImmediate = WorldPoint(location, coordSys);
-			projectile.Rotation = rotation;
-			projectile.Field = this;
+			Projectile projectile = Projectile.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
 			projectile.Activate ();
-			projectile.Controller = controller;
+			projectile.AddController(controller);
 			return new FireData<CurvedProjectile>(projectile, controller);
 		}
 		
@@ -419,12 +411,9 @@ namespace Danmaku2D {
 		                                 float rotation, 
 		                                 IProjectileController controller,
 		                                 CoordinateSystem coordSys = CoordinateSystem.View) {
-			Projectile projectile = ProjectileManager.Get (bulletType);
-			projectile.PositionImmediate = WorldPoint(location, coordSys);
-			projectile.Rotation = rotation;
-			projectile.Field = this;
+			Projectile projectile = Projectile.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
 			projectile.Activate ();
-			projectile.Controller = controller;
+			projectile.AddController(controller);
 		}
 
 		public delegate IProjectileController BurstController(int depth);
@@ -447,14 +436,13 @@ namespace Danmaku2D {
 			float start = direction - range * 0.5f;
 			float end = direction + range * 0.5f;
 			float delta = range / count;
+			IProjectileController test = new CurvedProjectile(0f, 30);
 			for (int j = 0; j < depth; j++) {
 				IProjectileController controller = (haveController) ? burstController(j) : null;
 				for (float rotation = start; rotation <= end; rotation += delta) {
-					Projectile bullet = ProjectileManager.Get (bulletType);
-					bullet.PositionImmediate = position;
-					bullet.Rotation = rotation;
-					bullet.Field = this;
-					bullet.Controller = controller;
+					Projectile bullet = Projectile.Get (bulletType, position, rotation, this);
+					bullet.AddController(controller);
+					bullet.AddController(test);
 					bullet.Activate ();
 					if (haveGroup) {
 						group.Add (bullet);
@@ -462,6 +450,21 @@ namespace Danmaku2D {
 				}
 			}
 		}
+
+		#if UNITY_EDITOR
+		void OnDrawGizmos() {
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawWireCube (bounds.Center, bounds.Size);
+			Gizmos.color = Color.cyan;
+			Gizmos.DrawWireCube (movementBounds.Center, movementBounds.Size);
+			Vector3 newExtents = movementBounds.Size;
+			newExtents.z = 2 * GamePlaneDistance;
+			Gizmos.color = Color.white;
+			Vector3 camPos = movementBounds.Center;
+			Gizmos.matrix = Matrix4x4.TRS(camPos, Quaternion.Euler((camPos.z > 0) ? 180f : 0f, 0f, -Camera2DRotation), Vector3.one);
+			Gizmos.DrawWireCube(Vector3.zero, newExtents);
+		}
+		#endif
 	}
 
 	public struct FireData<T> where T : IProjectileController {

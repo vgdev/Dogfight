@@ -30,7 +30,7 @@ namespace Danmaku2D {
 		
 		public virtual void Awake() {
 			ProjectileGroup = new ProjectileGroup ();
-			ProjectileGroup.Controller = this;
+			ProjectileGroup.AddController(this);
 		}
 
 		#region IProjectileController implementation
