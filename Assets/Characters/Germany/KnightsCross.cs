@@ -42,7 +42,7 @@ public class KnightsCross : TimedAttackPattern {
     }
 
     void fire() {
-        Debug.Log(angleToPlayer);
+        print(angleToPlayer);
 
 		float left = angleToPlayer + 90f;
 		float right = angleToPlayer + 270f;

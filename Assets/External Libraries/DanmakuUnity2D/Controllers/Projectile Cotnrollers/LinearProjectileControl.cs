@@ -25,7 +25,7 @@ namespace Danmaku2D {
 	/// A ProjectileController or ProjectileGroupController for creating bullets that move along a straight path.
 	/// </summary>
 	[System.Serializable]
-	public class LinearProjectile : ProjectileController, IProjectileGroupController {
+	public class LinearProjectile : IProjectileController {
 		
 		[SerializeField]
 		private float velocity = 5;
@@ -75,19 +75,6 @@ namespace Danmaku2D {
 		
 		#region IProjectileController implementation
 		
-		public sealed override void UpdateProjectile (float dt) {
-			UpdateProjectile (Projectile, dt);
-		}
-		
-		#endregion
-		
-		#region IProjectileGroupController implementation
-		
-		public ProjectileGroup ProjectileGroup {
-			get;
-			set;
-		}
-		
 		public virtual void UpdateProjectile (Projectile projectile, float dt) {
 //			if(acceleration != 0) {
 //				float accelSign = Util.Sign(acceleration);
@@ -101,8 +88,18 @@ namespace Danmaku2D {
 //					acceleration = 0;
 //				}
 //			}
-			if (velocity != 0)
-				projectile.Position += projectile.Direction * velocity * dt;
+			float currentVelocity = velocity;
+			if (acceleration != 0) {
+				currentVelocity += acceleration * projectile.Time;
+				if(acceleration < 0 && currentVelocity < capSpeed) {
+					currentVelocity = capSpeed;
+				} else if(acceleration > 0 && currentVelocity > capSpeed) {
+					currentVelocity = capSpeed;
+				}
+			}
+
+			if (currentVelocity != 0)
+				projectile.Position += projectile.Direction * (currentVelocity * dt);
 		}
 		
 		#endregion

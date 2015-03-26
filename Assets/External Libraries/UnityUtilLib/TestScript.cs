@@ -18,13 +18,13 @@ namespace UnityUtilLib {
 
 		/// <summary>
 		/// Called upon Component instantiation
-		/// Destroys the Component when included with a non-editor build
+		/// Destroys the Component when included with a non-editor or non-debug/non-development build.
 		/// </summary>
 		public override void Awake() {
 			#if UNITY_EDITOR
 			base.Awake ();
 			#else
-			if(keepAnyway)
+			if(keepAnyway || Debug.isDebugBuild)
 				base.Awake();
 			else
 				Destroy(this);
