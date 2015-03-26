@@ -42,7 +42,7 @@ public class StarsAndStripes : TimedAttackPattern {
 	protected override void OnExecutionStart () {
 		base.OnExecutionStart ();
 		stripesDelay.Reset ();
-		Vector2 burstSource = burstSpawnLocation - 0.5f * burstSpawnArea + Util.RandomVect2 (burstSpawnArea);
+		Vector2 burstSource = burstSpawnLocation - 0.5f * burstSpawnArea + burstSpawnArea.Random();
 		for(int i = 0; i < burstCount; i++) {
 			FireLinearBullet(burstBullet, burstSource, 360f / (float) burstCount * (float)i, burstVelocity);
 		}

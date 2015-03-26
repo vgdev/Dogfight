@@ -18,18 +18,16 @@ public class InvertOtherScreen : TimedAttackPattern {
 	}
 
 	private IEnumerator FlipScreen() {
-		Quaternion rot = TargetField.CameraTransform2D.rotation;
-		Vector3 euler = rot.eulerAngles;
-		euler.z += 180f;
-		Quaternion altRot = Quaternion.Euler (euler);
+		float rot = TargetField.Camera2DRotation;
+		float altRot = rot + 180f;
 		float t = 0;
 		Time.timeScale = 0f;
 		while (t < 1f) {
-			TargetField.CameraTransform2D.rotation = Quaternion.Slerp(rot, altRot, t);
+			TargetField.Camera2DRotation = Mathf.Lerp(rot, altRot, t);
 			yield return new WaitForEndOfFrame();
 			t += Time.unscaledDeltaTime / flipDuration;
 		}
-		TargetField.CameraTransform2D.rotation = altRot;
+		TargetField.Camera2DRotation = altRot;
 		Time.timeScale = 1f;
 
 	}

@@ -47,8 +47,8 @@ GameObject:
   - 61: {fileID: 6162242}
   - 50: {fileID: 5062242}
   - 114: {fileID: 11462248}
-  - 114: {fileID: 11462246}
   - 114: {fileID: 11452054}
+  - 114: {fileID: 11430698}
   m_Layer: 12
   m_Name: USA
   m_TagString: Player
@@ -163,6 +163,36 @@ BoxCollider2D:
   m_Offset: {x: -.0134963989, y: .164588928}
   serializedVersion: 2
   m_Size: {x: 2.6510725, y: 4.05488825}
+--- !u!114 &11430698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cab6263c08337b469ad50a12cae5d7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
+  spawnLocation: {x: .5, y: .899999976}
+  spawnArea: {x: 0, y: 0}
+  bulletCount: 1000
+  burstDepth: 1
+  burstRange: 360
+  burstCount:
+    MaxCount: 10
+    Count: 10
+  burstDelay:
+    Time: .100000001
+  burstInitialRotation: 0
+  burstRotationDelta: 0
+  LinearController:
+    velocity: 15
+    acceleration: 0
+    capSpeed: 0
+  deltaDepthVelocity: 0
 --- !u!114 &11452054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,33 +241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb4b20b90d935146b4622eac1468c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11462246
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cab6263c08337b469ad50a12cae5d7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetField: {fileID: 0}
-  prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
-  spawnLocation: {x: .5, y: .850000024}
-  spawnArea: {x: 0, y: 0}
-  bulletCount: 1500
-  burstCount:
-    MaxCount: 10
-    Count: 10
-  burstDelay:
-    Time: .0500000007
-  burstInitialRotation: 0
-  burstRotationDelta: 5
-  LinearController:
-    velocity: 15
-    acceleration: 0
-    capSpeed: 0
 --- !u!114 &11462248
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -253,7 +256,7 @@ MonoBehaviour:
   focusMovementSpeed: 3
   fireRate: 20
   attackPatterns:
-  - {fileID: 11462246}
+  - {fileID: 11430698}
   - {fileID: 11452054}
   shotOffset: {x: .5, y: 0}
   shotVelocity: 200

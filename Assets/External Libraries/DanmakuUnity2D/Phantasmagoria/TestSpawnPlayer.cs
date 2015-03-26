@@ -13,8 +13,8 @@ namespace Danmaku2D.Phantasmagoria {
 			PhantasmagoriaGameController controller = GetComponent<PhantasmagoriaGameController> ();
 			PhantasmagoriaPlayableCharacter player1 = (PhantasmagoriaPlayableCharacter) controller.player1.Field.SpawnPlayer (character1);
 			PhantasmagoriaPlayableCharacter player2 = (PhantasmagoriaPlayableCharacter) controller.player2.Field.SpawnPlayer (character2);
-			player1.Initialize(new PhantasmagoriaControlledAgent(1));
-			player2.Initialize(new PhantasmagoriaControlledAgent(2));
+			player1.Agent = new PhantasmagoriaControlledAgent(1);
+			player2.Agent = new PhantasmagoriaControlledAgent(2);
 		}
 	}
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Danmaku2D {
 
-	public abstract class ProjectileControlBehavior : MonoBehaviour, IProjectileGroupController {
+	public abstract class ProjectileControlBehavior : MonoBehaviour, IProjectileController {
 		
 		private SpriteRenderer spriteRenderer;
 		public SpriteRenderer SpriteRenderer {
@@ -30,10 +30,14 @@ namespace Danmaku2D {
 		
 		public virtual void Awake() {
 			ProjectileGroup = new ProjectileGroup ();
-			ProjectileGroup.Controller = this;
+			ProjectileGroup.AddController(this);
 		}
-		
-		public abstract void UpdateProjectile(Projectile projectile, float dt);
+
+		#region IProjectileController implementation
+
+		public abstract void UpdateProjectile (Projectile projectile, float dt);
+
+		#endregion
 	}
 }
 

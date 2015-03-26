@@ -15,11 +15,11 @@ namespace UnityUtilLib {
 			CurrentDelay = maxDelay;
 		}
 
-		public bool Tick(float dt, bool reset = true, float value = -1) {
+		public bool Tick(float dt) {
 			CurrentDelay -= dt;
 			bool ready = CurrentDelay <= 0f;
-			if(ready && reset)
-				CurrentDelay = (value > 0) ? value : MaxDelay;
+			if(ready)
+				CurrentDelay = MaxDelay;
 			return ready;
 		}
 
@@ -52,10 +52,10 @@ namespace UnityUtilLib {
 			return Count <= 0;
 		}
 
-		public bool Tick(bool reset = true) {
+		public bool Tick() {
 			Count--;
 			bool ready = Count < 0;
-			if(ready && reset)
+			if(ready)
 				Count = MaxCount;
 			return ready;
 		}
