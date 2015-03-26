@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace Danmaku2D.NoScript {
@@ -11,7 +11,7 @@ namespace Danmaku2D.NoScript {
 			if (sourcePoints == null)
 				sourcePoints = new SourcePoint[1];
 			SourcePoint point = sourcePoints [0];
-			point.Location = transform.position;
+			point.Position = transform.position;
 			point.BaseRotation = transform.rotation.eulerAngles.z;
 			sourcePoints [0] = point;
 		}

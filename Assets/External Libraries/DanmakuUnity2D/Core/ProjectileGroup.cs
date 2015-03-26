@@ -13,6 +13,7 @@ namespace Danmaku2D {
 
 		public ProjectileGroup() {
 			group = new HashSet<Projectile> ();
+			controllers = new HashSet<IProjectileController> ();
 		}
 
 		public void AddController(IProjectileController controller) {

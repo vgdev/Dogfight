@@ -42,13 +42,6 @@ namespace Danmaku2D.Phantasmagoria {
 		}
 
 		[SerializeField]
-		private BasicEnemy guardian;
-
-		[SerializeField]
-		private Vector2 guardianSpawnLocation = new Vector2 (0.5f, 1.1f);
-		private bool guardianSummoned;
-
-		[SerializeField]
 		private float closureDuration;
 
 		[SerializeField]
@@ -75,19 +68,10 @@ namespace Danmaku2D.Phantasmagoria {
 				StartCoroutine(RoundReset ());
 			}
 			roundTimeRemaining -= Util.TargetDeltaTime;
-			if (roundTimeRemaining < 0f && !guardianSummoned) {
-				if(guardian != null) {
-					SpawnEnemy(guardian, guardianSpawnLocation);
-					guardianSummoned = true;
-				} else {
-					Debug.LogWarning("Tried to summon a Guardian enemy that doesn't exist");
-				}
-			}
 		}
 
 		public void StartRound() {
 			roundTimeRemaining = roundTime;
-			guardianSummoned = false;
 		}
 
 		private int playerNumber = 1;
@@ -173,11 +157,11 @@ namespace Danmaku2D.Phantasmagoria {
 			reseting = false;
 		}
 
-		public override void SpawnEnemy(Enemy prefab, Vector2 relativeLocations) {
-			if(player1.Field != null && player2.Field != null) {
-				player1.Field.SpawnEnemy(prefab, relativeLocations);
-				player2.Field.SpawnEnemy(prefab, relativeLocations);
-			}
-		}
+//		public override void SpawnEnemy(Enemy prefab, Vector2 relativeLocations) {
+//			if(player1.Field != null && player2.Field != null) {
+//				player1.Field.SpawnEnemy(prefab, relativeLocations);
+//				player2.Field.SpawnEnemy(prefab, relativeLocations);
+//			}
+//		}
 	}
 }

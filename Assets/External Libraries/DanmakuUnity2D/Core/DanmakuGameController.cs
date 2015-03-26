@@ -11,8 +11,8 @@ namespace Danmaku2D {
 	/// <summary>
 	/// A GameController implementation for 2D Danmaku games.
 	/// </summary>
-	[RequireComponent(typeof(EnemyManager))]
-	public abstract class DanmakuGameController : GameController {
+//	[RequireComponent(typeof(EnemyManager))]
+	public class DanmakuGameController : GameController {
 
 		[SerializeField]
 		private int maximumLives;
@@ -33,7 +33,7 @@ namespace Danmaku2D {
 			}
 		}
 
-		public abstract void SpawnEnemy (Enemy prefab, Vector2 relativeLocations);
+//		public abstract void SpawnEnemy (Enemy prefab, Vector2 relativeLocations);
 
 		public override void Update() {
 			base.Update ();

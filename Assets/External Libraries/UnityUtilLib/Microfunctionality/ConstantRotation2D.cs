@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace UnityUtilLib {
 
-	public class Constant2DRotation : MonoBehaviour {
+	internal class ConstantRotation2D : CachedObject {
 
 		[Range(-360f, 360f)]
 		public float angularVelocity;

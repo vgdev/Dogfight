@@ -10,6 +10,12 @@ namespace Danmaku2D {
 		[SerializeField]
 		private ProjectileSource source;
 
+		protected ProjectileSource Source {
+			get {
+				return source;
+			}
+		}
+
 		[SerializeField]
 		private FrameCounter delay;
 
@@ -38,14 +44,10 @@ namespace Danmaku2D {
 		public void Fire() {
 			if (source == null)
 				source = gameObject.AddComponent<PointSource> ();
-			print ("fire");
-			SourcePoint[] points = source.SourcePoints;
-			int size = points.Length;
-			for(int i = 0; i < size; i++) {
-				FireFromSource(points[i]);
-			}
+//			print ("fire");
+			FireProjectiles ();
 		}
 
-		protected abstract void FireFromSource (SourcePoint source);
+		protected abstract void FireProjectiles();
 	}
 }

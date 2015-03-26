@@ -86,10 +86,10 @@ namespace Danmaku2D {
 			if (chain != null && chain.chain != null) {
 				EnemySpawnData[] chainData = chain.chain;
 				for(int i = 0; i < chainData.Length; i++) {
-					Rect area = chainData[i].spawnArea;
-					float rx = Random.Range(area.xMin, area.xMax);
-					float ry = Random.Range(area.yMin, area.yMax);
-					controller.SpawnEnemy(chainData[i].EnemyPrefab, new Vector2(rx, ry));
+//					Rect area = chainData[i].spawnArea;
+//					float rx = Random.Range(area.xMin, area.xMax);
+//					float ry = Random.Range(area.yMin, area.yMax);
+//					controller.SpawnEnemy(chainData[i].EnemyPrefab, new Vector2(rx, ry));
 					float time = 0f;
 					while(time < chainData[i].timeUntilNext) {
 						yield return UtilCoroutines.WaitForUnpause(this);

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 
@@ -22,11 +22,11 @@ namespace Danmaku2D.NoScript {
 				oldCount = count;
 			}
 			float delta = Util.TwoPI / count;
-			float rotation = transform.rotation.eulerAngles.z;
+			float rotation = transform.rotation.eulerAngles.z + 90f;
 			for (int i = 0; i < count; i++) {
 				float currentRotation = Util.Degree2Rad * rotation + i * delta;
-				sourcePoints[i].Location = ((Vector2)transform.position) + radius  * Util.OnUnitCircleRadians(currentRotation);
-				sourcePoints[i].BaseRotation = (raidalDirection) ? Util.Rad2Degree * currentRotation + 90f : rotation;
+				sourcePoints[i].Position = ((Vector2)transform.position) + radius  * Util.OnUnitCircleRadians(currentRotation);
+				sourcePoints[i].BaseRotation = ((raidalDirection) ? Util.Rad2Degree * currentRotation : rotation) - 90f;
 			}
 		}
 

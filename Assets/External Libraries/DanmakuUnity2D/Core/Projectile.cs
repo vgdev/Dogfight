@@ -113,6 +113,15 @@ namespace Danmaku2D {
 			return proj;
 		}
 
+		internal static Projectile Get(DanmakuField field, FireBuilder builder) {
+			Projectile proj = projectilePool.Get ();
+			proj.MatchPrefab (builder.Prefab);
+			proj.PositionImmediate = field.WorldPoint (builder.Position, builder.CoordinateSystem);
+			proj.Rotation = builder.Rotation;
+			proj.field = field;
+			return proj;
+		}
+
 		internal static void UpdateAll() {
 			float dt = Util.TargetDeltaTime;
 			int totalCount = projectilePool.totalCount;
@@ -309,13 +318,17 @@ namespace Danmaku2D {
 		}
 
 		public void AddController(IProjectileController controller) {
-			controllerUpdate += controller.UpdateProjectile;
-			controllerCheck = controllerUpdate != null;
+			if(controller != null) {
+				controllerUpdate += controller.UpdateProjectile;
+				controllerCheck = controllerUpdate != null;
+			}
 		}
 
 		public void RemoveController(IProjectileController controller) {
-			controllerUpdate -= controller.UpdateProjectile;
-			controllerCheck = controllerUpdate != null;
+			if(controller != null) {
+				controllerUpdate -= controller.UpdateProjectile;
+				controllerCheck = controllerUpdate != null;
+			}
 		}
 
 		/// <summary>
