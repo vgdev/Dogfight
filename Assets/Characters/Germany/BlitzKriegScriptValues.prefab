@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &166432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 466432}
+  - 114: {fileID: 11478404}
+  m_Layer: 14
+  m_Name: BlitzKriegScriptValues
+  m_TagString: Bullet
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &466432
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 166432}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11478404
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 166432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f73f1050271bf524bad2bb5f4d53bcd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 2
+  prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
+  bulletCount: 9
+  burstCount:
+    MaxCount: 1
+    Count: 1
+  burstDelay:
+    Time: .0500000007
+  burstInitialRotation: 0
+  burstRotationDelta: 5
+  LinearController:
+    velocity: 10
+    acceleration: 0
+    capSpeed: 0
+  crossDelay:
+    Time: .300000012
+  centerArea: {x: 1, y: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 166432}
+  m_IsPrefabParent: 1
