@@ -11,7 +11,7 @@ GameObject:
   - 212: {fileID: 21214182}
   - 114: {fileID: 11414182}
   - 58: {fileID: 5814182}
-  - 114: {fileID: 11438258}
+  - 114: {fileID: 11457296}
   m_Layer: 14
   m_Name: Red Bullet
   m_TagString: Bullet
@@ -57,9 +57,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleCollider: {fileID: 5814182}
   spriteRenderer: {fileID: 21214182}
-  extraControllers:
-  - {fileID: 11438258}
---- !u!114 &11438258
+  extraControllers: []
+--- !u!114 &11457296
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

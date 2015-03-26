@@ -3,7 +3,7 @@ using UnityUtilLib;
 using System.Collections;
 
 namespace Danmaku2D {
-	public class PlayerGrazeHitbox : MonoBehaviour {
+	public class PlayerGrazeHitbox : MonoBehaviour, IProjectileCollider{
 
 		private DanmakuPlayer player;
 
@@ -14,6 +14,11 @@ namespace Danmaku2D {
 			}
 		}
 
+		#region IProjectileCollider implementation
+		public void OnProjectileCollision (Projectile proj) {
+			//throw new System.NotImplementedException ();
+		}
+		#endregion
 
 		//TODO: FIX
 

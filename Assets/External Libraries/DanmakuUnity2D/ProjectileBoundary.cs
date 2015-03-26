@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,7 +11,7 @@ namespace Danmaku2D {
 	/// A script for defining boundaries for detecting collision with Projectiles
 	/// </summary>
 	[RequireComponent(typeof(Collider2D))]
-	public class ProjectileBoundary : MonoBehaviour {
+	public class ProjectileBoundary : MonoBehaviour, IProjectileCollider {
 
 		/// <summary>
 		/// A filter for a set of tags, delimited by "|" for selecting which bullets to affect
@@ -20,7 +20,7 @@ namespace Danmaku2D {
 		[SerializeField]
 		private string tagFilter;
 
-		private List<string> validTags;
+		private HashSet<string> validTags;
 
 		/// <summary>
 		/// Called on Component instantiation
@@ -28,16 +28,15 @@ namespace Danmaku2D {
 		void Awake() {
 			if(tagFilter == null)
 				tagFilter = "";
-			validTags = new List<string> ();
-			validTags.AddRange(tagFilter.Split ('|'));
+			validTags = new HashSet<string>(tagFilter.Split ('|'));
 		}
 
 		/// <summary>
 		/// Called on collision with any Projectile
 		/// </summary>
 		/// <param name="proj">Proj.</param>
-		void OnProjectileCollision(Projectile proj) {
-			if(proj != null && (validTags.Count <= 0 || validTags.Contains(proj.Tag))) {
+		public void OnProjectileCollision(Projectile proj) {
+			if(validTags.Count <= 0 || validTags.Contains(proj.Tag)) {
 				ProcessProjectile(proj);
 			}
 		}

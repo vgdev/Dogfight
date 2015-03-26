@@ -12,7 +12,7 @@ namespace UnityUtilLib {
 	/// <c>public class Foo : Singleton<Foo></c>
 	/// </summary>
 	[RequireComponent(typeof(StaticGameObject))]
-	public abstract class SingletonBehavior<T> : CachedObject where T : SingletonBehavior<T> {
+	public abstract class Singleton<T> : CachedObject where T : Singleton<T> {
 
 		private static T instance;
 

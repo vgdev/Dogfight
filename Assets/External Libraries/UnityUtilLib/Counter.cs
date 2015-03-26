@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace UnityUtilLib {
@@ -6,117 +6,73 @@ namespace UnityUtilLib {
 	[System.Serializable]
 	public struct CountdownDelay {
 
-		[SerializeField]
-		private float maxDelay;
-		public float MaxDelay {
-			get {
-				return maxDelay;
-			}
-			set {
-				maxDelay = value;
-			}
-		}	
-
-		[SerializeField]
-		private float currentDelay;
-		public float CurrentDelay {
-			get {
-				return currentDelay;
-			}
-			set {
-				currentDelay = value;
-			}
-		}
+		//Made it a public variable to remove the computation time needed to access/edit it externally
+		public float MaxDelay;
+		public float CurrentDelay;
 
 		public CountdownDelay(float maxDelay) {
-			this.maxDelay = maxDelay;
-			currentDelay = maxDelay;
+			MaxDelay = maxDelay;
+			CurrentDelay = maxDelay;
 		}
 
 		public bool Tick(float dt, bool reset = true, float value = -1) {
-			currentDelay -= dt;
-			bool ready = currentDelay <= 0f;
+			CurrentDelay -= dt;
+			bool ready = CurrentDelay <= 0f;
 			if(ready && reset)
-				currentDelay = (value > 0) ? value : maxDelay;
+				CurrentDelay = (value > 0) ? value : MaxDelay;
 			return ready;
 		}
 
 		public bool Ready() {
-			return currentDelay <= 0f;
+			return CurrentDelay <= 0f;
 		}
 
 		public void ForceReady() {
-			currentDelay = 0f;
+			CurrentDelay = 0f;
 		}
 
 		public void Reset() {
-			currentDelay = maxDelay;
+			CurrentDelay = MaxDelay;
 		}
 	}
 
 	[System.Serializable]
 	public struct Counter {
-
-		[SerializeField]
-		private int maxCount;
-		public int MaxCount {
-			get {
-				return maxCount;
-			}
-			set {
-				maxCount = value;
-			}
-		}
-
-		[SerializeField]
-		private int count;
-		public int Count {
-			get {
-				return count;
-			}
-			set {
-				count = value;
-			}
-		}
+		
+		//Made it a public variable to remove the computation time needed to access/edit it externally
+		public int MaxCount;
+		public int Count;
 
 		public Counter(int maxCount) {
-			this.maxCount = maxCount;
-			count = maxCount;
+			MaxCount = maxCount;
+			Count = maxCount;
 		}
 
 		public bool Ready() {
-			return count <= 0;
+			return Count <= 0;
 		}
 
 		public bool Tick(bool reset = true) {
-			count--;
-			bool ready = count < 0;
+			Count--;
+			bool ready = Count < 0;
 			if(ready && reset)
-				count = maxCount;
+				Count = MaxCount;
 			return ready;
 		}
 
 		public void Reset() {
-			count = maxCount;
+			Count = MaxCount;
 		}
 
 		public void ForceReady() {
-			count = 0;
+			Count = 0;
 		}
 	}
 
 	[System.Serializable]
 	public class FrameCounter {
-		[SerializeField]
-		private float delay;
-		private float Time {
-			get {
-				return delay;
-			}
-			set {
-				delay = value;
-			}
-		}
+
+		public float Time;
 
 		private int maxCount;
 		public int MaxCount {
@@ -135,13 +91,13 @@ namespace UnityUtilLib {
 		private bool init = false;
 		
 		public FrameCounter(float maxDelay) {
-			this.delay = maxDelay;
-			maxCount = Util.TimeToFrames (delay);
+			this.Time = maxDelay;
+			maxCount = Util.TimeToFrames (Time);
 			count = maxCount;
 		}
 
 		public void Init() {
-			maxCount = Util.TimeToFrames (delay);
+			maxCount = Util.TimeToFrames (Time);
 			count = maxCount;
 			init = true;
 		}
@@ -165,7 +121,7 @@ namespace UnityUtilLib {
 		public void Reset() {
 			if(!init)
 				Init ();
-			maxCount = Util.TimeToFrames (delay);
+			maxCount = Util.TimeToFrames (Time);
 			count = maxCount;
 		}
 

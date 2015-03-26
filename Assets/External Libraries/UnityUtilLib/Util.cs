@@ -235,6 +235,53 @@ namespace UnityUtilLib {
 			return p;
 		}
 
+		public static T[] GetComponents<T> (GameObject gameObject) where T : class {
+			Component[] components = gameObject.GetComponents (typeof(T));
+			int num = components.Length;
+			T[] temp = new T[num];
+			for(int i = 0; i < num; i++) {
+				temp[i] = components[i] as T;
+			}
+			return temp;
+		}
+
+		public static T[] GetComponents<T> (Component component) where T : class {
+			Component[] components = component.GetComponents (typeof(T));
+			int num = components.Length;
+			T[] temp = new T[num];
+			for(int i = 0; i < num; i++) {
+				temp[i] = components[i] as T;
+			}
+			return temp;
+		}
+
+		public static T[] GetComponentsPrealloc<T>(GameObject gameObject, T[] prealloc, out int count) where T : class {
+			Component[] components = gameObject.GetComponents (typeof(T));
+			count = components.Length;
+			if (prealloc.Length < count) {
+				Debug.Log(count);
+				prealloc = new T[count];
+			}
+			for(int i = 0; i < count; i++) {
+				prealloc[i] = components[i] as T;
+			}
+			return prealloc;
+		}
+
+		public static T[] GetComponentsPrealloc<T>(Component component, T[] prealloc, out int count) where T : class  {
+			Component[] components = component.GetComponents (typeof(T));
+			count = components.Length;
+			if (prealloc.Length < count) {
+				Debug.Log(component);
+				prealloc = new T[count];
+			}
+			for(int i = 0; i < count; i++) {
+				prealloc[i] = components[i] as T;
+			}
+			return prealloc;
+		}
+
+
 		/// <summary>
 		/// Finds the <a href="http://docs.unity3d.com/ScriptReference/Object.html">UnityEngine.Object</a> that derive from a certain type.
 		/// Unlike <a href="http://docs.unity3d.com/ScriptReference/Object.FindObjectsOfType.html">UnityEngine.Object.FindObjectsOfType</a>, this method works on interface types as well.
@@ -243,7 +290,7 @@ namespace UnityUtilLib {
 		/// </summary>
 		/// <returns>The objects of type T.</returns>
 		/// <typeparam name="T">the type to search for</typeparam>
-		public static object[] FindObjectsOfType<T>() {
+		public static T[] FindObjectsOfType<T>() where T : class  {
 			return FindObjectByType<T, Object> ();
 		}
 
@@ -255,21 +302,21 @@ namespace UnityUtilLib {
 		/// </summary>
 		/// <returns>The objects of type T.</returns>
 		/// <typeparam name="T">the type to search for</typeparam>
-		public static object[] FindBehaviorsOfType<T> () {
+		public static T[] FindBehaviorsOfType<T> () where T : class  {
 			return FindObjectByType<T, MonoBehaviour> ();
 		}
 
-		private static object[] FindObjectByType<T, V> () where V : Object {
-			T returnValue = default(T);
+		private static T[] FindObjectByType<T, V> () where T : class where V : Object {
 			Object[] objects = Object.FindObjectsOfType<V> ();
-			List<object> matches = new List<object> ();
+			List<T> matches = new List<T> ();
 			for(int i = 0; i < objects.Length; i++) {
 				if(objects[i] is T) {
-					matches.Add (objects[i]);
+					matches.Add (objects[i] as T);
 				}
 			}
 			return matches.ToArray ();
 		}
+
 
 		/// <summary>
 		/// Finds the closest described component to the given point
@@ -290,12 +337,12 @@ namespace UnityUtilLib {
 			}
 			return returnValue;
 		}
-
+		
 		public static float AngleBetween2D(Vector2 v1, Vector2 v2) {
 			Vector2 diff = v2 - v1;
 			return Mathf.Atan2 (diff.y, diff.x) * 180f / Mathf.PI - 90f; 
 		}
-
+		
 		public static Quaternion RotationBetween2D(Vector2 v1, Vector2 v2) {
 			return Quaternion.Euler (0f, 0f, AngleBetween2D (v1, v2));
 		}

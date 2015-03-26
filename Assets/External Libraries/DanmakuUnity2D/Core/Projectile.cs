@@ -14,12 +14,46 @@ namespace Danmaku2D {
 	/// </summary>
 	public sealed class Projectile : PooledObject, IColorable, IPrefabed<ProjectilePrefab> {
 
-		private static Vector2 unchanged = Vector2.zero;
 		private static int[] collisionMask;
+
+		internal static void SetupCollisions() {
+			collisionMask = Util.CollisionLayers2D ();
+		}
+
+		internal int index;
+
 		private bool to_deactivate;
 		private GameObject gameObject;
 		private Transform transform;
 		private SpriteRenderer renderer;
+		private ProjectilePrefab prefab;
+		private ProjectilePrefab runtime;
+		
+		private IProjectileController controller;
+		internal List<ProjectileGroup> groups;
+		private ProjectileGroup[] groupCache;
+		private Vector2 circleCenter = Vector2.zero; 
+
+		private float rotation;
+		private Vector2 direction;
+
+		//Preallocated variables to avoid allocation in Update
+		private Vector2 originalPosition;
+		private Vector2 movementVector;
+		private int count;
+		private RaycastHit2D[] raycastHits;
+		private Collider2D[] colliders;
+		private IProjectileCollider[] scripts;
+
+		//Cached check for controllers to avoid needing to calculate them in Update
+		internal bool groupCheck;
+		private bool controllerCheck;
+		
+		private float circleRaidus = 1f;
+		private Sprite sprite;
+		private Color color;
+		private string tag;
+		private int layer;
 
 		/// <summary>
 		/// Gets or sets the damage this projectile does to entities.
@@ -31,7 +65,6 @@ namespace Danmaku2D {
 			set;
 		}
 
-		private IProjectileController controller;
 		/// <summary>
 		/// The controller 
 		/// </summary>
@@ -42,14 +75,12 @@ namespace Danmaku2D {
 			}
 			set {
 				controller = value;
-				if(controller != null)
+				controllerCheck = controller != null;
+				if(controllerCheck) {
 					controller.Projectile = this;
+				}
 			}
 		}
-
-		private List<ProjectileGroup> groups;
-		private Vector2 circleCenter = Vector2.zero; 
-		private float circleRaidus = 1f;
 
 		/// <summary>
 		/// Gets the renderer sprite of the projectile.
@@ -58,7 +89,7 @@ namespace Danmaku2D {
 		/// <value>The sprite.</value>
 		public Sprite Sprite {
 			get {
-				return renderer.sprite;
+				return sprite;
 			}
 		}
 
@@ -69,23 +100,27 @@ namespace Danmaku2D {
 		/// <value>The renderer color.</value>
 		public Color Color {
 			get {
-				return renderer.color;
+				return color;
 			}
 			set {
 				renderer.color = value;
+				color = value;
 			}
 		}
 
 		/// <summary>
 		/// Gets or sets the position, in world space, of the projectile.
+		/// Exposed as a public variable instead of a property to decrease computational overhead.
 		/// </summary>
 		/// <value>The position of the projectile.</value>
-		public Vector2 Position {
+		public Vector2 Position;
+
+		public Vector2 PositionImmediate {
 			get {
-				return transform.position;
+				return Position;
 			}
 			set {
-				transform.position = value;
+				Position = transform.localPosition = value;
 			}
 		}
 
@@ -95,15 +130,17 @@ namespace Danmaku2D {
 		/// 0 - Straight up
 		/// 90 - Straight Left
 		/// 180 - Straight Down
-		/// 279 -  Straight Right
+		/// 270 -  Straight Right
 		/// </summary>
 		/// <value>The rotation of the bullet in degrees.</value>
 		public float Rotation {
 			get {
-				return transform.rotation.eulerAngles.z;
+				return rotation;
 			}
 			set {
 				transform.rotation = Quaternion.Euler(0f, 0f, value);
+				rotation = value;
+				direction = transform.up;
 			}
 		}
 
@@ -115,7 +152,7 @@ namespace Danmaku2D {
 		/// <value>The direction vector the projectile is facing toward.</value>
 		public Vector2 Direction {
 			get {
-				return transform.up;
+				return direction;
 			}
 		}
 		
@@ -149,7 +186,7 @@ namespace Danmaku2D {
 		/// <value>The tag of the projectile.</value>
 		public string Tag {
 			get {
-				return gameObject.tag;
+				return tag;
 			}
 		}
 
@@ -159,77 +196,101 @@ namespace Danmaku2D {
 		/// <value>The layer of the projectile.</value>
 		public int Layer {
 			get {
-				return gameObject.layer;
+				return layer;
 			}
 		}
 
 		/// <summary>
+		/// Gets the DanmakuField this instance was fired from.
+		/// </summary>
+		/// <value>The field the projectile was fired from.</value>
+		public DanmakuField Field {
+			get;
+			internal set;
+		}
+
+		/// <summary>
 		/// Compares the tag of the Projectile instance to the given string.
-		/// Mirrors <a href="http://docs.unity3d.com/ScriptReference/GameObject.CompareTag.html>GameObject.CompareTag</a>.
+		/// Mirrors <a href="http://docs.unity3d.com/ScriptReference/GameObject.CompareTag.html">GameObject.CompareTag</a>.
 		/// </summary>
 		/// <returns><c>true</c>, if tag is an exact match to the string, <c>false</c> otherwise.</returns>
 		/// <param name="tag">Tag.</param>
 		public bool CompareTag(string tag) {
 			return gameObject.CompareTag (tag);
 		}
-		
-		private RaycastHit2D[] hits;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Danmaku2D.Projectile"/> class.
 		/// </summary>
-		public Projectile() {
-			if(collisionMask == null)
-				collisionMask = Util.CollisionLayers2D();
+		internal Projectile() {
 			groups = new List<ProjectileGroup> ();
 			gameObject = new GameObject ("Projectile");
+			#if UNITY_EDITOR
+			//This is purely for cleaning up the inspector, no need in an actual build
 			gameObject.hideFlags = HideFlags.HideInHierarchy;
+			#endif
 			renderer = gameObject.AddComponent<SpriteRenderer> ();
 			transform = gameObject.transform;
-			gameObject.SetActive (false);
-			hits = new RaycastHit2D[10];
+			//gameObject.SetActive (false);
+			raycastHits = new RaycastHit2D[10];
+			colliders = new Collider2D[10];
+			scripts = new IProjectileCollider[10];
 		}
 
-		internal void Update() {
+		public void Update(float dt) {
 			frames++;
-			float dt = Util.TargetDeltaTime;
+	
+			originalPosition = Position;
 
-			Vector2 movementVector = Vector3.zero;
-
-			if (Controller != null) {
-				movementVector += Controller.UpdateProjectile (dt);
+			if (controllerCheck) {
+				controller.UpdateProjectile (dt);
 			}
 
-			if(groups.Count > 0) {
-				for (int i = 0; i < groups.Count; i++) {
-					movementVector += groups[i].UpdateProjectile(this, dt);
+			if(groupCheck) {
+				int groupCount = groups.Count;
+				for(int i = 0; i < groupCount; i++) {
+					groups[i].UpdateProjectile(this, dt);
 				}
 			}
 
-			int count = Physics2D.CircleCastNonAlloc(transform.position + (Vector3)circleCenter, 
-			                                         circleRaidus,
-			                                         movementVector,
-			                                         hits,
-			                                         movementVector.magnitude,
-			                                         collisionMask[gameObject.layer]);
-			
-			if(movementVector != unchanged)
-				transform.position += (Vector3)movementVector;
+			movementVector = Position - originalPosition;
+
+			float distance = movementVector.magnitude;
+			bool discrete = distance < circleRaidus;
+			if (discrete) {
+				count = Physics2D.OverlapCircleNonAlloc(originalPosition + circleCenter,
+				                                        circleRaidus,
+				                                        colliders);
+			} else {
+				count = Physics2D.CircleCastNonAlloc(originalPosition + circleCenter, 
+				                                     circleRaidus,
+				                                     movementVector,
+				                                     raycastHits,
+				                                     distance,
+				                                     collisionMask[layer]);
+			}
 
 			//Translate
 			if(count > 0) {
-				int i;
-				for (i = 0; i < count; i++) {
-					RaycastHit2D hit = hits[i];
-					if (hit.collider != null) {
-						hit.collider.SendMessage("OnProjectileCollision", this, SendMessageOptions.DontRequireReceiver);
+				for (int i = 0; i < count; i++) {
+					Collider2D collider = (discrete) ? colliders[i] : raycastHits[i].collider;
+					int count2 = 0;
+					scripts = Util.GetComponentsPrealloc(collider, scripts, out count2);
+					for(int j = 0; j < count2; j++) {
+						scripts[j].OnProjectileCollision(this);
 					}
 					if(to_deactivate){
-						Position = hits[i].point;
+						if(discrete) {
+							Position = Physics2D.CircleCast(originalPosition + circleCenter, circleRaidus, movementVector, distance).point;
+						} else {
+							Position = raycastHits[i].point;
+						}
 						break;
 					}
 				}
 			}
+
+			transform.localPosition = Position;
 			
 			if (to_deactivate) {
 				DeactivateImmediate();
@@ -246,23 +307,27 @@ namespace Danmaku2D {
 		/// </summary>
 		/// <param name="prefab">the ProjectilePrefab to match.</param>
 		public void MatchPrefab(ProjectilePrefab prefab) {
-			ProjectilePrefab runtime = prefab.GetRuntime ();
-			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
-			
-			transform.localScale = runtime.transform.localScale;
-			gameObject.tag = runtime.gameObject.tag;
-			gameObject.layer = runtime.gameObject.layer;
 
-			renderer.sprite = runtime.Sprite;
+			if (prefab != this.prefab) {
+				this.prefab = prefab;
+				runtime = prefab.GetRuntime();
+				transform.localScale = runtime.Scale;
+				sprite = renderer.sprite = runtime.Sprite;
+				renderer.sharedMaterial = runtime.Material;
+				renderer.sortingLayerID = renderer.sortingLayerID;
+				circleCenter = Util.HadamardProduct2(transform.lossyScale, runtime.ColliderOffset);
+				circleRaidus = runtime.ColliderRadius * Util.MaxComponent2(transform.lossyScale);
+				tag = gameObject.tag = runtime.Tag;
+				layer = runtime.Layer;
+			}
+
 			renderer.color = runtime.Color;
-			renderer.sharedMaterial = runtime.Material;
-			renderer.sortingLayerID = renderer.sortingLayerID;
 
-			circleCenter = Util.HadamardProduct2(transform.lossyScale, runtime.ColliderOffset);
-			circleRaidus = runtime.ColliderRadius * Util.MaxComponent2(transform.lossyScale);
-
-			for(int i = 0; i < pcbs.Length; i++) {
-				pcbs[i].ProjectileGroup.Add(this);
+			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
+			if (pcbs.Length > 0) {
+				for (int i = 0; i < pcbs.Length; i++) {
+					pcbs [i].ProjectileGroup.Add (this);
+				}
 			}
 		}
 
@@ -272,8 +337,10 @@ namespace Danmaku2D {
 		/// Calling this on a projectile marked for deactivation will unmark the projectile and keep it from deactivating.
 		/// </summary>
 		public override void Activate () {
+			base.Activate ();
 			to_deactivate = false;
-			gameObject.SetActive (true);
+			//gameObject.SetActive (true);
+			renderer.enabled = true;
 		}
 
 		/// <summary>
@@ -291,7 +358,8 @@ namespace Danmaku2D {
 		/// <param name="group">the group this Projectile is to be added to</param>
 		public void AddToGroup(ProjectileGroup group) {
 			groups.Add (group);
-			group.Add (this);
+			group.group.Add (this);
+			groupCheck = groups.Count > 0;
 		}
 
 		/// <summary>
@@ -300,7 +368,8 @@ namespace Danmaku2D {
 		/// <param name="group">the group this Projectile is to be removed from</param>
 		public void RemoveFromGroup(ProjectileGroup group) {
 			groups.Remove (group);
-			group.Remove (this);
+			group.group.Remove (this);
+			groupCheck = groups.Count > 0;
 		}
 
 		/// <summary>
@@ -309,15 +378,20 @@ namespace Danmaku2D {
 		/// This method should only be used when dealing with Projectiles while the game is paused or when ProjectileManager is not enabled
 		/// </summary>
 		public void DeactivateImmediate() {
-			Controller = null;
-			ProjectileGroup[] temp = groups.ToArray ();
-			for (int i = 0; i < temp.Length; i++) {
-				temp[i].Remove(this);
+			for (int i = 0; i < groups.Count; i++) {
+				groups[i].group.Remove (this);
 			}
+			groups.Clear ();
+			groupCheck = false;
+			Controller = null;
+			controllerCheck = false;
 			Damage = 0;
 			frames = 0;
-			gameObject.SetActive (false);
+			//gameObject.SetActive (false);
+			renderer.enabled = false;
+			IsActive = false;
 			base.Deactivate ();
+			//ProjectileManager.Return (this);
 		}
 	}
 }

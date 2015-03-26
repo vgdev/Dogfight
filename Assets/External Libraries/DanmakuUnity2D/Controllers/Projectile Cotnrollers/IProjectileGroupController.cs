@@ -10,7 +10,7 @@ namespace Danmaku2D {
 		/// </summary>
 		/// <value>The projectile group.</value>
 		ProjectileGroup ProjectileGroup { get; set; }
-		Vector2 UpdateProjectile (Projectile projectile, float dt);
+		void UpdateProjectile (Projectile projectile, float dt);
 	}
 }
 

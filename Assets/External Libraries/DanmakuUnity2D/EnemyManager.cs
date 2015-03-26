@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityUtilLib;
 
 namespace Danmaku2D {
-	public class EnemyManager : SingletonBehavior<EnemyManager>, IPausable {
+	public class EnemyManager : Singleton<EnemyManager>, IPausable {
 
 		private List<Enemy> registeredEnemies;
 
