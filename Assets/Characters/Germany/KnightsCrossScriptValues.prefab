@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 466432}
-  - 114: {fileID: 11416918}
+  - 114: {fileID: 11406128}
   m_Layer: 14
   m_Name: KnightsCrossScriptValues
   m_TagString: Bullet
@@ -23,12 +23,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 166432}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.35195065, y: 2.37701893, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11416918
+--- !u!114 &11406128
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -39,12 +39,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efd689ac5ef4764abe71c0736c4a6cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
   timeout:
-    maxDelay: 3.5
-    currentDelay: 3.5
+    Time: 2
   crossDelay:
-    maxDelay: .25
-    currentDelay: .25
+    Time: .400000006
   fatBullet: {fileID: 11420942, guid: 53a04669cc266574082aafa42d1e95da, type: 2}
   thinBullet: {fileID: 11483526, guid: fd93b1802e3f9c94ea450691f812cacc, type: 2}
   bulletVelocity: 7
@@ -61,4 +60,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 166432}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

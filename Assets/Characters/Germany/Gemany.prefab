@@ -132,8 +132,10 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: .730000019}
+  serializedVersion: 2
   m_Radius: 2.04999995
-  m_Center: {x: 0, y: .730000019}
 --- !u!58 &5830090
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -143,8 +145,10 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: .730000019}
+  serializedVersion: 2
   m_Radius: .340000004
-  m_Center: {x: 0, y: .730000019}
 --- !u!61 &6130088
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -154,8 +158,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: -.0134963989, y: .164588928}
+  serializedVersion: 2
   m_Size: {x: 2.6510725, y: 4.05488825}
-  m_Center: {x: -.0134963989, y: .164588928}
 --- !u!114 &11430088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -183,9 +189,9 @@ MonoBehaviour:
   deathCancelDuration: .5
   deathCancelRadius: 30
   deathInvincibiiltyPeriod:
-    delay: 0
+    Time: 0
   invincibiltyFlash:
-    delay: 0
+    Time: 0
 --- !u!114 &11430092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -219,10 +225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efd689ac5ef4764abe71c0736c4a6cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
   timeout:
-    delay: 5
+    Time: 2
   crossDelay:
-    delay: .200000003
+    Time: .400000006
   fatBullet: {fileID: 11420942, guid: 53a04669cc266574082aafa42d1e95da, type: 2}
   thinBullet: {fileID: 11483526, guid: fd93b1802e3f9c94ea450691f812cacc, type: 2}
   bulletVelocity: 7
@@ -237,16 +244,20 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 4051134229
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -243833067
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 93cba88b1c5b656408c976e73b84609a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -261,4 +272,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 130092}
   m_IsPrefabParent: 1
-  m_IsExploded: 1
