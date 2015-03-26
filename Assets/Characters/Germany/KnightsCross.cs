@@ -29,7 +29,7 @@ public class KnightsCross : TimedAttackPattern {
     protected override void OnExecutionStart() {
         base.OnExecutionStart();
         crossDelay.Reset();
-        center = Util.RandomVect2(centerArea);
+        center = centerArea.Random();
         angleToPlayer = TargetField.AngleTowardPlayer(TargetField.WorldPoint(center), DanmakuField.CoordinateSystem.World);
         fire();
     }

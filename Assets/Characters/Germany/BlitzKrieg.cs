@@ -34,7 +34,7 @@ public class BlitzKrieg : TimedAttackPattern
     {
         base.Awake();
         burstGroup = new ProjectileGroup();
-        burstGroup.Controller = LinearController;
+        burstGroup.AddController(LinearController);
     }
 
     [SerializeField]
@@ -65,7 +65,7 @@ public class BlitzKrieg : TimedAttackPattern
 
     void fire()
     {
-        Vector2 center = Util.RandomVect2(centerArea);
+        Vector2 center = centerArea.Random();
         center.y += vertical;
         vertical += .2f;
         float offset = (burstCount.MaxCount - burstCount.Count) * burstRotationDelta;
