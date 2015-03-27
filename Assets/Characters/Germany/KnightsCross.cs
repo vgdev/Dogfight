@@ -26,8 +26,8 @@ public class KnightsCross : TimedAttackPattern {
     private float angleToPlayer;
 
     // this is called every time the attack pattern starts
-    protected override void OnExecutionStart() {
-        base.OnExecutionStart();
+    protected override void OnInitialize() {
+        base.OnInitialize();
         crossDelay.Reset();
         //Vector2 center = new Vector2(.5f, .5f);//Util.RandomVect2(centerArea);
         //float angleToPlayer = TargetField.AngleTowardPlayer(TargetField.ViewToWorld(center));

@@ -8,12 +8,12 @@ public class InvertOtherScreen : TimedAttackPattern {
 	[SerializeField]
 	private float flipDuration;
 
-	protected override void OnExecutionStart () {
-		base.OnExecutionStart ();
+	protected override void OnInitialize () {
+		base.OnInitialize ();
 		StartCoroutine (FlipScreen ());
 	}
 
-	protected override void OnExecutionFinish () {
+	protected override void OnFinalize () {
 		StartCoroutine (FlipScreen ());
 	}
 

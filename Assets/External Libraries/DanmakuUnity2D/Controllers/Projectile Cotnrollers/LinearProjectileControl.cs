@@ -76,18 +76,6 @@ namespace Danmaku2D {
 		#region IProjectileController implementation
 		
 		public virtual void UpdateProjectile (Projectile projectile, float dt) {
-//			if(acceleration != 0) {
-//				float accelSign = Util.Sign(acceleration);
-//				if(accelSign == Util.Sign(capSpeed - velocity)) {
-//					velocity += acceleration * dt;
-//					if((accelSign < 0 && velocity < capSpeed) || (accelSign > 0 && velocity > capSpeed)) {
-//						velocity = capSpeed;
-//					}
-//				} else {
-//					velocity = capSpeed;
-//					acceleration = 0;
-//				}
-//			}
 			float currentVelocity = velocity;
 			if (acceleration != 0) {
 				currentVelocity += acceleration * projectile.Time;

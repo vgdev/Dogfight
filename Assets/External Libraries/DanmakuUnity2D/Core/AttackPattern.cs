@@ -11,7 +11,13 @@ namespace Danmaku2D {
 	/// An abstract class that defines the basic functionality of a DanmakuUnity Attack Pattern.
 	/// Derived classes of AbstractAttackPattern are used to define and control the various intricate patterns seen in danmaku games.
 	/// </summary>
-	public abstract class AttackPattern : PausableGameObject {
+	public abstract class AttackPattern : CachedObject, IPausable {
+		#region IPausable implementation
+		public bool Paused {
+			get;
+			set;
+		}
+		#endregion
 
 		/// <summary>
 		/// The DanmakuField that all bullets fired by this pattern will end up within. <br>
@@ -56,13 +62,14 @@ namespace Danmaku2D {
 		/// An overridable function that is called every time the AttackPattern starts its execution.
 		/// Use this for setup of various execution related variables
 		/// </summary>
-		protected virtual void OnExecutionStart() {
+		protected virtual void OnInitialize() {
 		}
+
 		/// <summary>
 		/// An overridable function that is called every time the AttackPattern finishes its execution.
 		/// Use this for cleanup of various execution related variables
 		/// </summary>
-		protected virtual void OnExecutionFinish() {
+		protected virtual void OnFinalize() {
 		}
 
 		/// <summary>
@@ -78,12 +85,12 @@ namespace Danmaku2D {
 		
 		private IEnumerator Execute() {
 			Active = true;
-			OnExecutionStart ();
+			OnInitialize ();
 			while(!IsFinished && Active) {
 				MainLoop();
 				yield return UtilCoroutines.WaitForUnpause(this);
 			}
-			OnExecutionFinish ();
+			OnFinalize ();
 			Active = false;
 		}
 

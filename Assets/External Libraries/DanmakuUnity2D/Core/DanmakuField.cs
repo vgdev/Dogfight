@@ -357,6 +357,32 @@ namespace Danmaku2D {
 			}
 			return player;
 		}
+
+		
+		public void SpawnEnemy(Enemy prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {
+			Enemy enemy = (Enemy)Instantiate(prefab);
+			Transform transform = enemy.transform;
+			transform.position = WorldPoint(location, coordSys);
+			enemy.Field = this;
+		}
+		
+		public GameObject SpawnGameObject(GameObject gameObject, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {
+			GameObject instance = (GameObject)Instantiate (gameObject);
+			instance.transform.position = WorldPoint (location, coordSys);
+			return instance;
+		}
+
+		public Component SpawnObject(Component prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {
+			Component instance = (Component)Instantiate (prefab);
+			instance.transform.position = WorldPoint (location, coordSys);
+			return instance;
+		}
+
+		public T SpawnObject<T>(T prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) where T : Component {
+			T instance = (T)Instantiate (prefab);
+			instance.transform.position = WorldPoint (location, coordSys);
+			return instance;
+		}
 		
 		/// <summary>
 		/// Spawns a projectile in the field.
@@ -372,13 +398,6 @@ namespace Danmaku2D {
 			Projectile bullet = Projectile.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
 			bullet.Activate ();
 			return bullet;
-		}
-		
-		public void SpawnEnemy(Enemy prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {
-			Enemy enemy = (Enemy)Instantiate(prefab);
-			Transform transform = enemy.transform;
-			transform.position = WorldPoint((Vector2)location, coordSys);
-			enemy.Field = this;
 		}
 
 		public FireData<LinearProjectile> FireLinearProjectile(ProjectilePrefab bulletType, 

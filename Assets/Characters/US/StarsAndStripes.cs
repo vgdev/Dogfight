@@ -39,8 +39,8 @@ public class StarsAndStripes : TimedAttackPattern {
 	private float burstVelocity = 0f;
 
 	// this is called every time the attack pattern starts
-	protected override void OnExecutionStart () {
-		base.OnExecutionStart ();
+	protected override void OnInitialize () {
+		base.OnInitialize ();
 		stripesDelay.Reset ();
 		Vector2 burstSource = burstSpawnLocation - 0.5f * burstSpawnArea + burstSpawnArea.Random();
 		for(int i = 0; i < burstCount; i++) {

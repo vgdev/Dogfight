@@ -52,7 +52,7 @@ namespace Danmaku2D.AttackPatterns {
 			}
 		}
 		
-		protected override void OnExecutionStart () {
+		protected override void OnInitialize () {
 			burstCount.Reset ();
 			currentBurstSource = spawnLocation - 0.5f * spawnArea + spawnArea.Random();
 		}

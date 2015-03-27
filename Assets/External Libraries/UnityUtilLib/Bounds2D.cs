@@ -5,7 +5,7 @@ namespace UnityUtilLib {
 	public struct Bounds2D {
 
 		public Vector2 Center;
-		public Vector2 Size;
+		public Vector2 Extents;
 
 		public Vector2 Max {
 			get {
@@ -19,12 +19,12 @@ namespace UnityUtilLib {
 			}
 		}
 
-		public Vector2 Extents {
+		public Vector2 Size {
 			get {
-				return 0.5f * Size;
+				return 2 * Extents;
 			}
 			set {
-				Size = 2f * value;
+				Extents = 0.5f * value;
 			}
 		}
 
@@ -34,10 +34,17 @@ namespace UnityUtilLib {
 		}
 
 		public bool Contains(Vector2 point) {
-			Vector2 diff = Util.Abs (point - Center);
-			Vector2 extents = Extents;
-//			Debug.Log (diff.ToString() + " ," + Size.ToString());
-			return diff.x <= extents.x && diff.y <= extents.y;
+			Vector2 min = Center - Extents;
+			Vector2 max = Center + Extents;
+			if (point.x < min.x)
+				return false;
+			else if (point.y < min.y)
+				return false;
+			else if (point.x > max.x)
+				return false;
+			else if(point.y > max.y)
+				return false;
+			return true;
 		}
 
 		public override bool Equals (object obj) {

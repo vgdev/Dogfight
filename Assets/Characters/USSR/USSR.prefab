@@ -189,9 +189,9 @@ MonoBehaviour:
   deathCancelDuration: .5
   deathCancelRadius: 30
   deathInvincibiiltyPeriod:
-    delay: 2
+    Time: 3
   invincibiltyFlash:
-    delay: .200000003
+    Time: .200000003
 --- !u!114 &11445190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,11 +203,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6cdb2cbc50f7f41ab444ac59fd3e87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
   timeout:
-    delay: 10
+    Time: 0
   snowPrefab: {fileID: 11441880, guid: 25eea8ed97ca94847bc79f6b7794775a, type: 2}
   delay:
-    delay: .100000001
+    Time: 0
   spawnCount: 3
   areaCenter: {x: -.0500000007, y: .5}
   areaSize: {x: 0, y: 1}
@@ -215,6 +216,8 @@ MonoBehaviour:
   angleMax: 270
   linearController:
     velocity: 15
+    acceleration: 0
+    capSpeed: 0
 --- !u!114 &11449460
 MonoBehaviour:
   m_ObjectHideFlags: 1

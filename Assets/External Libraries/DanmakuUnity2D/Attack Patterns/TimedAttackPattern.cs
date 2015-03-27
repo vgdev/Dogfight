@@ -23,7 +23,7 @@ namespace Danmaku2D {
 			}
 		}
 
-		protected override void OnExecutionStart () {
+		protected override void OnInitialize () {
 			timeout.Reset ();
 		}
 
