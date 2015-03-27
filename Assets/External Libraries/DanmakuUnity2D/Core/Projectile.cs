@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityUtilLib;
 using UnityUtilLib.Pooling;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// A development kit for quick development of 2D Danmaku games
@@ -160,16 +161,17 @@ namespace Danmaku2D {
 		internal Vector2 direction;
 		
 		internal Vector2 circleCenter = Vector2.zero; 
-		internal float circleRaidus = 1f;
+		private float circleRaidus = 1f;
 		internal Sprite sprite;
 		internal Color color;
 		internal string tag;
 		internal int layer;
 		internal int frames;
+		internal float time;
 		internal bool symmetric;
+		internal bool collisionCheck;
 		
-		private bool discrete;
-		private int count;
+		private int colliderMask;
 
 		private bool to_deactivate;
 		private ProjectilePrefab prefab;
@@ -181,10 +183,9 @@ namespace Danmaku2D {
 		private DanmakuField field;
 
 		//Preallocated variables to avoid allocation in Update
-		private Vector2 originalPosition;
-		private Vector2 movementVector;
+		private int count, count2;
 		private float distance;
-		private int count2;
+		private Vector2 originalPosition, movementVector;
 		private IProjectileCollider[] scripts;
 		private RaycastHit2D[] raycastHits;
 		private Collider2D[] colliders;
@@ -228,7 +229,6 @@ namespace Danmaku2D {
 		
 		/// <summary>
 		/// Gets or sets the position, in world space, of the projectile.
-		/// Exposed as a public variable instead of a property to decrease computational overhead.
 		/// </summary>
 		/// <value>The position of the projectile.</value>
 		public Vector2 Position;
@@ -238,7 +238,9 @@ namespace Danmaku2D {
 				return Position;
 			}
 			set {
-				Position = transform.localPosition = value;
+				transform.localPosition = value;
+				Position.x = value.x;
+				Position.y = value.y;
 			}
 		}
 		
@@ -259,8 +261,19 @@ namespace Danmaku2D {
 				if(!symmetric)
 					transform.localRotation = Quaternion.Euler(0f, 0f, value);
 				rotation = value;
-				direction = Util.OnUnitCircle(value + 90f);
+				float expected = rotation + 90f;
+				direction.x = (float)Math.Cos (expected);
+				direction.y = (float)Math.Sin (expected);
 			}
+		}
+
+		public void Rotate(float delta) {
+			if(!symmetric)
+				transform.Rotate(0f, 0f, delta);
+			rotation += delta;
+			float expected = rotation + 90f;
+			direction.x = (float)Math.Cos (expected);
+			direction.y = (float)Math.Sin (expected);
 		}
 		
 		/// <summary>
@@ -305,6 +318,10 @@ namespace Danmaku2D {
 			get {
 				return tag;
 			}
+			set {
+				tag = value;
+				gameObject.tag = value;
+			}
 		}
 		
 		/// <summary>
@@ -314,6 +331,10 @@ namespace Danmaku2D {
 		public int Layer {
 			get {
 				return layer;
+			}
+			set {
+				layer = value;
+				colliderMask = collisionMask[layer];
 			}
 		}
 
@@ -376,25 +397,15 @@ namespace Danmaku2D {
 				controllerUpdate(this, dt);
 			}
 
-//			if(groupCheck) {
-//				for(int i = 0; i < groupCountCache; i++) {
-//					IProjectileController groupController = groups[i].Controller;
-//					if(groupController != null)
-//						groupController.UpdateProjectile(this, dt);
-//				}
-//			}
-
 			movementVector = Position - originalPosition;
-			distance = movementVector.magnitude;
-
-			discrete = distance < circleRaidus;
-			count2 = 0;
-
-			if (discrete) {
-				count = Physics2D.OverlapCircleNonAlloc(originalPosition + circleCenter,
-				                                        circleRaidus,
-				                                        colliders,
-				                                        collisionMask[layer]);
+			if(collisionCheck) {
+				distance = movementVector.magnitude;
+				//Check if the collision detection should be continuous or not
+				if (distance > circleRaidus) {
+					count = Physics2D.OverlapCircleNonAlloc(originalPosition + circleCenter,
+				                                            circleRaidus,
+				                                            colliders,
+				                                            colliderMask);
 					for (int i = 0; i < count; i++) {
 						GameObject go = colliders [i].gameObject;
 						scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
@@ -406,23 +417,24 @@ namespace Danmaku2D {
 							break;
 						}
 					}
-			} else {
-				count = Physics2D.CircleCastNonAlloc(originalPosition + circleCenter, 
-				                                     circleRaidus,
-				                                     movementVector,
-				                                     raycastHits,
-				                                     distance,
-				                                     collisionMask[layer]);
-				for (int i = 0; i < count; i++) {
-					RaycastHit2D hit = raycastHits [i];
-					GameObject go = hit.collider.gameObject;
-					scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
-					for (int j = 0; j < count2; j++) {
-						scripts [j].OnProjectileCollision (this);
-					}
-					if (to_deactivate) {
-						Position = hit.point;
-						break;
+				} else {
+					count = Physics2D.CircleCastNonAlloc(originalPosition + circleCenter, 
+					                                     circleRaidus,
+					                                     movementVector,
+					                                     raycastHits,
+					                                     distance,
+					                                     colliderMask);
+					for (int i = 0; i < count; i++) {
+						RaycastHit2D hit = raycastHits [i];
+						GameObject go = hit.collider.gameObject;
+						scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
+						for (int j = 0; j < count2; j++) {
+							scripts [j].OnProjectileCollision (this);
+						}
+						if (to_deactivate) {
+							Position = hit.point;
+							break;
+						}
 					}
 				}
 			}
@@ -448,18 +460,20 @@ namespace Danmaku2D {
 			if (this.prefab != prefab) {
 				this.prefab = prefab;
 				this.runtime = prefab.GetRuntime();
-				transform.localScale = runtime.Scale;
-				sprite = renderer.sprite = runtime.Sprite;
-				renderer.sharedMaterial = runtime.Material;
-				renderer.sortingLayerID = renderer.sortingLayerID;
-				circleCenter = transform.lossyScale.Hadamard2(runtime.ColliderOffset);
-				circleRaidus = runtime.ColliderRadius * transform.lossyScale.Max();
-				tag = gameObject.tag = runtime.Tag;
-				layer = runtime.Layer;
-				symmetric = runtime.Symmetric;
+				Vector2 scale = transform.localScale = runtime.cachedScale;
+				sprite = renderer.sprite = runtime.cachedSprite;
+				renderer.sharedMaterial = runtime.cachedMaterial;
+				renderer.sortingLayerID = runtime.cachedSortingLayer;
+				circleCenter = scale.Hadamard2(runtime.cachedColliderOffset);
+				circleRaidus = runtime.cachedColliderRadius * scale.Max();
+				tag = gameObject.tag = runtime.cachedTag;
+				symmetric = runtime.symmetric;
 			}
 			
-			renderer.color = runtime.Color;
+			renderer.color = runtime.cachedColor;
+			layer = runtime.cachedLayer;
+			colliderMask = collisionMask [layer];
+			collisionCheck = false;
 
 			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
 			if (pcbs.Length > 0) {

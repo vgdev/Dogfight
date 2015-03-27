@@ -98,8 +98,12 @@ namespace Danmaku2D {
 				}
 			}
 
-			if (currentVelocity != 0)
-				projectile.Position += projectile.Direction * (currentVelocity * dt);
+			if (currentVelocity != 0) {
+				Vector2 direction = projectile.direction;
+				float change = currentVelocity * dt;
+				projectile.Position.x += direction.x * change;
+				projectile.Position.y += direction.y * change;
+			}
 		}
 		
 		#endregion
