@@ -32,7 +32,7 @@ namespace Danmaku2D {
 		internal Vector2 circleCenter = Vector2.zero; 
 		private float circleRaidus = 1f;
 		internal Sprite sprite;
-		internal Color color;
+		internal Color32 color;
 		internal string tag;
 		internal int layer;
 		internal int frames;
@@ -87,7 +87,7 @@ namespace Danmaku2D {
 		/// <see href="http://docs.unity3d.com/ScriptReference/SpriteRenderer-color.html">SpriteRenderer.color</see>
 		/// </summary>
 		/// <value>The renderer color.</value>
-		public Color Color {
+		public Color32 Color {
 			get {
 				return color;
 			}
@@ -130,10 +130,7 @@ namespace Danmaku2D {
 				if(!symmetric)
 					transform.localRotation = Quaternion.Euler(0f, 0f, value);
 				rotation = value;
-				float expected = rotation + 90f;
-				direction = Util.OnUnitCircle(rotation + 90f);
-//				direction.x = (float)Math.Cos (expected);
-//				direction.y = (float)Math.Sin (expected);
+				direction = UnitCircle(rotation);
 			}
 		}
 
@@ -141,9 +138,7 @@ namespace Danmaku2D {
 			if(!symmetric)
 				transform.Rotate(0f, 0f, delta);
 			rotation += delta;
-			float expected = rotation + 90f;
-			direction.x = (float)Math.Cos (expected);
-			direction.y = (float)Math.Sin (expected);
+			direction = UnitCircle (rotation);
 		}
 		
 		/// <summary>
@@ -259,9 +254,7 @@ namespace Danmaku2D {
 			scripts = new IProjectileCollider[5];
 		}
 
-		internal void Update(float dt) {
-			if (!is_active)
-				return;
+		internal void Update() {
 			frames++;
 			originalPosition.x = Position.x;
 			originalPosition.y = Position.y;
@@ -272,6 +265,8 @@ namespace Danmaku2D {
 			
 			movementVector.x = Position.x - originalPosition.x;
 			movementVector.y = Position.y - originalPosition.y;
+
+			collisionCheck = UnityEngine.Random.value > 0.5f;
 
 			if(collisionCheck) {
 				distance = movementVector.magnitude;

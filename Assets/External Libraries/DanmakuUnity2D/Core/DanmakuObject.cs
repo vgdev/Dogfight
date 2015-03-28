@@ -55,7 +55,7 @@ namespace Danmaku2D {
 		internal Vector2 cachedColliderOffset;
 		
 		internal Sprite cachedSprite;
-		internal Color cachedColor;
+		internal Color32 cachedColor;
 		internal Material cachedMaterial;
 		internal int cachedSortingLayer;
 
@@ -117,7 +117,7 @@ namespace Danmaku2D {
 		/// Gets the color of the instance's SpriteRenderer
 		/// </summary>
 		/// <value>The color to be rendered with.</value>
-		public Color Color {
+		public Color32 Color {
 			get {
 				return cachedColor;
 			}

@@ -22,7 +22,7 @@ namespace UnityUtilLib.GUI {
 		private Vector2 offset;
 
 		[SerializeField]
-		private Color shadowColor;
+		private Color32 shadowColor;
 
 		private void Start() {
 			shadow = new GameObject();

@@ -8,9 +8,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 466432}
-  - 114: {fileID: 11406128}
+  - 114: {fileID: 11478404}
   m_Layer: 14
-  m_Name: KnightsCrossScriptValues
+  m_Name: BlitzKriegScriptValues
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11406128
+--- !u!114 &11478404
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -36,19 +36,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 166432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6efd689ac5ef4764abe71c0736c4a6cf, type: 3}
+  m_Script: {fileID: 11500000, guid: f73f1050271bf524bad2bb5f4d53bcd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TargetField: {fileID: 0}
   timeout:
     Time: 2
+  prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
+  bulletCount: 9
+  burstCount:
+    MaxCount: 1
+    Count: 1
+  burstDelay:
+    Time: .0500000007
+  burstInitialRotation: 0
+  burstRotationDelta: 5
+  LinearController:
+    velocity: 10
+    acceleration: 0
+    capSpeed: 0
   crossDelay:
-    Time: .400000006
-  fatBullet: {fileID: 11420942, guid: 53a04669cc266574082aafa42d1e95da, type: 2}
-  thinBullet: {fileID: 11483526, guid: fd93b1802e3f9c94ea450691f812cacc, type: 2}
-  bulletVelocity: 7
-  centerArea: {x: 1, y: 1}
-  bulletSeparationDist: .0500000007
+    Time: .300000012
+  centerArea: {x: 1, y: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

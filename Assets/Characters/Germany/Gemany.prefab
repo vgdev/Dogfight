@@ -48,6 +48,7 @@ GameObject:
   - 50: {fileID: 5030090}
   - 114: {fileID: 11430088}
   - 114: {fileID: 11436200}
+  - 114: {fileID: 11441488}
   m_Layer: 12
   m_Name: Gemany
   m_TagString: Player
@@ -178,6 +179,7 @@ MonoBehaviour:
   fireRate: 20
   attackPatterns:
   - {fileID: 11436200}
+  - {fileID: 11441488}
   shotOffset: {x: .5, y: 0}
   shotVelocity: 200
   chargeRate: 1
@@ -227,14 +229,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetField: {fileID: 0}
   timeout:
-    Time: 0
+    Time: 2
   crossDelay:
-    Time: 0
+    Time: .400000006
   fatBullet: {fileID: 11420942, guid: 53a04669cc266574082aafa42d1e95da, type: 2}
   thinBullet: {fileID: 11483526, guid: fd93b1802e3f9c94ea450691f812cacc, type: 2}
   bulletVelocity: 7
   centerArea: {x: 1, y: 1}
   bulletSeparationDist: .0500000007
+--- !u!114 &11441488
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f73f1050271bf524bad2bb5f4d53bcd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 2
+  prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
+  bulletCount: 9
+  burstCount:
+    MaxCount: 1
+    Count: 1
+  burstDelay:
+    Time: .0500000007
+  burstInitialRotation: 0
+  burstRotationDelta: 5
+  LinearController:
+    velocity: 10
+    acceleration: 0
+    capSpeed: 0
+  crossDelay:
+    Time: .300000012
+  centerArea: {x: 1, y: 0}
 --- !u!212 &21230088
 SpriteRenderer:
   m_ObjectHideFlags: 1
