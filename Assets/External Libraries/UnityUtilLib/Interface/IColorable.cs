@@ -14,7 +14,7 @@ namespace UnityUtilLib {
 		/// Gets or sets the color of the object.
 		/// </summary>
 		/// <value>The color of the object.</value>
-		Color Color { get; set; }
+		Color32 Color { get; set; }
 	}
 }
 

@@ -191,9 +191,9 @@ MonoBehaviour:
   deathCancelDuration: .5
   deathCancelRadius: 30
   deathInvincibiiltyPeriod:
-    Time: 0
+    Time: 3
   invincibiltyFlash:
-    Time: 0
+    Time: .200000003
 --- !u!114 &11430092
 MonoBehaviour:
   m_ObjectHideFlags: 1

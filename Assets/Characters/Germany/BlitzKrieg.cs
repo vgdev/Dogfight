@@ -46,9 +46,9 @@ public class BlitzKrieg : TimedAttackPattern
     private float vertical=0;
 
     // this is called every time the attack pattern starts
-    protected override void OnExecutionStart()
+    protected override void OnInitialize()
     {
-        base.OnExecutionStart();
+		base.OnInitialize();
         crossDelay.Reset();
         vertical = 0;
         fire();

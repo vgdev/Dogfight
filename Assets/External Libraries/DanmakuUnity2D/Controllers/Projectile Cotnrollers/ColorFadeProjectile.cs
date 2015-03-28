@@ -6,7 +6,7 @@ namespace Danmaku2D.ProjectileControllers {
 	public class ColorFadeProjectile : ProjectileControlBehavior {
 
 		[SerializeField]
-		private Color endColor;
+		private Color32 endColor;
 
 		[SerializeField]
 		private float startTime;
@@ -16,13 +16,13 @@ namespace Danmaku2D.ProjectileControllers {
 
 		public override void UpdateProjectile (Projectile projectile, float dt) {
 			float bulletTime = projectile.Time;
-			Color startColor = SpriteRenderer.color;
+			Color32 startColor = SpriteRenderer.color;
 			if (bulletTime < startTime)
 				projectile.Color = startColor;
 			else if (bulletTime > endTime)
 				projectile.Color = endColor;
 			else
-				projectile.Color = Color.Lerp (startColor, endColor, (bulletTime - startTime) / (endTime - startTime));
+				projectile.Color = Color32.Lerp (startColor, endColor, (bulletTime - startTime) / (endTime - startTime));
 		}
 
 	}

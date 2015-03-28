@@ -26,8 +26,8 @@ public class KnightsCross : TimedAttackPattern {
     private float angleToPlayer;
 
     // this is called every time the attack pattern starts
-    protected override void OnExecutionStart() {
-        base.OnExecutionStart();
+    protected override void OnInitialize() {
+        base.OnInitialize();
         crossDelay.Reset();
         center = centerArea.Random();
         angleToPlayer = TargetField.AngleTowardPlayer(TargetField.WorldPoint(center), DanmakuField.CoordinateSystem.World);

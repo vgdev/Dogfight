@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using Danmaku2D;
 using UnityUtilLib;
@@ -31,8 +31,8 @@ public class RussianWinter : TimedAttackPattern {
 
 	private ProjectileGroup group;
 
-	protected override void OnExecutionStart () {
-		base.OnExecutionStart ();
+	protected override void OnInitialize () {
+		base.OnInitialize ();
 		group = new ProjectileGroup ();
 		group.AddController(linearController);
 	}

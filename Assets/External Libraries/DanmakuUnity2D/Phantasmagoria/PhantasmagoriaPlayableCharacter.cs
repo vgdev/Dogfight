@@ -112,8 +112,8 @@ namespace Danmaku2D.Phantasmagoria {
 			WaitForEndOfFrame wfeof = new WaitForEndOfFrame();
 			SpriteRenderer render = GetComponent<SpriteRenderer> ();
 			bool flash = false;
-			Color normalColor = render.color;
-			Color flashColor = normalColor;
+			Color32 normalColor = render.color;
+			Color32 flashColor = normalColor;
 			flashColor.a = 0;
 			while(!deathInvincibiiltyPeriod.Tick()) {
 				if(invincibiltyFlash.Tick()) {

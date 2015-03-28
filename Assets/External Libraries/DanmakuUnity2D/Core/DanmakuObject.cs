@@ -45,19 +45,19 @@ namespace Danmaku2D {
 		private SpriteRenderer spriteRenderer;
 
 		[SerializeField]
-		private bool symmetric;
+		internal bool symmetric;
 
-		private Vector3 cachedScale;
-		private string cachedTag;
-		private int cachedLayer;
+		internal Vector3 cachedScale;
+		internal string cachedTag;
+		internal int cachedLayer;
 		
-		private float cachedColliderRadius;
-		private Vector2 cachedColliderOffset;
+		internal float cachedColliderRadius;
+		internal Vector2 cachedColliderOffset;
 		
-		private Sprite cachedSprite;
-		private Color cachedColor;
-		private Material cachedMaterial;
-		private int cachedSortingLayer;
+		internal Sprite cachedSprite;
+		internal Color32 cachedColor;
+		internal Material cachedMaterial;
+		internal int cachedSortingLayer;
 
 		public bool Symmetric {
 			get {
@@ -117,7 +117,7 @@ namespace Danmaku2D {
 		/// Gets the color of the instance's SpriteRenderer
 		/// </summary>
 		/// <value>The color to be rendered with.</value>
-		public Color Color {
+		public Color32 Color {
 			get {
 				return cachedColor;
 			}

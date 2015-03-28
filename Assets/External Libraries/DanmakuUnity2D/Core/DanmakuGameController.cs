@@ -23,6 +23,9 @@ namespace Danmaku2D {
 		[SerializeField]
 		private int projectileSpawnOnEmpty = 100;
 
+		[SerializeField]
+		private float angleResolution = 0.1f;
+
 		/// <summary>
 		/// The maximum number of lives a player can reach.
 		/// </summary>
@@ -44,7 +47,7 @@ namespace Danmaku2D {
 
 		public override void Awake () {
 			base.Awake ();
-			Projectile.Setup (projectileInitialCount, projectileSpawnOnEmpty);
+			Projectile.Setup (projectileInitialCount, projectileSpawnOnEmpty, angleResolution);
 		}
 	}
 }
