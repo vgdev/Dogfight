@@ -112,8 +112,8 @@ namespace Danmaku2D.Phantasmagoria {
 			WaitForEndOfFrame wfeof = new WaitForEndOfFrame();
 			SpriteRenderer render = GetComponent<SpriteRenderer> ();
 			bool flash = false;
-			Color32 normalColor = render.color;
-			Color32 flashColor = normalColor;
+			Color normalColor = render.color;
+			Color flashColor = normalColor;
 			flashColor.a = 0;
 			while(!deathInvincibiiltyPeriod.Tick()) {
 				if(invincibiltyFlash.Tick()) {
@@ -158,8 +158,8 @@ namespace Danmaku2D.Phantasmagoria {
 		public override void Fire () {
 			Vector2 location;
 			location = transform.position;
-			Projectile proj1 = Field.FireLinearProjectile (shotType, location + shotOffset, 0f, shotVelocity, DanmakuField.CoordinateSystem.World).Projectile;
-			Projectile proj2 = Field.FireLinearProjectile (shotType, location - shotOffset, 0f, shotVelocity, DanmakuField.CoordinateSystem.World).Projectile;
+			Projectile proj1 = Field.FireLinear (shotType, location + shotOffset, 0f, shotVelocity, DanmakuField.CoordinateSystem.World);
+			Projectile proj2 = Field.FireLinear (shotType, location - shotOffset, 0f, shotVelocity, DanmakuField.CoordinateSystem.World);
 			proj1.Damage = proj2.Damage = shotDamage;
 		}
 	}

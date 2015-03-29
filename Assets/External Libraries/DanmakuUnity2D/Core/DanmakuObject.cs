@@ -5,35 +5,6 @@ using UnityUtilLib.Pooling;
 
 namespace Danmaku2D {
 
-	public class DanmakuObject {
-
-
-		internal DanmakuObject() {
-		}
-
-//		public int Move(Vector2 movementVector, float distance, int mask) {
-//
-//			discrete = distance < circleRaidus;
-//			if (discrete) {
-//				count = Physics2D.OverlapCircleNonAlloc(position + circleCenter,
-//				                                        circleRaidus,
-//				                                        colliders,
-//				                                        mask);
-//			} else {
-//				count = Physics2D.CircleCastNonAlloc(position + circleCenter, 
-//				                                     circleRaidus,
-//				                                     movementVector,
-//				                                     raycastHits,
-//				                                     distance,
-//				                                     mask);
-//				//Translate
-//			}
-//			position += movementVector;
-//			transform.localPosition = position;
-//			return count;
-//		}
-	}
-
 	public abstract class DanmakuObjectPrefab : CachedObject {
 		
 		[HideInInspector]
@@ -55,7 +26,7 @@ namespace Danmaku2D {
 		internal Vector2 cachedColliderOffset;
 		
 		internal Sprite cachedSprite;
-		internal Color32 cachedColor;
+		internal Color cachedColor;
 		internal Material cachedMaterial;
 		internal int cachedSortingLayer;
 
@@ -117,7 +88,7 @@ namespace Danmaku2D {
 		/// Gets the color of the instance's SpriteRenderer
 		/// </summary>
 		/// <value>The color to be rendered with.</value>
-		public Color32 Color {
+		public Color Color {
 			get {
 				return cachedColor;
 			}

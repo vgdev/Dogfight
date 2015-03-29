@@ -37,9 +37,8 @@ namespace Danmaku2D {
 		}
 
 		internal static int Ang2Index(float angle) {
-			while (angle < 0)
-				angle += 360;
-			return (int)((angle % 360) * invAngRes);
+			float clamp = angle - 360 * Mathf.FloorToInt (angle / 360);
+			return (int)(clamp * invAngRes);
 		}
 
 		internal static Vector2 UnitCircle(float angle) {
@@ -90,7 +89,7 @@ namespace Danmaku2D {
 			}
 		}
 		
-		internal static Projectile Get (ProjectilePrefab projectileType, Vector2 position, float rotation, DanmakuField field) {
+		public static Projectile Get (ProjectilePrefab projectileType, Vector2 position, float rotation, DanmakuField field) {
 			Projectile proj = projectilePool.Get ();
 			proj.MatchPrefab (projectileType);
 			proj.PositionImmediate = position;
@@ -100,11 +99,16 @@ namespace Danmaku2D {
 			return proj;
 		}
 		
-		internal static Projectile Get(DanmakuField field, FireBuilder builder) {
+		public static Projectile Get(DanmakuField field, FireBuilder builder) {
 			Projectile proj = projectilePool.Get ();
 			proj.MatchPrefab (builder.Prefab);
 			proj.PositionImmediate = field.WorldPoint (builder.Position, builder.CoordinateSystem);
 			proj.Rotation = builder.Rotation;
+			proj.Velocity = builder.Velocity;
+			proj.AngularVelocity = builder.AngularVelocity;
+			proj.AddController (builder.Controller);
+			if (builder.Group != null) 
+				proj.AddToGroup (builder.Group);
 			proj.field = field;
 			proj.bounds = field.bounds;
 			return proj;

@@ -27,7 +27,7 @@ public class RussianWinter : TimedAttackPattern {
 	private float angleMax;
 
 	[SerializeField]
-	private LinearProjectile linearController;
+	private AccelerationController linearController;
 
 	private ProjectileGroup group;
 

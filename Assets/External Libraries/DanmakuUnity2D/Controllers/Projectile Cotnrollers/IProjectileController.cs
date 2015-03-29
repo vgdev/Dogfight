@@ -5,6 +5,8 @@ using UnityEngine;
 /// </summary>
 namespace Danmaku2D {
 
+	public delegate void ProjectileController(Projectile proj, float dt);
+
 	/// <summary>
 	/// An interface for defining any controller of single Projectile.
 	/// If looking to reuse behavior among large numbers of projectiles, use a ProjectileGroup and IProjectileGroupController instead.

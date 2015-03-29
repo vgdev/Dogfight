@@ -11,7 +11,7 @@ namespace Danmaku2D.Phantasmagoria.GUI {
 		private PhantasmagoriaGameController gameController;
 
 		[SerializeField]
-		private Color32 flashColor;
+		private Color flashColor;
 
 		[SerializeField]
 		private FrameCounter flashInterval;
@@ -19,7 +19,7 @@ namespace Danmaku2D.Phantasmagoria.GUI {
 		[SerializeField]
 		private float flashThreshold;
 
-		private Color32 normalColor;
+		private Color normalColor;
 		private bool flashState;
 		private GUIText label;
 

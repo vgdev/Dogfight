@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 using Danmaku2D;
@@ -26,7 +26,7 @@ public class BlitzKrieg : TimedAttackPattern
     private float burstRotationDelta;
 
     [SerializeField]
-    private LinearProjectile LinearController;
+    private AccelerationController LinearController;
 
     private ProjectileGroup burstGroup;
 
