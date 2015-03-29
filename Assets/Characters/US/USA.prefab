@@ -178,7 +178,7 @@ MonoBehaviour:
   prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
   spawnLocation: {x: .5, y: .899999976}
   spawnArea: {x: 0, y: 0}
-  bulletCount: 500
+  bulletCount: 20
   burstDepth: 1
   burstRange: 360
   burstCount:
