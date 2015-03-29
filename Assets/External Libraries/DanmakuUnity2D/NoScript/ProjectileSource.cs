@@ -4,10 +4,10 @@ using UnityUtilLib;
 
 namespace Danmaku2D {
 	
-	public struct SourcePoint {
+	public class SourcePoint {
 		public Vector2 Position;
 		public float BaseRotation;
-		
+
 		public SourcePoint(Vector2 location, float rotation) {
 			this.Position = location;
 			this.BaseRotation = rotation;
@@ -16,16 +16,39 @@ namespace Danmaku2D {
 
 	public abstract class ProjectileSource : CachedObject {
 
+		public ProjectileSource subSource;
+
 		[System.NonSerialized]
 		public DanmakuField TargetField;
 
-		protected SourcePoint[] sourcePoints;
+		protected List<SourcePoint> sourcePoints;
 
-		protected abstract void UpdateSourcePoints ();
+		protected void UpdatePoints(Vector2 position, float rotation) {
+			UpdateSourcePoints(position, rotation);
+			float sourceRotation;
+			if (subSource != null) {
+				List<SourcePoint> temp = new List<SourcePoint> ();
+				for (int i = 0; i < sourcePoints.Count; i++) {
+					if (subSource.sourcePoints == null) {
+						subSource.sourcePoints = new List<SourcePoint> ();
+					}
+					sourceRotation = sourcePoints [i].BaseRotation;
+					subSource.UpdatePoints (sourcePoints [i].Position, sourceRotation);
+					for (int j = 0; j < subSource.sourcePoints.Count; j++) {
+						SourcePoint point = subSource.sourcePoints [j];
+						//point.BaseRotation += rotation;
+						temp.Add (point);
+					}
+				}
+				sourcePoints = temp;
+			}
+		}
+
+		protected abstract void UpdateSourcePoints (Vector2 position, float rotation);
 
 		void Update() {
 			if (transform.hasChanged) {
-				UpdateSourcePoints ();
+				UpdatePoints(transform.position, transform.rotation.eulerAngles.z);
 				transform.hasChanged = false;
 			}
 		}
@@ -33,108 +56,63 @@ namespace Danmaku2D {
 		public override void Awake () {
 			base.Awake ();
 			TargetField = Util.FindClosest<DanmakuField> (transform.position);
-			UpdateSourcePoints ();
+			sourcePoints = new List<SourcePoint> ();
+			UpdatePoints(transform.position, transform.rotation.eulerAngles.z);
 		}
 
 		public SourcePoint[] SourcePoints {
 			get {
-				UpdateSourcePoints();
-				return sourcePoints;
+				UpdateSourcePoints(transform.position, transform.eulerAngles.z);
+				return sourcePoints.ToArray();
 			}
 		}
 
-		private static IProjectileController DefaultController(int depth) {
-			return new LinearProjectile (5f);
-		}
-
-		public void FireSingle(ProjectilePrefab prefab, 
-		                       float rotationOffset = 0, 
-		                       IProjectileController controller = null) {
+		public void Fire(ProjectilePrefab prefab,
+		                 float velocity,
+		                 float rotationOffset = 0,
+		                 float angularVelocity = 0,
+		                 ProjectileController controller = null,
+		                 FireModifier modifier = null) {
 			if(TargetField == null) {
 				Debug.LogWarning("Firing from a Projectile Source without a Target Field");
 				return;
 			}
-			if (controller == null) {
-				controller = DefaultController(0);
-			}
-			for (int i = 0; i < sourcePoints.Length; i++) {
+			for (int i = 0; i < sourcePoints.Count; i++) {
 				SourcePoint source = sourcePoints[i];
-				TargetField.FireControlledProjectile (prefab,
-				                                      source.Position,
-				                                      source.BaseRotation + rotationOffset,
-				                                      controller,
-				                                      DanmakuField.CoordinateSystem.World);
+				TargetField.FireCurved (prefab,
+                                        source.Position,
+                                        source.BaseRotation + rotationOffset,
+				                        velocity,
+				                        angularVelocity,
+				                        DanmakuField.CoordinateSystem.World,
+                                        controller);
 			}
 		}
 
-		public void FireSingle(FireBuilder data) {
+		public void Fire(FireBuilder data) {
 			if(TargetField == null) {
 				Debug.LogWarning("Firing from a Projectile Source without a Target Field");
 				return;
 			}
-			IProjectileController controller = data.Controller;
-			if (controller == null) {
-				controller = new LinearProjectile (5f);
-			}
+			ProjectileController controller = data.Controller;
 			FireBuilder copy = data.Clone ();
 			float rotationOffset = data.Rotation;
 			copy.CoordinateSystem = DanmakuField.CoordinateSystem.World;
 			copy.Controller = controller;
-			for (int i = 0; i < sourcePoints.Length; i++) {
+			for (int i = 0; i < sourcePoints.Count; i++) {
 				SourcePoint source = sourcePoints[i];
 				copy.Position = source.Position;
 				copy.Rotation = source.BaseRotation + rotationOffset;
-				TargetField.FireControlledProjectile(copy);
-			}
-		}
-
-		public void FireBurst(ProjectilePrefab prefab,
-		                      int count,
-		                      float rotationOffset = 0, 
-		                      float rotationRange = 360f, 
-		                      int depth = 1,
-		                      BurstController controller = null) {
-			if(TargetField == null) {
-				Debug.LogWarning("Firing from a Projectile Source without a Target Field");
-				return;
-			}
-			if (controller == null) {
-				controller = DefaultController;
-			}
-			for (int i = 0; i < sourcePoints.Length; i++) {
-				SourcePoint source = sourcePoints[i];
-				TargetField.SpawnBurst (prefab,
-				                        source.Position,
-				                        source.BaseRotation + rotationOffset,
-				                        rotationRange,
-				                        count,
-				                        null,
-				                        depth,
-				                        controller,
-				                        DanmakuField.CoordinateSystem.World);
-			}
-		}
-
-		public void FireBurst(BurstBuilder data) {
-			if(TargetField == null) {
-				Debug.LogWarning("Firing from a Projectile Source without a Target Field");
-				return;
-			}
-			BurstBuilder copy = data.Clone ();
-			float rotationOffset = data.Rotation;
-			copy.CoordinateSystem = DanmakuField.CoordinateSystem.World;
-
-			for (int i = 0; i < sourcePoints.Length; i++) {
-				SourcePoint source = sourcePoints[i];
-				copy.Position = source.Position;
-				copy.Rotation = source.BaseRotation + rotationOffset;
-				TargetField.SpawnBurst (copy);
+				TargetField.Fire(copy);
 			}
 		}
 
 		void OnDrawGizmos() {
-			UpdateSourcePoints ();
-			for(int i = 0; i < sourcePoints.Length; i++) {
+			if (sourcePoints == null) { 
+				sourcePoints = new List<SourcePoint> ();
+			}
+			UpdatePoints(transform.position, transform.rotation.eulerAngles.z);
+			for(int i = 0; i < sourcePoints.Count; i++) {
 				Gizmos.color = Color.yellow;
 				Gizmos.DrawWireSphere(sourcePoints[i].Position, 1f);
 				Gizmos.color = Color.red;

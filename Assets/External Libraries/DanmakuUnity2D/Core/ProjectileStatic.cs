@@ -13,21 +13,58 @@ namespace Danmaku2D {
 	/// The base object that represents a single bullet in a Danmaku game
 	/// </summary>
 	public sealed partial class Projectile : IPooledObject, IColorable, IPrefabed<ProjectilePrefab> {
-		
+
+		private const float twoPI = Mathf.PI * 2;
+		private static Vector2[] unitCircle;
+		private static float angleResolution;
+		private static float invAngRes;
 		private static int[] collisionMask;
 		private static ProjectilePool projectilePool;
+		private static float dt;
 		
-		internal static void Setup(int initial, int spawn) {
+		internal static void Setup(int initial, int spawn, float angRes) {
 			collisionMask = Util.CollisionLayers2D ();
 			projectilePool = new ProjectilePool (initial, spawn);
+			angleResolution = angRes;
+			invAngRes = 1f / angRes;
+			int count = Mathf.CeilToInt(360f / angleResolution);
+			float angle;
+			unitCircle = new Vector2[count];
+			for (int i = 0; i < count; i++) {
+				angle = i * angleResolution + 90f;
+				unitCircle[i] = Util.OnUnitCircle(angle);
+			}
+		}
+
+		internal static int Ang2Index(float angle) {
+			float clamp = angle - 360 * Mathf.FloorToInt (angle / 360);
+			return (int)(clamp * invAngRes);
+		}
+
+		internal static Vector2 UnitCircle(float angle) {
+			return unitCircle [Ang2Index(angle)];
+		}
+
+		internal static float Cos(float angle) {
+			return unitCircle [Ang2Index (angle)].x;
+		}
+
+		internal static float Sin(float angle) {
+			return unitCircle [Ang2Index (angle)].y;
+		}
+
+		internal static float Tan(float angle) {
+			return Cos (angle) / Sin (angle);
 		}
 		
 		internal static void UpdateAll() {
-			float dt = Util.TargetDeltaTime;
+			dt = Util.TargetDeltaTime;
 			Projectile[] all = projectilePool.all;
 			int totalCount = projectilePool.totalCount;
 			for (int i = 0; i < totalCount; i++) {
-				all[i].Update(dt);
+				if(all[i].is_active) {
+					all[i].Update();
+				}
 			}
 		}
 		
@@ -52,7 +89,7 @@ namespace Danmaku2D {
 			}
 		}
 		
-		internal static Projectile Get (ProjectilePrefab projectileType, Vector2 position, float rotation, DanmakuField field) {
+		public static Projectile Get (ProjectilePrefab projectileType, Vector2 position, float rotation, DanmakuField field) {
 			Projectile proj = projectilePool.Get ();
 			proj.MatchPrefab (projectileType);
 			proj.PositionImmediate = position;
@@ -62,11 +99,16 @@ namespace Danmaku2D {
 			return proj;
 		}
 		
-		internal static Projectile Get(DanmakuField field, FireBuilder builder) {
+		public static Projectile Get(DanmakuField field, FireBuilder builder) {
 			Projectile proj = projectilePool.Get ();
 			proj.MatchPrefab (builder.Prefab);
 			proj.PositionImmediate = field.WorldPoint (builder.Position, builder.CoordinateSystem);
 			proj.Rotation = builder.Rotation;
+			proj.Velocity = builder.Velocity;
+			proj.AngularVelocity = builder.AngularVelocity;
+			proj.AddController (builder.Controller);
+			if (builder.Group != null) 
+				proj.AddToGroup (builder.Group);
 			proj.field = field;
 			proj.bounds = field.bounds;
 			return proj;

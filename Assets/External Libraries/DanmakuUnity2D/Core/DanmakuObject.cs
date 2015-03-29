@@ -5,35 +5,6 @@ using UnityUtilLib.Pooling;
 
 namespace Danmaku2D {
 
-	public class DanmakuObject {
-
-
-		internal DanmakuObject() {
-		}
-
-//		public int Move(Vector2 movementVector, float distance, int mask) {
-//
-//			discrete = distance < circleRaidus;
-//			if (discrete) {
-//				count = Physics2D.OverlapCircleNonAlloc(position + circleCenter,
-//				                                        circleRaidus,
-//				                                        colliders,
-//				                                        mask);
-//			} else {
-//				count = Physics2D.CircleCastNonAlloc(position + circleCenter, 
-//				                                     circleRaidus,
-//				                                     movementVector,
-//				                                     raycastHits,
-//				                                     distance,
-//				                                     mask);
-//				//Translate
-//			}
-//			position += movementVector;
-//			transform.localPosition = position;
-//			return count;
-//		}
-	}
-
 	public abstract class DanmakuObjectPrefab : CachedObject {
 		
 		[HideInInspector]

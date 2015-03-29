@@ -14,41 +14,41 @@ namespace Danmaku2D {
 	/// The base object that represents a single bullet in a Danmaku game
 	/// </summary>
 	public sealed partial class Projectile : IPooledObject, IColorable, IPrefabed<ProjectilePrefab> {
-
-		private delegate void ProjectileUpdate(Projectile proj, float dt);
-		
-		private GameObject gameObject;
-		private Transform transform;
-		private SpriteRenderer renderer;
-		
-		internal string cachedTag;
-		internal int cachedLayer;
 		
 		internal int index;
 
+		private GameObject gameObject;
+		private Transform transform;
+		private SpriteRenderer renderer;
+
 		internal float rotation;
 		internal Vector2 direction;
-		
+
+		//Cached information about the Projectile from its prefab
 		internal Vector2 circleCenter = Vector2.zero; 
 		private float circleRaidus = 1f;
 		internal Sprite sprite;
+		internal Material material;
 		internal Color color;
 		internal string tag;
 		internal int layer;
 		internal int frames;
 		internal float time;
+		internal string cachedTag;
+		internal int cachedLayer;
 		internal bool symmetric;
-		internal bool collisionCheck;
-		
+
+		//Prefab information
+		private ProjectilePrefab prefab;
+		private ProjectilePrefab runtime;
+
+		//Collision related variables
 		private int colliderMask;
 
 		private bool to_deactivate;
-		private ProjectilePrefab prefab;
-		private ProjectilePrefab runtime;
 		
-		private ProjectileUpdate controllerUpdate;
+		private ProjectileController controllerUpdate;
 		internal List<ProjectileGroup> groups;
-		internal int groupCountCache;
 		private DanmakuField field;
 		private Bounds2D bounds;
 
@@ -63,6 +63,16 @@ namespace Danmaku2D {
 		//Cached check for controllers to avoid needing to calculate them in Update
 		internal bool groupCheck;
 		private bool controllerCheck;
+		internal int groupCountCache;
+
+		public float Velocity;
+		public float AngularVelocity;
+
+		public ProjectilePrefab Prefab {
+			get {
+				return runtime;
+			}
+		}
 
 		/// <summary>
 		/// Gets or sets the damage this projectile does to entities.
@@ -80,6 +90,10 @@ namespace Danmaku2D {
 			get {
 				return sprite;
 			}
+			set {
+				sprite = value;
+				renderer.sprite = value;
+			}
 		}
 		
 		/// <summary>
@@ -94,6 +108,16 @@ namespace Danmaku2D {
 			set {
 				renderer.color = value;
 				color = value;
+			}
+		}
+
+		public Material Material {
+			get {
+				return material;
+			}
+			set {
+				material = value;
+				renderer.material = value;
 			}
 		}
 		
@@ -130,20 +154,8 @@ namespace Danmaku2D {
 				if(!symmetric)
 					transform.localRotation = Quaternion.Euler(0f, 0f, value);
 				rotation = value;
-				float expected = rotation + 90f;
-				direction = Util.OnUnitCircle(rotation + 90f);
-//				direction.x = (float)Math.Cos (expected);
-//				direction.y = (float)Math.Sin (expected);
+				direction = UnitCircle(rotation);
 			}
-		}
-
-		public void Rotate(float delta) {
-			if(!symmetric)
-				transform.Rotate(0f, 0f, delta);
-			rotation += delta;
-			float expected = rotation + 90f;
-			direction.x = (float)Math.Cos (expected);
-			direction.y = (float)Math.Sin (expected);
 		}
 		
 		/// <summary>
@@ -208,18 +220,14 @@ namespace Danmaku2D {
 			}
 		}
 
-		public void AddController(IProjectileController controller) {
-			if(controller != null) {
-				controllerUpdate += controller.UpdateProjectile;
-				controllerCheck = controllerUpdate != null;
-			}
+		public bool BoundsCheck {
+			get;
+			set;
 		}
 
-		public void RemoveController(IProjectileController controller) {
-			if(controller != null) {
-				controllerUpdate -= controller.UpdateProjectile;
-				controllerCheck = controllerUpdate != null;
-			}
+		public bool CollisionCheck {
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -230,6 +238,32 @@ namespace Danmaku2D {
 			get {
 				return field;
 			}
+		}
+
+		public void AddController(IProjectileController controller) {
+			if(controller != null) {
+				controllerUpdate += controller.UpdateProjectile;
+				controllerCheck = controllerUpdate != null;
+			}
+		}
+
+		public void AddController(ProjectileController controller) {
+			controllerUpdate += controller;
+			controllerCheck = controllerUpdate != null;
+		}
+
+		public void RemoveController(IProjectileController controller) {
+			if(controller != null) {
+				controllerUpdate -= controller.UpdateProjectile;
+				controllerCheck = controllerUpdate != null;
+			}
+		}
+
+		public void Rotate(float delta) {
+			if(!symmetric)
+				transform.Rotate(0f, 0f, delta);
+			rotation += delta;
+			direction = UnitCircle (rotation);
 		}
 		
 		/// <summary>
@@ -259,9 +293,7 @@ namespace Danmaku2D {
 			scripts = new IProjectileCollider[5];
 		}
 
-		internal void Update(float dt) {
-			if (!is_active)
-				return;
+		internal void Update() {
 			frames++;
 			originalPosition.x = Position.x;
 			originalPosition.y = Position.y;
@@ -269,11 +301,21 @@ namespace Danmaku2D {
 			if (controllerCheck) {
 				controllerUpdate(this, dt);
 			}
+
+			if(AngularVelocity != 0f) {
+				Rotation += AngularVelocity * dt;
+			}
+
+			if (Velocity != 0) {
+				float change = Velocity * dt;
+				Position.x += direction.x * change;
+				Position.y += direction.y * change;
+			}
 			
 			movementVector.x = Position.x - originalPosition.x;
 			movementVector.y = Position.y - originalPosition.y;
 
-			if(collisionCheck) {
+			if(CollisionCheck) {
 				distance = movementVector.magnitude;
 				//Check if the collision detection should be continuous or not
 				if (distance <= circleRaidus) {
@@ -314,7 +356,7 @@ namespace Danmaku2D {
 				}
 			}
 
-			if (!bounds.Contains (Position)) {
+			if (BoundsCheck && !bounds.Contains (Position)) {
 				DeactivateImmediate();
 				return;
 			}
@@ -340,7 +382,6 @@ namespace Danmaku2D {
 				this.prefab = prefab;
 				this.runtime = prefab.GetRuntime();
 				Vector2 scale = transform.localScale = runtime.cachedScale;
-				sprite = renderer.sprite = runtime.cachedSprite;
 				renderer.sharedMaterial = runtime.cachedMaterial;
 				renderer.sortingLayerID = runtime.cachedSortingLayer;
 				circleCenter = scale.Hadamard2(runtime.cachedColliderOffset);
@@ -348,11 +389,11 @@ namespace Danmaku2D {
 				tag = gameObject.tag = runtime.cachedTag;
 				symmetric = runtime.symmetric;
 			}
-			
+
+			renderer.sprite = runtime.Sprite;
 			renderer.color = runtime.cachedColor;
 			layer = runtime.cachedLayer;
 			colliderMask = collisionMask [layer];
-			collisionCheck = true;
 
 			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
 			if (pcbs.Length > 0) {
@@ -391,6 +432,8 @@ namespace Danmaku2D {
 			to_deactivate = false;
 			//gameObject.SetActive (true);
 			renderer.enabled = true;
+			BoundsCheck = true;
+			CollisionCheck = true;
 		}
 		
 		/// <summary>

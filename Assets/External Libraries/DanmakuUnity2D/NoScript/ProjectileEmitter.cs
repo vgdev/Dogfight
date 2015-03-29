@@ -19,6 +19,17 @@ namespace Danmaku2D {
 		[SerializeField]
 		private FrameCounter delay;
 
+		[SerializeField]
+		private ModifierWrapper modifier;
+
+		public FireModifier Modifier {
+			get {
+				if(modifier == null)
+					return null;
+				return modifier.Modifier;
+			}
+		}
+
 		public DanmakuField TargetField {
 			get {
 				return source.TargetField;
@@ -33,7 +44,6 @@ namespace Danmaku2D {
 			if (source == null)
 				source = GetComponent<ProjectileSource> ();
 		}
-
 
 		public override void NormalUpdate () {
 			if(delay.Tick()) {

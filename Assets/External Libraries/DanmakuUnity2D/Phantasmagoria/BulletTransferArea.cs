@@ -21,7 +21,7 @@ namespace Danmaku2D.Phantasmagoria {
 			Vector3 startScale = transform.localScale;
 			Color spriteColor = rend.color;
 			Color targetColor = spriteColor;
-			targetColor.a = 0f;
+			targetColor.a = 0;
 			float dt = Util.TargetDeltaTime;
 			float t = 0;
 			while (t < 1f) {
