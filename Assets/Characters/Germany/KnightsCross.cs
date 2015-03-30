@@ -8,10 +8,10 @@ public class KnightsCross : TimedAttackPattern {
     private FrameCounter crossDelay;
 
     [SerializeField]
-    private ProjectilePrefab fatBullet;
+    private DanmakuPrefab fatBullet;
 
     [SerializeField]
-    private ProjectilePrefab thinBullet;
+    private DanmakuPrefab thinBullet;
 
     [SerializeField]
     private float bulletVelocity;

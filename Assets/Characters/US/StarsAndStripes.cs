@@ -9,7 +9,7 @@ public class StarsAndStripes : TimedAttackPattern {
 	private FrameCounter stripesDelay;
 
 	[SerializeField]
-	private ProjectilePrefab stripesBullet;
+	private DanmakuPrefab stripesBullet;
 
 	[SerializeField]
 	private int stripeCount;
@@ -27,7 +27,7 @@ public class StarsAndStripes : TimedAttackPattern {
 	private int burstCount;
 
 	[SerializeField]
-	private ProjectilePrefab burstBullet;
+	private DanmakuPrefab burstBullet;
 
 	[SerializeField]
 	private Vector2 burstSpawnLocation = 0.5f * Vector2.one;

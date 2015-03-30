@@ -9,6 +9,19 @@ namespace UnityUtilLib {
 	/// A abstract class for "cached" object. It caches commonly both the behaviour's GameObject and Transform to increase efficency
 	/// </summary>
 	public abstract class CachedObject : MonoBehaviour {
+
+//		[SerializeField]
+//		private new string name;
+//
+//		public virtual string Name {
+//			get {
+//				return name;
+//			}
+//			set {
+//				name = value;
+//			}
+//		}		
+
 		private GameObject gameObj;
 		private Transform trans;
 

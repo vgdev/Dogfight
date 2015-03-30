@@ -55,7 +55,7 @@ namespace Danmaku2D {
 		[System.NonSerialized]
 		public DanmakuField TargetField;
 
-		private DanmakuPlayer player;
+		internal DanmakuPlayer player;
 		private float currentAspectRatio;
 		private float screenOffset;
 		internal Bounds2D bounds;
@@ -394,23 +394,23 @@ namespace Danmaku2D {
 		/// <param name="location">The location within the field to spawn the projectile.</param>
 		/// <param name="rotation">Rotation.</param>
 		/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
-		public Projectile SpawnProjectile(ProjectilePrefab bulletType, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
-			Projectile bullet = Projectile.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
+		public Danmaku SpawnProjectile(DanmakuPrefab bulletType, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
+			Danmaku bullet = Danmaku.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
 			bullet.Activate ();
 			return bullet;
 		}
 
-		public Projectile FireLinear(ProjectilePrefab bulletType, 
+		public Danmaku FireLinear(DanmakuPrefab bulletType, 
                                      Vector2 location, 
                                      float rotation, 
                                      float velocity,
 		                             CoordinateSystem coordSys = CoordinateSystem.View,
-		                             ProjectileController controller = null,
+		                             DanmakuController controller = null,
                                      FireModifier modifier = null,
-                                     ProjectileGroup group = null) {
+                                     DanmakuGroup group = null) {
 			Vector2 position = WorldPoint (location, coordSys);
 			if (modifier == null) {
-				Projectile projectile = Projectile.Get (bulletType, position, rotation, this);
+				Danmaku projectile = Danmaku.Get (bulletType, position, rotation, this);
 				projectile.Activate ();
 				projectile.Velocity = velocity;
 				if (group != null) {
@@ -424,18 +424,18 @@ namespace Danmaku2D {
 			}
 		}
 		
-		public Projectile FireCurved(ProjectilePrefab bulletType,
+		public Danmaku FireCurved(DanmakuPrefab bulletType,
                                      Vector2 location,
                                      float rotation,
                                      float velocity,
                                      float angularVelocity,
                                      CoordinateSystem coordSys = CoordinateSystem.View,
-                             		 ProjectileController controller = null,
+                             		 DanmakuController controller = null,
                                      FireModifier modifier = null,
-                                     ProjectileGroup group = null) {
+                                     DanmakuGroup group = null) {
 			Vector2 position = WorldPoint (location, coordSys);
 			if (modifier == null) {
-				Projectile projectile = Projectile.Get (bulletType, position, rotation, this);
+				Danmaku projectile = Danmaku.Get (bulletType, position, rotation, this);
 				projectile.Activate ();
 				projectile.Velocity = velocity;
 				projectile.AngularVelocity = angularVelocity;
@@ -451,10 +451,10 @@ namespace Danmaku2D {
 			}
 		}
 		
-		public Projectile Fire(FireBuilder data) {
+		public Danmaku Fire(FireBuilder data) {
 			FireModifier modifier = data.Modifier;
 			if (modifier == null) {
-				Projectile projectile = Projectile.Get (this, data);
+				Danmaku projectile = Danmaku.Get (this, data);
 				projectile.Activate ();
 				return projectile;
 			} else {
@@ -480,11 +480,11 @@ namespace Danmaku2D {
 		#endif
 	}
 
-	public struct FireData<T> where T : IProjectileController {
-		public Projectile Projectile;
+	public struct FireData<T> where T : IDanmakuController {
+		public Danmaku Projectile;
 		public T Controller;
 		
-		public FireData(Projectile projectile, T controller) {
+		public FireData(Danmaku projectile, T controller) {
 			Projectile = projectile;
 			Controller = controller;
 		}
@@ -492,17 +492,17 @@ namespace Danmaku2D {
 
 	[System.Serializable]
 	public class FireBuilder : IClonable<FireBuilder> {
-		public ProjectilePrefab Prefab = null;
+		public DanmakuPrefab Prefab = null;
 		public Vector2 Position = Vector2.zero;
 		public float Rotation = 0;
 		public float Velocity;
 		public float AngularVelocity;
-		public ProjectileController Controller = null;
+		public DanmakuController Controller = null;
 		public DanmakuField.CoordinateSystem CoordinateSystem = DanmakuField.CoordinateSystem.View;
-		public ProjectileGroup Group;
+		public DanmakuGroup Group;
 		public FireModifier Modifier;
 		
-		public FireBuilder(ProjectilePrefab prefab) {
+		public FireBuilder(DanmakuPrefab prefab) {
 			this.Prefab = prefab;
 		}
 

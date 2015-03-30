@@ -4,7 +4,7 @@ using UnityUtilLib;
 
 namespace Danmaku2D.NoScript {
 
-	internal class CircleSource : ProjectileSource {
+	internal class CircleSource : DanmakuSource {
 
 		#pragma warning disable 0649
 		public int count;

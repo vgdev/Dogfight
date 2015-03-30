@@ -6,7 +6,7 @@ using UnityUtilLib;
 public class RussianWinter : TimedAttackPattern {
 
 	[SerializeField]
-	private ProjectilePrefab snowPrefab;
+	private DanmakuPrefab snowPrefab;
 
 	[SerializeField]
 	private FrameCounter delay;
@@ -29,11 +29,11 @@ public class RussianWinter : TimedAttackPattern {
 	[SerializeField]
 	private AccelerationController linearController;
 
-	private ProjectileGroup group;
+	private DanmakuGroup group;
 
 	protected override void OnInitialize () {
 		base.OnInitialize ();
-		group = new ProjectileGroup ();
+		group = new DanmakuGroup ();
 		group.AddController(linearController);
 	}
 

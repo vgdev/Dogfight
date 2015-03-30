@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using Danmaku2D;
 
 /// <summary>
 /// Custom <a href="http://docs.unity3d.com/ScriptReference/Editor.html">Editor</a> for ProjectilePrefab
 /// </summary>
-[CustomEditor(typeof(ProjectilePrefab))]
+[CustomEditor(typeof(DanmakuPrefab))]
 internal class ProjectilePrefabEditor : UnityEditor.Editor {
 
 	/// <summary>
@@ -14,7 +14,7 @@ internal class ProjectilePrefabEditor : UnityEditor.Editor {
 	/// </summary>
 	public override void OnInspectorGUI () {
 		base.OnInspectorGUI ();
-		ProjectilePrefab prefab = target as ProjectilePrefab;
+		DanmakuPrefab prefab = target as DanmakuPrefab;
 		if(GUILayout.Button("Reinitialize")) {
 			SerializedProperty collider = serializedObject.FindProperty("circleCollider");
 			SerializedProperty renderer = serializedObject.FindProperty("spriteRenderer");

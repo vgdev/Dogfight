@@ -94,37 +94,37 @@ namespace Danmaku2D {
 			Active = false;
 		}
 
-		protected Projectile SpawnProjectile(ProjectilePrefab projectileType,
+		protected Danmaku SpawnProjectile(DanmakuPrefab projectileType,
 		                                     Vector2 location,
 		                                     float rotation,
 		                                     DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
 			return TargetField.SpawnProjectile (projectileType, location, rotation, coordSys);
 		}
 
-		protected Projectile FireLinear(ProjectilePrefab projectileType, 
+		protected Danmaku FireLinear(DanmakuPrefab projectileType, 
 		                                      Vector2 location, 
 		                                      float rotation, 
 		                                      float velocity,
 		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View,
-		                                      ProjectileController controller = null,
+		                                      DanmakuController controller = null,
 		                                      FireModifier modifier = null,
-		                                      ProjectileGroup group = null) {
+		                                      DanmakuGroup group = null) {
 			return TargetField.FireLinear (projectileType, location, rotation, velocity, coordSys, controller, modifier, group);
 		}
 
-		protected Projectile FireCurved(ProjectilePrefab projectileType,
+		protected Danmaku FireCurved(DanmakuPrefab projectileType,
 	                                    Vector2 location,
 	                                    float rotation,
 	                                    float velocity,
 	                                    float angularVelocity,
 	                                    DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View,
-	                                    ProjectileController controller = null,
+	                                    DanmakuController controller = null,
 	                                    FireModifier modifier = null,
-	                                    ProjectileGroup group = null) {
+	                                    DanmakuGroup group = null) {
 			return TargetField.FireCurved (projectileType, location, rotation, velocity, angularVelocity, coordSys, controller, modifier, group);
 		}
 
-		protected Projectile Fire(FireBuilder data) {
+		protected Danmaku Fire(FireBuilder data) {
 			return TargetField.Fire (data);
 		}
 	}

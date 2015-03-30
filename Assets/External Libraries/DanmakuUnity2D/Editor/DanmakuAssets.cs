@@ -36,11 +36,11 @@ internal static class DanmakuAssets {
 	[MenuItem("Assets/Create/Danmaku 2D/Projectile Prefab", false, 51)]
 	public static void AddProjectilePrefab() {
 		GameObject temp = new GameObject ("Projectile Prefab");
-		temp.AddComponent<ProjectilePrefab> ();
+		temp.AddComponent<DanmakuPrefab> ();
 		string pathName = GetProjectWindowFolder ();
 		GameObject prefab = PrefabUtility.CreatePrefab (pathName + "/Projectile Prefab.prefab", temp);
 		Object.DestroyImmediate (temp);
-		SerializedObject so = new SerializedObject (prefab.GetComponent<ProjectilePrefab> ());
+		SerializedObject so = new SerializedObject (prefab.GetComponent<DanmakuPrefab> ());
 		so.FindProperty ("circleCollider").objectReferenceValue = prefab.GetComponent<CircleCollider2D> ();
 		so.FindProperty ("spriteRenderer").objectReferenceValue = prefab.GetComponent<SpriteRenderer> ();
 		so.ApplyModifiedProperties ();

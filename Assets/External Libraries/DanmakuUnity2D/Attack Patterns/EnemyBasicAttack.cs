@@ -29,7 +29,7 @@ namespace Danmaku2D.AttackPatterns {
 		private float generalRange;
 
 		[SerializeField]
-		private ProjectilePrefab basicPrefab;
+		private DanmakuPrefab basicPrefab;
 
 		protected override bool IsFinished {
 			get {

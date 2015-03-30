@@ -6,7 +6,7 @@ using Danmaku2D;
 public class BlitzKrieg : TimedAttackPattern
 {
     [SerializeField]
-    private ProjectilePrefab prefab;
+    private DanmakuPrefab prefab;
 
     [SerializeField]
     private int bulletCount;
@@ -28,12 +28,12 @@ public class BlitzKrieg : TimedAttackPattern
     [SerializeField]
     private AccelerationController LinearController;
 
-    private ProjectileGroup burstGroup;
+    private DanmakuGroup burstGroup;
 
     public override void Awake()
     {
         base.Awake();
-        burstGroup = new ProjectileGroup();
+        burstGroup = new DanmakuGroup();
         burstGroup.AddController(LinearController);
     }
 
@@ -71,7 +71,7 @@ public class BlitzKrieg : TimedAttackPattern
         float offset = (burstCount.MaxCount - burstCount.Count) * burstRotationDelta;
         for (int i = 0; i < bulletCount; i++)
         {
-            Projectile temp = SpawnProjectile(prefab, center, offset + 360f / (float)bulletCount * (float)i);
+            Danmaku temp = SpawnProjectile(prefab, center, offset + 360f / (float)bulletCount * (float)i);
             burstGroup.Add(temp);
         }
     }
