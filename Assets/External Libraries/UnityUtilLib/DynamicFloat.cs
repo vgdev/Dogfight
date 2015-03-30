@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 
-namespace Danmaku2D {
+namespace UnityUtilLib {
 
 	[System.Serializable]
 	public class DynamicInt {

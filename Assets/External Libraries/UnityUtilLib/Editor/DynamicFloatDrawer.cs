@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEditor;
 
-namespace Danmaku2D.Editor {
+namespace UnityUtilLib.Editor {
 
 	[CustomPropertyDrawer(typeof(DynamicInt))]
 	public class DynamicIntDrawer : PropertyDrawer {
