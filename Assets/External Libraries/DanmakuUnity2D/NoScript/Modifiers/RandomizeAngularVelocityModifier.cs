@@ -1,15 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RandomizeAngularVelocityModifier : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
+namespace Danmaku2D {
 	
+	[System.Serializable]
+	public class RandomizeAngularVelocityModifier : FireModifier {
+		
+		[SerializeField]
+		private DynamicFloat range = 0;
+		
+		#region implemented abstract members of FireModifier
+		public override void Fire (Vector2 position, DynamicFloat rotation) {
+			float oldAV = AngularVelocity;
+			float rangeValue = range.Value;
+			AngularVelocity = oldAV + Random.Range (-0.5f * rangeValue, 0.5f * rangeValue);
+			FireSingle (position, rotation);
+			AngularVelocity = oldAV;
+		}
+		#endregion
+		
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	namespace Wrapper {
+		
+		internal class RandomizeAngularVelocityModifier : ModifierWrapper<Danmaku2D.RandomizeAngularVelocityModifier> {
+		}
+		
 	}
+	
 }

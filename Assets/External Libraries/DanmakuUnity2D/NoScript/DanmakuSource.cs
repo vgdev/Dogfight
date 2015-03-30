@@ -6,9 +6,9 @@ namespace Danmaku2D {
 	
 	public class SourcePoint {
 		public Vector2 Position;
-		public float BaseRotation;
+		public DynamicFloat BaseRotation;
 
-		public SourcePoint(Vector2 location, float rotation) {
+		public SourcePoint(Vector2 location, DynamicFloat rotation) {
 			this.Position = location;
 			this.BaseRotation = rotation;
 		}
@@ -23,7 +23,7 @@ namespace Danmaku2D {
 
 		protected List<SourcePoint> sourcePoints;
 
-		protected void UpdatePoints(Vector2 position, float rotation) {
+		protected void UpdatePoints(Vector2 position, DynamicFloat rotation) {
 			UpdateSourcePoints(position, rotation);
 			float sourceRotation;
 			if (subSource != null) {
@@ -68,15 +68,19 @@ namespace Danmaku2D {
 		}
 
 		public void Fire(DanmakuPrefab prefab,
-		                 float velocity,
-		                 float rotationOffset = 0,
-		                 float angularVelocity = 0,
+		                 DynamicFloat velocity,
+		                 DynamicFloat rotationOffset = null,
+		                 DynamicFloat angularVelocity = null,
 		                 DanmakuController controller = null,
 		                 FireModifier modifier = null) {
 			if(TargetField == null) {
 				Debug.LogWarning("Firing from a Projectile Source without a Target Field");
 				return;
 			}
+			if (rotationOffset == null)
+				rotationOffset = 0f;
+			if (angularVelocity == null)
+				angularVelocity = 0f;
 			for (int i = 0; i < sourcePoints.Count; i++) {
 				SourcePoint source = sourcePoints[i];
 				TargetField.FireCurved (prefab,
@@ -94,11 +98,9 @@ namespace Danmaku2D {
 				Debug.LogWarning("Firing from a Projectile Source without a Target Field");
 				return;
 			}
-			DanmakuController controller = data.Controller;
 			FireBuilder copy = data.Clone ();
-			float rotationOffset = data.Rotation;
+			DynamicFloat rotationOffset = data.Rotation;
 			copy.CoordinateSystem = DanmakuField.CoordinateSystem.World;
-			copy.Controller = controller;
 			for (int i = 0; i < sourcePoints.Count; i++) {
 				SourcePoint source = sourcePoints[i];
 				copy.Position = source.Position;

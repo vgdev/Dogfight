@@ -7,12 +7,13 @@ namespace Danmaku2D {
 	public class RandomizeVelocityModifier : FireModifier {
 
 		[SerializeField]
-		private float range;
+		private DynamicFloat range = 0;
 
 		#region implemented abstract members of FireModifier
-		public override void Fire (Vector2 position, float rotation) {
+		public override void Fire (Vector2 position, DynamicFloat rotation) {
 			float oldVelocity = Velocity;
-			Velocity = oldVelocity + Random.Range (-0.5f * range, 0.5f * range);
+			float rangeValue = range.Value;
+			Velocity = oldVelocity + Random.Range (-0.5f * rangeValue, 0.5f * rangeValue);
 			FireSingle (position, rotation);
 			Velocity = oldVelocity;
 		}

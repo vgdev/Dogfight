@@ -39,5 +39,21 @@ namespace Danmaku2D {
 			for(int i = 0; i < sources.Length; i++)
 				sources[i].Fire (fireData);
 		}
+
+		public void FireAtDanmaku(Danmaku danmaku) {
+			FireBuilder copy = fireData.Clone ();
+			copy.CoordinateSystem = DanmakuField.CoordinateSystem.World;
+			copy.Position = danmaku.Position;
+			copy.Rotation = danmaku.rotation;
+			danmaku.Field.Fire(copy);
+		}
+
+		public void FireAtPoint(Vector2 position, DynamicFloat rotation, DanmakuField field) {
+			FireBuilder copy = fireData.Clone ();
+			copy.CoordinateSystem = DanmakuField.CoordinateSystem.World;
+			copy.Position = position;
+			copy.Rotation = rotation;
+			field.Fire (copy);
+		}
 	}
 }

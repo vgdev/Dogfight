@@ -55,10 +55,10 @@ namespace Danmaku2D {
 			}
 		}
 
-		public float Rotation {
+		public DynamicFloat Rotation {
 			set {
 				foreach(Danmaku danmaku in group) {
-					danmaku.Rotation = value;
+					danmaku.Rotation = value.Value;
 				}
 			}
 		}
@@ -95,7 +95,7 @@ namespace Danmaku2D {
 			}
 		}
 
-		public void Rotate(float delta) {
+		public void Rotate(DynamicFloat delta) {
 			foreach(Danmaku danmaku in group) {
 				danmaku.Rotate(delta);
 			}

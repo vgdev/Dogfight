@@ -1,21 +1,6 @@
 using UnityEngine;
 using UnityUtilLib;
 
-namespace Danmaku2D.ProjectileControllers {
-
-	public class AccelerationProjectileController : ControllerWrapperBehavior<AccelerationController> {
-		[SerializeField]
-		private AccelerationController controller;
-
-		#region implemented abstract members of ControllerWrapperBehavior
-		protected override AccelerationController CreateController () {
-			return controller;
-		}
-		#endregion
-	}
-
-}
-
 /// <summary>
 /// A development kit for quick development of 2D Danmaku games
 /// </summary>
@@ -28,16 +13,21 @@ namespace Danmaku2D {
 	public class AccelerationController : IDanmakuController {
 
 		[SerializeField]
-		private float acceleration = 0;
+		private DynamicFloat acceleration;
 
 		[SerializeField]
-		private float capSpeed;
+		private DynamicFloat capSpeed;
+
+		public AccelerationController() {
+			this.acceleration = (DynamicFloat)0f;
+			this.capSpeed = (DynamicFloat)0f;
+		}
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Danmaku2D.ProjectileControllers.LinearProjectile"/> class.
 		/// </summary>
 		/// <value>The velocity of the controlled Projectile(s) in absolute world coordinates per second</value>
-		public AccelerationController (float acceleration, float capSpeed) : base() {
+		public AccelerationController (DynamicFloat acceleration, DynamicFloat capSpeed) : base() {
 			this.acceleration = acceleration;
 			this.capSpeed = capSpeed;
 		}
@@ -59,5 +49,13 @@ namespace Danmaku2D {
 		
 		#endregion
 	}
+
+	namespace Wrapper {
+		
+		public class AccelerationProjectileController : ControllerWrapperBehavior<AccelerationController> {
+		}
+		
+	}
+
 }
 

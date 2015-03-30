@@ -9,7 +9,7 @@ namespace Danmaku2D {
 		private FireModifier subModifier;
 		private FireBuilder builder;
 
-		protected float Velocity {
+		protected DynamicFloat Velocity {
 			get {
 				return builder.Velocity;
 			}
@@ -21,7 +21,7 @@ namespace Danmaku2D {
 			}
 		}
 
-		protected float AngularVelocity {
+		protected DynamicFloat AngularVelocity {
 			get {
 				return builder.AngularVelocity;
 			}
@@ -99,7 +99,7 @@ namespace Danmaku2D {
 		}
 
 		protected void FireSingle(Vector2 position,
-		                        float rotation) {
+		                          DynamicFloat rotation) {
 			if (SubModifier == null) {
 				builder.Position = position;
 				builder.Rotation = rotation;
@@ -109,7 +109,7 @@ namespace Danmaku2D {
 			}
 		}
 
-		public abstract void Fire(Vector2 position, float rotation);
+		public abstract void Fire(Vector2 position, DynamicFloat rotation);
 	}
 
 }

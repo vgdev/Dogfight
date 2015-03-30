@@ -34,12 +34,10 @@ namespace Danmaku2D.AttackPatterns {
 		private FrameCounter burstDelay;
 		
 		[SerializeField]
-		[Range(-180f, 180f)]
-		private float burstInitialRotation;
+		private DynamicFloat burstInitialRotation;
 		
 		[SerializeField]
-		[Range(-360f, 360f)]
-		private float burstRotationDelta;
+		private DynamicFloat burstRotationDelta;
 
 		[SerializeField]
 		private ProjectileControlBehavior[] controllers;

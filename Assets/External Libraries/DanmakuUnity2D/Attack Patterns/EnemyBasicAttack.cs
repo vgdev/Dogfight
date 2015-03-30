@@ -17,16 +17,16 @@ namespace Danmaku2D.AttackPatterns {
 		private FrameCounter fireDelay;
 
 		[SerializeField]
-		private float velocity;
+		private DynamicFloat velocity;
 
 		[SerializeField]
-		public float angV;
+		public DynamicFloat angV;
 
 		[SerializeField]
-		private float currentDelay;
+		private DynamicFloat currentDelay;
 
 		[SerializeField]
-		private float generalRange;
+		private DynamicFloat generalRange;
 
 		[SerializeField]
 		private DanmakuPrefab basicPrefab;

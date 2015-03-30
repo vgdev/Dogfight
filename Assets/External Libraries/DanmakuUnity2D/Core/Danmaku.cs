@@ -33,7 +33,6 @@ namespace Danmaku2D {
 		internal string tag;
 		internal int layer;
 		internal int frames;
-		internal float time;
 		internal string cachedTag;
 		internal int cachedLayer;
 		internal bool symmetric;
@@ -269,10 +268,11 @@ namespace Danmaku2D {
 			controllerUpdate = null;
 		}
 
-		public void Rotate(float delta) {
+		public void Rotate(DynamicFloat delta) {
+			float Delta = delta.Value;
 			if(!symmetric)
-				transform.Rotate(0f, 0f, delta);
-			rotation += delta;
+				transform.Rotate(0f, 0f, Delta);
+			rotation += Delta;
 			direction = UnitCircle (rotation);
 		}
 		

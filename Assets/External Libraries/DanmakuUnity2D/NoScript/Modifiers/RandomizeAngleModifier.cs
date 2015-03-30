@@ -7,11 +7,13 @@ namespace Danmaku2D {
 	public class RandomizeAngleModifier : FireModifier {
 
 		[SerializeField, Range(0f, 360f)]
-		private float range = 0;
+		private DynamicFloat range = 0;
 
 		#region implemented abstract members of FireModifier
-		public override void Fire (Vector2 position, float rotation) {
-			FireSingle (position, Random.Range (rotation - range, rotation + range));
+		public override void Fire (Vector2 position, DynamicFloat rotation) {
+			float rotationValue = rotation.Value;
+			float rangeValue = range.Value;
+			FireSingle (position, Random.Range (rotationValue - 0.5f * rangeValue, rotationValue + 0.5f * rangeValue));
 		}
 		#endregion
 

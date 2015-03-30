@@ -96,15 +96,15 @@ namespace Danmaku2D {
 
 		protected Danmaku SpawnProjectile(DanmakuPrefab projectileType,
 		                                     Vector2 location,
-		                                     float rotation,
+		                                     DynamicFloat rotation,
 		                                     DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
 			return TargetField.SpawnProjectile (projectileType, location, rotation, coordSys);
 		}
 
 		protected Danmaku FireLinear(DanmakuPrefab projectileType, 
 		                                      Vector2 location, 
-		                                      float rotation, 
-		                                      float velocity,
+		                             		  DynamicFloat rotation, 
+		                             		  DynamicFloat velocity,
 		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View,
 		                                      DanmakuController controller = null,
 		                                      FireModifier modifier = null,
@@ -114,9 +114,9 @@ namespace Danmaku2D {
 
 		protected Danmaku FireCurved(DanmakuPrefab projectileType,
 	                                    Vector2 location,
-	                                    float rotation,
-	                                    float velocity,
-	                                    float angularVelocity,
+	                                    DynamicFloat rotation,
+	                                    DynamicFloat velocity,
+	                                    DynamicFloat angularVelocity,
 	                                    DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View,
 	                                    DanmakuController controller = null,
 	                                    FireModifier modifier = null,

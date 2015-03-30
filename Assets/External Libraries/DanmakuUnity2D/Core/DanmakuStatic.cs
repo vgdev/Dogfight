@@ -89,7 +89,7 @@ namespace Danmaku2D {
 			}
 		}
 		
-		public static Danmaku Get (DanmakuPrefab projectileType, Vector2 position, float rotation, DanmakuField field) {
+		public static Danmaku Get (DanmakuPrefab projectileType, Vector2 position, DynamicFloat rotation, DanmakuField field) {
 			Danmaku proj = projectilePool.Get ();
 			proj.MatchPrefab (projectileType);
 			proj.PositionImmediate = position;

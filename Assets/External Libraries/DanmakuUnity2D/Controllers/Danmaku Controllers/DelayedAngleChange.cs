@@ -14,17 +14,14 @@ namespace Danmaku2D.ProjectileControllers {
 		private float delay;
 
 		[SerializeField]
-		private float angle;
-
-		[SerializeField]
-		private float range;
+		private DynamicFloat angle;
 
 		#region implemented abstract members of ProjectileControlBehavior
 
 		public override void UpdateProjectile (Danmaku projectile, float dt) {
 			float time = projectile.Time;
 			if(time >= delay && time - dt <= delay) {
-				float baseAngle = angle;
+				float baseAngle = angle.Value;
 				switch(rotationMode) {
 					case RotationMode.Relative:
 						baseAngle += projectile.Rotation;
@@ -35,7 +32,7 @@ namespace Danmaku2D.ProjectileControllers {
 					case RotationMode.Absolute:
 						break;
 				}
-				projectile.Rotation = Random.Range(baseAngle - range, baseAngle + range);
+				projectile.Rotation = baseAngle;
 			}
 		}
 

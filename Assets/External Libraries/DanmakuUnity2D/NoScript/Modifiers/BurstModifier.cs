@@ -6,23 +6,28 @@ namespace Danmaku2D {
 	[System.Serializable]
 	public class BurstModifier : FireModifier {
 
-		public float Range = 360f;
-		public int Count = 1;
-		public float DeltaVelocity = 0f;
-		public float DeltaAngularVelocity = 0f;
+		public DynamicFloat Range = 360f;
+		public DynamicInt Count = 1;
+		public DynamicFloat DeltaVelocity = 0f;
+		public DynamicFloat DeltaAngularVelocity = 0f;
 
 		#region implemented abstract members of FireModifier
 
-		public override void Fire (Vector2 position, float rotation) {
+		public override void Fire (Vector2 position, DynamicFloat rotation) {
 
-			Count = Mathf.Abs (Count);
+			int count = Count.Value;
+			float range = Range.Value;
+			float deltaV = DeltaVelocity.Value;
+			float deltaAV = DeltaAngularVelocity.Value; 
 
-			float start = rotation - Range * 0.5f;
-			float delta = Range / (Count - 1);
+			count = Mathf.Abs (count);
 
-			for (int i = 0; i < Count; i++) {
-				Velocity += DeltaVelocity;
-				AngularVelocity += DeltaAngularVelocity;
+			float start = rotation - range * 0.5f;
+			float delta = range / (count - 1);
+
+			for (int i = 0; i < count; i++) {
+				Velocity += deltaV;
+				AngularVelocity += deltaAV;
 				FireSingle(position, start + i * delta);
 			}
 
