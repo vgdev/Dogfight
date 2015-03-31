@@ -17,19 +17,19 @@ namespace Danmaku2D.AttackPatterns {
 		private FrameCounter fireDelay;
 
 		[SerializeField]
-		private float velocity;
+		private DynamicFloat velocity;
 
 		[SerializeField]
-		public float angV;
+		public DynamicFloat angV;
 
 		[SerializeField]
-		private float currentDelay;
+		private DynamicFloat currentDelay;
 
 		[SerializeField]
-		private float generalRange;
+		private DynamicFloat generalRange;
 
 		[SerializeField]
-		private ProjectilePrefab basicPrefab;
+		private DanmakuPrefab basicPrefab;
 
 		protected override bool IsFinished {
 			get {
@@ -40,7 +40,7 @@ namespace Danmaku2D.AttackPatterns {
 		protected override void MainLoop () {
 			if (fireDelay.Tick()) {
 				float angle = TargetField.AngleTowardPlayer(transform.position) + Random.Range(-generalRange, generalRange);
-				FireCurvedBullet(basicPrefab, transform.position, angle, velocity, angV, DanmakuField.CoordinateSystem.World);
+				FireCurved(basicPrefab, transform.position, angle, velocity, angV, DanmakuField.CoordinateSystem.World);
 			}
 		}
 	}

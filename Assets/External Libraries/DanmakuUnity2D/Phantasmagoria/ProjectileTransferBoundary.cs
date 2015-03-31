@@ -15,7 +15,7 @@ namespace Danmaku2D.Phantasmagoria {
 			}
 		}
 
-		protected override void ProcessProjectile (Projectile proj) {
+		protected override void ProcessProjectile (Danmaku proj) {
 			if (field != null) {
 				PhantasmagoriaGameController.Transfer(proj);
 			}

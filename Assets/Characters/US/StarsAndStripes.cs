@@ -9,7 +9,7 @@ public class StarsAndStripes : TimedAttackPattern {
 	private FrameCounter stripesDelay;
 
 	[SerializeField]
-	private ProjectilePrefab stripesBullet;
+	private DanmakuPrefab stripesBullet;
 
 	[SerializeField]
 	private int stripeCount;
@@ -27,7 +27,7 @@ public class StarsAndStripes : TimedAttackPattern {
 	private int burstCount;
 
 	[SerializeField]
-	private ProjectilePrefab burstBullet;
+	private DanmakuPrefab burstBullet;
 
 	[SerializeField]
 	private Vector2 burstSpawnLocation = 0.5f * Vector2.one;
@@ -44,7 +44,7 @@ public class StarsAndStripes : TimedAttackPattern {
 		stripesDelay.Reset ();
 		Vector2 burstSource = burstSpawnLocation - 0.5f * burstSpawnArea + burstSpawnArea.Random();
 		for(int i = 0; i < burstCount; i++) {
-			FireLinearBullet(burstBullet, burstSource, 360f / (float) burstCount * (float)i, burstVelocity);
+			FireLinear(burstBullet, burstSource, 360f / (float) burstCount * (float)i, burstVelocity);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class StarsAndStripes : TimedAttackPattern {
 			Vector2 origin = Vector2.up + stripeOffset * ((horizontal) ? -Vector2.up : Vector2.right);
 			Vector2 dif = (1f - 2 * stripeOffset) / ((float) stripeCount - 1) * ((horizontal) ? -Vector2.up : Vector2.right);
 			for(int i = 0; i < stripeCount; i++) {
-				FireLinearBullet(stripesBullet, origin + (i * dif), (horizontal) ? 270f : 180f, stripeVelocity);
+				FireLinear(stripesBullet, origin + (i * dif), (horizontal) ? 270f : 180f, stripeVelocity);
 			}
 		}
 	}

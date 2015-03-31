@@ -9,11 +9,11 @@ namespace Danmaku2D {
 		private List<Enemy> registeredEnemies;
 
 		public static void RegisterEnemy(Enemy enemy) {
-			Instance.registeredEnemies.Add (enemy);
+//			Instance.registeredEnemies.Add (enemy);
 		}
 
 		public static void UnregisterEnemy(Enemy enemy) {
-			Instance.registeredEnemies.Remove (enemy);
+//			Instance.registeredEnemies.Remove (enemy);
 		}
 
 		private DanmakuGameController controller;

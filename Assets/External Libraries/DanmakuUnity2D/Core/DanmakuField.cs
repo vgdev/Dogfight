@@ -55,7 +55,7 @@ namespace Danmaku2D {
 		[System.NonSerialized]
 		public DanmakuField TargetField;
 
-		private DanmakuPlayer player;
+		internal DanmakuPlayer player;
 		private float currentAspectRatio;
 		private float screenOffset;
 		internal Bounds2D bounds;
@@ -394,129 +394,74 @@ namespace Danmaku2D {
 		/// <param name="location">The location within the field to spawn the projectile.</param>
 		/// <param name="rotation">Rotation.</param>
 		/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
-		public Projectile SpawnProjectile(ProjectilePrefab bulletType, Vector2 location, float rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
-			Projectile bullet = Projectile.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
+		public Danmaku SpawnProjectile(DanmakuPrefab bulletType, Vector2 location, DynamicFloat rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
+			Danmaku bullet = Danmaku.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
 			bullet.Activate ();
 			return bullet;
 		}
 
-		public FireData<LinearProjectile> FireLinearProjectile(ProjectilePrefab bulletType, 
-		                                         Vector2 location, 
-		                                         float rotation, 
-		                                         float velocity,
-		                                         CoordinateSystem coordSys = CoordinateSystem.View) {
-			LinearProjectile controller = new LinearProjectile (velocity);
-			Projectile projectile = Projectile.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
-			projectile.Activate ();
-			projectile.AddController(controller);
-			return new FireData<LinearProjectile>(projectile, controller);
-		}
-		
-		public FireData<CurvedProjectile> FireCurvedProjectile(ProjectilePrefab bulletType,
-		                                         Vector2 location,
-		                                         float rotation,
-		                                         float velocity,
-		                                         float angularVelocity,
-		                                         CoordinateSystem coordSys = CoordinateSystem.View) {
-			CurvedProjectile controller = new CurvedProjectile (velocity, angularVelocity);
-			Projectile projectile = Projectile.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
-			projectile.Activate ();
-			projectile.AddController(controller);
-			return new FireData<CurvedProjectile>(projectile, controller);
-		}
-		
-		public Projectile FireControlledProjectile(ProjectilePrefab bulletType, 
-		                                 Vector2 location, 
-		                                 float rotation, 
-		                                 IProjectileController controller,
-		                                 CoordinateSystem coordSys = CoordinateSystem.View) {
-			Projectile projectile = Projectile.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
-			projectile.Activate ();
-			projectile.AddController(controller);
-			return projectile;
-		}
-
-		public void SpawnBurst(ProjectilePrefab bulletType,
-		                       Vector2 location,
-		                       float direction,
-		                       float range,
-		                       int count,
-		                       ProjectileGroup group = null,
-		                       int depth = 1,
-		                       BurstController burstController = null,
-		                       CoordinateSystem coordSys = CoordinateSystem.View) {
-			bool haveGroup = group != null;
-			bool haveController = burstController != null;
-			count = Mathf.Abs (count);
-			depth = Mathf.Abs (depth);
-			range = Mathf.Abs (range);
+		public Danmaku FireLinear(DanmakuPrefab bulletType, 
+                                     Vector2 location, 
+                                     DynamicFloat rotation, 
+                                     DynamicFloat velocity,
+		                             CoordinateSystem coordSys = CoordinateSystem.View,
+		                             DanmakuController controller = null,
+                                     FireModifier modifier = null,
+                                     DanmakuGroup group = null) {
 			Vector2 position = WorldPoint (location, coordSys);
-			float start = direction - range * 0.5f;
-			float end = direction + range * 0.5f;
-			float delta = range / count;
-			for (int j = 0; j < depth; j++) {
-				IProjectileController controller = (haveController) ? burstController(j) : null;
-				for (float rotation = start; rotation <= end; rotation += delta) {
-					Projectile bullet = Projectile.Get (bulletType, position, rotation, this);
-					bullet.AddController(controller);
-					bullet.Activate ();
-					if (haveGroup) {
-						group.Add (bullet);
-					}
+			if (modifier == null) {
+				Danmaku projectile = Danmaku.Get (bulletType, position, rotation, this);
+				projectile.Activate ();
+				projectile.Velocity = velocity;
+				if (group != null) {
+					group.Add (projectile);
 				}
+				return projectile;
+			} else {
+				modifier.Initialize(bulletType, velocity, 0f, this,  null, group);
+				modifier.Fire(position, rotation);
+				return null;
 			}
 		}
-
-		public Projectile FireLinearProjectile(FireBuilder data, float velocity) {
-			LinearProjectile controller = new LinearProjectile (velocity);
-			Projectile projectile = Projectile.Get (this, data);
-			projectile.Activate ();
-			projectile.AddController(controller);
-			data.Controller = controller;
-			return projectile;
-		}
 		
-		public Projectile FireCurvedProjectile(FireBuilder data, float velocity, float angularVelocity) {
-			CurvedProjectile controller = new CurvedProjectile (velocity, angularVelocity);
-			Projectile projectile = Projectile.Get (this, data);
-			projectile.Activate ();
-			projectile.AddController(controller);
-			data.Controller = controller;
-			return projectile;
-		}
-		
-		public Projectile FireControlledProjectile(FireBuilder data) {
-			Projectile projectile = Projectile.Get (this, data);
-			projectile.Activate ();
-			projectile.AddController(data.Controller);
-			return projectile;
-		}
-
-		public void SpawnBurst(BurstBuilder data) {
-			IProjectileController allController = data.Controller;
-			ProjectileGroup group = data.Group;
-			BurstController burstController = data.BurstController;
-			bool haveGroup = group != null;
-			bool haveController = data.BurstController != null;
-			float direction = data.Rotation;
-			float range = data.Range;
-			float start = direction - range * 0.5f;
-			float end = direction + range * 0.5f;
-			float delta = range / data.Count;
-			for (int j = 0; j < data.Depth; j++) {
-				IProjectileController controller = (haveController) ? burstController(j) : null;
-				for (float rotation = start; rotation <= end; rotation += delta) {
-					data.Rotation = rotation;
-					Projectile bullet = Projectile.Get (this, data);
-					bullet.AddController(allController);
-					bullet.AddController(controller);
-					bullet.Activate ();
-					if (haveGroup) {
-						group.Add (bullet);
-					}
+		public Danmaku FireCurved(DanmakuPrefab bulletType,
+                                     Vector2 location,
+                                     DynamicFloat rotation,
+                                     DynamicFloat velocity,
+                                     DynamicFloat angularVelocity,
+                                     CoordinateSystem coordSys = CoordinateSystem.View,
+                             		 DanmakuController controller = null,
+                                     FireModifier modifier = null,
+                                     DanmakuGroup group = null) {
+			Vector2 position = WorldPoint (location, coordSys);
+			if (modifier == null) {
+				Danmaku projectile = Danmaku.Get (bulletType, position, rotation, this);
+				projectile.Activate ();
+				projectile.Velocity = velocity;
+				projectile.AngularVelocity = angularVelocity;
+				projectile.AddController(controller);
+				if (group != null) {
+					group.Add (projectile);
 				}
+				return projectile;
+			} else {
+				modifier.Initialize(bulletType, velocity, angularVelocity, this, null, group);
+				modifier.Fire(position, rotation);
+				return null;
 			}
-			data.Rotation = direction;
+		}
+		
+		public Danmaku Fire(FireBuilder data) {
+			FireModifier modifier = data.Modifier;
+			if (modifier == null) {
+				Danmaku projectile = Danmaku.Get (this, data);
+				projectile.Activate ();
+				return projectile;
+			} else {
+				modifier.Initialize (data, this);
+				modifier.Fire (WorldPoint (data.Position, data.CoordinateSystem), data.Rotation);
+				return null;
+			}
 		}
 
 		#if UNITY_EDITOR
@@ -535,25 +480,19 @@ namespace Danmaku2D {
 		#endif
 	}
 
-	public struct FireData<T> where T : IProjectileController {
-		public Projectile Projectile;
-		public T Controller;
-		
-		public FireData(Projectile projectile, T controller) {
-			Projectile = projectile;
-			Controller = controller;
-		}
-	}
-
 	[System.Serializable]
 	public class FireBuilder : IClonable<FireBuilder> {
-		public ProjectilePrefab Prefab = null;
+		public DanmakuPrefab Prefab = null;
 		public Vector2 Position = Vector2.zero;
-		public float Rotation = 0;
-		public IProjectileController Controller = null;
+		public DynamicFloat Rotation;
+		public DynamicFloat Velocity;
+		public DynamicFloat AngularVelocity;
+		public DanmakuController Controller = null;
 		public DanmakuField.CoordinateSystem CoordinateSystem = DanmakuField.CoordinateSystem.View;
+		public DanmakuGroup Group;
+		public FireModifier Modifier;
 		
-		public FireBuilder(ProjectilePrefab prefab) {
+		public FireBuilder(DanmakuPrefab prefab) {
 			this.Prefab = prefab;
 		}
 
@@ -562,72 +501,13 @@ namespace Danmaku2D {
 			FireBuilder copy = new FireBuilder (Prefab);
 			copy.Position = Position;
 			copy.Rotation = Rotation;
+			copy.Velocity = Velocity;
+			copy.AngularVelocity = AngularVelocity;
 			copy.Controller = Controller;
 			copy.CoordinateSystem = CoordinateSystem;
+			copy.Modifier = Modifier;
 			return copy;
 		}
-		#endregion
-	}
-	
-	public delegate IProjectileController BurstController(int depth);
-
-	[System.Serializable]
-	public class BurstBuilder : FireBuilder {
-		[SerializeField]
-		private float range = 360f;
-		public float Range {
-			get {
-				return range;
-			}
-			set {
-				range = System.Math.Abs(value);
-			}
-		}
-
-		[SerializeField]
-		private int count = 1;
-		public int Count {
-			get {
-				return count;
-			}
-			set {
-				count = System.Math.Abs(value);
-			}
-		}
-
-		[SerializeField]
-		private int depth = 1;
-		public int Depth {
-			get {
-				return depth;
-			}
-			set {
-				depth = System.Math.Abs(value);
-			}
-		}
-
-		public ProjectileGroup Group = null;
-		public BurstController BurstController;
-
-		public BurstBuilder(ProjectilePrefab prefab) : base(prefab) {
-		}
-
-		#region IClonable implementation
-
-		public new BurstBuilder Clone () {
-			BurstBuilder copy = new BurstBuilder (Prefab);
-			copy.Position = Position;
-			copy.Rotation = Rotation;
-			copy.Controller = Controller;
-			copy.CoordinateSystem = CoordinateSystem;
-			copy.range = range;
-			copy.count = count;
-			copy.depth = depth;
-			copy.Group = Group;
-			copy.BurstController = BurstController;
-			return copy;
-		}
-
 		#endregion
 	}
 }

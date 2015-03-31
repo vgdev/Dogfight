@@ -94,78 +94,38 @@ namespace Danmaku2D {
 			Active = false;
 		}
 
-		/// <summary>
-		/// Helper method for subclasses to quickly spawn projectiles.
-		/// </summary>
-		/// <returns>The projectile spawned with the given parameters</returns>
-		/// <param name="projectileType">The defining characteristics behind this projectile</param>
-		/// <param name="location">The location the bullet is to be spawned at. Expected value varies with the provided CoordinateSystem</param>
-		/// <param name="rotation">The rotation the bullet is to be spawned with.</param>
-		/// <param name="coordSys">The Coordinate system the location is to be spawned using</param>
-		protected Projectile SpawnProjectile(ProjectilePrefab projectileType,
+		protected Danmaku SpawnProjectile(DanmakuPrefab projectileType,
 		                                     Vector2 location,
-		                                     float rotation,
+		                                     DynamicFloat rotation,
 		                                     DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
 			return TargetField.SpawnProjectile (projectileType, location, rotation, coordSys);
 		}
 
-		/// <summary>
-		/// Helper method for subclasses to quickly firing straight moving bullets.
-		/// </summary>
-		/// <returns>The projectile spawned with the given parameters</returns>
-		/// <param name="projectileType">The defining characteristics behind this projectile</param>
-		/// <param name="location">The location the bullet is to be fired from. Expected value varies with the provided CoordinateSystem</param>
-		/// <param name="rotation">The rotation the bullet is to be fired with.</param>
-		/// <param name="coordSys">The Coordinate system the location is to be spawned using</param>
-		protected LinearProjectile FireLinearBullet(ProjectilePrefab projectileType, 
+		protected Danmaku FireLinear(DanmakuPrefab projectileType, 
 		                                      Vector2 location, 
-		                                      float rotation, 
-		                                      float velocity,
-		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			LinearProjectile linearProjectile = new LinearProjectile (velocity);
-			Projectile bullet = Projectile.Get (projectileType, TargetField.WorldPoint(location, coordSys), rotation, TargetField);
-			bullet.Activate ();
-			bullet.AddController(linearProjectile);
-			return linearProjectile;
+		                             		  DynamicFloat rotation, 
+		                             		  DynamicFloat velocity,
+		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View,
+		                                      DanmakuController controller = null,
+		                                      FireModifier modifier = null,
+		                                      DanmakuGroup group = null) {
+			return TargetField.FireLinear (projectileType, location, rotation, velocity, coordSys, controller, modifier, group);
 		}
 
-		/// <summary>
-		/// Helper method for subclasses to quickly firing bullet that move along curved paths.
-		/// </summary>
-		/// <returns>The projectile spawned with the given parameters</returns>
-		/// <param name="projectileType">The defining characteristics behind this projectile</param>
-		/// <param name="location">The location the bullet is to be fired from. Expected value varies with the provided CoordinateSystem</param>
-		/// <param name="rotation">The rotation the bullet is to be fired with.</param>
-		/// <param name="coordSys">The Coordinate system the location is to be spawned using</param>
-		protected CurvedProjectile FireCurvedBullet(ProjectilePrefab projectileType,
-		                                      Vector2 location,
-		                                      float rotation,
-		                                      float velocity,
-		                                      float angularVelocity,
-		                                      DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			CurvedProjectile curvedProjectile = new CurvedProjectile (velocity, angularVelocity);
-			Projectile bullet = Projectile.Get (projectileType, TargetField.WorldPoint(location, coordSys), rotation, TargetField);
-			bullet.Activate ();
-			bullet.AddController(curvedProjectile);
-			return curvedProjectile;
+		protected Danmaku FireCurved(DanmakuPrefab projectileType,
+	                                    Vector2 location,
+	                                    DynamicFloat rotation,
+	                                    DynamicFloat velocity,
+	                                    DynamicFloat angularVelocity,
+	                                    DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View,
+	                                    DanmakuController controller = null,
+	                                    FireModifier modifier = null,
+	                                    DanmakuGroup group = null) {
+			return TargetField.FireCurved (projectileType, location, rotation, velocity, angularVelocity, coordSys, controller, modifier, group);
 		}
 
-		/// <summary>
-		/// Helper method for subclasses to quickly firing bullets with custom behavior.
-		/// </summary>
-		/// <returns>The projectile spawned with the given parameters</returns>
-		/// <param name="projectileType">The defining characteristics behind this projectile</param>
-		/// <param name="location">The location the bullet is to be fired from. Expected value varies with the provided CoordinateSystem</param>
-		/// <param name="rotation">The rotation the bullet is to be fired with.</param>
-		/// <param name="coordSys">The Coordinate system the location is to be spawned using</param>
-		protected void FireControlledBullet(ProjectilePrefab projectileType, 
-		                                    Vector2 location, 
-		                                    float rotation, 
-		                                    IProjectileController controller,
-		                                    DanmakuField.CoordinateSystem coordSys = DanmakuField.CoordinateSystem.View) {
-			Projectile bullet = Projectile.Get (projectileType, TargetField.WorldPoint(location, coordSys), rotation, TargetField);
-			bullet.Activate ();
-			bullet.AddController(controller);
+		protected Danmaku Fire(FireBuilder data) {
+			return TargetField.Fire (data);
 		}
 	}
 }

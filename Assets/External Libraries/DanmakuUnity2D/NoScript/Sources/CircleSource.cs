@@ -4,7 +4,7 @@ using UnityUtilLib;
 
 namespace Danmaku2D.NoScript {
 
-	internal class CircleSource : ProjectileSource {
+	internal class CircleSource : DanmakuSource {
 
 		#pragma warning disable 0649
 		public int count;
@@ -12,21 +12,16 @@ namespace Danmaku2D.NoScript {
 		public bool raidalDirection;
 		#pragma warning restore 0649
 
-		private int oldCount;
-
 		#region implemented abstract members of ProjectileSource
 
-		protected override void UpdateSourcePoints () {
-			if (sourcePoints == null || count != oldCount) {
-				sourcePoints = new SourcePoint[count];
-				oldCount = count;
-			}
+		protected override void UpdateSourcePoints (Vector2 position, float rotation) {
+			sourcePoints.Clear ();
 			float delta = Util.TwoPI / count;
-			float rotation = transform.rotation.eulerAngles.z + 90f;
 			for (int i = 0; i < count; i++) {
 				float currentRotation = Util.Degree2Rad * rotation + i * delta;
-				sourcePoints[i].Position = ((Vector2)transform.position) + radius  * Util.OnUnitCircleRadians(currentRotation);
-				sourcePoints[i].BaseRotation = ((raidalDirection) ? Util.Rad2Degree * currentRotation : rotation) - 90f;
+				SourcePoint sourcePoint = new SourcePoint(position + radius  * Util.OnUnitCircleRadians(currentRotation),
+				                                          ((raidalDirection) ? Util.Rad2Degree * currentRotation - 90f : rotation));
+				sourcePoints.Add(sourcePoint);
 			}
 		}
 

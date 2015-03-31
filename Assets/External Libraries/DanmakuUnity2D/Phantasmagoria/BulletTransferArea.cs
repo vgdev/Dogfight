@@ -19,14 +19,14 @@ namespace Danmaku2D.Phantasmagoria {
 			SpriteRenderer rend = GetComponent<SpriteRenderer> ();
 			Vector3 maxScaleV = Vector3.one * maxScale;
 			Vector3 startScale = transform.localScale;
-			Color32 spriteColor = rend.color;
-			Color32 targetColor = spriteColor;
+			Color spriteColor = rend.color;
+			Color targetColor = spriteColor;
 			targetColor.a = 0;
 			float dt = Util.TargetDeltaTime;
 			float t = 0;
 			while (t < 1f) {
 				transform.localScale = Vector3.Lerp(startScale, maxScaleV, t);
-				rend.color = Color32.Lerp(spriteColor, targetColor, t);
+				rend.color = Color.Lerp(spriteColor, targetColor, t);
 				yield return UtilCoroutines.WaitForUnpause(this);
 				t += dt / duration;
 			}

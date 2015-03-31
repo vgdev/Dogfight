@@ -41,13 +41,13 @@ namespace Danmaku2D {
 		public override void Update() {
 			base.Update ();
 			if (!IsGamePaused) {
-				Projectile.UpdateAll();
+				Danmaku.UpdateAll();
 			}
 		}
 
 		public override void Awake () {
 			base.Awake ();
-			Projectile.Setup (projectileInitialCount, projectileSpawnOnEmpty, angleResolution);
+			Danmaku.Setup (projectileInitialCount, projectileSpawnOnEmpty, angleResolution);
 		}
 	}
 }

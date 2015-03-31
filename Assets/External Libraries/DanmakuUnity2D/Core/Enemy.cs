@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityUtilLib;
 
 /// <summary>
@@ -85,7 +85,7 @@ namespace Danmaku2D {
 		/// A message handler for handling collisions with Projectile(s)
 		/// </summary>
 		/// <param name="proj">the projectile that hit the enemy</param>
-		void OnProjectileCollision(Projectile proj) {
+		void OnProjectileCollision(Danmaku proj) {
 			Hit (proj.Damage);
 			proj.Deactivate();
 		}

@@ -41,15 +41,18 @@ TagManager:
   - GUI/Player 2
   - GUI/Shared
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Player Shot
     uniqueID: 959430727
     locked: 0
   - name: Player
     uniqueID: 4051134229
     locked: 0
+  - name: Player Hitbox
+    uniqueID: 3134179019
+    locked: 0
   - name: Bullet
     uniqueID: 3746238291
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
