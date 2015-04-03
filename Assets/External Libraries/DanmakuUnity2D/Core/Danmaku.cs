@@ -408,7 +408,7 @@ namespace Danmaku2D {
 			DanmakuControlBehavior[] pcbs = runtime.ExtraControllers;
 			if (pcbs.Length > 0) {
 				for (int i = 0; i < pcbs.Length; i++) {
-					pcbs [i].DanmakuGroup.Add (this);
+					controllerUpdate += pcbs[i].Controller;
 				}
 			}
 		}

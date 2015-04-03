@@ -234,6 +234,7 @@ namespace Danmaku2D {
 				camera2D = camObj.GetComponent<Camera>();
 				if(camera2D == null){
 					camera2D = camObj.AddComponent<Camera>();
+					camObj.AddComponent<GUILayer>();
 				}
 				camObj.hideFlags = HideFlags.HideInHierarchy;
 			}

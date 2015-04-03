@@ -56,3 +56,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: PseudoGUI
+    uniqueID: 2985605821
+    locked: 0

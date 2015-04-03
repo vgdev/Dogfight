@@ -53,6 +53,11 @@ namespace Danmaku2D {
 			set;
 		}
 
+		public virtual bool IsFocused {
+			get;
+			set;
+		}
+
 		[SerializeField]
 		private float fireRate = 4.0f;
 		private float fireDelay;
@@ -67,9 +72,9 @@ namespace Danmaku2D {
 			get { return -(int)Util.Sign(forbiddenMovement.y); }
 		}
 
-		public virtual void Move(float horizontalDirection, float verticalDirection, bool focus) {
+		public virtual void Move(float horizontalDirection, float verticalDirection) {
 			float dt = Util.TargetDeltaTime;
-			float movementSpeed = (focus) ? focusMovementSpeed : normalMovementSpeed;
+			float movementSpeed = (IsFocused) ? focusMovementSpeed : normalMovementSpeed;
 			Vector2 dir = new Vector2 (Util.Sign(horizontalDirection), Util.Sign(verticalDirection));
 			Vector3 movementVector = movementSpeed * Vector3.one;
 			movementVector.x *= (dir.x == Util.Sign(forbiddenMovement.x)) ? 0f : dir.x;

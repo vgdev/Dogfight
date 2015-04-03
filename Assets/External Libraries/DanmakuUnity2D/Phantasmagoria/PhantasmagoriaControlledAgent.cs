@@ -36,8 +36,9 @@ namespace Danmaku2D.Phantasmagoria {
 
 			player.IsFiring = fire;
 			player.IsCharging = charge;
+			player.IsFocused = focus;
 
-			Player.Move (movementVector.x, movementVector.y, focus);
+			Player.Move (movementVector.x, movementVector.y);
 		}
 	}
 }

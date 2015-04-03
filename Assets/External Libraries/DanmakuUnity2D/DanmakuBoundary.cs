@@ -26,9 +26,11 @@ namespace Danmaku2D {
 		/// Called on Component instantiation
 		/// </summary>
 		void Awake() {
-			if(tagFilter == null)
-				tagFilter = "";
-			validTags = new HashSet<string>(tagFilter.Split ('|'));
+			if (tagFilter == null || tagFilter == "")
+				validTags = new HashSet<string> ();
+			else
+				validTags = new HashSet<string>(tagFilter.Split ('|'));
+			Debug.Log (validTags.Count);
 		}
 
 		/// <summary>

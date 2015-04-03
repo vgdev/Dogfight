@@ -225,7 +225,7 @@ MonoBehaviour:
   shotDamage: 5
   cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
   deathCancelDuration: .5
-  deathCancelRadius: 30
+  deathCancelRadius: 40
   deathInvincibiiltyPeriod:
     Time: 3
   invincibiltyFlash:

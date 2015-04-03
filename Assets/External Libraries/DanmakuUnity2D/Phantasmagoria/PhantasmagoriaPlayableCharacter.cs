@@ -71,10 +71,10 @@ namespace Danmaku2D.Phantasmagoria {
 		private BulletCancelArea cancelPrefab;
 
 		[SerializeField]
-		private float deathCancelDuration;
+		private float deathCancelDuration = 0.5f;
 
 		[SerializeField]
-		private float deathCancelRadius;
+		private float deathCancelRadius = 40f;
 
 		[SerializeField]
 		private FrameCounter deathInvincibiiltyPeriod;
@@ -99,8 +99,8 @@ namespace Danmaku2D.Phantasmagoria {
 		public override void Hit(Danmaku proj) {
 			if(!invincible) {
 				base.Hit (proj);
-				BulletCancelArea cancelArea = (BulletCancelArea)Instantiate (cancelPrefab, transform.position, Quaternion.identity);
-				cancelArea.Run(deathCancelDuration, deathCancelRadius);
+				BulletCancelArea cancel = (BulletCancelArea)Instantiate (cancelPrefab, transform.position, Quaternion.identity);
+				cancel.Run(deathCancelDuration, deathCancelRadius);
 				invincible = true;
 				StartCoroutine(DeathInvincibiilty());
 			}

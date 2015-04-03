@@ -44,11 +44,16 @@ namespace Danmaku2D.Phantasmagoria {
 		[SerializeField]
 		private float closureDuration;
 
-		[SerializeField]
-		private Transform closureTop;
+		public float closureSize;
 
 		[SerializeField]
-		private Transform closureBottom;
+		private Transform closure;
+
+		public GameObject p1winner;
+		public GameObject p2winner;
+		public GameObject p1loser;
+		public GameObject p2loser;
+		public float postConclusionWait;
 
 		private bool reseting = false;
 
@@ -67,7 +72,34 @@ namespace Danmaku2D.Phantasmagoria {
 			if (!reseting && (player1.Field.Player.LivesRemaining <= 0 || player2.Field.Player.LivesRemaining <= 0)) {
 				StartCoroutine(RoundReset ());
 			}
-			roundTimeRemaining -= Util.TargetDeltaTime;
+			float t, dt = Util.TargetDeltaTime;
+			roundTimeRemaining -= dt;
+			bool p1win = player1.score >= winningScore;
+			bool p2win = player2.score >= winningScore;
+			if (p1win && p2win) {
+				//Signal Sudden Death
+				player1.score = player2.score = 0;
+				winningScore = 1;
+			} else if (p1win) {
+				//Declare Player 1 the winner
+				p1winner.SetActive (true);
+				p2loser.SetActive(true);
+				p1loser.SetActive(false);
+				p2winner.SetActive(false);
+				StartCoroutine(WaitForReturn());
+			} else if (p2win) {
+				//Declare Player 2 the winner
+				p1winner.SetActive (false);
+				p2loser.SetActive(false);
+				p1loser.SetActive(true);
+				p2winner.SetActive(true);
+				StartCoroutine(WaitForReturn());
+			}
+		}
+
+		public IEnumerator WaitForReturn() {
+			yield return new WaitForSeconds (postConclusionWait);
+			Application.LoadLevel(0);
 		}
 
 		public void StartRound() {
@@ -96,37 +128,24 @@ namespace Danmaku2D.Phantasmagoria {
 			reseting = true;
 			WaitForEndOfFrame wfeof = new WaitForEndOfFrame ();
 			float duration = closureDuration / 2f;
-			Vector3 scale = closureTop.localScale;
+			Vector3 scale = closure.localScale;
 			Vector3 oldScale = scale;
 			float dt = Util.TargetDeltaTime;
 			float t = 0;
 			scale.y = t;
 			PauseGame ();
 			while (t <= 1f) {
-				scale.y = t;
-				closureTop.localScale = scale;
-				closureBottom.localScale = scale;
+				scale.y = closureSize * t;
+				closure.localScale = scale;
 				yield return wfeof;
 				t += dt / duration;
 			}
 			scale.y = 1f;
-			closureTop.localScale = scale;
-			closureBottom.localScale = scale;
+			closure.localScale = scale;
 			bool p1dead = player1.Field.Player.LivesRemaining <= 0;
 			bool p2dead = player2.Field.Player.LivesRemaining <= 0;
 			player1.score += (p2dead && !p1dead) ? 1 : 0;
 			player2.score += (p1dead && !p2dead) ? 1 : 0;
-			bool p1win = player1.score >= winningScore;
-			bool p2win = player2.score >= winningScore;
-			if(p1win && p2win) {
-				//Signal Sudden Death
-				player1.score = player2.score = 0;
-				winningScore = 1;
-			} else if(p1win) {
-				//Declare Player 1 the winner
-			} else if(p2win) {
-				//Declare Player 2 the winner
-			}
 			player1.Field.Player.Reset (MaximumLives);
 			player2.Field.Player.Reset (MaximumLives);
 			player1.Field.Camera2DRotation = 0f;
@@ -146,13 +165,12 @@ namespace Danmaku2D.Phantasmagoria {
 			}
 			while (t > 0f) {
 				scale.y = t;
-				closureTop.localScale = scale;
-				closureBottom.localScale = scale;
-				yield return wfeof;
+				scale.y = closureSize * t;
+				closure.localScale = scale;
+				yield return null;
 				t -= dt / duration;
 			}
-			closureTop.localScale = oldScale;
-			closureBottom.localScale = oldScale;
+			closure.localScale = oldScale;
 			UnpauseGame ();
 			reseting = false;
 		}
