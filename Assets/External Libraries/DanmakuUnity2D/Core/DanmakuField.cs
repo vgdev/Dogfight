@@ -393,7 +393,7 @@ namespace Danmaku2D {
 		/// <param name="location">The location within the field to spawn the projectile.</param>
 		/// <param name="rotation">Rotation.</param>
 		/// <param name="absoluteWorldCoord">If set to <c>true</c>, <c>location</c> is in absolute world coordinates relative to the bottom right corner of the game plane.</param>
-		public Danmaku SpawnProjectile(DanmakuPrefab bulletType, Vector2 location, DynamicFloat rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
+		public Danmaku SpawnDanmaku(DanmakuPrefab bulletType, Vector2 location, DynamicFloat rotation, CoordinateSystem coordSys = CoordinateSystem.View) {
 			Danmaku bullet = Danmaku.Get (bulletType, WorldPoint(location, coordSys), rotation, this);
 			bullet.Activate ();
 			return bullet;
@@ -409,13 +409,13 @@ namespace Danmaku2D {
                                      DanmakuGroup group = null) {
 			Vector2 position = WorldPoint (location, coordSys);
 			if (modifier == null) {
-				Danmaku projectile = Danmaku.Get (bulletType, position, rotation, this);
-				projectile.Activate ();
-				projectile.Velocity = velocity;
+				Danmaku danmaku = Danmaku.Get (bulletType, position, rotation, this);
+				danmaku.Activate ();
+				danmaku.Velocity = velocity;
 				if (group != null) {
-					group.Add (projectile);
+					group.Add (danmaku);
 				}
-				return projectile;
+				return danmaku;
 			} else {
 				modifier.Initialize(bulletType, velocity, 0f, this,  null, group);
 				modifier.Fire(position, rotation);
@@ -434,15 +434,15 @@ namespace Danmaku2D {
                                      DanmakuGroup group = null) {
 			Vector2 position = WorldPoint (location, coordSys);
 			if (modifier == null) {
-				Danmaku projectile = Danmaku.Get (bulletType, position, rotation, this);
-				projectile.Activate ();
-				projectile.Velocity = velocity;
-				projectile.AngularVelocity = angularVelocity;
-				projectile.AddController(controller);
+				Danmaku danmaku = Danmaku.Get (bulletType, position, rotation, this);
+				danmaku.Activate ();
+				danmaku.Velocity = velocity;
+				danmaku.AngularVelocity = angularVelocity;
+				danmaku.AddController(controller);
 				if (group != null) {
-					group.Add (projectile);
+					group.Add (danmaku);
 				}
-				return projectile;
+				return danmaku;
 			} else {
 				modifier.Initialize(bulletType, velocity, angularVelocity, this, null, group);
 				modifier.Fire(position, rotation);
@@ -453,9 +453,9 @@ namespace Danmaku2D {
 		public Danmaku Fire(FireBuilder data) {
 			FireModifier modifier = data.Modifier;
 			if (modifier == null) {
-				Danmaku projectile = Danmaku.Get (this, data);
-				projectile.Activate ();
-				return projectile;
+				Danmaku danmaku = Danmaku.Get (this, data);
+				danmaku.Activate ();
+				return danmaku;
 			} else {
 				modifier.Initialize (data, this);
 				modifier.Fire (WorldPoint (data.Position, data.CoordinateSystem), data.Rotation);

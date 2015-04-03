@@ -13,8 +13,8 @@ namespace Danmaku2D {
 
 		private DanmakuPrefab runtime;
 		
-		private ProjectileControlBehavior[] extraControllers;
-		internal ProjectileControlBehavior[] ExtraControllers {
+		private DanmakuControlBehavior[] extraControllers;
+		internal DanmakuControlBehavior[] ExtraControllers {
 			get {
 				return extraControllers;
 			}
@@ -22,7 +22,7 @@ namespace Danmaku2D {
 
 		public override void Awake() {
 			base.Awake ();
-			extraControllers = GetComponents<ProjectileControlBehavior>();
+			extraControllers = GetComponents<DanmakuControlBehavior>();
 		}
 
 		internal DanmakuPrefab GetRuntime() {

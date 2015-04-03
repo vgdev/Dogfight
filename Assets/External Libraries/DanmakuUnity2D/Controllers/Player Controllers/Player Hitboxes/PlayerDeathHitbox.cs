@@ -14,10 +14,10 @@ namespace Danmaku2D {
 			}
 		}
 
-		public void OnProjectileCollision(Danmaku proj) {
+		public void OnDanmakuCollision(Danmaku danmaku) {
 			if (player != null) {
-				player.Hit (proj);
-				proj.Deactivate();
+				player.Hit (danmaku);
+				danmaku.Deactivate();
 			}
 		}
 	}

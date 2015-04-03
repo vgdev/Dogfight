@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Danmaku2D.Controllers {
+namespace Danmaku2D.DanmakuControllers {
 
 	[System.Serializable]
 	public class ColorFadeController : IDanmakuController {
@@ -15,7 +15,7 @@ namespace Danmaku2D.Controllers {
 		[SerializeField]
 		private float endTime;
 
-		public void UpdateProjectile (Danmaku projectile, float dt) {
+		public void UpdateDanmaku (Danmaku projectile, float dt) {
 			float bulletTime = projectile.Time;
 			Color startColor = projectile.Prefab.cachedColor;
 //			Debug.Log (bulletTime);
@@ -35,7 +35,7 @@ namespace Danmaku2D.Controllers {
 	namespace Wrapper {
 
 		[AddComponentMenu("Danmaku 2D/Controllers/Color Fade Controller")]
-		internal class ColorFadeController : ControllerWrapperBehavior<Danmaku2D.Controllers.ColorFadeController> {
+		internal class ColorFadeController : ControllerWrapperBehavior<Danmaku2D.DanmakuControllers.ColorFadeController> {
 		}
 	}
 }

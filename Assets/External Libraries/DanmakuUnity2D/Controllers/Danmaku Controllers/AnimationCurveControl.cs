@@ -1,6 +1,5 @@
 using UnityEngine;
-
-namespace Danmaku2D.Controllers {
+namespace Danmaku2D.DanmakuControllers {
 
 	[System.Serializable]
 	public class AnimationCurveController : IDanmakuController {
@@ -8,11 +7,11 @@ namespace Danmaku2D.Controllers {
 		[SerializeField]
 		private AnimationCurve velocityCurve;
 
-		#region IProjectileController implementation
-		public virtual void UpdateProjectile (Danmaku projectile, float dt) {
-			float velocity = velocityCurve.Evaluate (projectile.Time);
+		#region IDanmakuController implementation
+		public virtual void UpdateDanmaku (Danmaku danmaku, float dt) {
+			float velocity = velocityCurve.Evaluate (danmaku.Time);
 			if (velocity != 0)
-				projectile.Position += projectile.Direction * velocity * dt;
+				danmaku.Position += danmaku.Direction * velocity * dt;
 		}
 		#endregion
 	}

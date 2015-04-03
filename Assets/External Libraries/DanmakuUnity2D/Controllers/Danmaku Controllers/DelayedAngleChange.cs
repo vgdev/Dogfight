@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityUtilLib;
 
-namespace Danmaku2D.Controllers {
-
+namespace Danmaku2D.DanmakuControllers {
 	public class DelayedAngleChange : IDanmakuController {
 
 		private enum RotationMode { Absolute, Relative, Player }
@@ -16,29 +15,33 @@ namespace Danmaku2D.Controllers {
 		[SerializeField]
 		private DynamicFloat angle;
 
-		public void UpdateProjectile (Danmaku projectile, float dt) {
-			float time = projectile.Time;
+		#region implemented abstract members of IDanmakuController
+
+		public void UpdateDanmaku (Danmaku danmaku, float dt) {
+			float time = danmaku.Time;
 			if(time >= delay && time - dt <= delay) {
 				float baseAngle = angle.Value;
 				switch(rotationMode) {
 					case RotationMode.Relative:
-						baseAngle += projectile.Rotation;
+						baseAngle += danmaku.Rotation;
 						break;
 					case RotationMode.Player:
-						baseAngle += projectile.Field.AngleTowardPlayer(projectile.Position);
+						baseAngle += danmaku.Field.AngleTowardPlayer(danmaku.Position);
 						break;
 					case RotationMode.Absolute:
 						break;
 				}
-				projectile.Rotation = baseAngle;
+				danmaku.Rotation = baseAngle;
 			}
 		}
+
+		#endregion
 	}
 
 	namespace Wrapper {
 
 		[AddComponentMenu("Danmaku 2D/Controllers/Delayed Angle Change")]
-		public class DelayedAngleChange : ControllerWrapperBehavior<Danmaku2D.Controllers.DelayedAngleChange> {
+		public class DelayedAngleChange : ControllerWrapperBehavior<Danmaku2D.DanmakuControllers.DelayedAngleChange> {
 		}
 
 	}

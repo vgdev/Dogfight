@@ -10,7 +10,7 @@ namespace Danmaku2D  {
 		private List<string> tagFilter;
 
 		#region IDanmakuCollider implementation
-		public void OnProjectileCollision (Danmaku proj) {
+		public void OnDanmakuCollision (Danmaku proj) {
 			for(int i = 0; i < tagFilter.Count; i++) {
 				if(proj.CompareTag(tagFilter[i])) {
 					Trigger();

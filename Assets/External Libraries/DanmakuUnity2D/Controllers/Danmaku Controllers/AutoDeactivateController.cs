@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityUtilLib;
 
-namespace Danmaku2D.Controllers {
+namespace Danmaku2D.DanmakuControllers {
 
 	[System.Serializable]
 	public class AutoDeactivateController : IDanmakuController {
@@ -42,10 +42,10 @@ namespace Danmaku2D.Controllers {
 			frames = Util.TimeToFrames (time);
 		}
 
-		#region IProjectileController implementation
-		public void UpdateProjectile (Danmaku projectile, float dt) {
-			if (projectile.frames > frames && frames >= 0) {
-				projectile.Deactivate();
+		#region IDanmakuController implementation
+		public void UpdateDanmaku (Danmaku danmaku, float dt) {
+			if (danmaku.frames > frames) {
+				danmaku.Deactivate();
 			}
 		}
 		#endregion
@@ -55,7 +55,7 @@ namespace Danmaku2D.Controllers {
 	namespace Wrapper {
 		
 		[AddComponentMenu("Danmaku 2D/Controllers/Auto Deactivate Controller")]
-		internal class AutoDeactivateController : ControllerWrapperBehavior<Danmaku2D.Controllers.AutoDeactivateController> {
+		internal class AutoDeactivateController : ControllerWrapperBehavior<Danmaku2D.DanmakuControllers.AutoDeactivateController> {
 		}
 
 	}

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 namespace Danmaku2D.Phantasmagoria {
-	public class ProjectileTransferBoundary : ProjectileBoundary {
+	public class DanmakuTransferBoundary : DanmakuBoundary {
 
 		[SerializeField]
 		private DanmakuField field;
@@ -15,7 +15,7 @@ namespace Danmaku2D.Phantasmagoria {
 			}
 		}
 
-		protected override void ProcessProjectile (Danmaku proj) {
+		protected override void ProcessDanmaku (Danmaku proj) {
 			if (field != null) {
 				PhantasmagoriaGameController.Transfer(proj);
 			}

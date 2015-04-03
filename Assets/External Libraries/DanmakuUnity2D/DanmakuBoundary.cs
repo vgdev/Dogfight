@@ -11,7 +11,7 @@ namespace Danmaku2D {
 	/// A script for defining boundaries for detecting collision with Projectiles
 	/// </summary>
 	[RequireComponent(typeof(Collider2D))]
-	public class ProjectileBoundary : MonoBehaviour, IDanmakuCollider {
+	public class DanmakuBoundary : MonoBehaviour, IDanmakuCollider {
 
 		/// <summary>
 		/// A filter for a set of tags, delimited by "|" for selecting which bullets to affect
@@ -32,23 +32,23 @@ namespace Danmaku2D {
 		}
 
 		/// <summary>
-		/// Called on collision with any Projectile
+		/// Called on collision with any Danmaku
 		/// </summary>
 		/// <param name="proj">Proj.</param>
-		public void OnProjectileCollision(Danmaku proj) {
-			if(validTags.Count <= 0 || validTags.Contains(proj.Tag)) {
-				ProcessProjectile(proj);
+		public void OnDanmakuCollision(Danmaku danmaku) {
+			if(validTags.Count <= 0 || validTags.Contains(danmaku.Tag)) {
+				ProcessDanmaku(danmaku);
 			}
 		}
 
 		/// <summary>
-		/// Processes a projectile.
+		/// Processes a danmaku.
 		/// By default, this deactivates all Projectiles that come in contact with the ProjectileBoundary
 		/// Override this in subclasses for alternative behavior.
 		/// </summary>
 		/// <param name="proj">the projectile to process</param>
-		protected virtual void ProcessProjectile(Danmaku proj) {
-			proj.Deactivate();
+		protected virtual void ProcessDanmaku(Danmaku danmaku) {
+			danmaku.Deactivate();
 		}
 	}
 }

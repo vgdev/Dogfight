@@ -24,7 +24,7 @@ namespace Danmaku2D {
 		internal float rotation;
 		internal Vector2 direction;
 
-		//Cached information about the Projectile from its prefab
+		//Cached information about the Danmaku from its prefab
 		internal Vector2 circleCenter = Vector2.zero; 
 		private float circleRaidus = 1f;
 		internal Sprite sprite;
@@ -171,7 +171,7 @@ namespace Danmaku2D {
 		
 		/// <summary>
 		/// The amount of time, in seconds,that has passed since this bullet has been fired.
-		/// This is calculated based on the number of AbstractProjectileControllerd frames that has passed since the bullet has fired
+		/// This is calculated based on the number of AbstractDanmakuControllerd frames that has passed since the bullet has fired
 		/// Pausing will cause this value to stop increasing
 		/// </summary>
 		/// <value>The time since the projectile has been fired.</value>
@@ -241,7 +241,7 @@ namespace Danmaku2D {
 
 		public void AddController(IDanmakuController controller) {
 			if(controller != null) {
-				controllerUpdate += controller.UpdateProjectile;
+				controllerUpdate += controller.UpdateDanmaku;
 				controllerCheck = controllerUpdate != null;
 			}
 		}
@@ -253,7 +253,7 @@ namespace Danmaku2D {
 
 		public void RemoveController(IDanmakuController controller) {
 			if(controller != null) {
-				controllerUpdate -= controller.UpdateProjectile;
+				controllerUpdate -= controller.UpdateDanmaku;
 				controllerCheck = controllerUpdate != null;
 			}
 		}
@@ -277,7 +277,7 @@ namespace Danmaku2D {
 		}
 		
 		/// <summary>
-		/// Compares the tag of the Projectile instance to the given string.
+		/// Compares the tag of the Danmaku instance to the given string.
 		/// Mirrors <a href="http://docs.unity3d.com/ScriptReference/GameObject.CompareTag.html">GameObject.CompareTag</a>.
 		/// </summary>
 		/// <returns><c>true</c>, if tag is an exact match to the string, <c>false</c> otherwise.</returns>
@@ -287,7 +287,7 @@ namespace Danmaku2D {
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Danmaku2D.Projectile"/> class.
+		/// Initializes a new instance of the <see cref="Danmaku2D.Danmaku"/> class.
 		/// </summary>
 		internal Danmaku() {
 			groups = new List<DanmakuGroup> ();
@@ -337,7 +337,7 @@ namespace Danmaku2D {
 						GameObject go = colliders [i].gameObject;
 						scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
 						for (int j = 0; j < count2; j++) {
-							scripts [j].OnProjectileCollision (this);
+							scripts [j].OnDanmakuCollision (this);
 						}
 						if (to_deactivate) {
 							Position = Physics2D.CircleCast (originalPosition + circleCenter, circleRaidus, movementVector, distance).point;
@@ -356,7 +356,7 @@ namespace Danmaku2D {
 						GameObject go = hit.collider.gameObject;
 						scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
 						for (int j = 0; j < count2; j++) {
-							scripts [j].OnProjectileCollision (this);
+							scripts [j].OnDanmakuCollision (this);
 						}
 						if (to_deactivate) {
 							Position = hit.point;
@@ -379,12 +379,12 @@ namespace Danmaku2D {
 		}
 
 		/// <summary>
-		/// Makes the instance of Projectile match the given ProjectilePrefab
+		/// Makes the instance of Danmaku match the given ProjectilePrefab
 		/// This copies:
 		/// - the sprite, material, sorting layer, and color from the ProjectilePrefab's SpriteRenderer
 		/// - the collider's size and offset from the ProjectilePrefab's CircleCollider2D
 		/// - the tag and layer from the ProjectilePrefab's GameObject
-		/// - any <see cref="ProjectileControlBehavior"/> on the ProjectilePrefab will be included as additional <see cref="IProjectileGroupController"/> that will affect the behavior of this bullet
+		/// - any <see cref="DanmakuControlBehavior"/> on the ProjectilePrefab will be included as additional <see cref="IDanmakuController"/> that will affect the behavior of this bullet
 		/// </summary>
 		/// <param name="prefab">the ProjectilePrefab to match.</param>
 		public void MatchPrefab(DanmakuPrefab prefab) {
@@ -405,10 +405,10 @@ namespace Danmaku2D {
 			layer = runtime.cachedLayer;
 			colliderMask = collisionMask [layer];
 
-			ProjectileControlBehavior[] pcbs = runtime.ExtraControllers;
+			DanmakuControlBehavior[] pcbs = runtime.ExtraControllers;
 			if (pcbs.Length > 0) {
 				for (int i = 0; i < pcbs.Length; i++) {
-					pcbs [i].ProjectileGroup.Add (this);
+					pcbs [i].DanmakuGroup.Add (this);
 				}
 			}
 		}
@@ -447,9 +447,9 @@ namespace Danmaku2D {
 		}
 		
 		/// <summary>
-		/// Marks the Projectile for deactivation, and the Projectile will deactivate and return to the ProjectileManager after 
-		/// finishing processing current updates, or when the Projectile is next updated
-		/// If Projectile needs to be deactivated in a moment when it is not being updated (i.e. when the game is paused), use <see cref="DeactivateImmediate"/> instead.
+		/// Marks the Danmaku for deactivation, and the Danmaku will deactivate and return to the ProjectileManager after 
+		/// finishing processing current updates, or when the Danmaku is next updated
+		/// If Danmaku needs to be deactivated in a moment when it is not being updated (i.e. when the game is paused), use <see cref="DeactivateImmediate"/> instead.
 		/// </summary>
 		public void Deactivate()  {
 			to_deactivate = true;
@@ -460,7 +460,7 @@ namespace Danmaku2D {
 		/// <summary>
 		/// Adds this projectile to the given ProjectileGroup
 		/// </summary>
-		/// <param name="group">the group this Projectile is to be added to</param>
+		/// <param name="group">the group this Danmaku is to be added to</param>
 		public void AddToGroup(DanmakuGroup group) {
 			groups.Add (group);
 			group.group.Add (this);
@@ -471,7 +471,7 @@ namespace Danmaku2D {
 		/// <summary>
 		/// Removes this projectile from the given ProjectileGroup
 		/// </summary>
-		/// <param name="group">the group this Projectile is to be removed from</param>
+		/// <param name="group">the group this Danmaku is to be removed from</param>
 		public void RemoveFromGroup(DanmakuGroup group) {
 			groups.Remove (group);
 			group.group.Remove (this);
@@ -480,7 +480,7 @@ namespace Danmaku2D {
 		}
 
 		/// <summary>
-		/// Immediately deactivates this Projectile and returns it to the pool it came from
+		/// Immediately deactivates this Danmaku and returns it to the pool it came from
 		/// Calling this generally unadvised. Use <see cref="Deactivate"/> whenever possible.
 		/// This method should only be used when dealing with Projectiles while the game is paused or when ProjectileManager is not enabled
 		/// </summary>
