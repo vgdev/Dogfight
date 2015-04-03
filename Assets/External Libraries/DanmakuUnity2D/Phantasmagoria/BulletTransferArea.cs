@@ -5,12 +5,12 @@ using System.Collections;
 namespace Danmaku2D.Phantasmagoria {
 
 	[DisallowMultipleComponent]
-	[RequireComponent(typeof(ProjectileTransferBoundary))]
+	[RequireComponent(typeof(DanmakuTransferBoundary))]
 	[RequireComponent(typeof(Collider2D))]
 	public class BulletTransferArea : PausableGameObject {
 
 		public void Run(float duration, float maxScale, DanmakuField origin) {
-			ProjectileTransferBoundary ptb = GetComponent<ProjectileTransferBoundary> ();
+			DanmakuTransferBoundary ptb = GetComponent<DanmakuTransferBoundary> ();
 			ptb.Field = origin;
 			StartCoroutine (Execute (duration, maxScale));
 		}

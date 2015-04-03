@@ -15,7 +15,7 @@ namespace Danmaku2D {
 	[DisallowMultipleComponent]
 	[RequireComponent(typeof(Rigidbody2D))]
 	[RequireComponent(typeof(Collider2D))]
-	public abstract class Enemy : PausableGameObject {
+	public abstract class Enemy : PausableGameObject, IDanmakuCollider {
 
 		public virtual AttackPattern CurrentAttackPattern { 
 			get {
@@ -82,12 +82,12 @@ namespace Danmaku2D {
 		}
 
 		/// <summary>
-		/// A message handler for handling collisions with Projectile(s)
+		/// A message handler for handling collisions with Danmaku(s)
 		/// </summary>
-		/// <param name="proj">the projectile that hit the enemy</param>
-		void OnProjectileCollision(Danmaku proj) {
-			Hit (proj.Damage);
-			proj.Deactivate();
+		/// <param name="proj">the danmaku that hit the enemy</param>
+		public void OnDanmakuCollision(Danmaku danmaku) {
+			Hit (danmaku.Damage);
+			danmaku.Deactivate();
 		}
 	}
 }

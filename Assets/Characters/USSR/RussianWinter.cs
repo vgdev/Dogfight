@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Danmaku2D;
 using UnityUtilLib;
+using Danmaku2D.DanmakuControllers;
 
 public class RussianWinter : TimedAttackPattern {
 
@@ -41,7 +42,7 @@ public class RussianWinter : TimedAttackPattern {
 		base.MainLoop ();
 		if(delay.Tick ()) {
 			for(int i = 0; i < spawnCount; i++) {
-				group.Add (SpawnProjectile(snowPrefab, areaCenter - areaSize / 2f + areaSize.Random(), Random.Range(angleMin, angleMax)));
+				group.Add (SpawnDanmaku(snowPrefab, areaCenter - areaSize / 2f + areaSize.Random(), Random.Range(angleMin, angleMax)));
 			}
 		}
 	}

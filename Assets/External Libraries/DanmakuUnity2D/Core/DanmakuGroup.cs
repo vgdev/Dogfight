@@ -127,16 +127,16 @@ namespace Danmaku2D {
 		}
 
 		public void AddController(IDanmakuController controller) {
-			groupControllers -= controller.UpdateProjectile;
+			groupControllers -= controller.UpdateDanmaku;
 			foreach(Danmaku proj in group) {
-				proj.AddController(controller.UpdateProjectile);
+				proj.AddController(controller.UpdateDanmaku);
 			}
 		}
 
 		public void RemoveController(IDanmakuController controller) {
-			groupControllers -= controller.UpdateProjectile;
+			groupControllers -= controller.UpdateDanmaku;
 			foreach(Danmaku proj in group) {
-				proj.RemoveController(controller.UpdateProjectile);
+				proj.RemoveController(controller.UpdateDanmaku);
 			}
 		}
 

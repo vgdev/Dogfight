@@ -74,7 +74,7 @@ namespace Danmaku2D {
 		                 DanmakuController controller = null,
 		                 FireModifier modifier = null) {
 			if(TargetField == null) {
-				Debug.LogWarning("Firing from a Projectile Source without a Target Field");
+				Debug.LogWarning("Firing from a Danmaku Source without a Target Field");
 				return;
 			}
 			if (rotationOffset == null)
@@ -95,7 +95,7 @@ namespace Danmaku2D {
 
 		public void Fire(FireBuilder data) {
 			if(TargetField == null) {
-				Debug.LogWarning("Firing from a Projectile Source without a Target Field");
+				Debug.LogWarning("Firing from a Danmaku Source without a Target Field");
 				return;
 			}
 			FireBuilder copy = data.Clone ();

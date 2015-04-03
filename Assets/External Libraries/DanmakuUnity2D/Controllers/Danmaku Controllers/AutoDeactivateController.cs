@@ -9,10 +9,10 @@ namespace Danmaku2D {
 		public bool useTime;
 		public int frames;
 
-		#region IProjectileController implementation
-		public void UpdateProjectile (Danmaku projectile, float dt) {
-			if (projectile.frames > frames) {
-				projectile.Deactivate();
+		#region IDanmakuController implementation
+		public void UpdateDanmaku (Danmaku danmaku, float dt) {
+			if (danmaku.frames > frames) {
+				danmaku.Deactivate();
 			}
 		}
 		#endregion

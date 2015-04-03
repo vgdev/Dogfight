@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 using Danmaku2D;
+using Danmaku2D.DanmakuControllers;
 
 public class BlitzKrieg : TimedAttackPattern
 {
@@ -71,7 +72,7 @@ public class BlitzKrieg : TimedAttackPattern
         float offset = (burstCount.MaxCount - burstCount.Count) * burstRotationDelta;
         for (int i = 0; i < bulletCount; i++)
         {
-            Danmaku temp = SpawnProjectile(prefab, center, offset + 360f / (float)bulletCount * (float)i);
+            Danmaku temp = SpawnDanmaku(prefab, center, offset + 360f / (float)bulletCount * (float)i);
             burstGroup.Add(temp);
         }
     }

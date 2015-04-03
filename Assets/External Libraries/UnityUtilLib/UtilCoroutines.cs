@@ -51,11 +51,11 @@ namespace UnityUtilLib {
 		/// <summary>
 		/// A useful utility function for Coroutines in implementors of IPausable.
 		/// If the instance is not paused, it will wait return a WaitForEndOfFrame instance.
-		/// If the instance is paused, it will wait until the object becomes AbstractProjectileControllerd before continuing.
+		/// If the instance is paused, it will wait until the object becomes AbstractDanmakuControllerd before continuing.
 		/// <example>
 		/// This is standard usage for this function:
 		/// <code>
-		/// yield return AbstractProjectileController()
+		/// yield return AbstractDanmakuController()
 		/// </code>
 		/// </example>
 		/// <see href="http://docs.unity3d.com/Manual/Coroutines.html">Unity Manual: Coroutines</see>
@@ -70,7 +70,7 @@ namespace UnityUtilLib {
 		}
 
 		/// <summary>
-		/// Coroutine to wait for the object to become AbstractProjectileControllerd
+		/// Coroutine to wait for the object to become AbstractDanmakuControllerd
 		/// <see href="http://docs.unity3d.com/Manual/Coroutines.html">Unity Manual: Coroutines</see>
 		/// </summary>
 		/// <returns> The Coroutine IEnumerator </returns>
