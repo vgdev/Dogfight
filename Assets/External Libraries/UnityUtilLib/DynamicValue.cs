@@ -5,7 +5,7 @@ using UnityUtilLib;
 namespace UnityUtilLib {
 
 	[System.Serializable]
-	public class DynamicInt {
+	public struct DynamicInt {
 			
 		public enum Type { Constant, Random }
 		
@@ -96,7 +96,7 @@ namespace UnityUtilLib {
 	}
 
 	[System.Serializable]
-	public class DynamicFloat {
+	public struct DynamicFloat {
 
 		public enum Type { Constant, Random }
 
@@ -150,7 +150,7 @@ namespace UnityUtilLib {
 			if (df1.type == Type.Constant && df2.type == Type.Constant)
 				return new DynamicFloat (df1.centerValue - df2.centerValue);
 			else 
-				return new DynamicFloat (df1.centerValue - df2.centerValue, df1.range + df2.range);
+				return new DynamicFloat (df1.centerValue - df2.centerValue, df1.range - df2.range);
 		}
 
 		public static bool operator ==(DynamicFloat df1, DynamicFloat df2) {

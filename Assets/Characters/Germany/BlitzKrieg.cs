@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityUtilLib;
 using Danmaku2D;
+using Danmaku2D.Controllers;
 
 public class BlitzKrieg : TimedAttackPattern
 {

@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// A development kit for quick development of 2D Danmaku games
 /// </summary>
-namespace Danmaku2D {
+namespace Danmaku2D.Controllers.Wrapper {
 
 	/// <summary>
 	/// An abstract generic superclass to mirror the functionality of any implementor of IPorjectileGroupController in a ProjectileControlBehavior.

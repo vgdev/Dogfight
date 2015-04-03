@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace Danmaku2D  {
 
-	[RequireComponent(typeof(Collider2D))]
+	[RequireComponent(typeof(Collider2D)), AddComponentMenu("Danmaku 2D/Triggers/Projectile Collider Trigger")]
 	public class ProjectileColliderTrigger : DanmakuTrigger, IDanmakuCollider {
 
 		[SerializeField]
@@ -13,7 +13,7 @@ namespace Danmaku2D  {
 		public void OnProjectileCollision (Danmaku proj) {
 			for(int i = 0; i < tagFilter.Count; i++) {
 				if(proj.CompareTag(tagFilter[i])) {
-					FireTrigger();
+					Trigger();
 					break;
 				}
 			}

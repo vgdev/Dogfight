@@ -4,7 +4,7 @@ using UnityUtilLib;
 /// <summary>
 /// A development kit for quick development of 2D Danmaku games
 /// </summary>
-namespace Danmaku2D {
+namespace Danmaku2D.Controllers {
 	
 	/// <summary>
 	/// A ProjectileController or ProjectileGroupController for creating bullets that move along a straight path.
@@ -32,8 +32,6 @@ namespace Danmaku2D {
 			this.capSpeed = capSpeed;
 		}
 		
-		#region IProjectileController implementation
-		
 		public virtual void UpdateProjectile (Danmaku projectile, float dt) {
 			if (acceleration != 0) {
 				float velocity = projectile.Velocity;
@@ -46,12 +44,11 @@ namespace Danmaku2D {
 				projectile.Velocity = velocity;
 			}
 		}
-		
-		#endregion
 	}
 
 	namespace Wrapper {
-		
+
+		[AddComponentMenu("Danmaku 2D/Controllers/Acceleration Controller")]
 		public class AccelerationProjectileController : ControllerWrapperBehavior<AccelerationController> {
 		}
 		

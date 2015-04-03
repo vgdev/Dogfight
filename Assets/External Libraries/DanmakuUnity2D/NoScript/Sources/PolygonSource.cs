@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PolygonSource : MonoBehaviour {
+namespace Danmaku2D {
 
-	// Use this for initialization
-	void Start () {
-	
+	[AddComponentMenu("Danmaku 2D/Sources/Polygon Source")]
+	public class PolygonSource : MonoBehaviour {
+		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

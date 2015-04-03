@@ -8,8 +8,7 @@ namespace Danmaku2D {
 	/// <summary>
 	/// A container behavior used on prefabs to define how a bullet looks or behaves
 	/// </summary>
-	[RequireComponent(typeof(CircleCollider2D))]
-	[RequireComponent(typeof(SpriteRenderer))]
+	[RequireComponent(typeof(CircleCollider2D)), RequireComponent(typeof(SpriteRenderer)), AddComponentMenu("Danmaku 2D/Danmaku Prefab")]
 	public sealed class DanmakuPrefab : DanmakuObjectPrefab {
 
 		private DanmakuPrefab runtime;

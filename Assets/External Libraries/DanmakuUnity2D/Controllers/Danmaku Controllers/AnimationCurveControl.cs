@@ -1,7 +1,6 @@
 using UnityEngine;
-using Danmaku2D.ProjectileControllers;
 
-namespace Danmaku2D {
+namespace Danmaku2D.Controllers {
 
 	[System.Serializable]
 	public class AnimationCurveController : IDanmakuController {
@@ -19,8 +18,11 @@ namespace Danmaku2D {
 	}
 
 	namespace Wrapper {
+		
+		[AddComponentMenu("Danmaku 2D/Controllers/Animation Curve Controller")]
 		internal class AnimationCurveController : ControllerWrapperBehavior<AnimationCurveController> {
 		}
+
 	}
 }
 

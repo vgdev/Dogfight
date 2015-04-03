@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Danmaku2D {
+namespace Danmaku2D.Controllers {
 
 	[System.Serializable]
 	public class FireDanmakuController : IDanmakuController {
@@ -25,4 +25,11 @@ namespace Danmaku2D {
 		
 	}
 
+	namespace Wrapper {
+
+		[AddComponentMenu("Danmaku 2D/Controllers/Fire Danmaku Controller")]
+		public class FireDanmakuController : ControllerWrapperBehavior<Danmaku2D.Controllers.FireDanmakuController> {
+		}
+
+	}
 }

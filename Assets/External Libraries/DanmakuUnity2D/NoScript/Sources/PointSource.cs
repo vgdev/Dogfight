@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Danmaku2D.NoScript {
 
+	[AddComponentMenu("Danmaku 2D/Sources/Point Source")]
 	internal class PointSource : DanmakuSource {
 
 		#region implemented abstract members of ProjectileSource

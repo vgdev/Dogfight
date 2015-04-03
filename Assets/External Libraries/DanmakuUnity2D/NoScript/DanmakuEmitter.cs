@@ -5,6 +5,7 @@ using Danmaku2D.NoScript;
 
 namespace Danmaku2D {
 
+	[AddComponentMenu("Danmaku 2D/Danmaku Emitter")]
 	public sealed class DanmakuEmitter : DanmakuTriggerReciever {
 
 		[SerializeField]

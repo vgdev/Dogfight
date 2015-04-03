@@ -21,6 +21,7 @@ namespace Danmaku2D {
 
 	namespace Wrapper {
 
+		[AddComponentMenu("Danmaku 2D/Modifiers/Randomize Angle")]
 		internal class RandomizeAngleModifier : ModifierWrapper<Danmaku2D.RandomizeAngleModifier> {
 		}
 

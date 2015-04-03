@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityUtilLib;
 
-namespace Danmaku2D.ProjectileControllers {
+namespace Danmaku2D.Controllers {
 
-	public class DelayedAngleChange : ProjectileControlBehavior {
+	public class DelayedAngleChange : IDanmakuController {
 
 		private enum RotationMode { Absolute, Relative, Player }
 
@@ -16,9 +16,7 @@ namespace Danmaku2D.ProjectileControllers {
 		[SerializeField]
 		private DynamicFloat angle;
 
-		#region implemented abstract members of ProjectileControlBehavior
-
-		public override void UpdateProjectile (Danmaku projectile, float dt) {
+		public void UpdateProjectile (Danmaku projectile, float dt) {
 			float time = projectile.Time;
 			if(time >= delay && time - dt <= delay) {
 				float baseAngle = angle.Value;
@@ -35,8 +33,13 @@ namespace Danmaku2D.ProjectileControllers {
 				projectile.Rotation = baseAngle;
 			}
 		}
+	}
 
-		#endregion
-		
+	namespace Wrapper {
+
+		[AddComponentMenu("Danmaku 2D/Controllers/Delayed Angle Change")]
+		public class DelayedAngleChange : ControllerWrapperBehavior<Danmaku2D.Controllers.DelayedAngleChange> {
+		}
+
 	}
 }

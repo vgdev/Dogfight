@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Danmaku2D;
+using Danmaku2D.Controllers;
 using UnityUtilLib;
 
 public class RussianWinter : TimedAttackPattern {

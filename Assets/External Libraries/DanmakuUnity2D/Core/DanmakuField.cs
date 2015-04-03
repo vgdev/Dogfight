@@ -10,8 +10,7 @@ using UnityEditor;
 /// </summary>
 namespace Danmaku2D {
 
-	[ExecuteInEditMode]
-	[DisallowMultipleComponent]
+	[ExecuteInEditMode, DisallowMultipleComponent, AddComponentMenu("Danmaku 2D/Danmaku Field")]
 	public sealed class DanmakuField : MonoBehaviour {
 
 		internal static List<DanmakuField> fields;

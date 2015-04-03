@@ -13,7 +13,7 @@ namespace Danmaku2D {
 			base.Awake ();
 			for(int i = 0; i < triggers.Length; i++) {
 				if(triggers[i] != null) {
-					triggers[i].Trigger += Trigger;
+					triggers[i].triggerCallback += Trigger;
 				}
 			}
 		}
@@ -21,7 +21,7 @@ namespace Danmaku2D {
 		public void OnDestroy() {
 			for(int i = 0; i < triggers.Length; i++) {
 				if(triggers[i] != null) {
-					triggers[i].Trigger -= Trigger;
+					triggers[i].triggerCallback -= Trigger;
 				}
 			}
 		}
@@ -29,16 +29,16 @@ namespace Danmaku2D {
 		public abstract void Trigger ();
 	}
 
-
-	public abstract class DanmakuTrigger : CachedObject {
+	[AddComponentMenu("Danmaku 2D/Danmaku Trigger")]
+	public class DanmakuTrigger : CachedObject {
 
 		public delegate void TriggerCallback ();
 		
-		internal TriggerCallback Trigger;
+		internal TriggerCallback triggerCallback;
 		
-		public void FireTrigger() {
-			if(Trigger != null)
-				Trigger();
+		public void Trigger() {
+			if(triggerCallback != null)
+				triggerCallback();
 		}
 
 	}
