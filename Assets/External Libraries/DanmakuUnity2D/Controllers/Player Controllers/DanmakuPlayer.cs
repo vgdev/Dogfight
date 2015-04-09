@@ -5,12 +5,13 @@ using System.Collections.Generic;
 namespace Danmaku2D {
 
 	[RequireComponent(typeof(Collider2D))]
-	public abstract class DanmakuPlayer : PausableGameObject {
-
-		public virtual DanmakuField Field {
+	public abstract class DanmakuPlayer : FieldDependentBehaviour, IPausable {
+		#region IPausable implementation
+		public bool Paused {
 			get;
 			set;
 		}
+		#endregion
 		
 		private PlayerAgent agent;
 		public PlayerAgent Agent {
@@ -25,12 +26,15 @@ namespace Danmaku2D {
 
 		public override void Awake () {
 			base.Awake ();
-			Field = Util.FindClosest<DanmakuField> (transform.position);
 			Field.player = this;
 		}
-		
-		public override void NormalUpdate () {
-			base.NormalUpdate ();
+
+		void Update() {
+			if(!Paused)
+				NormalUpdate();
+		}
+
+		protected virtual void NormalUpdate() {
 			if(agent != null)
 				agent.Update();
 		}

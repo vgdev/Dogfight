@@ -42,7 +42,6 @@ namespace Danmaku2D {
 
 		public override void Awake() {
 			base.Awake ();
-			Field = Util.FindClosest<DanmakuField> (transform.position);
 			currentHealth = maxHealth;
 			movementPattern = GetComponent<MovementPattern> ();
 			movementPattern.DestroyOnEnd = true;

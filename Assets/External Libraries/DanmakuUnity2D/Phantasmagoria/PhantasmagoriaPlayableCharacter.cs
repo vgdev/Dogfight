@@ -89,10 +89,10 @@ namespace Danmaku2D.Phantasmagoria {
 				return base.Field;
 			}
 			set {
-				base.Field = value;
+				DanmakuField field = base.Field = value;
 				for(int i = 0; i < attackPatterns.Length; i++)
 					if(attackPatterns[i] != null)
-						attackPatterns[i].TargetField = base.Field.TargetField;
+						attackPatterns[i].TargetField = field.TargetField;
 			}
 		}
 
@@ -139,7 +139,7 @@ namespace Danmaku2D.Phantasmagoria {
 			currentChargeCapacity -= level;
 		}
 
-		public override void NormalUpdate () {
+		protected override void NormalUpdate () {
 			base.NormalUpdate ();
 			float dt = Util.TargetDeltaTime;
 			currentChargeCapacity += chargeCapacityRegen * dt;

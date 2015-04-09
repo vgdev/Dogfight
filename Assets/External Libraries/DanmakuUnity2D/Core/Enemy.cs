@@ -15,7 +15,7 @@ namespace Danmaku2D {
 	[DisallowMultipleComponent]
 	[RequireComponent(typeof(Rigidbody2D))]
 	[RequireComponent(typeof(Collider2D))]
-	public abstract class Enemy : PausableGameObject, IDanmakuCollider {
+	public abstract class Enemy : FieldDependentBehaviour, IPausable, IDanmakuCollider {
 
 		public virtual AttackPattern CurrentAttackPattern { 
 			get {
@@ -23,20 +23,14 @@ namespace Danmaku2D {
 			}
 		}
 
-		private DanmakuField field;
+		#region IPausable implementation
 
-		/// <summary>
-		/// Gets or sets the DanmakuField that all Projectiles fired by this instance will use.
-		/// </summary>
-		/// <value>The field.</value>
-		public DanmakuField Field {
-			get {
-				return field;
-			}
-			set {
-				field = value;
-			}
+		public bool Paused {
+			get;
+			set;
 		}
+
+		#endregion
 
 		/// <summary>
 		/// Gets a value indicating whether this instance is dead.
