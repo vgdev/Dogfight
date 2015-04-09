@@ -30,7 +30,6 @@ namespace Danmaku2D {
 				validTags = new HashSet<string> ();
 			else
 				validTags = new HashSet<string>(tagFilter.Split ('|'));
-			Debug.Log (validTags.Count);
 		}
 
 		/// <summary>

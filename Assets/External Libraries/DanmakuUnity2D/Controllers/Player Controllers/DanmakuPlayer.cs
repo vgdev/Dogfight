@@ -5,13 +5,17 @@ using System.Collections.Generic;
 namespace Danmaku2D {
 
 	[RequireComponent(typeof(Collider2D))]
-	public abstract class DanmakuPlayer : FieldDependentBehaviour, IPausable {
-		#region IPausable implementation
+	public abstract class DanmakuPlayer : DanmakuTrigger, IPausable {
+
+		public virtual DanmakuField Field {
+			get;
+			set;
+		}
+
 		public bool Paused {
 			get;
 			set;
 		}
-		#endregion
 		
 		private PlayerAgent agent;
 		public PlayerAgent Agent {
@@ -34,9 +38,9 @@ namespace Danmaku2D {
 				NormalUpdate();
 		}
 
-		protected virtual void NormalUpdate() {
-			if(agent != null)
-				agent.Update();
+		public virtual void NormalUpdate() {
+			if (agent != null)
+				agent.Update ();
 		}
 
 		[SerializeField]
@@ -105,8 +109,6 @@ namespace Danmaku2D {
 			}
 		}
 
-		public abstract void Fire ();
-
 		public virtual void Hit(Danmaku proj) {
 			livesRemaining--;
 		}
@@ -122,7 +124,7 @@ namespace Danmaku2D {
 			if(IsFiring) {
 				fireDelay -= dt;
 				if(fireDelay < 0f) {
-					Fire ();
+					Trigger();
 					fireDelay = 1f / fireRate;
 				}
 			}

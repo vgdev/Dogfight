@@ -25,7 +25,7 @@ namespace Danmaku2D {
 		internal Vector2 direction;
 
 		//Cached information about the Danmaku from its prefab
-		internal Vector2 circleCenter = Vector2.zero; 
+		internal Vector2 colliderOffset = Vector2.zero; 
 		private float circleRaidus = 1f;
 		internal Sprite sprite;
 		internal Material material;
@@ -55,16 +55,30 @@ namespace Danmaku2D {
 		private int count, count2;
 		private float distance;
 		private Vector2 originalPosition, movementVector;
-		private IDanmakuCollider[] scripts;
+//		private IDanmakuCollider[] scripts;
 		private RaycastHit2D[] raycastHits;
 		private Collider2D[] colliders;
+		private Vector2 collisionCenter;
+		private float movementChange;
 
 		//Cached check for controllers to avoid needing to calculate them in Update
 		internal bool groupCheck;
 		private bool controllerCheck;
 		internal int groupCountCache;
 
-		public float Velocity;
+		private float speed;
+		private float angularVelocity;
+
+		public float Speed {
+			get {
+				return speed;
+			}
+			set {
+				speed = value;
+				movementChange = speed * dt;
+			}
+		}
+
 		public float AngularVelocity;
 
 		public DanmakuPrefab Prefab {
@@ -219,15 +233,8 @@ namespace Danmaku2D {
 			}
 		}
 
-		public bool BoundsCheck {
-			get;
-			set;
-		}
-
-		public bool CollisionCheck {
-			get;
-			set;
-		}
+		public bool BoundsCheck;
+		public bool CollisionCheck;
 
 		/// <summary>
 		/// Gets the DanmakuField this instance was fired from.
@@ -300,7 +307,7 @@ namespace Danmaku2D {
 			#endif
 			raycastHits = new RaycastHit2D[5];
 			colliders = new Collider2D[5];
-			scripts = new IDanmakuCollider[5];
+//			scripts = new IDanmakuCollider[5];
 		}
 
 		internal void Update() {
@@ -316,10 +323,11 @@ namespace Danmaku2D {
 				Rotation += AngularVelocity * dt;
 			}
 
-			if (Velocity != 0) {
-				float change = Velocity * dt;
-				Position.x += direction.x * change;
-				Position.y += direction.y * change;
+			if (Speed != 0) {
+				if(dtChanged)
+					movementChange = speed * dt;
+				Position.x += direction.x * movementChange;
+				Position.y += direction.y * movementChange;
 			}
 			
 			movementVector.x = Position.x - originalPosition.x;
@@ -327,25 +335,29 @@ namespace Danmaku2D {
 
 			if(CollisionCheck) {
 				distance = movementVector.magnitude;
+				collisionCenter.x = originalPosition.x + colliderOffset.y;
+				collisionCenter.y = originalPosition.y + colliderOffset.y;
 				//Check if the collision detection should be continuous or not
 				if (distance <= circleRaidus) {
-					count = Physics2D.OverlapCircleNonAlloc(originalPosition + circleCenter,
+					count = Physics2D.OverlapCircleNonAlloc(originalPosition + colliderOffset,
 					                                        circleRaidus,
 					                                        colliders,
 					                                        colliderMask);
 					for (int i = 0; i < count; i++) {
-						GameObject go = colliders [i].gameObject;
-						scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
-						for (int j = 0; j < count2; j++) {
+//						GameObject go = colliders [i].gameObject;
+//						scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
+//						for (int j = 0; j < count2; j++) {
+						IDanmakuCollider[] scripts = field.colliderMap[colliders[i]];
+						for (int j = 0; j < scripts.Length; j++) {
 							scripts [j].OnDanmakuCollision (this);
 						}
 						if (to_deactivate) {
-							Position = Physics2D.CircleCast (originalPosition + circleCenter, circleRaidus, movementVector, distance).point;
+							Position = Physics2D.CircleCast (collisionCenter, circleRaidus, movementVector, distance).point;
 							break;
 						}
 					}
 				} else {
-					count = Physics2D.CircleCastNonAlloc(originalPosition + circleCenter, 
+					count = Physics2D.CircleCastNonAlloc(collisionCenter, 
 					                                     circleRaidus,
 					                                     movementVector,
 					                                     raycastHits,
@@ -353,9 +365,11 @@ namespace Danmaku2D {
 					                                     colliderMask);
 					for (int i = 0; i < count; i++) {
 						RaycastHit2D hit = raycastHits [i];
-						GameObject go = hit.collider.gameObject;
-						scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
-						for (int j = 0; j < count2; j++) {
+//						GameObject go = hit.collider.gameObject;
+//						scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
+//						for (int j = 0; j < count2; j++) {
+						IDanmakuCollider[] scripts = field.colliderMap[hit.collider];
+						for (int j = 0; j < scripts.Length; j++) {
 							scripts [j].OnDanmakuCollision (this);
 						}
 						if (to_deactivate) {
@@ -394,7 +408,7 @@ namespace Danmaku2D {
 				Vector2 scale = transform.localScale = runtime.cachedScale;
 				renderer.sharedMaterial = runtime.cachedMaterial;
 				renderer.sortingLayerID = runtime.cachedSortingLayer;
-				circleCenter = scale.Hadamard2(runtime.cachedColliderOffset);
+				colliderOffset = scale.Hadamard2(runtime.cachedColliderOffset);
 				circleRaidus = runtime.cachedColliderRadius * scale.Max();
 				tag = gameObject.tag = runtime.cachedTag;
 				symmetric = runtime.symmetric;

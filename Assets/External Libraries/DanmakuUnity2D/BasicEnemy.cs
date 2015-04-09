@@ -55,7 +55,7 @@ namespace Danmaku2D {
 
 		protected override void Damage (float damage) {
 			currentHealth -= damage;
-			print (currentHealth);
+			//print (currentHealth);
 		}
 		
 		public override bool IsDead {

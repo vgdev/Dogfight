@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &144494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 460980}
+  - 114: {fileID: 11468404}
+  m_Layer: 12
+  m_Name: Player Shot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &197972
 GameObject:
   m_ObjectHideFlags: 0
@@ -49,6 +65,8 @@ GameObject:
   - 50: {fileID: 5097974}
   - 114: {fileID: 11497978}
   - 114: {fileID: 11423826}
+  - 114: {fileID: 11460564}
+  - 114: {fileID: 11485548}
   m_Layer: 12
   m_Name: Australia
   m_TagString: Player
@@ -56,6 +74,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &460980
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: .819999993, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 497976}
+  m_RootOrder: 2
 --- !u!4 &497972
 Transform:
   m_ObjectHideFlags: 1
@@ -87,11 +117,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197976}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.7306042, y: -2.75038314, z: 0}
+  m_LocalPosition: {x: -176.587936, y: -25.7523518, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 497974}
   - {fileID: 497972}
+  - {fileID: 460980}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!50 &5097972
@@ -178,6 +209,81 @@ MonoBehaviour:
   timeout:
     Time: 0
   flipDuration: 1
+--- !u!114 &11460564
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4e4f002f1792f4aa4bab53b9200ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers:
+  - {fileID: 11497978}
+  sources:
+  - {fileID: 11468404}
+  fireData:
+    Prefab: {fileID: 11429344, guid: 3a629fa46dfc0184c96fbedeec43cd9c, type: 2}
+    Position: {x: 0, y: 0}
+    Rotation:
+      type: 0
+      centerValue: 0
+      range: 0
+    Velocity:
+      type: 0
+      centerValue: 100
+      range: 0
+    AngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    CoordinateSystem: 0
+    Damage: 3
+  modifier: {fileID: 11485548}
+  controllers: []
+--- !u!114 &11468404
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172d150a45fe41040a0db77aa245b44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subSource: {fileID: 0}
+--- !u!114 &11485548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8382d8a36abd6d469c9041d84c0b902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modifier:
+    Range:
+      type: 0
+      centerValue: 90
+      range: 0
+    Count:
+      type: 0
+      centerValue: 7
+      range: 0
+    DeltaVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    DeltaAngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+  subModifier: {fileID: 0}
 --- !u!114 &11497972
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -213,16 +319,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalMovementSpeed: 5
   focusMovementSpeed: 3
-  fireRate: 4
+  fireRate: 10
   attackPatterns:
   - {fileID: 11423826}
-  shotOffset: {x: .5, y: 0}
-  shotVelocity: 200
   chargeRate: 1
   chargeCapacityRegen: 1
   currentChargeCapacity: 0
-  shotType: {fileID: 11472154, guid: 757e39eb56fa122418e58d715653d773, type: 2}
-  shotDamage: 5
   cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
   deathCancelDuration: .5
   deathCancelRadius: 40
