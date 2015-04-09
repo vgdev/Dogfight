@@ -74,8 +74,7 @@ namespace Danmaku2D {
 			dt = Util.TargetDeltaTime;
 			dtChanged = oldDt != dt;
 			Danmaku[] all = projectilePool.all;
-			int totalCount = projectilePool.totalCount;
-			for (int i = 0; i < totalCount; i++) {
+			for (int i = 0; i < all.Length; i++) {
 				if(all[i].is_active) {
 					all[i].Update();
 				}
@@ -85,8 +84,7 @@ namespace Danmaku2D {
 		
 		public static void DeactivateAll() {
 			Danmaku[] all = projectilePool.all;
-			int totalCount = projectilePool.totalCount;
-			for (int i = 0; i < totalCount; i++) {
+			for (int i = 0; i < all.Length; i++) {
 				if(all[i].is_active)
 					all[i].DeactivateImmediate();
 			}

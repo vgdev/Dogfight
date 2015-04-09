@@ -30,14 +30,12 @@ namespace Danmaku2D {
 
 		public override void Awake () {
 			base.Awake ();
-			Field = Util.FindClosest<DanmakuField> (transform.position);
 			Field.player = this;
 		}
 
 		void Update() {
-			if (!Paused) {
+			if(!Paused)
 				NormalUpdate();
-			}
 		}
 
 		public virtual void NormalUpdate() {

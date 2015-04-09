@@ -15,6 +15,23 @@ namespace Danmaku2D {
 
 		internal static List<DanmakuField> fields;
 
+		public static DanmakuField FindClosest(Vector2 position) {
+			if(fields == null)
+				return null;
+			DanmakuField closest = null;
+			float minDist = float.MaxValue;
+			for(int i = 0; i < fields.Count; i++) {
+				DanmakuField field = fields[i];
+				Vector2 diff = ((Vector2)field.transform.position - position);
+				float distance = diff.sqrMagnitude;
+				if(distance < minDist) {
+					closest = field;
+					minDist = distance;
+				}
+			}
+			return closest;
+		}
+
 		internal Dictionary<Collider2D, IDanmakuCollider[]> colliderMap;
 
 		public enum CoordinateSystem { View, ViewRelative, Relative, World }
@@ -523,5 +540,19 @@ namespace Danmaku2D {
 			return copy;
 		}
 		#endregion
+	}
+
+	public class FieldDependentBehaviour : CachedObject {
+
+		public virtual DanmakuField Field {
+			get;
+			set;
+		}
+
+		public override void Awake () {
+			base.Awake ();
+			Field = DanmakuField.FindClosest (transform.position);
+		}
+
 	}
 }

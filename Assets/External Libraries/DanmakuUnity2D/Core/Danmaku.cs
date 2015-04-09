@@ -530,5 +530,29 @@ namespace Danmaku2D {
 			Pool.Return (this);
 			//ProjectileManager.Return (this);
 		}
+
+		public override int GetHashCode () {
+			return index;
+		}
+
+		public override bool Equals (object obj) {
+			return this == (obj as Danmaku);
+		}
+
+		public static bool operator ==(Danmaku d1, Danmaku d2) {
+			bool d1null = (object)d1 == null;
+			bool d2null = (object)d2 == null;
+			if(d1null && d2null)
+				return true;
+			if(d1null && !d2null)
+				return d2.is_active;
+			if(!d1null && d2null)
+				return d1.is_active;
+			return System.Object.ReferenceEquals(d1, d2);
+		}
+
+		public static bool operator !=(Danmaku d1, Danmaku d2) {
+			return !(d1 == d2);
+		}
 	}
 }

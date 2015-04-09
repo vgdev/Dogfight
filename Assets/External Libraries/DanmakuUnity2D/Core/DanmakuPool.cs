@@ -81,7 +81,7 @@ namespace Danmaku2D {
 				while (inactiveCount < count)
 					Spawn (spawnCount);
 				inactiveCount -= count;
-				for (int i = 0; i < count; i++) {
+				for (int i = 0; i < projectiles.Length; i++) {
 					projectiles[i] = all[queue[currentIndex]];
 					currentIndex = (currentIndex + 1) % size;
 				}
