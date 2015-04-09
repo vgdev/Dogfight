@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &124776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 480586}
+  - 114: {fileID: 11429128}
+  m_Layer: 12
+  m_Name: Player Shot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &171688
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,6 +63,8 @@ GameObject:
   - 61: {fileID: 6171688}
   - 50: {fileID: 5071690}
   - 114: {fileID: 11462282}
+  - 114: {fileID: 11402100}
+  - 114: {fileID: 11453668}
   m_Layer: 12
   m_Name: Japan
   m_TagString: Player
@@ -90,8 +108,21 @@ Transform:
   m_Children:
   - {fileID: 471690}
   - {fileID: 471688}
+  - {fileID: 480586}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &480586
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124776}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: .629999995, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 471692}
+  m_RootOrder: 2
 --- !u!50 &5071688
 Rigidbody2D:
   m_ObjectHideFlags: 1
@@ -161,6 +192,84 @@ BoxCollider2D:
   m_Offset: {x: -.0134963989, y: .164588928}
   serializedVersion: 2
   m_Size: {x: 2.6510725, y: 4.05488825}
+--- !u!114 &11402100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4e4f002f1792f4aa4bab53b9200ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers:
+  - {fileID: 11462282}
+  sources:
+  - {fileID: 11429128}
+  fireData:
+    Prefab: {fileID: 0}
+    Position: {x: 0, y: 0}
+    Rotation:
+      type: 0
+      centerValue: 0
+      range: 0
+    Velocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    AngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    CoordinateSystem: 0
+    Damage: 7
+  modifier: {fileID: 11453668}
+  controllers: []
+--- !u!114 &11429128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7045342c126352a4e822079d6d80f3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subSource: {fileID: 0}
+  count: 4
+  radius: 0
+  raidalDirection: 1
+--- !u!114 &11453668
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8382d8a36abd6d469c9041d84c0b902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modifier:
+    Range:
+      type: 0
+      centerValue: 10
+      range: 0
+    Count:
+      type: 0
+      centerValue: 3
+      range: 0
+    DeltaVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    DeltaAngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+  subModifier: {fileID: 0}
 --- !u!114 &11462282
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -176,13 +285,9 @@ MonoBehaviour:
   focusMovementSpeed: 3
   fireRate: 4
   attackPatterns: []
-  shotOffset: {x: .5, y: 0}
-  shotVelocity: 200
   chargeRate: 1
   chargeCapacityRegen: 1
   currentChargeCapacity: 0
-  shotType: {fileID: 11472154, guid: 757e39eb56fa122418e58d715653d773, type: 2}
-  shotDamage: 5
   cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
   deathCancelDuration: .5
   deathCancelRadius: 40

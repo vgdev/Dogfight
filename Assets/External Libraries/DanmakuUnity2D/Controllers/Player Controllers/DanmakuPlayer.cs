@@ -123,9 +123,7 @@ namespace Danmaku2D {
 		}
 
 		public void FireCheck(float dt) {
-			Debug.Log(IsFiring);
 			if(IsFiring) {
-				Debug.Log("Hello");
 				fireDelay -= dt;
 				if(fireDelay < 0f) {
 					Trigger();

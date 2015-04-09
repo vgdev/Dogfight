@@ -50,6 +50,9 @@ GameObject:
   - 114: {fileID: 11430088}
   - 114: {fileID: 11436200}
   - 114: {fileID: 11441488}
+  - 114: {fileID: 11423160}
+  - 114: {fileID: 11476034}
+  - 114: {fileID: 11477146}
   m_Layer: 12
   m_Name: Gemany
   m_TagString: Player
@@ -66,7 +69,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 424872}
   - 114: {fileID: 11461616}
-  - 114: {fileID: 11462618}
   m_Layer: 12
   m_Name: Player Shot
   m_TagString: Untagged
@@ -194,6 +196,41 @@ BoxCollider2D:
   m_Offset: {x: -.0134963989, y: .164588928}
   serializedVersion: 2
   m_Size: {x: 2.6510725, y: 4.05488825}
+--- !u!114 &11423160
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4e4f002f1792f4aa4bab53b9200ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers:
+  - {fileID: 11430088}
+  sources:
+  - {fileID: 11461616}
+  fireData:
+    Prefab: {fileID: 11468572, guid: bdeeb071e1656c343ba29a9125fc634b, type: 2}
+    Position: {x: 0, y: 0}
+    Rotation:
+      type: 0
+      centerValue: 0
+      range: 0
+    Velocity:
+      type: 0
+      centerValue: 120
+      range: 0
+    AngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    CoordinateSystem: 0
+    Damage: 2
+  modifier: {fileID: 11476034}
+  controllers:
+  - {fileID: 11477146}
 --- !u!114 &11430088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -205,8 +242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebcec34caf3f5e44a0354dd374d66b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalMovementSpeed: 5
-  focusMovementSpeed: 3
+  normalMovementSpeed: 20
+  focusMovementSpeed: 15
   fireRate: 20
   attackPatterns:
   - {fileID: 11436200}
@@ -304,18 +341,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   subSource: {fileID: 0}
---- !u!114 &11462618
+--- !u!114 &11476034
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 130114}
+  m_GameObject: {fileID: 130092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6f6f36dbebd48249b6a05b1ee0b3049, type: 3}
+  m_Script: {fileID: 11500000, guid: f8382d8a36abd6d469c9041d84c0b902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angularVelocity: 60
+  modifier:
+    Range:
+      type: 0
+      centerValue: 15
+      range: 0
+    Count:
+      type: 0
+      centerValue: 5
+      range: 0
+    DeltaVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    DeltaAngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+  subModifier: {fileID: 0}
+--- !u!114 &11477146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bd141673927f3f4cabd045212ab2bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  danmakuController:
+    rotationMode: 1
+    delay: .100000001
+    angle:
+      type: 1
+      centerValue: 0
+      range: 5
 --- !u!212 &21230088
 SpriteRenderer:
   m_ObjectHideFlags: 1

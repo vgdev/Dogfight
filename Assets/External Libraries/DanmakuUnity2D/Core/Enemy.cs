@@ -13,6 +13,7 @@ namespace Danmaku2D {
 	/// The bullets fired by these also can easily kill the player.
 	/// </summary>
 	[DisallowMultipleComponent]
+	[RequireComponent(typeof(Renderer))]
 	[RequireComponent(typeof(Rigidbody2D))]
 	[RequireComponent(typeof(Collider2D))]
 	public abstract class Enemy : PausableGameObject, IDanmakuCollider {
@@ -23,6 +24,7 @@ namespace Danmaku2D {
 			}
 		}
 
+		private Renderer renderer;
 		private DanmakuField field;
 
 		/// <summary>
@@ -48,6 +50,7 @@ namespace Danmaku2D {
 
 		public virtual void Start() {
 			EnemyManager.RegisterEnemy (this);
+			renderer = GetComponent<Renderer> ();
 		}
 
 		public void Hit(float damage) {
@@ -86,7 +89,9 @@ namespace Danmaku2D {
 		/// </summary>
 		/// <param name="proj">the danmaku that hit the enemy</param>
 		public void OnDanmakuCollision(Danmaku danmaku) {
-			Hit (danmaku.Damage);
+			if (renderer.isVisible) {
+				Hit (danmaku.Damage);
+			}
 			danmaku.Deactivate();
 		}
 	}
