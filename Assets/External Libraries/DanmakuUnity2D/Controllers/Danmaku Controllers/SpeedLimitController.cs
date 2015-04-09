@@ -27,12 +27,12 @@ namespace Danmaku2D.DanmakuControllers {
 
 		public void UpdateDanmaku (Danmaku danmaku, float dt) {
 			if(limitType == LimitType.Maximum) {
-				if(danmaku.Velocity > limit && !float.IsNaN(limit)) {
-					danmaku.Velocity = limit;
+				if(danmaku.Speed > limit && !float.IsNaN(limit)) {
+					danmaku.Speed = limit;
 				}
 			} else {
-				if(danmaku.Velocity < limit && !float.IsNaN(limit)) {
-					danmaku.Velocity = limit;
+				if(danmaku.Speed < limit && !float.IsNaN(limit)) {
+					danmaku.Speed = limit;
 				}
 			}
 		}

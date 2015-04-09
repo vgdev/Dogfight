@@ -9,12 +9,6 @@ namespace Danmaku2D.Phantasmagoria {
 		private AttackPattern[] attackPatterns;
 
 		[SerializeField]
-		private Vector2 shotOffset;
-
-		[SerializeField]
-		private float shotVelocity;
-
-		[SerializeField]
 		private float chargeRate = 1.0f;
 
 		[SerializeField]
@@ -22,12 +16,6 @@ namespace Danmaku2D.Phantasmagoria {
 
 		[SerializeField]
 		private float currentChargeCapacity;
-
-		[SerializeField]
-		private DanmakuPrefab shotType;
-
-		[SerializeField]
-		private int shotDamage = 5;
 
 		private bool charging;
 		public bool IsCharging {
@@ -153,14 +141,6 @@ namespace Danmaku2D.Phantasmagoria {
 			} else {
 				FireCheck(dt);
 			}
-		}
-
-		public override void Fire () {
-			Vector2 location;
-			location = transform.position;
-			Danmaku proj1 = Field.FireLinear (shotType, location + shotOffset, 0f, shotVelocity, DanmakuField.CoordinateSystem.World);
-			Danmaku proj2 = Field.FireLinear (shotType, location - shotOffset, 0f, shotVelocity, DanmakuField.CoordinateSystem.World);
-			proj1.Damage = proj2.Damage = shotDamage;
 		}
 	}
 }

@@ -72,8 +72,7 @@ namespace Danmaku2D.Phantasmagoria {
 			if (!reseting && (player1.Field.Player.LivesRemaining <= 0 || player2.Field.Player.LivesRemaining <= 0)) {
 				StartCoroutine(RoundReset ());
 			}
-			float t, dt = Util.TargetDeltaTime;
-			roundTimeRemaining -= dt;
+			roundTimeRemaining -= Util.TargetDeltaTime;
 			bool p1win = player1.score >= winningScore;
 			bool p2win = player2.score >= winningScore;
 			if (p1win && p2win) {

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityUtilLib;
 
 namespace Danmaku2D.DanmakuControllers {
+	[System.Serializable]
 	public class DelayedAngleChange : IDanmakuController {
 
 		private enum RotationMode { Absolute, Relative, Player }

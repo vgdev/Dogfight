@@ -15,7 +15,9 @@ namespace Danmaku2D {
 
 		internal static List<DanmakuField> fields;
 
-		public enum CoordinateSystem { View, Relative, World }
+		internal Dictionary<Collider2D, IDanmakuCollider[]> colliderMap;
+
+		public enum CoordinateSystem { View, ViewRelative, Relative, World }
 
 		public float ClipBoundary = 1f;
 
@@ -59,7 +61,10 @@ namespace Danmaku2D {
 		private float screenOffset;
 		internal Bounds2D bounds;
 		private Bounds2D movementBounds;
-		private Vector2 x, y, z, scale, bottomLeft;
+		private Vector2 x, y, z, scale;
+
+		[SerializeField]
+		private Vector2 bottomLeft;
 
 		[SerializeField]
 		private Rect viewportRect = new Rect(0f, 0f, 1f, 1f);
@@ -172,6 +177,8 @@ namespace Danmaku2D {
 			fields.Add (this);
 			TargetField = this;
 			CameraSetup ();
+
+			colliderMap = new Dictionary<Collider2D, IDanmakuCollider[]> ();
 			
 			#if UNITY_EDITOR
 			EditorApplication.playmodeStateChanged += PlayStateModeChange;
@@ -266,6 +273,7 @@ namespace Danmaku2D {
 			float size = camera2D.orthographicSize;
 			movementBounds.Extents = new Vector2 (camera2D.aspect * size, size);
 			bounds.Extents = movementBounds.Extents + Vector2.one * ClipBoundary * movementBounds.Extents.Max();
+
 			#if UNITY_EDITOR
 			if(Application.isPlaying) {
 			#endif
@@ -276,6 +284,12 @@ namespace Danmaku2D {
 						Resize ();
 					}
 				}
+
+				Collider2D[] colliders = Physics2D.OverlapAreaAll(bounds.Min, bounds.Max);
+				for(int i = 0; i < colliders.Length; i++) {
+					colliderMap[colliders[i]] = Util.GetComponents<IDanmakuCollider>(colliders[i].gameObject);
+				}
+
 			#if UNITY_EDITOR
 			}
 			#endif
@@ -303,6 +317,8 @@ namespace Danmaku2D {
 					return point;
 				case CoordinateSystem.Relative:
 					return bottomLeft + point;
+				case CoordinateSystem.ViewRelative:
+					return point.x * x + point.y * y;
 				default:
 				case CoordinateSystem.View:
 					return bottomLeft + point.x * x + point.y * y;
@@ -358,30 +374,26 @@ namespace Danmaku2D {
 			return player;
 		}
 
-		
-		public void SpawnEnemy(Enemy prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {
-			Enemy enemy = (Enemy)Instantiate(prefab);
-			Transform transform = enemy.transform;
-			transform.position = WorldPoint(location, coordSys);
+		public Enemy SpawnEnemy(Enemy prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {
+			Quaternion rotation = prefab.transform.rotation;
+			Enemy enemy = Instantiate(prefab, WorldPoint(location, coordSys), rotation) as Enemy;
 			enemy.Field = this;
+			return enemy;
 		}
 		
 		public GameObject SpawnGameObject(GameObject gameObject, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {
-			GameObject instance = (GameObject)Instantiate (gameObject);
-			instance.transform.position = WorldPoint (location, coordSys);
-			return instance;
+			Quaternion rotation = gameObject.transform.rotation;
+			return Instantiate (gameObject, WorldPoint (location, coordSys), rotation) as GameObject;
 		}
 
 		public Component SpawnObject(Component prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) {
-			Component instance = (Component)Instantiate (prefab);
-			instance.transform.position = WorldPoint (location, coordSys);
-			return instance;
+			Quaternion rotation = prefab.transform.rotation;
+			return Instantiate (prefab, WorldPoint (location, coordSys), rotation) as Component;
 		}
 
 		public T SpawnObject<T>(T prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) where T : Component {
-			T instance = (T)Instantiate (prefab);
-			instance.transform.position = WorldPoint (location, coordSys);
-			return instance;
+			Quaternion rotation = prefab.transform.rotation;
+			return Instantiate (prefab, WorldPoint (location, coordSys), rotation) as T;
 		}
 		
 		/// <summary>
@@ -412,7 +424,7 @@ namespace Danmaku2D {
 			if (modifier == null) {
 				Danmaku danmaku = Danmaku.Get (bulletType, position, rotation, this);
 				danmaku.Activate ();
-				danmaku.Velocity = velocity;
+				danmaku.Speed = velocity;
 				if (group != null) {
 					group.Add (danmaku);
 				}
@@ -437,7 +449,7 @@ namespace Danmaku2D {
 			if (modifier == null) {
 				Danmaku danmaku = Danmaku.Get (bulletType, position, rotation, this);
 				danmaku.Activate ();
-				danmaku.Velocity = velocity;
+				danmaku.Speed = velocity;
 				danmaku.AngularVelocity = angularVelocity;
 				danmaku.AddController(controller);
 				if (group != null) {
@@ -490,6 +502,7 @@ namespace Danmaku2D {
 		public DanmakuController Controller = null;
 		public DanmakuField.CoordinateSystem CoordinateSystem = DanmakuField.CoordinateSystem.View;
 		public DanmakuGroup Group;
+		public int Damage;
 		public FireModifier Modifier;
 		
 		public FireBuilder(DanmakuPrefab prefab) {
@@ -506,6 +519,7 @@ namespace Danmaku2D {
 			copy.Controller = Controller;
 			copy.CoordinateSystem = CoordinateSystem;
 			copy.Modifier = Modifier;
+			copy.Damage = Damage;
 			return copy;
 		}
 		#endregion

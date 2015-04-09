@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &124934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 420454}
+  - 114: {fileID: 11492584}
+  m_Layer: 12
+  m_Name: Right Fire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &162242
 GameObject:
   m_ObjectHideFlags: 0
@@ -50,6 +66,7 @@ GameObject:
   - 114: {fileID: 11462248}
   - 114: {fileID: 11452054}
   - 114: {fileID: 11401472}
+  - 114: {fileID: 11460778}
   m_Layer: 12
   m_Name: USA
   m_TagString: Player
@@ -57,6 +74,46 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &185230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400028}
+  - 114: {fileID: 11432884}
+  m_Layer: 12
+  m_Name: Left Fire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400028
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185230}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.400000006, y: .680000007, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 462246}
+  m_RootOrder: 2
+--- !u!4 &420454
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124934}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .400000006, y: .680000007, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 462246}
+  m_RootOrder: 3
 --- !u!4 &462242
 Transform:
   m_ObjectHideFlags: 1
@@ -88,11 +145,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162246}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.6237659, y: 1.73968363, z: 0}
+  m_LocalPosition: {x: -176.839569, y: -28.6554146, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 462244}
   - {fileID: 462242}
+  - {fileID: 400028}
+  - {fileID: 420454}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!50 &5062242
@@ -192,6 +251,7 @@ MonoBehaviour:
       centerValue: 0
       range: 0
     CoordinateSystem: 0
+    Damage: 0
   burstData:
     Range:
       type: 0
@@ -238,6 +298,18 @@ MonoBehaviour:
     centerValue: 10
     range: 0
   controllers: []
+--- !u!114 &11432884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172d150a45fe41040a0db77aa245b44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subSource: {fileID: 0}
 --- !u!114 &11452054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,6 +336,41 @@ MonoBehaviour:
   burstSpawnLocation: {x: .5, y: .5}
   burstSpawnArea: {x: .75, y: .25}
   burstVelocity: 7.5
+--- !u!114 &11460778
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4e4f002f1792f4aa4bab53b9200ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers:
+  - {fileID: 11462248}
+  sources:
+  - {fileID: 11432884}
+  - {fileID: 11492584}
+  fireData:
+    Prefab: {fileID: 11457182, guid: 5aeeb876b19ed0f4c9fb496da7db72dd, type: 2}
+    Position: {x: 0, y: 0}
+    Rotation:
+      type: 0
+      centerValue: 0
+      range: 0
+    Velocity:
+      type: 0
+      centerValue: 200
+      range: 0
+    AngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    CoordinateSystem: 0
+    Damage: 5
+  modifier: {fileID: 0}
+  controllers: []
 --- !u!114 &11462242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -303,13 +410,9 @@ MonoBehaviour:
   attackPatterns:
   - {fileID: 11401472}
   - {fileID: 11452054}
-  shotOffset: {x: .5, y: 0}
-  shotVelocity: 200
   chargeRate: 1
   chargeCapacityRegen: 1
   currentChargeCapacity: 0
-  shotType: {fileID: 11472154, guid: 757e39eb56fa122418e58d715653d773, type: 2}
-  shotDamage: 5
   cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
   deathCancelDuration: .5
   deathCancelRadius: 40
@@ -317,6 +420,18 @@ MonoBehaviour:
     Time: 3
   invincibiltyFlash:
     Time: 0
+--- !u!114 &11492584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172d150a45fe41040a0db77aa245b44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subSource: {fileID: 0}
 --- !u!212 &21244498
 SpriteRenderer:
   m_ObjectHideFlags: 1

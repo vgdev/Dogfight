@@ -27,7 +27,7 @@ namespace Danmaku2D.DanmakuControllers {
 		
 		public virtual void UpdateDanmaku (Danmaku danmaku, float dt) {
 			if (acceleration != 0) {
-				danmaku.Velocity += acceleration * dt;
+				danmaku.Speed += acceleration * dt;
 			}
 		}
 		

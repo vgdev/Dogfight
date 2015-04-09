@@ -5,9 +5,14 @@ using System.Collections.Generic;
 namespace Danmaku2D {
 
 	[RequireComponent(typeof(Collider2D))]
-	public abstract class DanmakuPlayer : PausableGameObject {
+	public abstract class DanmakuPlayer : DanmakuTrigger, IPausable {
 
 		public virtual DanmakuField Field {
+			get;
+			set;
+		}
+
+		public bool Paused {
 			get;
 			set;
 		}
@@ -28,11 +33,16 @@ namespace Danmaku2D {
 			Field = Util.FindClosest<DanmakuField> (transform.position);
 			Field.player = this;
 		}
-		
-		public override void NormalUpdate () {
-			base.NormalUpdate ();
-			if(agent != null)
-				agent.Update();
+
+		void Update() {
+			if (!Paused) {
+				NormalUpdate();
+			}
+		}
+
+		public virtual void NormalUpdate() {
+			if (agent != null)
+				agent.Update ();
 		}
 
 		[SerializeField]
@@ -101,8 +111,6 @@ namespace Danmaku2D {
 			}
 		}
 
-		public abstract void Fire ();
-
 		public virtual void Hit(Danmaku proj) {
 			livesRemaining--;
 		}
@@ -115,10 +123,12 @@ namespace Danmaku2D {
 		}
 
 		public void FireCheck(float dt) {
+			Debug.Log(IsFiring);
 			if(IsFiring) {
+				Debug.Log("Hello");
 				fireDelay -= dt;
 				if(fireDelay < 0f) {
-					Fire ();
+					Trigger();
 					fireDelay = 1f / fireRate;
 				}
 			}
