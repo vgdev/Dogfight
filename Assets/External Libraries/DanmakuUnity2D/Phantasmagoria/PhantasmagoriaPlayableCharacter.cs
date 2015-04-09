@@ -17,6 +17,12 @@ namespace Danmaku2D.Phantasmagoria {
 		[SerializeField]
 		private float currentChargeCapacity;
 
+		[SerializeField]
+		private float cancelDurationPerChargeLevel = 0.5f;
+
+		[SerializeField]
+		private float cancelRadiusPerChargeLevel = 5;
+
 		private bool charging;
 		public bool IsCharging {
 			get { 
@@ -45,7 +51,7 @@ namespace Danmaku2D.Phantasmagoria {
 
 		public int MaxChargeLevel {
 			get { 
-				return attackPatterns.Length + 1; 
+				return attackPatterns.Length; 
 			}
 		}
 
@@ -87,11 +93,15 @@ namespace Danmaku2D.Phantasmagoria {
 		public override void Hit(Danmaku proj) {
 			if(!invincible) {
 				base.Hit (proj);
-				BulletCancelArea cancel = (BulletCancelArea)Instantiate (cancelPrefab, transform.position, Quaternion.identity);
-				cancel.Run(deathCancelDuration, deathCancelRadius);
+				SpawnCancel(deathCancelDuration, deathCancelRadius);
 				invincible = true;
 				StartCoroutine(DeathInvincibiilty());
 			}
+		}
+
+		public void SpawnCancel(float duration, float radius) {
+			BulletCancelArea cancel = (BulletCancelArea)Instantiate (cancelPrefab, transform.position, Quaternion.identity);
+			cancel.Run(duration, radius);
 		}
 
 		private IEnumerator DeathInvincibiilty() {
@@ -123,6 +133,7 @@ namespace Danmaku2D.Phantasmagoria {
 					print("Null AttackPattern triggered. Make Sure all AttackPatterns are fully implemented");
 				}
 			}
+			SpawnCancel (level * cancelDurationPerChargeLevel, level * cancelRadiusPerChargeLevel);
 			chargeLevel -= level;
 			currentChargeCapacity -= level;
 		}

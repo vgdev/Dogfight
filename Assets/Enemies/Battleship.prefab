@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57b899a3c41f2541a07ea38c90df340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 75
   onDeathSpawn: {fileID: 136472, guid: 71e6b804545565e47adb0b74112075d8, type: 2}
 --- !u!114 &11495256
 MonoBehaviour:

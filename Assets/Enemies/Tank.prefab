@@ -57,9 +57,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: .0207265206}
   serializedVersion: 2
-  m_Size: {x: 5.99999952, y: 17.0900002}
+  m_Size: {x: 5.99999952, y: 11.1638699}
 --- !u!114 &11440438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57b899a3c41f2541a07ea38c90df340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 75
   onDeathSpawn: {fileID: 136472, guid: 71e6b804545565e47adb0b74112075d8, type: 2}
 --- !u!114 &11496756
 MonoBehaviour:

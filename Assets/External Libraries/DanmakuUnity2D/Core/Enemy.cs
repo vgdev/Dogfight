@@ -24,7 +24,7 @@ namespace Danmaku2D {
 			}
 		}
 
-		private Renderer renderer;
+		private Renderer enemyRenderer;
 		private DanmakuField field;
 
 		/// <summary>
@@ -50,7 +50,7 @@ namespace Danmaku2D {
 
 		public virtual void Start() {
 			EnemyManager.RegisterEnemy (this);
-			renderer = GetComponent<Renderer> ();
+			enemyRenderer = GetComponent<Renderer> ();
 		}
 
 		public void Hit(float damage) {
@@ -89,7 +89,7 @@ namespace Danmaku2D {
 		/// </summary>
 		/// <param name="proj">the danmaku that hit the enemy</param>
 		public void OnDanmakuCollision(Danmaku danmaku) {
-			if (renderer.isVisible) {
+			if (enemyRenderer.isVisible) {
 				Hit (danmaku.Damage);
 			}
 			danmaku.Deactivate();

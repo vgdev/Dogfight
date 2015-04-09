@@ -347,7 +347,14 @@ namespace Danmaku2D {
 //						GameObject go = colliders [i].gameObject;
 //						scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
 //						for (int j = 0; j < count2; j++) {
-						IDanmakuCollider[] scripts = field.colliderMap[colliders[i]];
+						IDanmakuCollider[] scripts;
+						Collider2D collider = colliders[i];
+						if(collider == null)
+							continue;
+						if(field.colliderMap.ContainsKey(collider))
+							scripts = field.colliderMap[collider];
+						else
+							scripts = Util.GetComponents<IDanmakuCollider>(collider.gameObject);
 						for (int j = 0; j < scripts.Length; j++) {
 							scripts [j].OnDanmakuCollision (this);
 						}
@@ -368,7 +375,15 @@ namespace Danmaku2D {
 //						GameObject go = hit.collider.gameObject;
 //						scripts = Util.GetComponentsPrealloc (go, scripts, out count2);
 //						for (int j = 0; j < count2; j++) {
-						IDanmakuCollider[] scripts = field.colliderMap[hit.collider];
+						
+						IDanmakuCollider[] scripts;
+						Collider2D collider = hit.collider;
+						if(collider == null)
+							continue;
+						if(field.colliderMap.ContainsKey(collider))
+							scripts = field.colliderMap[collider];
+						else
+							scripts = Util.GetComponents<IDanmakuCollider>(collider.gameObject);
 						for (int j = 0; j < scripts.Length; j++) {
 							scripts [j].OnDanmakuCollision (this);
 						}

@@ -15,11 +15,17 @@ namespace Danmaku2D {
 		#endregion
 
 		[SerializeField]
-		private FrameCounter delay;
+		private DynamicFloat delay;
+		private FrameCounter delayTimer;
+
+		public override void Awake () {
+			base.Awake ();
+			delayTimer = new FrameCounter (delay);
+		}
 
 		public void Update() {
 			if(!Paused) {
-				if(delay.Tick()) {
+				if(delayTimer.Tick()) {
 					Trigger();
 				}
 			}
