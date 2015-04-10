@@ -16,6 +16,9 @@ public class KnightsCross : TimedAttackPattern {
     [SerializeField]
     private float bulletVelocity;
 
+	[SerializeField]
+	private Vector2 pivot;
+
     [SerializeField]
     private Vector2 centerArea;
 
@@ -29,7 +32,7 @@ public class KnightsCross : TimedAttackPattern {
     protected override void OnInitialize() {
         base.OnInitialize();
         crossDelay.Reset();
-        center = centerArea.Random();
+        center = pivot + centerArea.Random();
         angleToPlayer = TargetField.AngleTowardPlayer(TargetField.WorldPoint(center), DanmakuField.CoordinateSystem.World);
         fire();
     }
