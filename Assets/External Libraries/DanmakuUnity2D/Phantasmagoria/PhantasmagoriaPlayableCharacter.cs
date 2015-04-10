@@ -5,8 +5,7 @@ using UnityUtilLib;
 namespace Danmaku2D.Phantasmagoria {
 	public class PhantasmagoriaPlayableCharacter : DanmakuPlayer {
 
-		[SerializeField]
-		private Sprite characterPortrait;
+		public Sprite characterPortrait;
 
 		[SerializeField]
 		private AttackPattern[] attackPatterns;

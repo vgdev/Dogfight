@@ -650,7 +650,7 @@ MonoBehaviour:
   playerSpawnLocation: {x: .5, y: .25}
   camera2D: {fileID: 609811333}
   camera3D: {fileID: 638768819}
-  bottomLeft: {x: 86.3542404, y: -19.9736252}
+  bottomLeft: {x: 61.2453804, y: -19.9976273}
   viewportRect:
     serializedVersion: 2
     x: .502499998
@@ -1704,7 +1704,7 @@ MonoBehaviour:
   playerSpawnLocation: {x: .5, y: .25}
   camera2D: {fileID: 621871267}
   camera3D: {fileID: 1841218275}
-  bottomLeft: {x: -113.682419, y: -19.9736252}
+  bottomLeft: {x: -138.695267, y: -19.9976273}
   viewportRect:
     serializedVersion: 2
     x: .00249999994
@@ -1719,47 +1719,6 @@ MonoBehaviour:
   renderTexture: {fileID: 0}
   occlusionCulling: 0
   hdr: 0
---- !u!1 &1354235362
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1354235364}
-  - 114: {fileID: 1354235363}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1354235363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1354235362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a9f060c006200498f1b958ecddd9cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character1: {fileID: 0}
-  character2: {fileID: 0}
---- !u!4 &1354235364
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1354235362}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.2455196, y: 3.92674255, z: -5.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
 --- !u!1 &1357636970
 GameObject:
   m_ObjectHideFlags: 0

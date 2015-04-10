@@ -13,7 +13,19 @@ public class PlayerSpawnPass : MonoBehaviour {
 		DontDestroyOnLoad (this);
 	}
 
-	void OnSceneLoad() {
+	void OnLevelWasLoaded(int level) {
+		var test = FindObjectsOfType<PlayerSpawnPass>();
+		Debug.Log (level);
+		if (test.Length > 1) {
+			Debug.Log("too many");
+			Destroy (gameObject);
+			return;
+		}
+		if (level < 1) {
+			Debug.Log("not in game");
+			return;
+		}
+		Debug.Log ("hi");
 		PhantasmagoriaGameController gc = FindObjectOfType<PhantasmagoriaGameController> ();
 		if (gc != null) {
 			PhantasmagoriaPlayableCharacter player1 = (PhantasmagoriaPlayableCharacter) gc.player1.Field.SpawnPlayer (character1);
