@@ -320,7 +320,7 @@ MonoBehaviour:
   normalMovementSpeed: 15
   focusMovementSpeed: 10
   fireRate: 10
-  characterPortrait: {fileID: 0}
+  characterPortrait: {fileID: 21300000, guid: cb614c9b91d06bd4581d253d029fbb77, type: 3}
   attackPatterns:
   - {fileID: 11423826}
   chargeRate: 1

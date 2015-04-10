@@ -302,7 +302,8 @@ MonoBehaviour:
   fatBullet: {fileID: 11420942, guid: 53a04669cc266574082aafa42d1e95da, type: 2}
   thinBullet: {fileID: 11483526, guid: fd93b1802e3f9c94ea450691f812cacc, type: 2}
   bulletVelocity: 7
-  centerArea: {x: 1, y: 1}
+  pivot: {x: .25, y: .449999988}
+  centerArea: {x: .5, y: .5}
   bulletSeparationDist: .0500000007
 --- !u!114 &11441488
 MonoBehaviour:
@@ -317,8 +318,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetField: {fileID: 0}
   timeout:
-    Time: 2
-  prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
+    Time: 4
+  prefab: {fileID: 11420942, guid: 53a04669cc266574082aafa42d1e95da, type: 2}
   bulletCount: 9
   burstCount:
     MaxCount: 1
@@ -330,7 +331,7 @@ MonoBehaviour:
   LinearController:
     acceleration: 0
   crossDelay:
-    Time: .300000012
+    Time: 1
   centerArea: {x: 1, y: 0}
 --- !u!114 &11461616
 MonoBehaviour:
@@ -391,6 +392,11 @@ MonoBehaviour:
       type: 1
       centerValue: 0
       range: 5
+    setAngV: 0
+    angularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
 --- !u!212 &21230088
 SpriteRenderer:
   m_ObjectHideFlags: 1

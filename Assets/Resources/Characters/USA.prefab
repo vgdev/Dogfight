@@ -69,6 +69,8 @@ GameObject:
   - 114: {fileID: 11460778}
   - 114: {fileID: 11433430}
   - 114: {fileID: 11498712}
+  - 114: {fileID: 11433426}
+  - 114: {fileID: 11490710}
   m_Layer: 12
   m_Name: USA
   m_TagString: Player
@@ -312,6 +314,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   subSource: {fileID: 0}
+--- !u!114 &11433426
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 1
+  prefab: {fileID: 136954, guid: cfeb30b297ac53440843bfaa4cf3ca4c, type: 2}
+  position: {x: .5, y: .75}
 --- !u!114 &11433430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -429,7 +447,8 @@ MonoBehaviour:
   attackPatterns:
   - {fileID: 11433430}
   - {fileID: 11498712}
-  - {fileID: 11452054}
+  - {fileID: 11490710}
+  - {fileID: 11433426}
   chargeRate: 1
   chargeCapacityRegen: 1
   currentChargeCapacity: 0
@@ -442,6 +461,22 @@ MonoBehaviour:
     Time: 3
   invincibiltyFlash:
     Time: 0
+--- !u!114 &11490710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 0
+  prefab: {fileID: 113518, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
+  position: {x: .5, y: .75}
 --- !u!114 &11492584
 MonoBehaviour:
   m_ObjectHideFlags: 1
