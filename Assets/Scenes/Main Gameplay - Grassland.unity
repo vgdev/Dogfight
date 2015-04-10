@@ -250,7 +250,7 @@ MeshRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 97eb23584587fd1499f770f6aab0d837, type: 2}
+  - {fileID: 2100000, guid: 5307f40373bf69542bd712e7af3a00cd, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1117,7 +1117,7 @@ MonoBehaviour:
   - weight: 100
     delay: .5
     chain:
-    - EnemyPrefab: {fileID: 11415660, guid: bbc6e28f080c340499d15ff1730f1b02, type: 2}
+    - EnemyPrefab: {fileID: 11440438, guid: 91aecc29e3188ae4e8dcbd548a2e4476, type: 2}
       spawnArea:
         serializedVersion: 2
         x: .25
@@ -1463,7 +1463,7 @@ MeshRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 97eb23584587fd1499f770f6aab0d837, type: 2}
+  - {fileID: 2100000, guid: 5307f40373bf69542bd712e7af3a00cd, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0

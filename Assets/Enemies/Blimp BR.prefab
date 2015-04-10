@@ -165,8 +165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay:
     type: 1
-    centerValue: 2
-    range: 1
+    centerValue: 4.5
+    range: 1.5
 --- !u!114 &11486406
 MonoBehaviour:
   m_ObjectHideFlags: 1
