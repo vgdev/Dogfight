@@ -53,6 +53,8 @@ GameObject:
   - 114: {fileID: 11423160}
   - 114: {fileID: 11476034}
   - 114: {fileID: 11477146}
+  - 114: {fileID: 11437994}
+  - 114: {fileID: 11404348}
   m_Layer: 12
   m_Name: Gemany
   m_TagString: Player
@@ -196,6 +198,23 @@ BoxCollider2D:
   m_Offset: {x: -.0134963989, y: .164588928}
   serializedVersion: 2
   m_Size: {x: 2.6510725, y: 4.05488825}
+--- !u!114 &11404348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 1
+  prefab: {fileID: 162750, guid: 0216abc0785fbec43863192a8b4d267c, type: 2}
+  position: {x: .5, y: 1}
+  range: {x: .5, y: .25}
 --- !u!114 &11423160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -247,10 +266,12 @@ MonoBehaviour:
   fireRate: 20
   characterPortrait: {fileID: 21300000, guid: ac6a65930573fc0418c7e5ca214c32f3, type: 3}
   attackPatterns:
-  - {fileID: 11436200}
+  - {fileID: 11404348}
+  - {fileID: 11441488}
+  - {fileID: 11437994}
   - {fileID: 11441488}
   chargeRate: 1
-  chargeCapacityRegen: 1
+  chargeCapacityRegen: .100000001
   currentChargeCapacity: 0
   cancelDurationPerChargeLevel: .5
   cancelRadiusPerChargeLevel: 5
@@ -305,6 +326,23 @@ MonoBehaviour:
   pivot: {x: .25, y: .449999988}
   centerArea: {x: .5, y: .5}
   bulletSeparationDist: .0500000007
+--- !u!114 &11437994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 3
+  prefab: {fileID: 163708, guid: 0a6040ae8327d42479787b2098b18e09, type: 2}
+  position: {x: .5, y: .75}
+  range: {x: .5, y: .25}
 --- !u!114 &11441488
 MonoBehaviour:
   m_ObjectHideFlags: 1

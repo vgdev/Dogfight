@@ -570,7 +570,7 @@ MonoBehaviour:
   playerSpawnLocation: {x: .5, y: .25}
   camera2D: {fileID: 609811333}
   camera3D: {fileID: 638768819}
-  bottomLeft: {x: 86.2779083, y: -19.9783783}
+  bottomLeft: {x: 86.3263779, y: -20.0037212}
   viewportRect:
     serializedVersion: 2
     x: .502499998
@@ -868,52 +868,6 @@ GUITexture:
   m_RightBorder: 0
   m_TopBorder: 0
   m_BottomBorder: 0
---- !u!1001 &713629837
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 435128, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -100.199997
-      objectReference: {fileID: 0}
-    - target: {fileID: 435128, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 8.89999962
-      objectReference: {fileID: 0}
-    - target: {fileID: 435128, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -5.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 435128, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 435128, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 435128, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 435128, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 435128, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 113518, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
-      propertyPath: m_Name
-      value: Freedom
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &723055554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,7 +1267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepAnyway: 0
-  character1: {fileID: 11430088, guid: 5792a94721e1f1f4f83ea33719cb6f58, type: 2}
+  character1: {fileID: 11462282, guid: 0d20bf3498bd4204ba09039bc9ec633a, type: 2}
   character2: {fileID: 11462248, guid: ce2275843d8b7ed4eb01649f027b069b, type: 2}
 --- !u!114 &787077645
 MonoBehaviour:
@@ -1669,7 +1623,7 @@ MonoBehaviour:
   playerSpawnLocation: {x: .5, y: .25}
   camera2D: {fileID: 621871267}
   camera3D: {fileID: 1841218275}
-  bottomLeft: {x: -113.722092, y: -19.9783783}
+  bottomLeft: {x: -113.627266, y: -20.0037212}
   viewportRect:
     serializedVersion: 2
     x: .00249999994
@@ -2082,7 +2036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   field: {fileID: 1341558597}
-  chargeCapacity: {fileID: 96955232}
+  chargeCapacity: {fileID: 1990498015}
   chargeLevel: {fileID: 96955232}
   indicator: {fileID: 1559619104}
 --- !u!1 &1559619104

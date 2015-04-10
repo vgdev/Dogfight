@@ -570,7 +570,7 @@ MonoBehaviour:
   playerSpawnLocation: {x: .5, y: .25}
   camera2D: {fileID: 609811333}
   camera3D: {fileID: 638768819}
-  bottomLeft: {x: 61.6230392, y: -19.9976273}
+  bottomLeft: {x: 86.3263779, y: -20.0037212}
   viewportRect:
     serializedVersion: 2
     x: .502499998
@@ -1623,7 +1623,7 @@ MonoBehaviour:
   playerSpawnLocation: {x: .5, y: .25}
   camera2D: {fileID: 621871267}
   camera3D: {fileID: 1841218275}
-  bottomLeft: {x: -138.376953, y: -19.9976273}
+  bottomLeft: {x: -113.627266, y: -20.0037212}
   viewportRect:
     serializedVersion: 2
     x: .00249999994
@@ -2036,7 +2036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   field: {fileID: 1341558597}
-  chargeCapacity: {fileID: 96955232}
+  chargeCapacity: {fileID: 1990498015}
   chargeLevel: {fileID: 96955232}
   indicator: {fileID: 1559619104}
 --- !u!1 &1559619104

@@ -330,6 +330,7 @@ MonoBehaviour:
     Time: 1
   prefab: {fileID: 136954, guid: cfeb30b297ac53440843bfaa4cf3ca4c, type: 2}
   position: {x: .5, y: .75}
+  range: {x: .5, y: .25}
 --- !u!114 &11433430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -346,6 +347,7 @@ MonoBehaviour:
     Time: 1
   prefab: {fileID: 152840, guid: 088a068c41d9f4c47a31be3d8b884ca5, type: 2}
   position: {x: .5, y: .5}
+  range: {x: 0, y: 0}
 --- !u!114 &11452054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -450,7 +452,7 @@ MonoBehaviour:
   - {fileID: 11490710}
   - {fileID: 11433426}
   chargeRate: 1
-  chargeCapacityRegen: 1
+  chargeCapacityRegen: .100000001
   currentChargeCapacity: 0
   cancelDurationPerChargeLevel: .5
   cancelRadiusPerChargeLevel: 15
@@ -477,6 +479,7 @@ MonoBehaviour:
     Time: 0
   prefab: {fileID: 113518, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
   position: {x: .5, y: .75}
+  range: {x: .5, y: .25}
 --- !u!114 &11492584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -505,6 +508,7 @@ MonoBehaviour:
     Time: 1
   prefab: {fileID: 139596, guid: 65e62e6887338c24bb567be7c522c942, type: 2}
   position: {x: .5, y: .5}
+  range: {x: 0, y: 0}
 --- !u!212 &21244498
 SpriteRenderer:
   m_ObjectHideFlags: 1

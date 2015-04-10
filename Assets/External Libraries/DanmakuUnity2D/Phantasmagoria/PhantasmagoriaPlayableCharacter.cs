@@ -139,8 +139,8 @@ namespace Danmaku2D.Phantasmagoria {
 				}
 			}
 			SpawnCancel (level * cancelDurationPerChargeLevel, level * cancelRadiusPerChargeLevel);
-			chargeLevel -= level;
-			currentChargeCapacity -= level;
+			chargeLevel = 0f;
+			currentChargeCapacity -= (int)level;
 		}
 
 		public override void NormalUpdate () {

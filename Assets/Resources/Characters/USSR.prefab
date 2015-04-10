@@ -212,7 +212,7 @@ MonoBehaviour:
   attackPatterns:
   - {fileID: 11445190}
   chargeRate: 1
-  chargeCapacityRegen: .5
+  chargeCapacityRegen: .100000001
   currentChargeCapacity: 0
   cancelDurationPerChargeLevel: 2
   cancelRadiusPerChargeLevel: 20
