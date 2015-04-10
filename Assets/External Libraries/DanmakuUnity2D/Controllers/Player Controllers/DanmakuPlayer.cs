@@ -74,27 +74,14 @@ namespace Danmaku2D {
 		private float fireRate = 4.0f;
 		private float fireDelay;
 
-		private Vector2 forbiddenMovement = Vector3.zero;
-
-		public int CanMoveHorizontal {
-			get { return -(int)Util.Sign(forbiddenMovement.x); }
-		}
-
-		public int CanMoveVertical {
-			get { return -(int)Util.Sign(forbiddenMovement.y); }
-		}
-
 		public virtual void Move(float horizontalDirection, float verticalDirection) {
 			Bounds2D fieldBounds = Field.MovementBounds;
 			Bounds2D myBounds = new Bounds2D(movementCollider.bounds);
 			float dt = Util.TargetDeltaTime;
 			float movementSpeed = (IsFocused) ? focusMovementSpeed : normalMovementSpeed;
 			Vector2 position = transform.position;
-			Vector2 dir = new Vector2 (Util.Sign(horizontalDirection), Util.Sign(verticalDirection));
-			Vector2 movementVector = movementSpeed * Vector2.one;
-			movementVector.x *= dt * ((dir.x == Util.Sign(forbiddenMovement.x)) ? 0f : dir.x);
-			movementVector.y *= dt * ((dir.y == Util.Sign(forbiddenMovement.y)) ? 0f : dir.y);
-			position += (Vector2)movementVector;
+			Vector2 movementVector = movementSpeed * dt * new Vector2 (Util.Sign(horizontalDirection), Util.Sign(verticalDirection));
+			position += movementVector;
 			myBounds.Center += movementVector;
 			Vector2 myMin = myBounds.Min;
 			Vector2 myMax = myBounds.Max;
@@ -110,24 +97,6 @@ namespace Danmaku2D {
 			else if (myMax.y > fMax.y)
 				position.y += fMax.y - myMax.y;
 			transform.position = position;
-		}
-
-		public void AllowMovement(Vector2 direction) {
-			if(Util.Sign(direction.x) == Util.Sign(forbiddenMovement.x)) {
-				forbiddenMovement.x = 0;
-			}
-			if(Util.Sign(direction.y) == Util.Sign(forbiddenMovement.y)) {
-				forbiddenMovement.y = 0;
-			}
-		}
-
-		public void ForbidMovement(Vector2 direction) {
-			if(direction.x != 0) {
-				forbiddenMovement.x = direction.x;
-			}
-			if(direction.y != 0) {
-				forbiddenMovement.y = direction.y;
-			}
 		}
 
 		public virtual void Hit(Danmaku proj) {

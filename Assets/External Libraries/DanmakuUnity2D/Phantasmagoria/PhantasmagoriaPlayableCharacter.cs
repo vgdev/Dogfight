@@ -59,6 +59,9 @@ namespace Danmaku2D.Phantasmagoria {
 			get {
 				return currentChargeCapacity;
 			}
+			set {
+				currentChargeCapacity = value;
+			}
 		}
 
 		[SerializeField]

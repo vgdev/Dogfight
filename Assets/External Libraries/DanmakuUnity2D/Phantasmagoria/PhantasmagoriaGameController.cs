@@ -44,10 +44,8 @@ namespace Danmaku2D.Phantasmagoria {
 		[SerializeField]
 		private float closureDuration;
 
-		public float closureSize;
-
 		[SerializeField]
-		private Transform closure;
+		private Transform[] closure;
 
 		public GameObject p1winner;
 		public GameObject p2winner;
@@ -127,20 +125,24 @@ namespace Danmaku2D.Phantasmagoria {
 			reseting = true;
 			WaitForEndOfFrame wfeof = new WaitForEndOfFrame ();
 			float duration = closureDuration / 2f;
-			Vector3 scale = closure.localScale;
+			Vector3 scale = new Vector3(1f, 0f, 1f);
 			Vector3 oldScale = scale;
 			float dt = Util.TargetDeltaTime;
 			float t = 0;
 			scale.y = t;
 			PauseGame ();
 			while (t <= 1f) {
-				scale.y = closureSize * t;
-				closure.localScale = scale;
+				scale.y = t;
+				for(int i = 0; i < closure.Length; i++) {
+					closure[i].localScale = scale;
+				}
 				yield return wfeof;
 				t += dt / duration;
 			}
 			scale.y = 1f;
-			closure.localScale = scale;
+			for(int i = 0; i < closure.Length; i++) {
+				closure[i].localScale = Vector3.one;
+			}
 			bool p1dead = player1.Field.Player.LivesRemaining <= 0;
 			bool p2dead = player2.Field.Player.LivesRemaining <= 0;
 			player1.score += (p2dead && !p1dead) ? 1 : 0;
@@ -164,12 +166,15 @@ namespace Danmaku2D.Phantasmagoria {
 			}
 			while (t > 0f) {
 				scale.y = t;
-				scale.y = closureSize * t;
-				closure.localScale = scale;
+				for(int i = 0; i < closure.Length; i++) {
+					closure[i].localScale = scale;
+				}
 				yield return null;
 				t -= dt / duration;
 			}
-			closure.localScale = oldScale;
+			for(int i = 0; i < closure.Length; i++) {
+				closure[i].localScale = oldScale;
+			}
 			UnpauseGame ();
 			reseting = false;
 		}

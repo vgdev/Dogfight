@@ -40,7 +40,7 @@ namespace Danmaku2D {
 					queue = new int[2];
 				}
 				int endCount = totalCount + spawnCount;
-				if(all.Length <= endCount) {
+				if(all.Length < endCount) {
 					size = all.Length;
 					while (size <= endCount) {
 						size = Mathf.NextPowerOfTwo(size + 1);
@@ -68,6 +68,8 @@ namespace Danmaku2D {
 					all[i] = new Danmaku();
 					all[i].index = i;
 					all[i].Pool = this;
+					if(endIndex > queue.Length)
+						endIndex = 0;
 					queue[endIndex] = i;
 				}
 				totalCount = endCount;
