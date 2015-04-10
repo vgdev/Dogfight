@@ -50,11 +50,11 @@ TagManager:
   - name: Player Hitbox
     uniqueID: 3134179019
     locked: 0
-  - name: Bullet
-    uniqueID: 3746238291
-    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Bullet
+    uniqueID: 3746238291
     locked: 0
   - name: PseudoGUI
     uniqueID: 2985605821

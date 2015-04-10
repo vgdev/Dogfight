@@ -56,6 +56,11 @@ namespace UnityUtilLib {
 			this.Size = Util.Abs(size);
 		}
 
+		public Bounds2D(Bounds bounds3d) {
+			center = bounds3d.center;
+			this.Size = bounds3d.size;
+		}
+
 		public bool Contains(Vector2 point) {
 			if (point.x < min.x)
 				return false;

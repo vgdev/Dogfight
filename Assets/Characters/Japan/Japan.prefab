@@ -44,6 +44,7 @@ GameObject:
   - 58: {fileID: 5871690}
   - 50: {fileID: 5071688}
   - 114: {fileID: 11400366}
+  - 212: {fileID: 21215170}
   m_Layer: 8
   m_Name: Death Hitbox
   m_TagString: Player
@@ -65,6 +66,7 @@ GameObject:
   - 114: {fileID: 11462282}
   - 114: {fileID: 11402100}
   - 114: {fileID: 11453668}
+  - 114: {fileID: 11473106}
   m_Layer: 12
   m_Name: Japan
   m_TagString: Player
@@ -91,7 +93,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: .629999995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 471692}
@@ -103,7 +105,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 101.5, y: 35.4000015, z: 0}
+  m_LocalPosition: {x: -31.3058128, y: -15.6108017, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 471690}
@@ -176,9 +178,9 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .730000019}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .340000004
+  m_Radius: .545108795
 --- !u!61 &6171688
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -306,7 +308,11 @@ MonoBehaviour:
   normalMovementSpeed: 30
   focusMovementSpeed: 20
   fireRate: 20
-  attackPatterns: []
+  attackPatterns:
+  - {fileID: 11473106}
+  - {fileID: 11473106}
+  - {fileID: 11473106}
+  - {fileID: 11473106}
   chargeRate: 1
   chargeCapacityRegen: 1
   currentChargeCapacity: 0
@@ -319,6 +325,107 @@ MonoBehaviour:
     Time: 1
   invincibiltyFlash:
     Time: .100000001
+--- !u!114 &11473106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470558aa7cbb4c0468822ddf5f28d1c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  fireData:
+    Prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
+    Position: {x: 0, y: 0}
+    Rotation:
+      type: 0
+      centerValue: 0
+      range: 0
+    Velocity:
+      type: 0
+      centerValue: 15
+      range: 0
+    AngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    CoordinateSystem: 0
+    Damage: 0
+  burstData:
+    Range:
+      type: 0
+      centerValue: 360
+      range: 0
+    Count:
+      type: 0
+      centerValue: 20
+      range: 0
+    DeltaVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    DeltaAngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+  depthData:
+    Depth:
+      type: 0
+      centerValue: 1
+      range: 0
+    DeltaVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    DeltaAngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+  spawnLocation: {x: .5, y: .800000012}
+  spawnArea: {x: 0, y: 0}
+  burstCount:
+    MaxCount: 10
+    Count: 10
+  burstDelay:
+    Time: .100000001
+  burstInitialRotation:
+    type: 0
+    centerValue: 0
+    range: 0
+  burstRotationDelta:
+    type: 0
+    centerValue: 10
+    range: 0
+  controllers: []
+--- !u!212 &21215170
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171690}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 1b7a979ebe4d22245826aaf0606ca31e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21271688
 SpriteRenderer:
   m_ObjectHideFlags: 1
