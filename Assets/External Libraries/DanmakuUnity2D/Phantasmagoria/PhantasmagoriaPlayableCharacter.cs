@@ -6,6 +6,9 @@ namespace Danmaku2D.Phantasmagoria {
 	public class PhantasmagoriaPlayableCharacter : DanmakuPlayer {
 
 		[SerializeField]
+		private Sprite characterPortrait;
+
+		[SerializeField]
 		private AttackPattern[] attackPatterns;
 
 		[SerializeField]
