@@ -570,7 +570,7 @@ MonoBehaviour:
   playerSpawnLocation: {x: .5, y: .25}
   camera2D: {fileID: 609811333}
   camera3D: {fileID: 638768819}
-  bottomLeft: {x: 60.9246254, y: -20.012085}
+  bottomLeft: {x: 86.2930832, y: -19.9863472}
   viewportRect:
     serializedVersion: 2
     x: .502499998
@@ -963,6 +963,7 @@ GameObject:
   - 114: {fileID: 787077641}
   - 82: {fileID: 787077642}
   - 114: {fileID: 787077644}
+  - 82: {fileID: 787077638}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -982,6 +983,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!82 &787077638
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 787077636}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &787077639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1186,6 +1256,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyNewInstances: 1
+  musicSource: {fileID: 787077642}
+  sfxSource: {fileID: 787077638}
 --- !u!82 &787077642
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1197,7 +1269,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a65fd7ab0e6712843832402761c1ea93, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: .200000003
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1623,7 +1695,7 @@ MonoBehaviour:
   playerSpawnLocation: {x: .5, y: .25}
   camera2D: {fileID: 621871267}
   camera3D: {fileID: 1841218275}
-  bottomLeft: {x: -139.014984, y: -20.012085}
+  bottomLeft: {x: -113.672729, y: -19.9863472}
   viewportRect:
     serializedVersion: 2
     x: .00249999994

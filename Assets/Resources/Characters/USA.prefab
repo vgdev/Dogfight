@@ -406,9 +406,11 @@ MonoBehaviour:
       centerValue: 0
       range: 0
     CoordinateSystem: 0
-    Damage: 5
+    Damage: 9
   modifier: {fileID: 0}
   controllers: []
+  fireSFX: {fileID: 8300000, guid: df86fe27f508c0c4ba9c60a602d2dd6d, type: 3}
+  fireVolume: .5
 --- !u!114 &11462242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -451,10 +453,10 @@ MonoBehaviour:
   - {fileID: 11498712}
   - {fileID: 11490710}
   - {fileID: 11433426}
-  chargeRate: 1
+  chargeRate: 3
   chargeCapacityRegen: .100000001
   currentChargeCapacity: 0
-  cancelDurationPerChargeLevel: .5
+  cancelDurationPerChargeLevel: .75
   cancelRadiusPerChargeLevel: 15
   cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
   deathCancelDuration: .5
@@ -476,7 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetField: {fileID: 0}
   timeout:
-    Time: 0
+    Time: 1
   prefab: {fileID: 113518, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
   position: {x: .5, y: .75}
   range: {x: .5, y: .25}

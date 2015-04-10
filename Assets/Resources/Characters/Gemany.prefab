@@ -250,6 +250,8 @@ MonoBehaviour:
   modifier: {fileID: 11476034}
   controllers:
   - {fileID: 11477146}
+  fireSFX: {fileID: 8300000, guid: df86fe27f508c0c4ba9c60a602d2dd6d, type: 3}
+  fireVolume: .5
 --- !u!114 &11430088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -270,11 +272,11 @@ MonoBehaviour:
   - {fileID: 11441488}
   - {fileID: 11437994}
   - {fileID: 11441488}
-  chargeRate: 1
+  chargeRate: 3
   chargeCapacityRegen: .100000001
   currentChargeCapacity: 0
-  cancelDurationPerChargeLevel: .5
-  cancelRadiusPerChargeLevel: 5
+  cancelDurationPerChargeLevel: .75
+  cancelRadiusPerChargeLevel: 12
   cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
   deathCancelDuration: .5
   deathCancelRadius: 40

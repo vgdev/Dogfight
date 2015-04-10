@@ -20,6 +20,12 @@ namespace Danmaku2D {
 		[SerializeField]
 		private DanmakuControlBehavior[] controllers;
 
+		[SerializeField]
+		private AudioClip fireSFX;
+
+		[SerializeField]
+		private float fireVolume = 1f;
+
 		public FireModifier Modifier {
 			get {
 				if(modifier == null)
@@ -39,6 +45,8 @@ namespace Danmaku2D {
 			fireData.Modifier = Modifier;
 			for(int i = 0; i < sources.Length; i++)
 				sources[i].Fire (fireData);
+			if (fireSFX != null)
+				AudioManager.PlaySFX (fireSFX, fireVolume);
 		}
 
 		public void FireAtDanmaku(Danmaku danmaku) {

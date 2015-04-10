@@ -25,8 +25,8 @@ InputManager:
     m_Name: Horizontal Movement Player 2
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: '[4]'
-    positiveButton: '[6]'
+    negativeButton: left
+    positiveButton: right
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -89,8 +89,8 @@ InputManager:
     m_Name: Vertical Movement Player 2
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: '[5]'
-    positiveButton: '[8]'
+    negativeButton: down
+    positiveButton: up
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -154,7 +154,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: /
+    positiveButton: .
     altNegativeButton: 
     altPositiveButton: joystick 2 button 5
     gravity: 1000
@@ -218,7 +218,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: .
+    positiveButton: ','
     altNegativeButton: 
     altPositiveButton: joystick 2 button 0
     gravity: 1000
@@ -250,7 +250,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: right shift
+    positiveButton: /
     altNegativeButton: 
     altPositiveButton: joystick 2 button 1
     gravity: 1000

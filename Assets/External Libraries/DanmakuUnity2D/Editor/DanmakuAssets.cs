@@ -68,7 +68,7 @@ internal static class DanmakuAssets {
 		temp.AddComponent<TestSpawnPlayer> ();
 		temp.AddComponent<AudioListener> ();
 		temp.AddComponent<AudioSource>();
-		temp.AddComponent<MusicManager> ();
+		temp.AddComponent<AudioManager> ();
 	}
 
 	/// <summary>

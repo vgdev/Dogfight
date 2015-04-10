@@ -69,6 +69,7 @@ GameObject:
   - 114: {fileID: 11473106}
   - 114: {fileID: 11476864}
   - 114: {fileID: 11410074}
+  - 114: {fileID: 11444262}
   m_Layer: 12
   m_Name: Japan
   m_TagString: Player
@@ -241,6 +242,8 @@ MonoBehaviour:
     Damage: 2
   modifier: {fileID: 11453668}
   controllers: []
+  fireSFX: {fileID: 8300000, guid: df86fe27f508c0c4ba9c60a602d2dd6d, type: 3}
+  fireVolume: .5
 --- !u!114 &11410074
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -284,6 +287,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cf408cccaf01e4cadc4be03b2543d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11444262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 1
+  prefab: {fileID: 112428, guid: a2379c38b4a29ad46b8992ebab3e2c21, type: 2}
+  position: {x: .5, y: .5}
+  range: {x: .5, y: .25}
 --- !u!114 &11453668
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -330,10 +350,10 @@ MonoBehaviour:
   characterPortrait: {fileID: 21300000, guid: dc9ff3d3aeb8c8d4591278b3d5c9be70, type: 3}
   attackPatterns:
   - {fileID: 11476864}
-  - {fileID: 11410074}
   - {fileID: 11476864}
+  - {fileID: 11410074}
   - {fileID: 11473106}
-  chargeRate: 2
+  chargeRate: 3
   chargeCapacityRegen: .100000001
   currentChargeCapacity: 0
   cancelDurationPerChargeLevel: 0

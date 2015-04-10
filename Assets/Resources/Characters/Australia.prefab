@@ -67,6 +67,9 @@ GameObject:
   - 114: {fileID: 11423826}
   - 114: {fileID: 11460564}
   - 114: {fileID: 11485548}
+  - 114: {fileID: 11487744}
+  - 114: {fileID: 11471858}
+  - 114: {fileID: 11485266}
   m_Layer: 12
   m_Name: Australia
   m_TagString: Player
@@ -243,6 +246,8 @@ MonoBehaviour:
     Damage: 3
   modifier: {fileID: 11485548}
   controllers: []
+  fireSFX: {fileID: 8300000, guid: df86fe27f508c0c4ba9c60a602d2dd6d, type: 3}
+  fireVolume: .5
 --- !u!114 &11468404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -255,6 +260,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   subSource: {fileID: 0}
+--- !u!114 &11471858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 1
+  prefab: {fileID: 196228, guid: 52493a5d118898b499801615486e6b36, type: 2}
+  position: {x: .5, y: .5}
+  range: {x: 0, y: 0}
+--- !u!114 &11485266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 3
+  prefab: {fileID: 147374, guid: bb710a94735ed6e4e9cc0e620c00943f, type: 2}
+  position: {x: .5, y: .75}
+  range: {x: .5, y: .25}
 --- !u!114 &11485548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -284,6 +323,23 @@ MonoBehaviour:
       centerValue: 0
       range: 0
   subModifier: {fileID: 0}
+--- !u!114 &11487744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 1
+  prefab: {fileID: 135162, guid: 248828115cbc1be4f84fb50e4b12241e, type: 2}
+  position: {x: .5, y: .75}
+  range: {x: .5, y: .25}
 --- !u!114 &11497972
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -322,12 +378,15 @@ MonoBehaviour:
   fireRate: 10
   characterPortrait: {fileID: 21300000, guid: cb614c9b91d06bd4581d253d029fbb77, type: 3}
   attackPatterns:
+  - {fileID: 11487744}
+  - {fileID: 11471858}
+  - {fileID: 11485266}
   - {fileID: 11423826}
-  chargeRate: 1
+  chargeRate: 3
   chargeCapacityRegen: .100000001
   currentChargeCapacity: 0
-  cancelDurationPerChargeLevel: .5
-  cancelRadiusPerChargeLevel: 15
+  cancelDurationPerChargeLevel: 2
+  cancelRadiusPerChargeLevel: 20
   cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
   deathCancelDuration: .5
   deathCancelRadius: 40

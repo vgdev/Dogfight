@@ -109,6 +109,8 @@ MonoBehaviour:
     Damage: 0
   modifier: {fileID: 11473524}
   controllers: []
+  fireSFX: {fileID: 8300000, guid: 858a7fc96bfb1384381dbd5de4f6796e, type: 3}
+  fireVolume: 1
 --- !u!114 &11473524
 MonoBehaviour:
   m_ObjectHideFlags: 1

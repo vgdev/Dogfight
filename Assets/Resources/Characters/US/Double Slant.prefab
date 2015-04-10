@@ -142,6 +142,8 @@ MonoBehaviour:
     Damage: 0
   modifier: {fileID: 11469802}
   controllers: []
+  fireSFX: {fileID: 8300000, guid: 858a7fc96bfb1384381dbd5de4f6796e, type: 3}
+  fireVolume: 1
 --- !u!114 &11429872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -305,6 +307,8 @@ MonoBehaviour:
     Damage: 0
   modifier: {fileID: 11472576}
   controllers: []
+  fireSFX: {fileID: 8300000, guid: 858a7fc96bfb1384381dbd5de4f6796e, type: 3}
+  fireVolume: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
