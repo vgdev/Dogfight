@@ -5,14 +5,10 @@ using UnityUtilLib;
 namespace Danmaku2D.Phantasmagoria {
 	public class PhantasmagoriaPlayableCharacter : DanmakuPlayer {
 
+		public Sprite characterPortrait;
+
 		[SerializeField]
 		private AttackPattern[] attackPatterns;
-
-		[SerializeField]
-		private Vector2 shotOffset;
-
-		[SerializeField]
-		private float shotVelocity;
 
 		[SerializeField]
 		private float chargeRate = 1.0f;
@@ -24,10 +20,10 @@ namespace Danmaku2D.Phantasmagoria {
 		private float currentChargeCapacity;
 
 		[SerializeField]
-		private DanmakuPrefab shotType;
+		private float cancelDurationPerChargeLevel = 0.5f;
 
 		[SerializeField]
-		private int shotDamage = 5;
+		private float cancelRadiusPerChargeLevel = 5;
 
 		private bool charging;
 		public bool IsCharging {
@@ -57,7 +53,7 @@ namespace Danmaku2D.Phantasmagoria {
 
 		public int MaxChargeLevel {
 			get { 
-				return attackPatterns.Length + 1; 
+				return attackPatterns.Length; 
 			}
 		}
 
@@ -65,16 +61,19 @@ namespace Danmaku2D.Phantasmagoria {
 			get {
 				return currentChargeCapacity;
 			}
+			set {
+				currentChargeCapacity = value;
+			}
 		}
 
 		[SerializeField]
 		private BulletCancelArea cancelPrefab;
 
 		[SerializeField]
-		private float deathCancelDuration;
+		private float deathCancelDuration = 0.5f;
 
 		[SerializeField]
-		private float deathCancelRadius;
+		private float deathCancelRadius = 40f;
 
 		[SerializeField]
 		private FrameCounter deathInvincibiiltyPeriod;
@@ -89,21 +88,25 @@ namespace Danmaku2D.Phantasmagoria {
 				return base.Field;
 			}
 			set {
-				base.Field = value;
+				DanmakuField field = base.Field = value;
 				for(int i = 0; i < attackPatterns.Length; i++)
 					if(attackPatterns[i] != null)
-						attackPatterns[i].TargetField = base.Field.TargetField;
+						attackPatterns[i].TargetField = field.TargetField;
 			}
 		}
 
 		public override void Hit(Danmaku proj) {
 			if(!invincible) {
 				base.Hit (proj);
-				BulletCancelArea cancelArea = (BulletCancelArea)Instantiate (cancelPrefab, transform.position, Quaternion.identity);
-				cancelArea.Run(deathCancelDuration, deathCancelRadius);
+				SpawnCancel(deathCancelDuration, deathCancelRadius);
 				invincible = true;
 				StartCoroutine(DeathInvincibiilty());
 			}
+		}
+
+		public void SpawnCancel(float duration, float radius) {
+			BulletCancelArea cancel = (BulletCancelArea)Instantiate (cancelPrefab, transform.position, Quaternion.identity);
+			cancel.Run(duration, radius);
 		}
 
 		private IEnumerator DeathInvincibiilty() {
@@ -135,6 +138,7 @@ namespace Danmaku2D.Phantasmagoria {
 					print("Null AttackPattern triggered. Make Sure all AttackPatterns are fully implemented");
 				}
 			}
+			SpawnCancel (level * cancelDurationPerChargeLevel, level * cancelRadiusPerChargeLevel);
 			chargeLevel -= level;
 			currentChargeCapacity -= level;
 		}
@@ -153,14 +157,6 @@ namespace Danmaku2D.Phantasmagoria {
 			} else {
 				FireCheck(dt);
 			}
-		}
-
-		public override void Fire () {
-			Vector2 location;
-			location = transform.position;
-			Danmaku proj1 = Field.FireLinear (shotType, location + shotOffset, 0f, shotVelocity, DanmakuField.CoordinateSystem.World);
-			Danmaku proj2 = Field.FireLinear (shotType, location - shotOffset, 0f, shotVelocity, DanmakuField.CoordinateSystem.World);
-			proj1.Damage = proj2.Damage = shotDamage;
 		}
 	}
 }

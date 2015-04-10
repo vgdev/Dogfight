@@ -10,6 +10,10 @@ namespace Danmaku2D.Phantasmagoria {
 		public PhantasmagoriaPlayableCharacter character2;
 
 		void Start() {
+			if (FindObjectOfType<PlayerSpawnPass> ()) {
+				Destroy (this);
+				return;
+			}
 			PhantasmagoriaGameController controller = GetComponent<PhantasmagoriaGameController> ();
 			PhantasmagoriaPlayableCharacter player1 = (PhantasmagoriaPlayableCharacter) controller.player1.Field.SpawnPlayer (character1);
 			PhantasmagoriaPlayableCharacter player2 = (PhantasmagoriaPlayableCharacter) controller.player2.Field.SpawnPlayer (character2);

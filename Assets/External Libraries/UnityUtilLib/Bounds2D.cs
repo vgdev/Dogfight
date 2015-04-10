@@ -4,18 +4,41 @@ using UnityEngine;
 namespace UnityUtilLib {
 	public struct Bounds2D {
 
-		public Vector2 Center;
-		public Vector2 Extents;
+		private Vector2 center;
+		private Vector2 extents;
+		private Vector2 max;
+		private Vector2 min;
+
+		public Vector2 Center {
+			get {
+				return center;
+			}
+			set {
+				center = value;
+				min = value - extents;
+				max = value + extents;
+			}
+		}
+		public Vector2 Extents {
+			get {
+				return extents;
+			}
+			set {
+				extents = value;
+				min = center - value;
+				max = center + value;
+			}
+		}
 
 		public Vector2 Max {
 			get {
-				return Center + Extents;
+				return max;
 			}
 		}
 
 		public Vector2 Min {
 			get {
-				return Center - Extents;
+				return min;
 			}
 		}
 
@@ -33,9 +56,12 @@ namespace UnityUtilLib {
 			this.Size = Util.Abs(size);
 		}
 
+		public Bounds2D(Bounds bounds3d) {
+			center = bounds3d.center;
+			this.Size = bounds3d.size;
+		}
+
 		public bool Contains(Vector2 point) {
-			Vector2 min = Center - Extents;
-			Vector2 max = Center + Extents;
 			if (point.x < min.x)
 				return false;
 			else if (point.y < min.y)

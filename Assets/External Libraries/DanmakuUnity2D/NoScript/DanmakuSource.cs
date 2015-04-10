@@ -69,25 +69,23 @@ namespace Danmaku2D {
 
 		public void Fire(DanmakuPrefab prefab,
 		                 DynamicFloat velocity,
-		                 DynamicFloat rotationOffset = null,
-		                 DynamicFloat angularVelocity = null,
+		                 DynamicFloat? rotationOffset = null,
+		                 DynamicFloat? angularVelocity = null,
 		                 DanmakuController controller = null,
 		                 FireModifier modifier = null) {
 			if(TargetField == null) {
-				Debug.LogWarning("Firing from a Projectile Source without a Target Field");
+				Debug.LogWarning("Firing from a Danmaku Source without a Target Field");
 				return;
 			}
-			if (rotationOffset == null)
-				rotationOffset = 0f;
-			if (angularVelocity == null)
-				angularVelocity = 0f;
+			DynamicFloat rotation = rotationOffset ?? 0f;
+			DynamicFloat angV = angularVelocity ?? 0f;
 			for (int i = 0; i < sourcePoints.Count; i++) {
 				SourcePoint source = sourcePoints[i];
 				TargetField.FireCurved (prefab,
                                         source.Position,
-                                        source.BaseRotation + rotationOffset,
+                                        source.BaseRotation + rotation,
 				                        velocity,
-				                        angularVelocity,
+				                        angV,
 				                        DanmakuField.CoordinateSystem.World,
                                         controller);
 			}
@@ -95,7 +93,7 @@ namespace Danmaku2D {
 
 		public void Fire(FireBuilder data) {
 			if(TargetField == null) {
-				Debug.LogWarning("Firing from a Projectile Source without a Target Field");
+				Debug.LogWarning("Firing from a Danmaku Source without a Target Field");
 				return;
 			}
 			FireBuilder copy = data.Clone ();

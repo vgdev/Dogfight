@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityUtilLib;
 using System.Collections;
 using Danmaku2D.NoScript;
 
 namespace Danmaku2D {
 
+	[AddComponentMenu("Danmaku 2D/Danmaku Emitter")]
 	public sealed class DanmakuEmitter : DanmakuTriggerReciever {
 
 		[SerializeField]
@@ -17,7 +18,7 @@ namespace Danmaku2D {
 		private Modifier modifier;
 
 		[SerializeField]
-		private ProjectileControlBehavior[] controllers;
+		private DanmakuControlBehavior[] controllers;
 
 		public FireModifier Modifier {
 			get {
@@ -34,7 +35,7 @@ namespace Danmaku2D {
 		public void Fire() {
 			fireData.Controller = null;
 			for(int i = 0; i < controllers.Length; i++)
-				fireData.Controller += controllers[i].UpdateProjectile;
+				fireData.Controller += controllers[i].UpdateDanmaku;
 			fireData.Modifier = Modifier;
 			for(int i = 0; i < sources.Length; i++)
 				sources[i].Fire (fireData);

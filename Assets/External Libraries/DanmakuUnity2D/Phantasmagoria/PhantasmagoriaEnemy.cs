@@ -6,17 +6,14 @@ namespace Danmaku2D.Phantasmagoria {
 	public class PhantasmagoriaEnemy : BasicEnemy {
 
 		[SerializeField]
-		private float deathReflectDuration;
+		public GameObject onDeathSpawn;
 
 		[SerializeField]
-		private float deathReflectRadius;
-
-		[SerializeField]
-		private BulletTransferArea bulletTransferPrefab;
+		private float specialBoost = 0.05f;
 
 		protected override void OnDeath () {
-			BulletTransferArea transferArea = (BulletTransferArea)Instantiate (bulletTransferPrefab, transform.position, Quaternion.identity);
-			transferArea.Run (deathReflectDuration, deathReflectRadius, Field);
+			Field.SpawnGameObject (onDeathSpawn, transform.position, DanmakuField.CoordinateSystem.World);
+			(Field.player as PhantasmagoriaPlayableCharacter).CurrentChargeCapacity += specialBoost;
 		}
 	}
 }

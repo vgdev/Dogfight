@@ -26,7 +26,8 @@ namespace Danmaku2D {
 	}
 
 	namespace Wrapper {
-		
+
+		[AddComponentMenu("Danmaku 2D/Modifiers/Line")]
 		internal class LineModifier : ModifierWrapper<Danmaku2D.LineModifier> {
 		}
 

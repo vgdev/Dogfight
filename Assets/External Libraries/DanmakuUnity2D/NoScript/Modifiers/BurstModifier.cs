@@ -40,6 +40,7 @@ namespace Danmaku2D {
 
 	namespace Wrapper {
 
+		[AddComponentMenu("Danmaku 2D/Modifiers/Burst")]
 		public class BurstModifier : ModifierWrapper<Danmaku2D.BurstModifier> {
 		}
 

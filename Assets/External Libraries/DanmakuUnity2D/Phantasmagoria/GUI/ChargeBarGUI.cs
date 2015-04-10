@@ -38,10 +38,12 @@ namespace Danmaku2D.Phantasmagoria.GUI {
 		void Update () {
 			Vector3 capacityScale = chargeCapacity.localScale;
 			Vector3 levelScale = chargeCapacity.localScale;
-			capacityScale.x = player.CurrentChargeCapacity / (float)player.MaxChargeLevel;
-			levelScale.x = player.CurrentChargeLevel / (float)player.MaxChargeLevel;
-			chargeCapacity.localScale = capacityScale;
-			chargeLevel.localScale = levelScale;
+			if (player.MaxChargeLevel > 0) {
+				capacityScale.x = player.CurrentChargeCapacity / (float)player.MaxChargeLevel;
+				levelScale.x = player.CurrentChargeLevel / (float)player.MaxChargeLevel;
+				chargeCapacity.localScale = capacityScale;
+				chargeLevel.localScale = levelScale;
+			}
 		}
 	}
 }
