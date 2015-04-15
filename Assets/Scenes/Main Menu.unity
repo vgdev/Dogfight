@@ -2253,6 +2253,7 @@ GameObject:
   - 114: {fileID: 692082123}
   - 114: {fileID: 692082122}
   - 114: {fileID: 692082121}
+  - 114: {fileID: 692082125}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -2315,6 +2316,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &692082125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 692082120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4e4f002f1792f4aa4bab53b9200ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers: []
+  sources: []
+  fireData:
+    Prefab: {fileID: 0}
+    Position: {x: 0, y: 0}
+    Rotation:
+      type: 0
+      centerValue: 0
+      range: 0
+    Velocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    AngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    CoordinateSystem: 0
+    Damage: 0
+  modifier: {fileID: 0}
+  controllers: []
+  fireSFX: {fileID: 0}
+  fireVolume: 1
 --- !u!1 &717385574
 GameObject:
   m_ObjectHideFlags: 0

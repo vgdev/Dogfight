@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityUtilLib;
 
 namespace Danmaku2D {
@@ -27,8 +27,8 @@ namespace Danmaku2D {
 
 	namespace Wrapper {
 
-		[AddComponentMenu("Danmaku 2D/Modifiers/Line")]
-		internal class LineModifier : ModifierWrapper<Danmaku2D.LineModifier> {
+		[AddComponentMenu("Danmaku 2D/Modifiers/Line Modifier")]
+		internal class LineModifier : Modifier<Danmaku2D.LineModifier> {
 		}
 
 	}

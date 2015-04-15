@@ -14,7 +14,7 @@ namespace Danmaku2D {
 		}
 	}
 
-	public abstract class DanmakuSource : CachedObject {
+	public abstract class DanmakuSource : CachedObject, IDanmakuNode {
 
 		public DanmakuSource subSource;
 
@@ -120,6 +120,30 @@ namespace Danmaku2D {
 				Gizmos.DrawLine(sourcePoints[i].Position, endRay);
 			}
 		}
+
+		#region IDanmakuNode implementation
+
+		public bool Connect (IDanmakuNode node) {
+			if (node is DanmakuSource) {
+				subSource = node as DanmakuSource;
+				return true;
+			}
+			return false;
+		}
+
+		public string NodeName {
+			get {
+				return GetType().ToString();
+			}
+		}
+
+		public Color NodeColor {
+			get {
+				return Color.green;
+			}
+		}
+
+		#endregion
 	}
 	
 }

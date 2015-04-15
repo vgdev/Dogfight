@@ -34,10 +34,6 @@ namespace Danmaku2D {
 			}
 		}
 
-		public override void Trigger () {
-			Fire ();
-		}
-
 		public void Fire() {
 			fireData.Controller = null;
 			for(int i = 0; i < controllers.Length; i++)
@@ -64,5 +60,19 @@ namespace Danmaku2D {
 			copy.Rotation = rotation;
 			field.Fire (copy);
 		}
+
+		#region implemented abstract members of DanmakuTriggerReciever
+
+		public override void Trigger () {
+			Fire ();
+		}
+
+		public override Color NodeColor {
+			get {
+				return Color.red;
+			}
+		}
+
+		#endregion
 	}
 }
