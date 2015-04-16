@@ -1,0 +1,186 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &163708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 471784}
+  - 114: {fileID: 11479626}
+  - 114: {fileID: 11412700}
+  - 114: {fileID: 11439746}
+  - 114: {fileID: 11442740}
+  - 114: {fileID: 11426834}
+  - 114: {fileID: 11431422}
+  m_Layer: 0
+  m_Name: Swastika
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &471784
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163708}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -99, y: 8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11412700
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4e4f002f1792f4aa4bab53b9200ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers:
+  - {fileID: 11431422}
+  sources:
+  - {fileID: 11479626}
+  fireData:
+    Prefab: {fileID: 11407708, guid: 5b1a5666fb2a66c48a714dd837e59868, type: 2}
+    Position: {x: 0, y: 0}
+    Rotation:
+      type: 0
+      centerValue: 45
+      range: 0
+    Velocity:
+      type: 0
+      centerValue: 10
+      range: 0
+    AngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    CoordinateSystem: 0
+    Damage: 0
+  modifier: {fileID: 11439746}
+  controllers:
+  - {fileID: 11442740}
+  - {fileID: 11426834}
+  fireSFX: {fileID: 8300000, guid: 11c138768da339347960a8efc99b56b6, type: 3}
+  fireVolume: 1
+--- !u!114 &11426834
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bd141673927f3f4cabd045212ab2bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  danmakuController:
+    rotationMode: 1
+    delay: 1
+    angle:
+      type: 1
+      centerValue: 0
+      range: 90
+    setAngV: 0
+    angularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+--- !u!114 &11431422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfdecd5616104c845ba3f36d424dc9d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay:
+    type: 0
+    centerValue: .100000001
+    range: 0
+--- !u!114 &11439746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8382d8a36abd6d469c9041d84c0b902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modifier:
+    Range:
+      type: 0
+      centerValue: 360
+      range: 0
+    Count:
+      type: 0
+      centerValue: 5
+      range: 0
+    DeltaVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    DeltaAngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+  subModifier: {fileID: 0}
+--- !u!114 &11442740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bd141673927f3f4cabd045212ab2bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  danmakuController:
+    rotationMode: 1
+    delay: .5
+    angle:
+      type: 0
+      centerValue: 90
+      range: 0
+    setAngV: 0
+    angularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+--- !u!114 &11479626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172d150a45fe41040a0db77aa245b44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subSource: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 163708}
+  m_IsPrefabParent: 1

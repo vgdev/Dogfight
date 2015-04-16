@@ -1,0 +1,174 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &135162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 413614}
+  - 114: {fileID: 11449126}
+  - 114: {fileID: 11439308}
+  - 114: {fileID: 11466584}
+  - 114: {fileID: 11477508}
+  - 114: {fileID: 11434264}
+  - 114: {fileID: 11419432}
+  m_Layer: 0
+  m_Name: Whirlpool Basic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &413614
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135162}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -100.339996, y: 8.02000046, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11419432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f6f36dbebd48249b6a05b1ee0b3049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angularVelocity: 30
+--- !u!114 &11434264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bd141673927f3f4cabd045212ab2bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  danmakuController:
+    rotationMode: 1
+    delay: 1
+    angle:
+      type: 0
+      centerValue: 0
+      range: 0
+    setAngV: 1
+    angularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+--- !u!114 &11439308
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4e4f002f1792f4aa4bab53b9200ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers:
+  - {fileID: 11466584}
+  sources:
+  - {fileID: 11449126}
+  fireData:
+    Prefab: {fileID: 11477072, guid: 2e0586f543103994eba3c85e066a504e, type: 2}
+    Position: {x: 0, y: 0}
+    Rotation:
+      type: 0
+      centerValue: 0
+      range: 0
+    Velocity:
+      type: 0
+      centerValue: 10
+      range: 0
+    AngularVelocity:
+      type: 0
+      centerValue: 180
+      range: 0
+    CoordinateSystem: 0
+    Damage: 0
+  modifier: {fileID: 11477508}
+  controllers:
+  - {fileID: 11434264}
+  fireSFX: {fileID: 8300000, guid: 29387e735665d214280256577311cc4f, type: 3}
+  fireVolume: 1
+--- !u!114 &11449126
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172d150a45fe41040a0db77aa245b44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subSource: {fileID: 0}
+--- !u!114 &11466584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfdecd5616104c845ba3f36d424dc9d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay:
+    type: 0
+    centerValue: .25
+    range: 0
+--- !u!114 &11477508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8382d8a36abd6d469c9041d84c0b902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modifier:
+    Range:
+      type: 0
+      centerValue: 360
+      range: 0
+    Count:
+      type: 0
+      centerValue: 6
+      range: 0
+    DeltaVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+    DeltaAngularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
+  subModifier: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 135162}
+  m_IsPrefabParent: 1

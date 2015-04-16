@@ -37,6 +37,39 @@ public class DogSelect : MonoBehaviour {
 	public int player1Selected;
 	public int player2Selected;
 
+	void P1Lock() {
+		player1Locked = !player1Locked;
+	}
+
+	void P2Lock() {
+		player2Locked = !player2Locked;
+	}
+
+	void P1Inc() {
+		player1Selected++;
+		if(player1Selected >= characters.Length)
+			player1Selected = 0;
+	}
+
+	void P2Inc() {
+		player2Selected++;
+		if(player2Selected >= characters.Length)
+			player2Selected = 0;
+	}
+
+	void P1Dec() {
+		player1Selected--;
+		if(player1Selected < 0)
+			player1Selected = characters.Length - 1;
+	}
+
+	void P2Dec() {
+		player2Selected--;
+		if(player2Selected < 0)
+			player2Selected = characters.Length - 1;
+	}
+
+
 	void Awake() {
 		var characterList = new List<PhantasmagoriaPlayableCharacter> ();
 		Object[] prefabs = Resources.LoadAll ("Characters");

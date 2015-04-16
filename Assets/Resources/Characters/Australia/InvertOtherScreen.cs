@@ -21,14 +21,14 @@ public class InvertOtherScreen : TimedAttackPattern {
 		float rot = TargetField.Camera2DRotation;
 		float altRot = rot + 180f;
 		float t = 0;
-		Time.timeScale = 0f;
+		DanmakuGameController.PauseGame ();
 		while (t < 1f) {
 			TargetField.Camera2DRotation = Mathf.Lerp(rot, altRot, t);
 			yield return new WaitForEndOfFrame();
 			t += Time.unscaledDeltaTime / flipDuration;
 		}
 		TargetField.Camera2DRotation = altRot;
-		Time.timeScale = 1f;
+		DanmakuGameController.UnpauseGame ();
 
 	}
 }

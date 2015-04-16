@@ -153,6 +153,14 @@ namespace Danmaku2D {
 			groupControllers = null;
 		}
 
+		public Dictionary<Danmaku, T> AddComponent<T>() where T : Component {
+			var pairs = new Dictionary<Danmaku, T> ();
+			foreach (Danmaku danmaku in group) {
+				pairs[danmaku] = danmaku.AddComponent<T>();
+			}
+			return pairs;
+		}
+
 		#region ICollection implementation
 
 		public void Add (Danmaku item) {

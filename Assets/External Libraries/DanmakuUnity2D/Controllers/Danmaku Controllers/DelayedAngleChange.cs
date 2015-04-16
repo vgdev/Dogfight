@@ -16,6 +16,12 @@ namespace Danmaku2D.DanmakuControllers {
 		[SerializeField]
 		private DynamicFloat angle;
 
+		[SerializeField]
+		private bool setAngV;
+
+		[SerializeField]
+		private DynamicFloat angularVelocity;
+
 		#region implemented abstract members of IDanmakuController
 
 		public void UpdateDanmaku (Danmaku danmaku, float dt) {
@@ -33,6 +39,8 @@ namespace Danmaku2D.DanmakuControllers {
 						break;
 				}
 				danmaku.Rotation = baseAngle;
+				if(setAngV)
+					danmaku.AngularVelocity = angularVelocity;
 			}
 		}
 

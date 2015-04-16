@@ -53,6 +53,8 @@ GameObject:
   - 114: {fileID: 11423160}
   - 114: {fileID: 11476034}
   - 114: {fileID: 11477146}
+  - 114: {fileID: 11437994}
+  - 114: {fileID: 11404348}
   m_Layer: 12
   m_Name: Gemany
   m_TagString: Player
@@ -196,6 +198,23 @@ BoxCollider2D:
   m_Offset: {x: -.0134963989, y: .164588928}
   serializedVersion: 2
   m_Size: {x: 2.6510725, y: 4.05488825}
+--- !u!114 &11404348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 1
+  prefab: {fileID: 162750, guid: 0216abc0785fbec43863192a8b4d267c, type: 2}
+  position: {x: .5, y: 1}
+  range: {x: .5, y: .25}
 --- !u!114 &11423160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -231,6 +250,8 @@ MonoBehaviour:
   modifier: {fileID: 11476034}
   controllers:
   - {fileID: 11477146}
+  fireSFX: {fileID: 8300000, guid: df86fe27f508c0c4ba9c60a602d2dd6d, type: 3}
+  fireVolume: .5
 --- !u!114 &11430088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -247,13 +268,15 @@ MonoBehaviour:
   fireRate: 20
   characterPortrait: {fileID: 21300000, guid: ac6a65930573fc0418c7e5ca214c32f3, type: 3}
   attackPatterns:
-  - {fileID: 11436200}
+  - {fileID: 11404348}
   - {fileID: 11441488}
-  chargeRate: 1
-  chargeCapacityRegen: 1
+  - {fileID: 11437994}
+  - {fileID: 11441488}
+  chargeRate: 3
+  chargeCapacityRegen: .100000001
   currentChargeCapacity: 0
-  cancelDurationPerChargeLevel: .5
-  cancelRadiusPerChargeLevel: 5
+  cancelDurationPerChargeLevel: .75
+  cancelRadiusPerChargeLevel: 12
   cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
   deathCancelDuration: .5
   deathCancelRadius: 40
@@ -302,8 +325,26 @@ MonoBehaviour:
   fatBullet: {fileID: 11420942, guid: 53a04669cc266574082aafa42d1e95da, type: 2}
   thinBullet: {fileID: 11483526, guid: fd93b1802e3f9c94ea450691f812cacc, type: 2}
   bulletVelocity: 7
-  centerArea: {x: 1, y: 1}
+  pivot: {x: .25, y: .449999988}
+  centerArea: {x: .5, y: .5}
   bulletSeparationDist: .0500000007
+--- !u!114 &11437994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 3
+  prefab: {fileID: 163708, guid: 0a6040ae8327d42479787b2098b18e09, type: 2}
+  position: {x: .5, y: .75}
+  range: {x: .5, y: .25}
 --- !u!114 &11441488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -317,8 +358,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetField: {fileID: 0}
   timeout:
-    Time: 2
-  prefab: {fileID: 11414182, guid: 3070d33033a225b4995e769e69877e9e, type: 2}
+    Time: 4
+  prefab: {fileID: 11420942, guid: 53a04669cc266574082aafa42d1e95da, type: 2}
   bulletCount: 9
   burstCount:
     MaxCount: 1
@@ -330,7 +371,7 @@ MonoBehaviour:
   LinearController:
     acceleration: 0
   crossDelay:
-    Time: .300000012
+    Time: 1
   centerArea: {x: 1, y: 0}
 --- !u!114 &11461616
 MonoBehaviour:
@@ -391,6 +432,11 @@ MonoBehaviour:
       type: 1
       centerValue: 0
       range: 5
+    setAngV: 0
+    angularVelocity:
+      type: 0
+      centerValue: 0
+      range: 0
 --- !u!212 &21230088
 SpriteRenderer:
   m_ObjectHideFlags: 1

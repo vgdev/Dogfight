@@ -67,6 +67,10 @@ GameObject:
   - 114: {fileID: 11452054}
   - 114: {fileID: 11401472}
   - 114: {fileID: 11460778}
+  - 114: {fileID: 11433430}
+  - 114: {fileID: 11498712}
+  - 114: {fileID: 11433426}
+  - 114: {fileID: 11490710}
   m_Layer: 12
   m_Name: USA
   m_TagString: Player
@@ -310,6 +314,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   subSource: {fileID: 0}
+--- !u!114 &11433426
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 1
+  prefab: {fileID: 136954, guid: cfeb30b297ac53440843bfaa4cf3ca4c, type: 2}
+  position: {x: .5, y: .75}
+  range: {x: .5, y: .25}
+--- !u!114 &11433430
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 1
+  prefab: {fileID: 152840, guid: 088a068c41d9f4c47a31be3d8b884ca5, type: 2}
+  position: {x: .5, y: .5}
+  range: {x: 0, y: 0}
 --- !u!114 &11452054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -368,9 +406,11 @@ MonoBehaviour:
       centerValue: 0
       range: 0
     CoordinateSystem: 0
-    Damage: 5
+    Damage: 9
   modifier: {fileID: 0}
   controllers: []
+  fireSFX: {fileID: 8300000, guid: df86fe27f508c0c4ba9c60a602d2dd6d, type: 3}
+  fireVolume: .5
 --- !u!114 &11462242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,12 +449,14 @@ MonoBehaviour:
   fireRate: 20
   characterPortrait: {fileID: 21300000, guid: f4888450778da9a4e8ff6ec0f83d2bd4, type: 3}
   attackPatterns:
-  - {fileID: 11401472}
-  - {fileID: 11452054}
-  chargeRate: 1
-  chargeCapacityRegen: 1
+  - {fileID: 11433430}
+  - {fileID: 11498712}
+  - {fileID: 11490710}
+  - {fileID: 11433426}
+  chargeRate: 3
+  chargeCapacityRegen: .100000001
   currentChargeCapacity: 0
-  cancelDurationPerChargeLevel: .5
+  cancelDurationPerChargeLevel: .75
   cancelRadiusPerChargeLevel: 15
   cancelPrefab: {fileID: 11451470, guid: 142a11794179a9942bc577454c2d8c62, type: 2}
   deathCancelDuration: .5
@@ -423,6 +465,23 @@ MonoBehaviour:
     Time: 3
   invincibiltyFlash:
     Time: 0
+--- !u!114 &11490710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 1
+  prefab: {fileID: 113518, guid: a3f886b5d43d9584e8308fddd8d05723, type: 2}
+  position: {x: .5, y: .75}
+  range: {x: .5, y: .25}
 --- !u!114 &11492584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -435,6 +494,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   subSource: {fileID: 0}
+--- !u!114 &11498712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a98f1ea76fd80d41b2ce6cf3f3e6192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetField: {fileID: 0}
+  timeout:
+    Time: 1
+  prefab: {fileID: 139596, guid: 65e62e6887338c24bb567be7c522c942, type: 2}
+  position: {x: .5, y: .5}
+  range: {x: 0, y: 0}
 --- !u!212 &21244498
 SpriteRenderer:
   m_ObjectHideFlags: 1

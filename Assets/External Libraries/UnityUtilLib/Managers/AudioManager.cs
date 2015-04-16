@@ -11,9 +11,10 @@ namespace UnityUtilLib {
 	/// Best used with the Scene's AudioListener attached on the same object.
 	/// </summary>
 	[RequireComponent(typeof(AudioSource))]
-	public class MusicManager : Singleton<MusicManager> {
+	public class AudioManager : Singleton<AudioManager> {
 
-		private AudioSource audioSource;
+		public AudioSource musicSource;
+		public AudioSource sfxSource;
 
 		/// <summary>
 		/// Gets the currently playing BGM.
@@ -21,8 +22,12 @@ namespace UnityUtilLib {
 		/// <value>The currently playing.</value>
 		public static AudioClip CurrentlyPlaying  {
 			get {
-				return Instance.audioSource.clip;
+				return Instance.musicSource.clip;
 			}
+		}
+
+		public static void PlaySFX(AudioClip audioClip, float volume = 1) {
+			Instance.musicSource.PlayOneShot (audioClip, volume);
 		}
 
 		/// <summary>
@@ -31,24 +36,24 @@ namespace UnityUtilLib {
 		/// <param name="musicClip">the music clip to play</param>
 		/// <param name="volume">the volume to play it at. If set to a negative number, the current volume will be used.</param>
 		public static void PlayMusic(AudioClip musicClip, float volume = -1) {
-			Instance.audioSource.Stop ();
-			Instance.audioSource.clip = musicClip;
+			Instance.musicSource.Stop ();
+			Instance.musicSource.clip = musicClip;
 			SetVolume (volume);
-			Instance.audioSource.Play ();
+			Instance.musicSource.Play ();
 		}
 
 		/// <summary>
 		/// Pauses this the current music clip.
 		/// </summary>
 		public static void Pause() {
-			Instance.audioSource.Pause ();
+			Instance.musicSource.Pause ();
 		}
 
 		/// <summary>
 		/// Stops the current music clip.
 		/// </summary>
 		public static void Stop() {
-			Instance.audioSource.Pause ();
+			Instance.musicSource.Pause ();
 		}
 
 		/// <summary>
@@ -58,12 +63,12 @@ namespace UnityUtilLib {
 		/// <param name="volume">the new volume.</param>
 		public static void SetVolume(float volume) {
 			if(volume >= 0f && volume <= 1f)
-				Instance.audioSource.volume = volume;
+				Instance.musicSource.volume = volume;
 		}
 
 		public override void Awake () {
 			base.Awake ();
-			audioSource = GetComponent<AudioSource>();
+			musicSource = GetComponent<AudioSource>();
 		}
 	}
 }

@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityUtilLib;
 using UnityUtilLib.Pooling;
 using System.Collections.Generic;
-using System;
 
 /// <summary>
 /// A development kit for quick development of 2D Danmaku games
@@ -16,6 +15,8 @@ namespace Danmaku2D {
 	public sealed partial class Danmaku : IPooledObject, IColorable, IPrefabed<DanmakuPrefab> {
 		
 		internal int index;
+
+		private Stack<Component> extraComponents;
 
 		private GameObject gameObject;
 		private Transform transform;
@@ -268,6 +269,14 @@ namespace Danmaku2D {
 		public void RemoveController(DanmakuController controller) {
 			controllerUpdate -= controller;
 			controllerCheck = controllerUpdate != null;
+		}
+
+		public T AddComponent<T>() where T : Component {
+			T component = gameObject.AddComponent<T> ();
+			if (extraComponents == null)
+				extraComponents = new Stack<Component> ();
+			extraComponents.Push (component);
+			return component;
 		}
 
 		public void ClearControllers() {
@@ -528,6 +537,11 @@ namespace Danmaku2D {
 			renderer.enabled = false;
 			is_active = false;
 			Pool.Return (this);
+			if (extraComponents != null) {
+				while(extraComponents.Count > 0) {
+					Object.Destroy(extraComponents.Pop());
+				}
+			}
 			//ProjectileManager.Return (this);
 		}
 

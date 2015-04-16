@@ -20,16 +20,18 @@ namespace Danmaku2D {
 		[SerializeField]
 		private DanmakuControlBehavior[] controllers;
 
+		[SerializeField]
+		private AudioClip fireSFX;
+
+		[SerializeField]
+		private float fireVolume = 1f;
+
 		public FireModifier Modifier {
 			get {
 				if(modifier == null)
 					return null;
 				return modifier.WrappedModifier;
 			}
-		}
-
-		public override void Trigger () {
-			Fire ();
 		}
 
 		public void Fire() {
@@ -39,6 +41,8 @@ namespace Danmaku2D {
 			fireData.Modifier = Modifier;
 			for(int i = 0; i < sources.Length; i++)
 				sources[i].Fire (fireData);
+			if (fireSFX != null)
+				AudioManager.PlaySFX (fireSFX, fireVolume);
 		}
 
 		public void FireAtDanmaku(Danmaku danmaku) {
@@ -56,5 +60,19 @@ namespace Danmaku2D {
 			copy.Rotation = rotation;
 			field.Fire (copy);
 		}
+
+		#region implemented abstract members of DanmakuTriggerReciever
+
+		public override void Trigger () {
+			Fire ();
+		}
+
+		public override Color NodeColor {
+			get {
+				return Color.red;
+			}
+		}
+
+		#endregion
 	}
 }

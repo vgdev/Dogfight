@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21262512}
   - 95: {fileID: 9520876}
   - 114: {fileID: 11425774}
+  - 114: {fileID: 11457954}
   m_Layer: 0
   m_Name: Vector-y Explosion
   m_TagString: Untagged
@@ -58,6 +59,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8324e8285874b4c8877b5ad058aca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11457954
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 136472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a501671816612d4f8abead74acd945e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 047192b276345ec4aa5cb52db86c1b33, type: 3}
 --- !u!212 &21262512
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -14,6 +14,7 @@ GameObject:
   - 58: {fileID: 5880214}
   - 114: {fileID: 11439714}
   - 114: {fileID: 11412336}
+  - 114: {fileID: 11496304}
   m_Layer: 0
   m_Name: Ring Explosion
   m_TagString: Untagged
@@ -98,6 +99,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawn: {fileID: 128912, guid: 2316a88a9b44dc444aa814eb5260f9af, type: 2}
+--- !u!114 &11496304
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a501671816612d4f8abead74acd945e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 64045f9a84e7afd459b6797a7855e95c, type: 3}
 --- !u!212 &21234888
 SpriteRenderer:
   m_ObjectHideFlags: 1
